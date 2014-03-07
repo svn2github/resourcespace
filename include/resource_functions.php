@@ -2593,7 +2593,7 @@ function get_resource_files($ref,$includeorphan=false){
 
     if (count($file_checklist)>0){
 	foreach (array_keys($file_checklist) as $thefile){
-		error_log("ResourceSpace: Orphaned file, resource $ref: $thefile");
+		debug("ResourceSpace: Orphaned file, resource $ref: $thefile");
 	        if ($includeorphan) {
 			array_push($filearray,$thefile);
 		}
