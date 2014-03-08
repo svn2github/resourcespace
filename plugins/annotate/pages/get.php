@@ -36,10 +36,10 @@ for ($x=0;$x<count($notes);$x++){
 	
 	if ($x>0){$json.=",";}
 	$json.="{";
-	$json.='"top":'.$notes[$x]['top_pos'].', ';
-	$json.='"left":'.$notes[$x]['left_pos'].', ';
-	$json.='"width":'.$notes[$x]['width'].', ';
-	$json.='"height":'.$notes[$x]['height'].', ';
+	$json.='"top":'.round($notes[$x]['top_pos']).', ';
+	$json.='"left":'.round($notes[$x]['left_pos']).', ';
+	$json.='"width":'.round($notes[$x]['width']).', ';
+	$json.='"height":'.round($notes[$x]['height']).', ';
 	$json.='"text":"'.str_replace('"','\"',$notes[$x]['note']).'", ';
 	$json.='"id":"'.$notes[$x]['note_id'].'", ';
 	if (isset($userref) && ($notes[$x]['user']==$userref)){
