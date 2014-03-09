@@ -40,7 +40,7 @@ for ($x=0;$x<count($notes);$x++){
 	$json.='"left":'.round($notes[$x]['left_pos']).', ';
 	$json.='"width":'.round($notes[$x]['width']).', ';
 	$json.='"height":'.round($notes[$x]['height']).', ';
-	$json.='"text":"'.str_replace('"','\"',$notes[$x]['note']).'", ';
+	$json.='"text":"'.config_encode($notes[$x]['note']).'", ';
 	$json.='"id":"'.$notes[$x]['note_id'].'", ';
 	if (isset($userref) && ($notes[$x]['user']==$userref)){
 	$json.='"editable":true';
