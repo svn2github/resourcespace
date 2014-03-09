@@ -697,48 +697,48 @@ function getval($val,$default,$force_numeric=false)
 
 function getvalescaped($val,$default,$force_numeric=false)
     {    
-   	# return a value from get/post, escaped, SQL-safe and XSS-free
-	$value=getval($val,$default,$force_numeric);
-	if (is_array($value))
-		{
-		foreach ($value as &$item)
-			{
-    		$item=escape_check($item); 
-	    	if (strpos(strtolower($item),"<script")!==false) return $default;
-    		}
-		}
-	else
-		{
-    	$value=escape_check($value);
-	    if (strpos(strtolower($value),"<script")!==false) {return $default;}
-    	}
+    # return a value from get/post, escaped, SQL-safe and XSS-free
+    $value=getval($val,$default,$force_numeric);
+    if (is_array($value))
+        {
+        foreach ($value as &$item)
+            {
+            $item=escape_check($item); 
+            if (strpos(strtolower($item),"<script")!==false) return $default;
+            }
+        }
+    else
+        {
+        $value=escape_check($value);
+        if (strpos(strtolower($value),"<script")!==false) {return $default;}
+        }
     return $value;
     }
     
 function getuid()
     {
     # generate a unique ID
-	return strtr(escape_check(microtime() . " " . $_SERVER["REMOTE_ADDR"]),". ","--");
+    return strtr(escape_check(microtime() . " " . $_SERVER["REMOTE_ADDR"]),". ","--");
     }
 
 function escape_check($text) #only escape a string if we need to, to prevent escaping an already escaped string
     {
-	global $db,$use_mysqli;
-	if ($use_mysqli)
-		{
-		$text=mysqli_real_escape_string($db,$text);
-    	}
+    global $db,$use_mysqli;
+    if ($use_mysqli)
+        {
+        $text=mysqli_real_escape_string($db,$text);
+        }
     else 
-		{
-		$text=mysql_real_escape_string($text);
-		}
+        {
+        $text=mysql_real_escape_string($text);
+        }
     # turn all \\' into \'
     while (!(strpos($text,"\\\\'")===false))
         {
         $text=str_replace("\\\\'","\\'",$text);
         }
 
-	# Remove any backslashes that are not being used to escape single quotes.
+    # Remove any backslashes that are not being used to escape single quotes.
     $text=str_replace("\\'","{bs}'",$text);
     $text=str_replace("\\n","{bs}n",$text);
     $text=str_replace("\\r","{bs}r",$text);
@@ -753,10 +753,10 @@ function escape_check($text) #only escape a string if we need to, to prevent esc
 
 function unescape($text) 
     {
-	// for comparing escape_checked strings against mysql content because	
-	// just doing $text=str_replace("\\","",$text);	does not undo escape_check
+    // for comparing escape_checked strings against mysql content because	
+    // just doing $text=str_replace("\\","",$text);	does not undo escape_check
 
-	# Remove any backslashes that are not being used to escape single quotes.
+    # Remove any backslashes that are not being used to escape single quotes.
     $text=str_replace("\\'","\'",$text);
     $text=str_replace("\\n","\n",$text);
     $text=str_replace("\\r","\r",$text);
