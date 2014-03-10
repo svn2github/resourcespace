@@ -60,10 +60,10 @@
 		$ratio=$result[$n]["thumb_width"]/$result[$n]["thumb_height"];
 		if ($result[$n]["thumb_width"]>$result[$n]['thumb_height']){
 			$xlwidth=350;
-			$xlheight=350/$ratio;
+			$xlheight=round(350/$ratio);
 		} else {
 			$xlheight=350;
-			$xlwidth=350*$ratio;
+			$xlwidth=round(350*$ratio);
 		}
 		?> width="<?php echo $xlwidth?>" height="<?php echo $xlheight?>" <?php 
 	} ?>src="<?php echo $pre_url ?>" class="ImageBorder"
