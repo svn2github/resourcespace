@@ -135,7 +135,7 @@ jQuery(document).ready( function ()
 		}	
 	
 	?>
-	\>
+	>
 	
 	<div class="HomePicturePanelIN" id='photoholder' style="
 	<?php
