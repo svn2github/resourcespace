@@ -153,7 +153,7 @@
 
 		<!-- Preview icon -->
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
-		<span class="IconPreview"><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/preview.php?from=search&ref=<?php echo urlencode($ref)?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&archive=<?php echo urlencode($archive)?>&k=<?php echo urlencode($k)?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="<?php echo $baseurl_short?>gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+		<span class="IconPreview"><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/preview.php?from=search&amp;ref=<?php echo urlencode($ref)?>&amp;ext=<?php echo $result[$n]["preview_extension"]?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>&amp;k=<?php echo urlencode($k)?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="<?php echo $baseurl_short?>gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		<?php $showkeypreview = true; ?>
 		<?php } /* end hook replacefullscreenpreviewicon */?>
 
@@ -174,7 +174,7 @@
 
 		<!-- Email icon -->
 		<?php if(!hook("iconemail")) { ?>
-		<?php if ($allow_share && $k=="") { ?><span class="IconEmail"><a href="<?php echo $baseurl_short?>pages/resource_email.php?ref=<?php echo urlencode($ref)?>&search=<?php echo urlencode($search)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&archive=<?php echo urlencode($archive)?>&k=<?php echo urlencode($k)?>"   onClick="return CentralSpaceLoad(this,true);" title="<?php echo $lang["emailresource"]?>"><img src="<?php echo $baseurl_short?>gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span>
+		<?php if ($allow_share && $k=="") { ?><span class="IconEmail"><a href="<?php echo $baseurl_short?>pages/resource_email.php?ref=<?php echo urlencode($ref)?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>&amp;k=<?php echo urlencode($k)?>"   onClick="return CentralSpaceLoad(this,true);" title="<?php echo $lang["emailresource"]?>"><img src="<?php echo $baseurl_short?>gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span>
 		<?php $showkeyemail = true; ?>
 		<?php } ?>
 		<?php } ?>
@@ -186,7 +186,7 @@
 
 		<!-- Collection comment icon -->
 		<?php if ($k==""){?><?php if (($collection_reorder_caption || $collection_commenting) && (substr($search,0,11)=="!collection")) { ?>
-		<span class="IconComment"><a href="<?php echo $baseurl_short?>pages/collection_comment.php?ref=<?php echo urlencode($ref)?>&collection=<?php echo urlencode(substr($search,11))?>"  onClick="return CentralSpaceLoad(this,true);" title="<?php echo $lang["addorviewcomments"]?>"><img src="<?php echo $baseurl_short?>gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
+		<span class="IconComment"><a href="<?php echo $baseurl_short?>pages/collection_comment.php?ref=<?php echo urlencode($ref)?>&amp;collection=<?php echo urlencode(substr($search,11))?>"  onClick="return CentralSpaceLoad(this,true);" title="<?php echo $lang["addorviewcomments"]?>"><img src="<?php echo $baseurl_short?>gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
 		<?php $showkeycomment = true; ?>
 		<?php } ?>	
 		<?php } hook("xlargesearchicon");?>

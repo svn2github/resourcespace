@@ -54,7 +54,7 @@
 		<?php } ?>
 		<?php } ?>
 
-		<?php if (!hook('replacelistviewemaillink') && $allow_share && $k=="") { ?><a class="nowrap" onClick="return CentralSpaceLoad(this);" href="<?php echo $baseurl_short?>pages/resource_email.php?ref=<?php echo htmlspecialchars($ref)?>&search=<?php echo urlencode($search)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&archive=<?php echo urlencode($archive)?>&k=<?php echo urlencode($k)?>">&gt;&nbsp;<?php echo $lang["action-email"]?></a><?php } ?></div></td>
+		<?php if (!hook('replacelistviewemaillink') && $allow_share && $k=="") { ?><a class="nowrap" onClick="return CentralSpaceLoad(this);" href="<?php echo $baseurl_short?>pages/resource_email.php?ref=<?php echo htmlspecialchars($ref)?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>&amp;k=<?php echo urlencode($k)?>">&gt;&nbsp;<?php echo $lang["action-email"]?></a><?php } ?></div></td>
 		
 		
 		</tr>
