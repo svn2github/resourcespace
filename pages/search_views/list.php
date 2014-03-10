@@ -46,7 +46,7 @@
 		<?php if ($list_view_status_column){?><td <?php hook("listviewcolumnstyle");?>><?php echo $lang["status" . $result[$n]["archive"]]?></td><?php } ?>
 		<?php if ($date_column){?><td <?php hook("listviewcolumnstyle");?>><?php echo nicedate($result[$n]["creation_date"],false,true)?></td><?php } ?>
 		<?php hook("addlistviewcolumn");?>
-		<td <?php hook("listviewcolumnstyle");?>><div class="ListTools"><a  onClick="return CentralSpaceLoad(this);" <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);"onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
+		<td <?php hook("listviewcolumnstyle");?>><div class="ListTools"><a  onClick="return CentralSpaceLoad(this);" <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
 
 		if (!hook("replacelistviewaddtocollectionlink")){
 		if (!checkperm("b")&& $k=="") { ?>
