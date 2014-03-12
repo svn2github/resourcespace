@@ -711,7 +711,14 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 .IconResourceType4  {background: url(../gfx/interface/IcAudio.png);}
 .collapsed {background: url(../gfx/interface/HomeArrow.png) no-repeat top left; background-position: 3px 3px;}
 .expanded {background: url(../gfx/interface/HomeArrowDown.png) no-repeat top left; background-position: 0px 6px;}
-
+.xlthumbsicon {background: url(../gfx/interface/xlicon.png) no-repeat 0px;}
+.xlthumbsiconactive {background: url(../gfx/interface/xliconactive.png) no-repeat 0px;}
+.smallthumbsicon {background: url(../gfx/interface/smallicon.png) no-repeat 0px;}
+.smallthumbsiconactive {background: url(../gfx/interface/smalliconactive.png) no-repeat 0px;}
+.largethumbsicon {background: url(../gfx/interface/largeicon.png) no-repeat 0px;}
+.largethumbsiconactive {background: url(../gfx/interface/largeiconactive.png) no-repeat 0px;}
+.smalllisticon {background: url(../gfx/interface/listicon.png) no-repeat 0px;}
+.smalllisticonactive {background: url(../gfx/interface/listiconactive.png) no-repeat 0px;}
 
 /* Plupload **************************************************************** */
 .plupload_container /* Plupload panel */
