@@ -151,6 +151,8 @@ $lang["property-sync_with_field"]="Sync with field";
 $lang["information-copy_field"]="<a href=field_copy.php?ref=%ref>Copy field</a>";
 $lang["property-display_condition"]="Display condition";
 $lang["information-display_condition"]="Display condition: this field will only display if the following conditions are met. Uses same format as group search filter i.e. shortname=value1|value2, shortnamea=validoptiona;shortnameb=validoptionb1|validoptionb2";
+$lang["property-onchange_macro"]="On change macro";
+$lang["information-onchange_macro"]="On change macro: code to be executed when field value is changed. CAUTION ADVISED";
 
 $lang["property-query"]="Query";
 
@@ -1782,8 +1784,6 @@ $lang["contactadminemailtext"]=" has emailed you about a resource";
 $lang["showgeolocationpanel"]="Show location information";
 $lang["hidegeolocationpanel"]="Hide location information";
 $lang["download_usage_option_blocked"]="This usage option is not available. Please check with your administrator";
-$lang["information-onchange_macro"]="On change macro: code to be executed when field value is changed. CAUTION ADVISED";
 
 $lang["tagcloudtext"]="With which metadata terms have people been tagging resources? The more a term has been used, the larger it appears in the cloud.<br /><br />You may also click on any term below to execute the search.";
 $lang["tagcloud"]="Tag Cloud";
-

@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20131118 för version 5104
+# Senast uppdaterad av Henrik Frizén 20140312 för version 5361
 
 #
 #
@@ -176,7 +176,9 @@ $lang["property-omit_when_copying"]="Utelämna vid kopiering";
 $lang["property-sync_with_field"]="Synkronisera med fält";
 $lang["information-copy_field"]="<a href=field_copy.php?ref=%ref>Kopiera fält</a>";
 $lang["property-display_condition"]="Visningsvillkor";
-$lang["information-display_condition"]="Visningsvillkor: Det här fältet visas endast om angivna villkor är uppfyllda. Samma format som för sökfilter för grupper används, det vill säga shortname=value1|value2, shortnamea=validoptiona;shortnameb=validoptionb1|validoptionb2";
+$lang["information-display_condition"]="Visningsvillkor: Det här fältet visas endast om angivna villkor är uppfyllda. Samma format som för sökfilter för grupper används, det vill säga kortnamn=värde1|värde2, kortnamnA=giltigtalternativA;kortnamnB=giltigtalternativB1|giltigtalternativB2";
+$lang["property-onchange_macro"]="Makro vid ändring";
+$lang["information-onchange_macro"]="Makro vid ändring: Kod som ska exekveras när fältets värde ändras. FÖRSIKTIGHET REKOMMENDERAS!";
 
 $lang["property-query"]="Fråga";
 
@@ -227,9 +229,13 @@ $lang["anyday"]="Alla dagar";
 $lang["anycountry"]="Alla länder";
 $lang["resultsdisplay"]="Resultatvisning";
 $lang["xlthumbs"]="Extrastora";
+$lang["xlthumbstitle"]="Extrastora miniatyrbilder";
 $lang["largethumbs"]="Stora";
+$lang["largethumbstitle"]="Stora miniatyrbilder";
 $lang["smallthumbs"]="Små";
+$lang["smallthumbstitle"]="Små miniatyrbilder";
 $lang["list"]="Lista";
+$lang["listtitle"]="Lista";
 $lang["perpage"]="per sida";
 
 $lang["gotoadvancedsearch"]="Avancerad sökning";
@@ -447,7 +453,7 @@ $lang["clearform"]="Rensa formulär";
 $lang["similarresources"]="liknande material"; # e.g. 17 similar resources
 $lang["similarresource"]="liknande material"; # e.g. 1 similar resource
 $lang["nosimilarresources"]="Inget liknande material";
-$lang["emailresource"]="E-posta";
+$lang["emailresource"]="E-posta material";
 $lang["resourcetitle"]="Materialtitel";
 $lang["requestresource"]="Begär material";
 $lang["action-viewmatchingresources"]="Visa matchande material";
@@ -519,6 +525,9 @@ $lang["mustspecifyonekeyword"]="Du måste ange minst ett sökord.";
 $lang["hasemailedyouaresource"]="har skickat ett material till dig per e-post."; # Suffixed to user name, e.g. Fred has e-mailed you a resource
 $lang["clicktoviewresource"]="Klicka på länken nedan om du vill visa materialet.";
 $lang["statuscode"]="Statuskod";
+$lang["unoconv_pdf"]="genererad av Open office";
+$lang['calibre_pdf']="genererad av Calibre";
+$lang["resourcenotfound"]="Materialet hittades inte.";
 
 # Resource log - actions
 $lang["resourcelog"]="Materiallogg";
@@ -806,8 +815,10 @@ $lang["lastupdated"]="Senast uppdaterad";
 $lang["lastused"]="Senast använd";
 $lang["noattachedusers"]="Ingen tillknuten användare.";
 $lang["confirmdeleteaccess"]="Vill du ta bort den här åtkomstnyckeln? Om du väljer att fortsätta kommer användare som har fått tillgång till samlingen med hjälp av denna nyckel inte längre att kunna komma åt samlingen.";
+$lang["confirmdeleteaccessresource"]="Vill du ta bort den här åtkomstnyckeln? Om du väljer att fortsätta kommer användare som har fått tillgång till materialet med hjälp av denna nyckel inte längre att kunna komma åt materialet.";
 $lang["noexternalsharing"]="Ingen extern delning.";
 $lang["sharedcollectionaddwarning"]="Varning! Denna samling delas med externa användare. Det material som du har lagt till har därmed gjorts tillgängligt för dessa användare. Klicka på Dela samling om du vill hantera den externa åtkomsten för denna samling.";
+$lang["sharedcollectionaddwarningupload"]="Varning! Den valda samlingen delas med externa användare. De material som du lägger till kommer därmed att göras tillgängliga för dessa användare. Klicka på Dela samling i samlingspanelen om du vill hantera den externa åtkomsten för denna samling.";
 $lang["restrictedsharecollection"]="Delning är inte tillåten eftersom du har begränsad åtkomst till minst ett material i den här samlingen.";
 $lang["selectgenerateurlexternal"]="Om du vill skapa en extern webbadress som fungerar för användare utan användarkonto, anger du först den åtkomstnivå som du finner lämplig.";
 $lang["selectgenerateurlexternalthemecat"]="Om du vill skapa externa webbadresser som fungerar för användare utan användarkonto, anger du först den åtkomstnivå som du finner lämplig.";
@@ -1297,6 +1308,7 @@ $lang["field_ref_and_name"]="%ref% – %name%"; # %ref% and %name% will be repla
 
 $lang["indicateusage"]="Beskriv hur du planerar att använda detta material.";
 $lang["usage"]="Användning";
+$lang["usagecomments"]="Användning";
 $lang["indicateusagemedium"]="Användningsmedia";
 $lang["usageincorrect"]="Du måste ange hur du planerar att använda materialet samt välja ett media";
 
@@ -1727,7 +1739,7 @@ $lang["contact_sheet-single_select_size"]="Bildkvalitet";
 
 $lang["caps-lock-on"]="Varning! Versallåset är aktiverat.";
 $lang["collectionnames"]="Samlingsnamn";
-$lang["findcollectionthemes"]="Samlingar i teman";
+$lang["findcollectionthemes"]="Teman";
 $lang["upload-options"]="Överföringsinställningar";
 $lang["user-preferences"]="Användarinställningar";
 $lang["allresources"]="Alla material";
@@ -1789,3 +1801,14 @@ $lang["no_resourcetypes-collections"] = "Alla %collectiontypes%"; # Use %COLLECT
 $lang["resourcetypes-collections"] = "Alla %resourcetypes% och alla %collectiontypes%"; # Please find the comments for $lang["resourcetypes-no_collections"] and $lang["no_resourcetypes-collections"]!
 $lang["resourcetypes_separator"] = ", "; # The separator to be used when converting the array of searched resourcetype to a string. E.g. ", " -> "photos, documents"
 $lang["collectiontypes_separator"] = ", "; # The separator to be used when converting the array of searched collections to a string. E.g. ", " -> "public collections, themes"
+$lang["hide_view_access_to_workflow_state"]="Blockera åtkomst till status";
+$lang["collection_share_status_warning"]="Varning! Denna samling har material med följande status, kontrollera att dessa material kommer att vara tillgängliga för andra användare";
+$lang["contactadmin"]="Kontakta administratör";
+$lang["contactadminintro"]="Skriv ett meddelande och klicka på <b>Skicka</b>.";
+$lang["contactadminemailtext"]=" har skickat dig ett e-postmeddelande om ett material";
+$lang["showgeolocationpanel"]="Visa platsinformation";
+$lang["hidegeolocationpanel"]="Dölj platsinformation";
+$lang["download_usage_option_blocked"]="Detta användningsalternativ är inte tillgängligt. Kontakta vid behov systemets administratör.";
+
+$lang["tagcloudtext"]="Med vilken metadata har materialen taggats? Ju oftare en tagg har använts desto större storlek har den i molnet.<br /><br />Klicka på valfri tagg om du vill göra en sökning.";
+$lang["tagcloud"]="Taggmoln";
