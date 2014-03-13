@@ -2,3 +2,4 @@ name    : api_search
 author  : Tom Gleason
 version : 0.1
 desc    : Search API
+config_url: /plugins/api_search/pages/setup.php

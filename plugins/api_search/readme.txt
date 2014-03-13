@@ -17,7 +17,8 @@ content=[string]         Return results as json or xml (default json without jso
 videosonly=[boolean]     Omit results without an flvthumb and flvpath
 page=[int]               Select page of paginated results (changes result structure to pagination style)
 results_per_page=[int]   Paginate results (changes result structure to pagination style) (default 15)
-
+prettyfieldnames=true    Show field names instead of 'field#' (default '')
+contributedby=true       Show Contributed By Username (default '')
 
 If a signature is required, you must md5([yourhashkey].[querystring]) and submit it as a final parameter called skey.
 Your hash key is a shared secret available from plugins/api_core.
