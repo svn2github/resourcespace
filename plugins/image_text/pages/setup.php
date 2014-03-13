@@ -20,7 +20,7 @@ for($n=0;$n<$imfontcount;$n++)
 	{
 	$imfonts[$n]=trim_spaces(str_replace("Font: ","",$imfonts[$n]));
 	}
-sort($imfonts, SORT_NATURAL);
+natsort($imfonts);
 
 // Specify the name of this plugin and the heading to display for the page.
 $plugin_name = 'image_text';
