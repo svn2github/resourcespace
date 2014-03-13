@@ -2188,7 +2188,7 @@ $simple_search_reset_after_search=false;
 #download_chunk_size - for resource downloads. This can be amended to suit local setup. For instance try changing this to 4096 if experiencing slow downloads
 $download_chunk_size=(2 << 20); 
 
-#what to search for in advanced search by default - "Global", "Collections" or resource type id (e.g. 1 for photo in default installation
+#what to search for in advanced search by default - "Global", "Collections" or resource type id (e.g. 1 for photo in default installation, can be comma separated to enable multiple selections
 $default_advanced_search_mode="Global";
 
 #Option to turn off metadata download in view.php
