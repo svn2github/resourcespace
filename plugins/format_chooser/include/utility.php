@@ -162,9 +162,10 @@ function showProfileChooser($class = '')
 
 function getProfileFileName($profile)
 	{
-	if ($profile !== null)
+	global $format_chooser_profiles;
+
+	if ($profile !== null && !empty($format_chooser_profiles))
 		{
-		global $format_chooser_profiles;
 		$profiles = array_values($format_chooser_profiles);
 		return $profiles[intval($profile)];
 		}

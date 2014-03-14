@@ -5,15 +5,15 @@ include_once dirname(__FILE__) . "/../include/utility.php";
 function HookFormat_chooserCollection_downloadReplaceuseoriginal()
 	{
 	global $format_chooser_output_formats, $format_chooser_profiles, $lang;
-	$defaultFormat = getDefaultOutputFormat();
 
 	?><div class="Question">
 	<label for="downloadformat"><?php echo $lang["downloadformat"]?></label>
 	<select name="ext" class="stdwidth" id="downloadformat">
+		<option value="" selected="selected"><?php echo $lang['format_chooser_keep_format'] ?></option>
 	<?php
 	foreach ($format_chooser_output_formats as $format)
 		{
-		?><option value="<?php echo $format ?>" <?php if ($format == $defaultFormat) { ?><?php } ?>><?php echo str_replace_formatted_placeholder("%extension", $format, $lang["field-fileextension"]) ?></option><?php
+		?><option value="<?php echo $format ?>"><?php echo str_replace_formatted_placeholder("%extension", $format, $lang["field-fileextension"]) ?></option><?php
 		}
 	?></select>
 	<div class="clearerleft"> </div></div><?php
@@ -65,7 +65,7 @@ function HookFormat_chooserCollection_downloadReplacedownloadextension($resource
 		}
 
 	$ext = strtoupper(getvalescaped('ext', getDefaultOutputFormat($inputFormat)));
-	if (!in_array($ext, $format_chooser_output_formats))
+	if (empty($ext) || !in_array($ext, $format_chooser_output_formats))
 		return false;
 
 	return strtolower($ext);
