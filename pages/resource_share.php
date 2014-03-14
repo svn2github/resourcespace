@@ -157,35 +157,38 @@ include "../include/header.php";
 		<?php
 		for ($n=0;$n<count($keys);$n++)
 			{
-			?>
-			<tr>
-			<td><div class="ListTitle"><a target="_blank" href="<?php echo $baseurl .
-                        (is_numeric($keys[$n]["collection"])?"?c=" . urlencode($keys[$n]["collection"]):"?r=" . urlencode($ref))
-                        . "&k=" . urlencode($keys[$n]["access_key"]) ?>"><?php echo htmlspecialchars($keys[$n]["access_key"]) ?></a></div></td>
-                        <td><?php echo (is_numeric($keys[$n]["collection"])?$lang["sharecollection"]:$lang["share-resource"]) ?></td>
-			<td><?php echo htmlspecialchars(resolve_users($keys[$n]["users"]))?></td>
-			<td><?php echo htmlspecialchars($keys[$n]["emails"]) ?></td>
-			<td><?php echo htmlspecialchars(nicedate($keys[$n]["maxdate"],true));	?></td>
-			<td><?php echo htmlspecialchars(nicedate($keys[$n]["lastused"],true)); ?></td>
-			<td><?php echo htmlspecialchars(($keys[$n]["expires"]=="")?$lang["never"]:nicedate($keys[$n]["expires"],false)) ?></td>
-			<td><?php echo htmlspecialchars(($keys[$n]["access"]==-1)?"":$lang["access" . $keys[$n]["access"]]); ?></td>
-			<td><div class="ListTools">
-                        <?php if (is_numeric($keys[$n]["collection"]))
-                            {
-                            ?>
-                            <a onClick="return CentralSpaceLoad(this,true);" href="collection_share.php?ref=<?php echo $keys[$n]["collection"] ?>">&gt;&nbsp;<?php echo $lang["viewcollection"]?></a>
-                            <?php
-                            }
-                        else
-                            {
-                            ?>
-                            <a href="#" onClick="if (confirm('<?php echo $lang["confirmdeleteaccessresource"]?>')) {document.getElementById('deleteaccess').value='<?php echo htmlspecialchars($keys[$n]["access_key"]) ?>';document.getElementById('resourceshareform').submit(); }">&gt;&nbsp;<?php echo $lang["action-delete"]?></a>      
-                            <?php
-                            }
-                        ?>
-			</div></td>
-			</tr>
-			<?php
+			if(!$resource_share_filter_collections || in_array($userref,explode(",",$keys[$n]["users"])))
+			    {
+			    ?>
+			    <tr>
+			    <td><div class="ListTitle"><a target="_blank" href="<?php echo $baseurl .
+			    (is_numeric($keys[$n]["collection"])?"?c=" . urlencode($keys[$n]["collection"]):"?r=" . urlencode($ref))
+			    . "&k=" . urlencode($keys[$n]["access_key"]) ?>"><?php echo htmlspecialchars($keys[$n]["access_key"]) ?></a></div></td>
+			    <td><?php echo (is_numeric($keys[$n]["collection"])?$lang["sharecollection"]:$lang["share-resource"]) ?></td>
+			    <td><?php echo htmlspecialchars(resolve_users($keys[$n]["users"]))?></td>
+			    <td><?php echo htmlspecialchars($keys[$n]["emails"]) ?></td>
+			    <td><?php echo htmlspecialchars(nicedate($keys[$n]["maxdate"],true));	?></td>
+			    <td><?php echo htmlspecialchars(nicedate($keys[$n]["lastused"],true)); ?></td>
+			    <td><?php echo htmlspecialchars(($keys[$n]["expires"]=="")?$lang["never"]:nicedate($keys[$n]["expires"],false)) ?></td>
+			    <td><?php echo htmlspecialchars(($keys[$n]["access"]==-1)?"":$lang["access" . $keys[$n]["access"]]); ?></td>
+			    <td><div class="ListTools">
+			    <?php if (is_numeric($keys[$n]["collection"]))
+				{
+				?>
+				<a onClick="return CentralSpaceLoad(this,true);" href="collection_share.php?ref=<?php echo $keys[$n]["collection"] ?>">&gt;&nbsp;<?php echo $lang["viewcollection"]?></a>
+				<?php
+				}
+			    else
+				{
+				?>
+				<a href="#" onClick="if (confirm('<?php echo $lang["confirmdeleteaccessresource"]?>')) {document.getElementById('deleteaccess').value='<?php echo htmlspecialchars($keys[$n]["access_key"]) ?>';document.getElementById('resourceshareform').submit(); }">&gt;&nbsp;<?php echo $lang["action-delete"]?></a>      
+				<?php
+				}
+			    ?>
+			    </div></td>
+			    </tr>
+			    <?php
+			    }
 			}
 		?>
 		</table>
@@ -194,13 +197,10 @@ include "../include/header.php";
 		}
 	?>
 	</div>	
-	        
-        
-        
-        
         
 </form>
 </div>
+</div> <!-- BasicsBox -->
 
 
 <?php

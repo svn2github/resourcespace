@@ -2301,3 +2301,6 @@ $search_all_workflow_states=false;
 
 # Require email address to be entered when users are submitting collecion feedback
 $feedback_email_required=true;
+
+# Option to show only existing shares that have been shared by the user when sharing resources (not collections)
+$resource_share_filter_collections=false;
