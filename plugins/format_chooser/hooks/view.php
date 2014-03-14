@@ -126,7 +126,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 				?>selected="selected"<?php } ?>><?php echo str_replace_formatted_placeholder("%extension", $format, $lang["field-fileextension"]) ?></option><?php
 			}
 
-		?></select></td>
+		?></select><?php showProfileChooser(); ?></td>
 		<td class="DownloadButton"><a id="convertDownload" onClick="return CentralSpaceLoad(this,true);"><?php
 			echo $lang['action-download'] ?></a></td>
 		</tr><?php
@@ -156,9 +156,12 @@ function HookFormat_chooserViewReplacedownloadoptions()
 		function updateDownloadLink() {
 			var index = jQuery('select#size').find(":selected").val();
 			var selectedFormat = jQuery('select#format').find(":selected").val();
+			var profile = jQuery('select#profile').find(":selected").val();
+			if (profile !== '')
+				profile = "&profile=" + profile;
 			jQuery('a#convertDownload').attr('href', '<?php echo $baseurl_short
-					?>pages/download_progress.php?ref=<?php echo $ref
-					?>&ext=' + selectedFormat.toLowerCase() + '&size=' + sizeInfo[index]['id']
+					?>pages/download_progress.php?ref=<?php echo $ref ?>&ext='
+							+ selectedFormat.toLowerCase() + profile + '&size=' + sizeInfo[index]['id']
 							+ '&search=<?php echo urlencode($search) ?>&offset=<?php echo $offset ?>'
 							+ '&k=<?php echo $k ?>&archive=<?php echo $archive ?>&sort='
 							+ '<?php echo $sort?>&order_by=<?php echo $order_by ?>');
@@ -172,6 +175,9 @@ function HookFormat_chooserViewReplacedownloadoptions()
 			updateDownloadLink();
 		});
 		jQuery('select#format').change(function() {
+			updateDownloadLink();
+		});
+		jQuery('select#profile').change(function() {
 			updateDownloadLink();
 		});
 	</script><?php

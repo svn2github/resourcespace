@@ -83,7 +83,7 @@ function getImageFormat($size)
  * The original colorspace of the image is retained. If $width and $height are zero, the image
  * keeps its original size.
  */
-function convertImage($resource, $page, $alternative, $target, $width, $height)
+function convertImage($resource, $page, $alternative, $target, $width, $height, $profile)
 	{
 	$command = get_utility_path("im-convert");
 	if (!$command)
@@ -101,6 +101,20 @@ function convertImage($resource, $page, $alternative, $target, $width, $height)
 		if ($height > 0)
 			$command .= "x$height";
 		$command .= '>"';
+		}
+
+	if ($profile === '')
+		$command .= ' +profile *';
+	else if (!empty($profile))
+		{
+		// Find out if the image does already have a profile
+		$identify = get_utility_path("im-identify");
+		$identify .= ' -verbose "' . $originalPath . '"';
+		$info = run_command($command);
+		$basePath = dirname(__FILE__) . '/../../../';
+		if (preg_match("/Profile-icc:/", $info) != 1)
+			$command .= ' -profile "' . $basePath . 'config/sRGB_IEC61966-2-1_black_scaled.icc"';
+		$command .= ' -profile "' . $basePath . $profile . '"';
 		}
 
 	$command .= " \"$target\"";
@@ -122,6 +136,39 @@ function sendFile($filename)
 	ob_end_flush();
 
 	readfile($filename);
+	}
+
+function showProfileChooser($class = '')
+	{
+	global $format_chooser_profiles, $lang;
+
+	if (empty($format_chooser_profiles))
+		return;
+
+	?><select name="profile" id="profile" <?php if (!empty($class)) echo 'class="' . $class . '"'; ?>>
+		<option value="" selected="selected"><?php
+				echo $lang['format_chooser_keep_profile'] ?></option><?php
+
+	$index = 0;
+	foreach (array_keys($format_chooser_profiles) as $name)
+		{
+		if (empty($name))
+			$name = $lang['format_chooser_remove_profile'];
+		?><option value="<?php echo $index++ ?>"><?php echo i18n_get_translated($name) ?></option><?php
+		}
+
+	?></select><?php
+	}
+
+function getProfileFileName($profile)
+	{
+	if ($profile !== null)
+		{
+		global $format_chooser_profiles;
+		$profiles = array_values($format_chooser_profiles);
+		return $profiles[intval($profile)];
+		}
+	return null;
 	}
 
 ?>

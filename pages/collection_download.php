@@ -166,23 +166,22 @@ if ($submitted != "")
 			$target_exists = file_exists($p);
 			$replaced_file = false;
 
-			if (!$target_exists)
+			$new_file = hook('replacedownloadfile', '', array($result[$n], $usesize, $pextension, $target_exists));
+			if (!empty($new_file) && $p != $new_file)
 				{
-				$new_file = hook('replacedownloadfile', '', array($result[$n], $usesize, $pextension));
-				if (!empty($new_file) && $p != $new_file)
-					{
-					$p = $new_file;
-					$deletion_array[] = $p;
-					$replaced_file = true;
-					}
-				else if ($useoriginal == 'yes' && resource_download_allowed($ref,'',$result[$n]['resource_type']))
-					{
-					// this size doesn't exist, so we'll try using the original instead
-					$p=get_resource_path($ref,true,'',false,$result[$n]['file_extension'],-1,1,$use_watermark);
-					$pextension = $result[$n]['file_extension'];
-					$subbed_original_resources[] = $ref;
-					$subbed_original = true;
-					}
+				$p = $new_file;
+				$deletion_array[] = $p;
+				$replaced_file = true;
+				$target_exists = file_exists($p);
+				}
+			else if (!$target_exists && $useoriginal == 'yes'
+					&& resource_download_allowed($ref,'',$result[$n]['resource_type']))
+				{
+				// this size doesn't exist, so we'll try using the original instead
+				$p=get_resource_path($ref,true,'',false,$result[$n]['file_extension'],-1,1,$use_watermark);
+				$pextension = $result[$n]['file_extension'];
+				$subbed_original_resources[] = $ref;
+				$subbed_original = true;
 				$target_exists = file_exists($p);
 				}
 

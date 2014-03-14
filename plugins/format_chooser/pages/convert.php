@@ -31,6 +31,7 @@ if ($width == 0 && $height == 0)
 	}
 
 $ext = getvalescaped('ext', getDefaultOutputFormat());
+$profile = getProfileFileName(getvalescaped('profile', null));
 
 $baseDirectory = get_temp_dir() . '/format_chooser';
 @mkdir($baseDirectory);
@@ -39,7 +40,7 @@ $target = $baseDirectory . '/' . getTargetFilename($ref, $ext, $size);
 
 set_time_limit(0);
 
-convertImage($resource, $page, $alternative, $target, $width, $height);
+convertImage($resource, $page, $alternative, $target, $width, $height, $profile);
 sendFile($target);
 unlink($target);
 

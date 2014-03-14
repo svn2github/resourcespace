@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . "/../include/utility.php";
 
 function HookFormat_chooserCollection_downloadReplaceuseoriginal()
 	{
-	global $format_chooser_output_formats, $lang;
+	global $format_chooser_output_formats, $format_chooser_profiles, $lang;
 	$defaultFormat = getDefaultOutputFormat();
 
 	?><div class="Question">
@@ -13,11 +13,18 @@ function HookFormat_chooserCollection_downloadReplaceuseoriginal()
 	<?php
 	foreach ($format_chooser_output_formats as $format)
 		{
-		?><option value="<?php echo $format ?>" <?php if ($format == $defaultFormat) { ?>selected="selected"<?php } ?>><?php echo str_replace_formatted_placeholder("%extension", $format, $lang["field-fileextension"]) ?></option><?php
+		?><option value="<?php echo $format ?>" <?php if ($format == $defaultFormat) { ?><?php } ?>><?php echo str_replace_formatted_placeholder("%extension", $format, $lang["field-fileextension"]) ?></option><?php
 		}
 	?></select>
 	<div class="clearerleft"> </div></div><?php
-
+	if (!empty($format_chooser_profiles))
+		{
+		?>
+		<div class="Question">
+		<label for="profile"><?php echo $lang['format_chooser_choose_profile']?></label>
+		<?php showProfileChooser('stdwidth') ?>
+		<div class="clearerleft"> </div></div><?php
+		}
 	return true;
 	}
 
@@ -64,11 +71,19 @@ function HookFormat_chooserCollection_downloadReplacedownloadextension($resource
 	return strtolower($ext);
 	}
 
-function HookFormat_chooserCollection_downloadReplacedownloadfile($resource, $size, $ext)
+function HookFormat_chooserCollection_downloadReplacedownloadfile($resource, $size, $ext,
+		$fileExists)
 	{
 	if (!supportsInputFormat($resource['file_extension']))
 		{
 		# Do not replace files we do not support
+		return false;
+		}
+
+	$profile = getProfileFileName(getvalescaped('profile', null));
+	if ($profile === null && $fileExists)
+		{
+		# Just serve the original file
 		return false;
 		}
 
@@ -82,7 +97,7 @@ function HookFormat_chooserCollection_downloadReplacedownloadfile($resource, $si
 	$height = (int)$format['height'];
 
 	set_time_limit(0);
-	convertImage($resource, 1, -1, $target, $width, $height);
+	convertImage($resource, 1, -1, $target, $width, $height, $profile);
 	return $target;
 	}
 
