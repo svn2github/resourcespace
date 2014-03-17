@@ -13,11 +13,12 @@ if (!in_array("api_search",$plugins)){die("no access");}
 
 $search=getval("search","");
 $search=refine_searchstring($search);
-$restypes=getval("restypes","");
-$order_by=getval("order_by","relevance");
-$sort=getval("sort","desc");
-$archive=getval("archive",0);
-$starsearch=getval("starsearch","");
+$restypes=getvalescaped("restypes","");
+$order_by=getvalescaped("order_by","relevance");
+$sort=getvalescaped("sort","desc");
+$archive=getvalescaped("archive",0);
+$starsearch=getvalescaped("starsearch","");
+$collection=getvalescaped("collection","",true);
 
 $help=getval("help","");
 if ($help!=""){
@@ -52,8 +53,9 @@ $test_query=rtrim($test_query,"&");
 	}
 }
 
+if ($collection!=""){$searchadd="!collection".$collection.", ";} else {$searchadd="";}
 
-$results=do_search($search,$restypes,$order_by,$archive,-1,$sort,false,$starsearch);
+$results=do_search($searchadd.$search,$restypes,$order_by,$archive,-1,$sort,false,$starsearch);
 
 if (!is_array($results)){$results=array();}
 
@@ -163,61 +165,14 @@ if (getval("videosonly","")!=""){
 	$results=$newresult;
 }
 
-// Prettify field titles
-if (getval("prettyfieldnames","")!=""){
-	$fields=sql_array("select ref value from resource_type_field");
-	$fields=sql_query("select ref, title from resource_type_field where  ref in ('" . join("','",$fields) . "') order by order_by");
 
-	$field_name=array();
-
-	foreach ($fields as $field){
-		$field_name[$field['ref']]=i18n_get_translated($field['title']);
-
-	}
-	for ($n=0;$n<count($results);$n++){
-		foreach ($results[$n] as $key=>$value){
-			if (substr($key,0,5)=="field"){
-				$field=str_replace("field","",$key);
-
-				$results[$n][$field_name[$field]]=$results[$n][$key];
-				unset ($results[$n][$key]);
-				}
-		}
-	}
+$modified_result=hook("modifyapisearchresult");
+if ($modified_result){
+	$results=$modified_result;
 }
 
-if (getval("contributedby","")!=""){
-	$users=get_users();
-	$n=0;
-	$users_array=array();
-	foreach($users as $user){
-		$users_array[$user['ref']]=$user['fullname'];
-	}
-	
-	for ($n=0;$n<count($results);$n++){
-		if ($results[$n]['created_by']>0 && isset($users_array[$results[$n]['created_by']])){
-		$results[$n][$lang['contributedby']]=$users_array[$results[$n]['created_by']];
-		}
-	}
-	
-}
-
-// Exclude fields (clean up the output)
-if ($api_search_exclude_fields!="" || count($api_search_include_fields)>0){
-	$newresult=array();
-	$api_search_exclude_fields=explode(",",$api_search_exclude_fields);
-	$api_search_exclude_fields=trim_array($api_search_exclude_fields);
-	$x=0;
-	for ($n=0;$n<count($results);$n++){
-		foreach ($results[$n] as $key=>$value){
-			if (!in_array($key,$api_search_exclude_fields)){
-				$newresult[$x][$key]=$value;
-			}
-		}
-		$x++;	
-	}
-	$results=$newresult;
-}
+ // this function in api_core   
+$results=refine_api_resource_results($results);
 
 if (getval("content","")=="xml" && !$paginate){
     header('Content-type: application/xml');

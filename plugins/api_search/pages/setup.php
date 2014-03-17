@@ -25,8 +25,6 @@ $list= rtrim(trim($list),",");
 
 $page_def[] = config_add_text_input('api_search_exclude_fields', $lang['api_search_exclude_fields']);
 $page_def[]=config_add_html($lang['api_search_excludable_fields'].": $list");
-$page_def[] = config_add_multi_ftype_select('api_search_include_fields', $lang['api_search_include_fields'],300,25);
-$page_def[]=config_add_html($lang['api_search_include_fields_notice']);
 
 
 // Do the page generation ritual -- don't change this section.
