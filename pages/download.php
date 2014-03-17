@@ -168,27 +168,20 @@ header("Content-Type: $mime");
 
 set_time_limit(0);
 
-#echo file_get_contents($path);
-# The above required that the downloaded file was read into PHP's memory space first.
-# Perhaps this is not the case for readfile().
-
-# Old method
-#readfile($path);
-
-# New method
-$sent = 0;
-$handle = fopen($path, "r");
-
-// Now we need to loop through the file and echo out chunks of file data
-while($sent < $filesize)
+if (!hook("replacefileoutput"))
 	{
-	echo fread($handle, $download_chunk_size);
-	ob_flush();
-	$sent += $download_chunk_size;
+	# New method
+	$sent = 0;
+	$handle = fopen($path, "r");
+
+	// Now we need to loop through the file and echo out chunks of file data
+	while($sent < $filesize)
+		{
+		echo fread($handle, $download_chunk_size);
+		ob_flush();
+		$sent += $download_chunk_size;
+		}
 	}
-
-
-
 
 #Deleting Exiftool temp File:
 if ($noattach=="" && $alternative==-1) # Only for downloads (not previews)
