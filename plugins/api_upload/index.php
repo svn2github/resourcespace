@@ -40,7 +40,12 @@ if (isset($_FILES['userfile'])){
 	 $value=getvalescaped("field".$required_field,"");
 	 if ($value==''){
 		 $fieldname=i18n_get_translated(sql_value("select title value from resource_type_field where ref='$required_field'",""));
-		 echo ("$fieldname is required. Use field$required_field=[string] as a parameter\n");$missing_fields=true;
+		 $options=sql_value("select options value from resource_type_field where ref='$required_field'","");
+		 $type=sql_value("select type value from resource_type_field where ref='$required_field'","");
+		 
+		 
+		 if ($options!="" && ($type==3 || $type==2)){$optionstring="Allowed Values: ".ltrim(urlencode(implode("\n",explode(",",$options))),",")."\n";} else {$optionstring="";}
+		 echo ("$fieldname is required. Use field$required_field=[string] as a parameter. $optionstring\n");$missing_fields=true;
 	 } 
  } 
  if ($missing_fields){die();}
@@ -51,6 +56,7 @@ if (isset($_FILES['userfile'])){
  // set required fields
   foreach ($required_fields as $required_field){
 	 $value=getvalescaped("field".$required_field,"");
+
 	 update_field($ref,$required_field,$value);
  } 
  
