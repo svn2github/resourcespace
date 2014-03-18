@@ -10,7 +10,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	debug("search=$search $go $fetchrows restypes=$restypes archive=$archive daylimit=$recent_search_daylimit");
 	
 	# globals needed for hooks	 
-	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order,$checkbox_and,$collections_omit_archived,$search_sql_double_pass_mode,$usergroup,$search_filter_strict;
+	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order,$checkbox_and,$collections_omit_archived,$search_sql_double_pass_mode,$usergroup,$search_filter_strict,$default_sort;
 
 	$alternativeresults = hook("alternativeresults", "", array($go));
 	if ($alternativeresults) {return $alternativeresults; }
@@ -24,6 +24,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# If there are no matches, instead returns an array of suggested searches.
 	# $restypes is optionally used to specify which resource types to search.
 	# $access_override is used by smart collections, so that all all applicable resources can be judged regardless of the final access-based results
+	
+	# Check valid sort
+	if(!in_array(strtolower($sort),array("asc","desc"))){$sort=$default_sort;};
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
