@@ -10,7 +10,7 @@ resourcetype=[integer]  the Resource Type
 archive=[integer]       archive status (default 0 active)
 collection=[integer]	collection to upload to
 prettyfieldnames=true   feedback shows field names instead of 'field#' (default '')
-contributedby=true      feedback shows Contributed By Username (default '')
+contributedby=[true|false]  feedback shows Contributed By Username (default 'true')
 
 
 For example, a watched "upload" folder could use a mac hotfolder with an custom upload script.

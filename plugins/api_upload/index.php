@@ -44,7 +44,7 @@ if (isset($_FILES['userfile'])){
 		 $type=sql_value("select type value from resource_type_field where ref='$required_field'","");
 		 
 		 
-		 if ($options!="" && ($type==3 || $type==2)){$optionstring="Allowed Values: ".ltrim(urlencode(implode("\n",explode(",",$options))),",")."\n";} else {$optionstring="";}
+		 if ($options!="" && ($type==3 || $type==2)){$optionstring="Allowed Values: ".ltrim(implode("\n",explode(",",$options)),",")."\n";} else {$optionstring="";}
 		 echo ("$fieldname is required. Use field$required_field=[string] as a parameter. $optionstring\n");$missing_fields=true;
 	 } 
  } 
