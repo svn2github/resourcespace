@@ -2879,10 +2879,20 @@ function get_original_imagesize($ref="",$path="", $extension="jpg")
 			    $ffprobe_output=run_command($ffprobe_fullpath . " -v 0 " . escapeshellarg($file) . " -show_streams -of json");
 			    $ffprobe_array=json_decode($ffprobe_output, true);
 			    # Different versions of ffprobe store the dimensions in different parts of the json output. Test both.
-			    if (!empty($ffprobe_array['width'] ))               { $sw = intval($ffprobe_array['width']);  }
-			    if (!empty($ffprobe_array['height']))               { $sh = intval($ffprobe_array['height']); }
-			    if (!empty($ffprobe_array['streams'][0]['width'] )) { $sw = intval($ffprobe_array['streams'][0]['width']);  }
-			    if (!empty($ffprobe_array['streams'][0]['height'])) { $sh = intval($ffprobe_array['streams'][0]['height']); }
+			    if (!empty($ffprobe_array['width'] )) { $sw = intval($ffprobe_array['width']);  }
+			    if (!empty($ffprobe_array['height'])) { $sh = intval($ffprobe_array['height']); }
+			    if (is_array($ffprobe_array['streams']))
+				{
+				foreach( $ffprobe_array['streams'] as $stream )
+				    {
+				    if (!empty($stream['codec_type']) && $stream['codec_type'] === 'video')
+					{
+					$sw = intval($stream['width']);
+					$sh = intval($stream['height']);
+					break;
+					}
+				    }
+				}
 			    }
 
 			if ($sw!=='?' && $sh!=='?')
