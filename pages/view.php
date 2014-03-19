@@ -577,6 +577,7 @@ function compute_megapixel($width, $height)
 function get_size_info($size, $originalSize = null)
 {
 	global $lang;
+	global $ffmpeg_supported_extensions;
 
 	$newWidth = intval($size['width']);
 	$newHeight = intval($size['height']);
@@ -608,11 +609,16 @@ function get_size_info($size, $originalSize = null)
 		$output.=" (" . $mp . " " . $lang["megapixel-short"] . ")";
 		}
 
-	compute_dpi($newWidth, $newHeight, $dpi, $dpi_unit, $dpi_w, $dpi_h);
+	$output.='</p>';
 
-	$output.='</p><p>';
-	$output.=$dpi_w . " " . $dpi_unit . " x " . $dpi_h . " " . $dpi_unit . " " . $lang["at-resolution"]
-			. " " . $dpi ." " . $lang["ppi"] . '</p>';
+	if ( !in_array(strtolower($size['extension']), $ffmpeg_supported_extensions) )
+	    {
+	    # Do DPI calculation only for non-videos
+	    compute_dpi($newWidth, $newHeight, $dpi, $dpi_unit, $dpi_w, $dpi_h);
+	    $output.= '<p>' . $dpi_w . " " . $dpi_unit . " x " . $dpi_h . " " . $dpi_unit . " " . $lang["at-resolution"]
+		   . " " . $dpi ." " . $lang["ppi"] . '</p>';
+	    }
+
 	return $output;
 }
 
