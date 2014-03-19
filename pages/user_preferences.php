@@ -7,7 +7,11 @@ hook("preuserpreferencesform");
 
 if (getval("save","")!="")
 	{
-	if (md5("RS" . $username . getvalescaped("currentpassword",""))!=$userpassword)
+	if (hook('saveadditionaluserpreferences'))
+		{
+		# The above hook may return true in order to prevent the password from being updated
+		}
+	else if (md5("RS" . $username . getvalescaped("currentpassword",""))!=$userpassword)
 		{
 		$error3=$lang["wrongpassword"];
 		}
@@ -41,9 +45,10 @@ include "../include/header.php";
 
 	<form method="post" action="<?php echo $baseurl_short?>pages/user_preferences.php">
 	<input type="hidden" name="expired" value="<?php echo htmlspecialchars(getvalescaped("expired",""))?>">
+	<?php hook('additionaluserpreferences'); ?>
 	<div class="Question">
 	<label for="password"><?php echo $lang["currentpassword"]?></label>
-	<input type=password class="stdwidth" name="currentpassword" id="currentpassword" value="<?php if ($userpassword=="b58d18f375f68d13587ce8a520a87919"){?>admin<?php } ?>"/>
+	<input type="password" class="stdwidth" name="currentpassword" id="currentpassword" value="<?php if ($userpassword=="b58d18f375f68d13587ce8a520a87919"){?>admin<?php } ?>"/>
 	<div class="clearerleft"> </div>
 	<?php if (isset($error3)) { ?><div class="FormError">!! <?php echo $error3?> !!</div><?php } ?>
 	</div>
