@@ -56,7 +56,7 @@ if ($refinements[0]!=""){
 		}
 		
 		
-		$searchcrumbs.="&amp;order_by=" . $order_by . "&amp;sort=".$sort."&amp;offset=" . $offset . "&amp;archive=" . $archive."&amp;sort=".$sort."\" onClick='return CentralSpaceLoad(this,true);'>".$search_title_element."</a>";
+		$searchcrumbs.="&amp;order_by=" . urlencode($order_by) . "&amp;sort=".urlencode($sort)."&amp;offset=" . urlencode($offset) . "&amp;archive=" . urlencode($archive)."&amp;sort=".$sort."\" onClick='return CentralSpaceLoad(this,true);'>".$search_title_element."</a>";
 	}
 }
 }
