@@ -1,0 +1,7 @@
+<?php
+# English
+
+$lang['user_preferences_configuration'] = 'Configuration for the user preferences';
+$lang['user_preferences_change_username'] = 'Allow changing the account name';
+$lang['user_preferences_change_email'] = 'Allow changing the E-mail address';
+$lang['user_preferences_change_name'] = 'Allow changing the user\'s name';
