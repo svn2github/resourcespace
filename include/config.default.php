@@ -483,6 +483,9 @@ $mycollections_link=false;
 # Display a 'My Requests' link in the top navigation
 $myrequests_link=false;
 
+# Display a 'Research Request' link in the top navigation
+$research_link=true;
+
 # display an alert icon next to the team centre link 
 # and the relevant team centre item when there are requests that need managing
 # only affects users with permissions to do this.

@@ -29,7 +29,7 @@
 		<?php if (checkperm("d")||(isset($mycontributions_link) && $mycontributions_link && checkperm("c"))) { ?><li><a href="<?php echo $baseurl?>/pages/contribute.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
 		<?php } /* end hook replacemycontributionslink */?>
 		<?php if (!hook("replaceresearchrequestlink")) { ?>
-		<?php if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a href="<?php echo $baseurl?>/pages/research_request.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["researchrequest"]?></a></li><?php } ?>
+		<?php if (($research_request) && ($research_link) && (checkperm("s")) && (checkperm("q"))) { ?><li><a href="<?php echo $baseurl?>/pages/research_request.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["researchrequest"]?></a></li><?php } ?>
 		<?php } ?>
 		<?php if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a href="<?php echo $baseurl?>/pages/tag.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["tagging"]?></a></li><?php } ?>
 		
