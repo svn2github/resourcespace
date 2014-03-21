@@ -869,6 +869,7 @@ $lang["requiredfield"]="This is a required field";
 $lang["requiredfields"]="Some required fields were not completed. Please review the form and try again";
 $lang["viewduplicates"]="View duplicate resources";
 $lang["duplicateresources"]="Duplicate resources";
+$lang["duplicateresourcesfor"]="Duplicate resources for ";
 $lang["userlog"]="User log";
 $lang["ipaddressrestriction"]="IP address restriction (optional)";
 $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";

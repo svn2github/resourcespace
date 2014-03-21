@@ -207,7 +207,15 @@ if ($search_titles)
         }
     elseif (substr($search,0,11)=="!duplicates")
         {
-        $search_title = '<h1 class="searchcrumbs"><a href="'.$baseurl_short.'pages/search.php?search=!duplicates'.$parameters_string.'" onClick="return CentralSpaceLoad(this,true);">'.$lang["duplicateresources"].'</a>'.$searchcrumbs.'</h1> ';
+        $ref=explode(" ",$search);$ref=str_replace("!duplicates","",$ref[0]);
+		$ref=explode(",",$ref);// just get the number
+		$ref=escape_check($ref[0]);
+		if ($ref!="") {
+			$search_title = '<h1 class="searchcrumbs"><a href='.$baseurl_short.'pages/search.php?search=!duplicates'.$ref.$parameters_string.' onClick="return CentralSpaceLoad(this,true);">'.$lang["duplicateresourcesfor"].$ref.'</a>'.$searchcrumbs.'</h1> ';
+        	}
+        else {
+        	$search_title = '<h1 class="searchcrumbs"><a href='.$baseurl_short.'pages/search.php?search=!duplicates'.$parameters_string.' onClick="return CentralSpaceLoad(this,true);">'.$lang["duplicateresources"].'</a>'.$searchcrumbs.'</h1> ';
+        	}
         }
     elseif (substr($search,0,5)=="!list")
         {
