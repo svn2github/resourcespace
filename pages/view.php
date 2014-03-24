@@ -611,7 +611,7 @@ function get_size_info($size, $originalSize = null)
 
 	$output.='</p>';
 
-	if ( !in_array(strtolower($size['extension']), $ffmpeg_supported_extensions) )
+	if (!isset($size['extension']) || !in_array(strtolower($size['extension']), $ffmpeg_supported_extensions))
 	    {
 	    # Do DPI calculation only for non-videos
 	    compute_dpi($newWidth, $newHeight, $dpi, $dpi_unit, $dpi_w, $dpi_h);
