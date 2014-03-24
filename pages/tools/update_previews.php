@@ -35,6 +35,7 @@ function update_preview($ref){
     $resourceinfo=sql_query("select ref, file_extension from resource where ref='$ref'");
     if (count($resourceinfo)>0){
         create_previews($ref, false,($previewbased?"jpg":$resourceinfo[0]["file_extension"]),false, $previewbased);
+        hook("afterupdatepreview");
         return true;
     }
     return false;
