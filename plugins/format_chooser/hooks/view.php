@@ -79,7 +79,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 		}
 
 	# Add drop down for all other sizes
-	$maxSize = 0;
+	$closestSize = 0;
 	if ($downloadCount > 1)
 		{
 		if (!$tableHeadersDrawn)
@@ -90,15 +90,19 @@ function HookFormat_chooserViewReplacedownloadoptions()
 
 		$sizes = get_all_image_sizes();
 
-		# Filter out all sizes that are larger than our image size, but not the largest one
+		# Filter out all sizes that are larger than our image size, but not the closest one
 		for ($n = 0; $n < count($sizes); $n++)
 			{
-			if ($maxSize < (int)$sizes[$n]['width'])
-				$maxSize = (int)$sizes[$n]['width'];
+			if (intval($sizes[$n]['width']) >= intval($originalSize['width'])
+					&& intval($sizes[$n]['height']) >= intval($originalSize['height'])
+					&& ($closestSize == 0 || $closestSize > (int)$sizes[$n]['width']))
+				$closestSize = (int)$sizes[$n]['width'];
 			}
 		for ($n = 0; $n < count($sizes); $n++)
 			{
-			if ($sizes[$n]['width'] != $maxSize && $sizes[$n]['width'] > $originalSize['width'])
+			if (intval($sizes[$n]['width']) != $closestSize
+					&& intval($sizes[$n]['width']) > intval($originalSize['width'])
+					&& intval($sizes[$n]['height']) > intval($originalSize['height']))
 				unset($sizes[$n]);
 			}
 		foreach ($sizes as $n => $size)
@@ -109,7 +113,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 				continue;
 
 			$name = $size['name'];
-			if ($size['width'] == $maxSize)
+			if ($size['width'] == $closestSize)
 				$name = $lang['format_chooser_original_size'];
 			?><option value="<?php echo $n ?>"><?php echo $name ?></option><?php
 			}
@@ -140,7 +144,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 			<?php
 			foreach ($sizes as $n => $size)
 				{
-				if ($size['width'] == $maxSize)
+				if ($size['width'] == $closestSize)
 					$size = $originalSize;
 			?>
 			<?php echo $n ?>: {
