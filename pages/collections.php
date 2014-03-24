@@ -608,7 +608,7 @@ elseif ($k!="" && !$lazyload)
     
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
-    if ((count($result)>0) && $show_edit_all_link && allow_multi_edit($result)) { ?>
+    if ((count($result)>0) && $show_edit_all_link && (!$edit_all_checkperms || allow_multi_edit($result))) { ?>
     <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>">&gt; <?php echo $lang["viewall"]?></a></li>
     <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/edit.php?collection=<?php echo urlencode($usercollection) ?>">&gt; <?php echo $lang["action-editall"]?></a></li>
 
