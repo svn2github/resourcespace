@@ -2081,6 +2081,7 @@ function get_custom_access_user($resource,$user)
 	return sql_value("select access value from resource_custom_access where resource='$resource' and user='$user' and (user_expires is null or user_expires>now())",false);
 	}
 
+if (!function_exists("resource_download_allowed")){
 function resource_download_allowed($resource,$size,$resource_type,$alternative=-1)
 	{
 
@@ -2135,6 +2136,7 @@ function resource_download_allowed($resource,$size,$resource_type,$alternative=-
 		}
 	
 	}
+}
 
 function get_edit_access($resource,$status=-999,$metadata=false,&$resourcedata="")
 	{
