@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $imagemagick_colorspace, $ghostscript_path, $pdf_pages, $antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_supported_extensions, $qlpreview_exclude_extensions, $ffmpeg_global_options,$ffmpeg_snapshot_fraction, $ffmpeg_snapshot_seconds;
+global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $imagemagick_colorspace, $ghostscript_path, $pdf_pages, $antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_supported_extensions, $qlpreview_exclude_extensions, $ffmpeg_global_options,$ffmpeg_snapshot_fraction, $ffmpeg_snapshot_seconds,$ffmpeg_no_new_snapshots;
 global $dUseCIEColor;
 
 # Locate utilities
@@ -32,7 +32,13 @@ else
 putenv("MAGICK_HOME=" . $imagemagick_path); 
 putenv("PATH=/bin:" . $ghostscript_path . ":" . $imagemagick_path); # Path
 
-if ($alternative==-1)
+$snapshotcheck=false;
+if (in_array($extension, $ffmpeg_supported_extensions)){
+	$snapshotcheck=file_exists(get_resource_path($ref,true,"pre",false,'jpg',-1,1,false,""));
+	if ($snapshotcheck){sql_query("update resource set has_image=1 where ref='$ref'");}
+}
+
+if ($alternative==-1 && !($snapshotcheck && in_array($extension, $ffmpeg_supported_extensions) && $ffmpeg_no_new_snapshots))
 	{
 	# Reset the 'has thumbnail image' status in case previewing fails with this new file. 
 	sql_query("update resource set has_image=0 where ref='$ref'"); 
@@ -470,8 +476,19 @@ if ($extension=="txt" && !isset($newfile))
    ----------------------------------------
 */
 $ffmpeg_fullpath = get_utility_path("ffmpeg");
+global $ffmpeg_preview,$ffmpeg_preview_seconds,$ffmpeg_preview_extension,$ffmpeg_preview_options, $ffmpeg_preview_min_width,$ffmpeg_preview_min_height,$ffmpeg_preview_max_width,$ffmpeg_preview_max_height, $php_path, $ffmpeg_preview_async, $ffmpeg_preview_force;
 
-if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
+
+// If a snapshot has already been created and $ffmpeg_no_new_snapshots, never revert the snapshot (this is usually a custom preview)
+
+if (($ffmpeg_fullpath!=false) && $snapshotcheck && in_array($extension, $ffmpeg_supported_extensions) && $ffmpeg_no_new_snapshots)
+	{
+		$target=get_resource_path($ref,true,"pre",false,'jpg',-1,1,false,"");
+		include (dirname(__FILE__)."/ffmpeg_processing.php");
+	}
+
+
+else if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
         {
         $snapshottime = 1;
         $out = run_command($ffmpeg_fullpath . " -i " . escapeshellarg($file), true);
@@ -499,9 +516,7 @@ if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $ffmpe
         if (file_exists($target)) 
             {
             $newfile=$target;
-            global $ffmpeg_preview,$ffmpeg_preview_seconds,$ffmpeg_preview_extension,$ffmpeg_preview_options;
-            global $ffmpeg_preview_min_width,$ffmpeg_preview_min_height,$ffmpeg_preview_max_width,$ffmpeg_preview_max_height;
-            global $php_path, $ffmpeg_preview_async, $ffmpeg_preview_force;
+           
 
             if ($ffmpeg_preview && ($extension!=$ffmpeg_preview_extension || $ffmpeg_preview_force) )
                 {
@@ -543,7 +558,7 @@ if (($ffmpeg_fullpath!=false) && in_array($extension, $ffmpeg_audio_extensions)&
 	Try ImageMagick
    ----------------------------------------
 */
-if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
+if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!in_array($extension, $ffmpeg_supported_extensions)))
 	{
     $prefix="";
 

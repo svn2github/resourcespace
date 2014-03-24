@@ -2308,5 +2308,8 @@ $feedback_email_required=true;
 # Option to show only existing shares that have been shared by the user when sharing resources (not collections)
 $resource_share_filter_collections=false;
 
+# Do not create any new snapshots when recreating FFMPEG previews. (This is to aid in migration to mp4 when custom previews have been uploaded)
+$ffmpeg_no_new_snapshots=false;
+
 # Set the following to false to disable permission checking before showing edit_all link in collection bar and on Manage my collections page, useful as this can be a performance hit if there are many resources in collections
 $edit_all_checkperms=true;
