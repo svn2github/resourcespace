@@ -634,10 +634,12 @@ function get_theme_headers($themes=array())
 	return $return;
 	}
 	
+if (!function_exists("themes_comparator")){
 function themes_comparator($a, $b)
 	{
 	return strnatcasecmp(i18n_get_collection_name($a), i18n_get_collection_name($b));
 	}
+}
 
 function collections_comparator($a, $b)
 	{
