@@ -4,11 +4,28 @@ include_once dirname(__FILE__) . "/../include/utility.php";
 
 function HookFormat_chooserCollection_downloadReplaceuseoriginal()
 	{
-	global $format_chooser_output_formats, $format_chooser_profiles, $lang;
+	global $format_chooser_output_formats, $format_chooser_profiles, $lang, $use_zip_extension;
+
+	$disabled = '';
+	if (!empty(getvalescaped('submitted', null)))
+		$disabled = ' disabled="disabled"';
+
+	# Replace the existing ajax_download() with our own that disables our widgets, too
+	if ($use_zip_extension)
+		{
+		?><script>
+			var originalDownloadFunction = ajax_download;
+			ajax_download = function() {
+				jQuery('#downloadformat').attr('disabled', 'disabled');
+				jQuery('#profile').attr('disabled', 'disabled');
+				return originalDownloadFunction();
+			}
+		</script><?php
+		}
 
 	?><div class="Question">
 	<label for="downloadformat"><?php echo $lang["downloadformat"]?></label>
-	<select name="ext" class="stdwidth" id="downloadformat">
+	<select name="ext" class="stdwidth" id="downloadformat"<?php echo $disabled ?>>
 		<option value="" selected="selected"><?php echo $lang['format_chooser_keep_format'] ?></option>
 	<?php
 	foreach ($format_chooser_output_formats as $format)

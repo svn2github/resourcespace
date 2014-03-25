@@ -138,14 +138,15 @@ function sendFile($filename)
 	readfile($filename);
 	}
 
-function showProfileChooser($class = '')
+function showProfileChooser($class = '', $disabled = false)
 	{
 	global $format_chooser_profiles, $lang;
 
 	if (empty($format_chooser_profiles))
 		return;
 
-	?><select name="profile" id="profile" <?php if (!empty($class)) echo 'class="' . $class . '"'; ?>>
+	?><select name="profile" id="profile" <?php if (!empty($class)) echo 'class="' . $class . '"';
+			echo $disabled ? ' disabled="disabled"' : ''; ?>>
 		<option value="" selected="selected"><?php
 				echo $lang['format_chooser_keep_profile'] ?></option><?php
 

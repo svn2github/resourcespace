@@ -500,6 +500,10 @@ function ajax_download()
 	document.getElementById('progress').innerHTML='<br /><br /><?php echo $lang["collectiondownloadinprogress"];?>';
 	document.getElementById('progress3').style.display='none';
 	document.getElementById('progressdiv').style.display='block';
+	jQuery('#downloadsize').attr('disabled', 'disabled');
+	jQuery('#text').attr('disabled', 'disabled');
+	jQuery('#archivesettings').attr('disabled', 'disabled');
+
 	var ifrm = document.getElementById('downloadiframe');
 	
     ifrm.src = "<?php echo $baseurl_short?>pages/collection_download.php?submitted=true&"+jQuery('#myform').serialize();
@@ -578,7 +582,7 @@ if (!hook('replacesizeoptions'))
 	$available_sizes=array_reverse($available_sizes,true);
 
 	# analyze available sizes and present options
-?><select name="size" class="stdwidth" id="downloadsize"><?php
+?><select name="size" class="stdwidth" id="downloadsize"<?php if (!empty($submitted)) echo ' disabled="disabled"' ?>><?php
 
 function display_size_option($sizeID, $sizeName, $fordropdown=true)
 	{
@@ -653,7 +657,7 @@ display_size_option('original', $lang['original'], false);
 if ($zipped_collection_textfile=="true") { ?>
 <div class="Question">
 <label for="text"><?php echo $lang["zippedcollectiontextfile"]?></label>
-<select name="text" class="shrtwidth" id="text">
+<select name="text" class="shrtwidth" id="text"<?php if (!empty($submitted)) echo ' disabled="disabled"' ?>>
 <option value="true"><?php echo $lang["yes"]?></option>
 <option value="false"><?php echo $lang["no"]?></option>
 </select>
@@ -669,7 +673,7 @@ if ($archiver)
     <div class="Question">
     <label for="archivetype"><?php echo $lang["archivesettings"]?></label>
     <div class="tickset">
-    <select name="settings" class="stdwidth" id="archivesettings"><?php
+    <select name="settings" class="stdwidth" id="archivesettings"<?php if (!empty($submitted)) echo ' disabled="disabled"' ?>><?php
     foreach ($collection_download_settings as $key=>$value)
         { ?>
         <option value="<?php echo htmlspecialchars($key) ?>"><?php echo lang_or_i18n_get_translated($value["name"],"archive-") ?></option><?php
