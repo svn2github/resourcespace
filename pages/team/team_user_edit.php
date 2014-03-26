@@ -116,6 +116,7 @@ if (($user["login_tries"]>=$max_login_attempts_per_username) && (strtotime($user
 </select>
 <?php } ?>
 <div class="clearerleft"> </div></div>
+<?php hook("additionalusergroupfields"); ?>
 
 <div class="Question"><label><?php echo $lang["emailaddress"]?></label><input name="email" type="text" class="stdwidth" value="<?php echo $user["email"]?>"><div class="clearerleft"> </div></div>
 
