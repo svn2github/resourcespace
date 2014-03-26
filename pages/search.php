@@ -619,7 +619,7 @@ if (true) # Always show search header now.
 	$totalpages=ceil($results/$per_page);
 	if ($offset>$results) {$offset=0;}
 	$curpage=floor($offset/$per_page)+1;
-	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".$sort."&amp;archive=" . $archive . "&amp;k=" . $k."&amp;sort=".$sort. "&amp;restypes=" . urlencode($restypes);	
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=" . urlencode($sort) . "&amp;archive=" . $archive . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
 	
 	pager();
 	$draw_pager=true;
