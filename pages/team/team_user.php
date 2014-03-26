@@ -93,10 +93,18 @@ $atoz.="</div>";
 function addColumnHeader($orderName, $labelKey)
 {
 	global $baseurl, $group, $order_by, $find, $lang;
+
+	if ($order_by == $orderName)
+		$image = '<image src="' . $baseurl . '/gfx/whitegry/interface/DESC.gif" border="0" />';
+	else if ($order_by == $orderName . ' desc')
+		$image = '<image src="' . $baseurl . '/gfx/whitegry/interface/ASC.gif" border="0" />';
+	else
+		$image = '';
+
 	?><td><a href="<?php echo $baseurl ?>/pages/team/team_user.php?offset=0&group=<?php
 			echo $group; ?>&order_by=<?php echo $orderName . ($order_by==$orderName ? '+desc' : '');
 			?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this);"><?php
-			echo $lang[$labelKey]?></a></td>
+			echo $lang[$labelKey] . $image ?></a></td>
 	<?php
 }
 
