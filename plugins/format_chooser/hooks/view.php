@@ -36,12 +36,13 @@ function HookFormat_chooserViewReplacedownloadoptions()
 	for ($n = 0; $n < count($sizes); $n++)
 		{
 		$downloadthissize = resource_download_allowed($ref, $sizes[$n]["id"], $resource["resource_type"]);
-		if ($downloadthissize)
-			$downloadCount++;
 		$counter++;
 
-		if ($sizes[$n]['id'] != '')
+		if ($sizes[$n]['id'] != '') {
+			if ($downloadthissize)
+				$downloadCount++;
 			continue;
+		}
 
 		# Is this the original file? Set that the user can download the original file
 		# so the request box does not appear.
@@ -80,7 +81,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 
 	# Add drop down for all other sizes
 	$closestSize = 0;
-	if ($downloadCount > 1)
+	if ($downloadCount > 0)
 		{
 		if (!$tableHeadersDrawn)
 			show_table_headers($showprice);
@@ -136,7 +137,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 		</tr><?php
 		}
 	?></table><?php
-	if ($downloadCount > 1)
+	if ($downloadCount > 0)
 		{
 	?><script type="text/javascript">
 		// Store size info in JavaScript array
