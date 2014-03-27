@@ -28,7 +28,7 @@ function refine_api_resource_results($results){
 		}
 	}
 
-	if (getval("contributedby","")!=""){
+	if (getval("contributedby","true")!="false"){
 		$users=get_users();
 		$n=0;
 		$users_array=array();
