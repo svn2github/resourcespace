@@ -157,7 +157,7 @@ jQuery(document).ready( function ()
 	</a>
 	
 <div class="PanelShadow"></div>
-<?php if ($welcome_text_picturepanel) { ?><div class="BasicsBox">
+<?php if ($welcome_text_picturepanel && !!hook('homereplacewelcome')) { ?><div class="BasicsBox">
     <h1><?php echo text("welcometitle")?></h1>
     <p><?php echo text("welcometext")?></p>
 </div>
@@ -286,7 +286,7 @@ endif; # end hook homefeaturedcol
 
 	<div class="clearerleft"></div>
 
-<?php if (!$welcome_text_picturepanel) { ?><div class="BasicsBox">
+<?php if (!$welcome_text_picturepanel && !hook('homereplacewelcome')) { ?><div class="BasicsBox">
     <h1><?php echo text("welcometitle")?></h1>
     <p><?php echo text("welcometext")?></p>
 </div>
