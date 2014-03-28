@@ -14,7 +14,7 @@ if (getval("save","")!="")
 	# Check the anti-spam code is correct
 	if (getval("antispamcode","")!=md5(getval("antispam","")))
 		{
-		$error=$lang["requiredfields"];
+		$error=$lang["requiredantispam"];
 		}
 	
 	# Check that the e-mail address doesn't already exist in the system
@@ -43,7 +43,7 @@ if (getval("save","")!="")
 			}
 		else
 			{
-			$error=$lang["requiredfields"];
+			$error=$try;
 			}
 		}
 	}

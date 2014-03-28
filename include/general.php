@@ -1049,6 +1049,11 @@ function email_user_request()
 	# E-mails the submitted user request form to the team.
 	global $applicationname,$email_from,$user_email,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required;
 	
+	# Required fields (name, email) not set?
+	$missingFields = array();
+	if (getval("name","")=="") { $missingFields[] = $lang["yourname"]; }
+	if (getval("email","")=="") { $missingFields[] = $lang["youremailaddress"]; }
+
 	# Add custom fields
 	$c="";
 	if (isset($custom_registration_fields))
@@ -1081,15 +1086,14 @@ function email_user_request()
 				}
 			elseif (isset($required) && in_array($custom[$n],$required))		# if the field was mandatory and a value or sub value(s) not set then we return false
 				{
-				return false;
+				$missingFields[] = $custom[$n];
 				}
 			}
 		}
 
-	# Required fields (name, email) not set?
-	if (getval("name","")=="") {return false;}
-	if (getval("email","")=="") {return false;}
-	
+	if (!empty($missingFields))
+		return $lang["requiredfields"] . ' ' . i18n_get_translated(implode(', ', $missingFields), true);
+
 	# Build a message
 	$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification2"] . "\n$baseurl";
 	
@@ -2395,7 +2399,12 @@ function auto_create_user_account()
 	{
 	# Automatically creates a user account (which requires approval unless $auto_approve_accounts is true).
 	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select,$auto_approve_accounts,$auto_approve_domains;
-	
+
+	# Required fields (name, email) not set?
+	$missingFields = array();
+	if (getval("name","")=="") { $missingFields[] = $lang["yourname"]; }
+	if (getval("email","")=="") { $missingFields[] = $lang["youremailaddress"]; }
+
 	# Add custom fields
 	$c="";
 	if (isset($custom_registration_fields))
@@ -2404,22 +2413,22 @@ function auto_create_user_account()
 	
 		# Required fields?
 		if (isset($custom_registration_required)) {$required=explode(",",$custom_registration_required);}
-	
+
 		for ($n=0;$n<count($custom);$n++)
 			{
 			if (isset($required) && in_array($custom[$n],$required) && getval("custom" . $n,"")=="")
 				{
-				return false; # Required field was not set.
+				# Required field was not set.
+				$missingFields[] = $custom[$n];
 				}
 			
 			$c.=i18n_get_translated($custom[$n]) . ": " . getval("custom" . $n,"") . "\n\n";
 			}
 		}
 
-	# Required fields (name, email) not set?
-	if (getval("name","")=="") {return $lang['requiredfields'];}
-	if (getval("email","")=="") {return $lang['requiredfields'];}
-	
+	if (!empty($missingFields))
+		return $lang["requiredfields"] . ' ' . i18n_get_translated(implode(', ', $missingFields), true);
+
 	# Work out which user group to set. Allow a hook to change this, if necessary.
 	$altgroup=hook("auto_approve_account_switch_group");
 	if ($altgroup!==false)
