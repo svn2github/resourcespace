@@ -24,23 +24,24 @@ $filename=$ref;
 $download=getval("download","")!="";
 
 if ($download)
+	{
+	header("Content-type: application/octet-stream");
+	header("Content-disposition: attachment; filename=" . $lang["metadata"]."_". $filename . ".txt");
 
+	foreach ($metadata as $metadata_entry) // Go through each entry
 		{
-		header("Content-type: application/octet-stream");
-		header("Content-disposition: attachment; filename=" . $lang["metadata"]."_". $filename . ".txt");
-
-		foreach ($metadata as $metadata_entry) // Go through each entry
-		     {
-		     echo $metadata_entry['title']; // This is the field title - the function got this by joining to the resource_type_field in the sql query
-		     echo ": ";
-		     echo tidylist($metadata_entry['value']); // This is the value for the field from the resource_data table
-		     echo "\n";   		
-		     }	
-     
- ob_flush();
- exit();
-		
+		if (!empty($metadata_entry['value']))
+			{
+			// This is the field title - the function got this by joining to the resource_type_field in the sql query
+			echo $metadata_entry['title'] . ': ';
+			// This is the value for the field from the resource_data table
+			echo tidylist(i18n_get_translated($metadata_entry['value'])) . "\n";
+			}
 		}
+
+	ob_flush();
+	exit();
+	}
 	
 include "../include/header.php";
 ?>
