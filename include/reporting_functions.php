@@ -1,8 +1,18 @@
 <?php
 # Reporting functions
 
+function get_report_name($report)
+	{
+    # Translates or customizes the report name.
+	$customName = hook('customreportname', '', array($report));
+	if ($customName)
+		return $customName;
+
+	return lang_or_i18n_get_translated($report["name"], "report-");
+	}
+
 function get_reports()
-{
+	{
     # Returns an array of reports. The standard reports are translated using $lang. Custom reports are i18n translated.
     # The reports are always listed in the same order - regardless of the used language. 
 
@@ -11,12 +21,16 @@ function get_reports()
 
     # Translates report names in the newly created array.
     $return = array();
-    for ($n = 0;$n<count($r);$n++) {
-        $r[$n]["name"] = lang_or_i18n_get_translated($r[$n]["name"], "report-");
-        $return[] = $r[$n]; # Adds to return array.
-    }
+    for ($n = 0;$n<count($r);$n++)
+		{
+		if (!hook('ignorereport', '', array($r[$n])))
+			{
+	        $r[$n]["name"] = get_report_name($r[$n]);
+			$return[] = $r[$n]; # Adds to return array.
+			}
+		}
     return $return;
-}
+	}
 
 function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true,$add_border=false)
 	{
@@ -24,9 +38,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 	global $lang, $baseurl;
 
 	$report=sql_query("select * from report where ref='$ref'");$report=$report[0];
-
-    # Translates the report name.
-    $report["name"]=lang_or_i18n_get_translated($report["name"], "report-");
+	$report['name'] = get_report_name($report);
 
 	if ($download)
 		{
@@ -35,7 +47,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 		header("Content-disposition: attachment; filename=" . $filename . "");
 		}
 
-	if($results = hook("customreport", "", array($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download,$add_border))); else {
+	if($results = hook("customreport", "", array($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download,$add_border, $report))); else {
 
 	$sql=$report["query"];
 	$sql=str_replace("[from-y]",$from_y,$sql);
@@ -81,7 +93,12 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 				{
 				$f++;
 				if ($f>1) {echo ",";}
-				if ($key!="thumbnail")
+				$custom = hook('customreportfield', '', array($result, $key, $value, $download));
+				if ($custom !== false)
+					{
+					echo $custom;
+					}
+				else if ($key!="thumbnail")
 					{
 					$value=lang_or_i18n_get_translated($value, "usergroup-");
 					$value=str_replace('"','""',$value); # escape double quotes
@@ -98,7 +115,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 		# Not downloading - output a table
 		$border="";
 		if ($add_border) {$border="border=\"1\"";}
-		$output="<br /><style>.InfoTable td {padding:5px;}</style><table $border class=\"InfoTable\">";
+		$output="<br /><h2>" . $report['name'] . "</h2><style>.InfoTable td {padding:5px;}</style><table $border class=\"InfoTable\">";
 		for ($n=0;$n<count($results);$n++)
 			{
 			$result=$results[$n];
@@ -138,7 +155,15 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 					}
 				else
 					{
-					$output.="<td>" . lang_or_i18n_get_translated($value, "usergroup-") . "</td>\r\n";
+					$custom = hook('customreportfield', '', array($result, $key, $value, $download));
+					if ($custom !== false)
+						{
+						$output .= $custom;
+						}
+					else
+						{
+						$output.="<td>" . lang_or_i18n_get_translated($value, "usergroup-") . "</td>\r\n";
+						}
 					}
 				}
 			$output.="</tr>\r\n";
@@ -198,7 +223,6 @@ function send_periodic_report_emails()
 
 		# Generate remote HTML table.
 		$output=do_report($report["report"], $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,false,true);
-
 
 		# Formulate a title
 		$title = $report["name"] . ": " . str_replace("?",$report["period"],$lang["lastndays"]);

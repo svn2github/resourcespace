@@ -256,11 +256,7 @@ if (checkperm("m"))
 </div>
 <!-- End of E-mail Me function -->
 
-
-
-
-
-
+<?php hook('customreportform', '', array($report)); ?>
 
 <script language="text/javascript">
 var do_download=false;
