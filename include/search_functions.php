@@ -26,7 +26,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# $access_override is used by smart collections, so that all all applicable resources can be judged regardless of the final access-based results
 	
 	# Check valid sort
-	if(!in_array(strtolower($sort),array("asc","desc"))){$sort=$default_sort;};
+	if(!in_array(strtolower($sort),array("asc","desc"))){$sort="asc";};
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
