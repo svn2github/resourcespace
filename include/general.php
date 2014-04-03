@@ -193,8 +193,9 @@ function get_resource_type_field($field)
 		return $return[0];
 		}
 	}
+if (!function_exists('get_resource_field_data')) {
 function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1,$external_access=false,$ord_by=false)
-{
+	{
     # Returns field data and field properties (resource_type_field and resource_data tables)
     # for this resource, for display in an edit / view form.
     # Standard field titles are translated using $lang.  Custom field titles are i18n translated.
@@ -255,6 +256,7 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
         }
     }
     return $return;
+	}
 }
 
 function get_resource_field_data_batch($refs)
