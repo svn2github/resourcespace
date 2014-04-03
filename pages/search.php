@@ -688,20 +688,20 @@ if (true) # Always show search header now.
 		?>
 		<div class="BasicsBox"> 
 		  <div class="NoFind">
-			<p><?php echo $lang["searchnomatches"]?></p>
+			<h2><?php echo $lang["searchnomatches"]?></h2>
 			<?php if ($result!="")
 			{
 			?>
-			<p><?php echo $lang["try"]?>: <a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
+			<h2><?php echo $lang["try"]?>: <a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></h2>
 			<?php $result=array();
 			}
 			else
 			{
 			?>
-			<p><?php if (strpos($search,"country:")!==false) { ?><p><?php echo $lang["tryselectingallcountries"]?> <?php } 
-			elseif (strpos($search,"year:")!==false) { ?><p><?php echo $lang["tryselectinganyyear"]?> <?php } 
-			elseif (strpos($search,"month:")!==false) { ?><p><?php echo $lang["tryselectinganymonth"]?> <?php } 
-			else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></p>
+			<h2><?php if (strpos($search,"country:")!==false) { ?><h2><?php echo $lang["tryselectingallcountries"]?> <?php } 
+			elseif (strpos($search,"year:")!==false) { ?><h2><?php echo $lang["tryselectinganyyear"]?> <?php } 
+			elseif (strpos($search,"month:")!==false) { ?><h2><?php echo $lang["tryselectinganymonth"]?> <?php } 
+			else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></h2>
 			<?php
 			}
 		  ?>
@@ -784,7 +784,7 @@ if (true) # Always show search header now.
         # loop and display the results
         for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)
             {
-			
+			echo 'asas';
 			if ($order_by=="resourcetype" && $display!="list")
 				{
 				if ($n==0 || ((isset($result[$n-1])) && $result[$n]["resource_type"]!=$result[$n-1]["resource_type"]))
