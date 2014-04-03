@@ -784,7 +784,7 @@ if (true) # Always show search header now.
         # loop and display the results
         for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)
             {
-			echo 'asas';
+			
 			if ($order_by=="resourcetype" && $display!="list")
 				{
 				if ($n==0 || ((isset($result[$n-1])) && $result[$n]["resource_type"]!=$result[$n-1]["resource_type"]))
