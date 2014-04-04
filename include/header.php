@@ -287,6 +287,7 @@ if ($use_recent_as_home){$homepage_url=$baseurl."/pages/search.php?search=".urle
 if ($pagename=="login" || $pagename=="user_request" || $pagename=="user_password"){$homepage_url=$baseurl."/index.php";}
 ?>
 
+<?php hook("beforeheader"); ?>
 <div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
 <?php if ($header_link && !$header_text_title && getval("k","")=="") {
 	$linkUrl=isset($header_link_url) ? $header_link_url : $homepage_url;
