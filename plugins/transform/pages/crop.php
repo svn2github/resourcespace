@@ -191,7 +191,13 @@ if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
 	$colorspace2 = '';
 }
 
-$command .= " \"$originalpath\" ";
+$commandprefix="";
+if (strtoupper($new_ext)=="PNG" || strtoupper($new_ext)=="GIF")
+    {
+    $commandprefix = " -background transparent ";
+    }
+    
+$command .= $commandprefix . " \"$originalpath\" ";
 
 
 $resolution=getval("resolution","",TRUE);
