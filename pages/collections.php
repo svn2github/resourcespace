@@ -232,36 +232,50 @@ if ($remove!="")
 $addsearch=getvalescaped("addsearch",-1);
 if ($addsearch!=-1)
 	{
-	hook("preaddsearch");
-	if (getval("mode","")=="")
-		{
-		#add saved search
-		add_saved_search($usercollection);
-		
-		# Log this
-		daily_stat("Add saved search to collection",0);
-		}
-	else
-		{
-		#add saved search (the items themselves rather than just the query)
-		$resourcesnotadded=add_saved_search_items($usercollection);
-		if (!empty($resourcesnotadded))
-			{
-			?><script language="Javascript">alert("<?php echo $lang["notapprovedresources"] . implode(", ",$resourcesnotadded);?>");</script><?php
-			}
-		# Log this
-		daily_stat("Add saved search items to collection",0);
-		}
-	hook("postaddsearch");
+    if (!collection_writeable($usercollection))
+        { ?>
+        <script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php
+        }
+    else
+        {
+        hook("preaddsearch");
+        if (getval("mode","")=="")
+            {
+            #add saved search
+            add_saved_search($usercollection);
+
+            # Log this
+            daily_stat("Add saved search to collection",0);
+            }
+        else
+            {
+            #add saved search (the items themselves rather than just the query)
+            $resourcesnotadded=add_saved_search_items($usercollection);
+            if (!empty($resourcesnotadded))
+                {
+                ?><script language="Javascript">alert("<?php echo $lang["notapprovedresources"] . implode(", ",$resourcesnotadded);?>");</script><?php
+                }
+            # Log this
+            daily_stat("Add saved search items to collection",0);
+            }
+        hook("postaddsearch");
+        }
 	}
 
 $removesearch=getvalescaped("removesearch","");
 if ($removesearch!="")
 	{
-	hook("preremovesearch");
-	#remove saved search
-	remove_saved_search($usercollection,$removesearch);
-	hook("postremovesearch");
+    if (!collection_writeable($usercollection))
+        { ?>
+        <script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php
+        }
+    else
+        {
+        hook("preremovesearch");
+        #remove saved search
+        remove_saved_search($usercollection,$removesearch);
+        hook("postremovesearch");
+        }
 	}
 	
 $addsmartcollection=getvalescaped("addsmartcollection",-1);
