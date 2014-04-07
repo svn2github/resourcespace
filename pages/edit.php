@@ -556,6 +556,9 @@ $titleh2 = str_replace(array("%number","%subtitle"), array("1", $lang["specifyde
 <p><?php echo $lang["intro-batch_edit"] ?></p>
 
 <?php
+// Upload template: Show the required fields note at the top of the form.
+if (!$is_template) { ?><p class="greyText noPadding"><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php }
+
 # Upload template: Show the save / clear buttons at the top too, to avoid unnecessary scrolling.
 ?>
 <div class="QuestionSubmit">

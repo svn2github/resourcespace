@@ -219,3 +219,11 @@ input[readonly] {color: #000000;}
 .smallthumbsicon{background: url(../gfx/interface/smallicon.png) no-repeat 0px;}
 .largethumbsicon{background: url(../gfx/interface/largeicon.png) no-repeat 0px;}
 .largethumbsiconactive{background: url(../gfx/interface/largeiconactive.png) no-repeat 0px;}
+
+.BasicsBox .greyText {
+	color: #737373;
+}
+
+.BasicsBox .noPadding {
+	padding: 0;
+}
