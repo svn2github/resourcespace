@@ -16,7 +16,6 @@ if ($ref<0)
 		}
 	if ($metadata_read){?>
 	<div class="Question" id="question_noexif">
-	<input type=hidden id="no_exif" name="no_exif" value="">
 	<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif",($metadata_read_default)?"":"no")!="") { ?>checked<?php } ?>>
 	<div class="clearerleft"> </div>
 	</div>
@@ -116,7 +115,7 @@ if ($ref<0)
 		<div class="clearerleft"> </div>
 		<div name="collectioninfo" id="collectioninfo" style="display:none;">
 		<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
-		<label for="collection_add"><?php echo $lang["collectionname"]?><?php if ($upload_collection_name_required){?><sup>*</sup><?php } ?></label>
+		<label for="entercolname"><?php echo $lang["collectionname"]?><?php if ($upload_collection_name_required){?><sup>*</sup><?php } ?></label>
 		<input type=text id="entercolname" name="entercolname" class="stdwidth" value='<?php echo htmlentities(stripslashes(getval("entercolname","")), ENT_QUOTES);?>'> 
 		
 		</div>

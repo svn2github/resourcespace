@@ -1028,7 +1028,20 @@ function display_field($n, $field, $newtab=false)
 		}
 		echo "\""; # close the style attribute
 		?>>
-	<label for="<?php echo htmlspecialchars($name)?>"><?php if (!$multiple) {?><?php echo htmlspecialchars($field["title"])?> <?php if (!$is_template && $field["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
+		<?php 
+			$labelname = $name;
+			
+			// Add _selector to label so it will keep working:
+			if($field['type'] == 9) {
+				$labelname .= '_selector';
+			}
+
+			// Add -d to label so it will keep working
+			if($field['type'] == 4) {
+				$labelname .= '-d';
+			}
+		?>
+	<label for="<?php echo htmlspecialchars($labelname)?>"><?php if (!$multiple) {?><?php echo htmlspecialchars($field["title"])?> <?php if (!$is_template && $field["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
 
 	<?php
 	# Autosave display
@@ -1037,7 +1050,7 @@ function display_field($n, $field, $newtab=false)
 	<?php } ?>
 
 
-	<?php
+	<?php 
 	# Define some Javascript for help actions (applies to all fields)
 	$help_js="onBlur=\"HideHelp(" . $field["ref"] . ");return false;\" onFocus=\"ShowHelp(" . $field["ref"] . ");return false;\"";
 
