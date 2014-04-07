@@ -32,7 +32,7 @@ if ($checkbox_ordered_vertically)
 	{
 	if(!hook('rendereditchkboxes')):
 	# ---------------- Vertical Ordering (only if configured) -----------
-	?><table cellpadding=2 cellspacing=0><tr><?php
+	?><fieldset class="customFieldset" name="<?php echo $field['title']; ?>"><table cellpadding=2 cellspacing=0><tr><?php
 	for ($y=0;$y<$height;$y++)
 		{
 		for ($x=0;$x<$cols;$x++)
@@ -48,16 +48,16 @@ if ($checkbox_ordered_vertically)
 				if ($option!="")
 					{
 					?>
-					<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
+					<td width="1"><input type="checkbox" id="<?php echo $name; ?>" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
 					<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } ?>
-					/></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
+					/></td><td><label class="customFieldLabel" for="<?php echo $name; ?>"><?php echo htmlspecialchars($trans)?></label></td>
 					<?php
 					}
 				}
 			}
 		?></tr><tr><?php
 		}
-	?></tr></table><?php
+	?></tr></table></fielset><?php
 	endif;
 	}
 else

@@ -208,6 +208,8 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 .Question{padding: 0.5em 0em 1em;}
 .QuestionSubmit{	padding: 0.75em 0em 1em;margin-top: 1em;}
 .Question label, .QuestionSubmit label{	width: 240px;float: left;margin-top: 0.4em;}
+.Question .customFieldLabel { width: auto; margin: 0;}
+.Question .customFieldset { padding: 0; border: 0;}
 .Question #capswarning { margin-left: 190px; display: none; color: red;font-weight: bold;}
 .Question .Lineup {margin: 3px 0px;}
 .Question .stdwidth,.stdwidth{width: 360px;font: 13px Ubuntu, Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
