@@ -6,7 +6,8 @@ hook ("preheaderoutput");
  
 # Do not display header / footer when dynamically loading CentralSpace contents.
 $ajax=getval("ajax","");
-if ($ajax=="") { 
+
+if ($ajax=="" && !hook("replace_header")) { 
 
 // blank starsearch cookie in case $star_search was turned off
 setcookie("starsearch","");

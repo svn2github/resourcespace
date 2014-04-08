@@ -754,7 +754,7 @@ function get_data_by_field($resource,$field){
 	if (is_numeric($field)){
 		return sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
 	} else {
-		return sql_value("select value from resource_data where resource='$resource' and resource_type_field=(select ref from resource_type_field where name='".escape_check($field)."')","");
+		return sql_value("select value from resource_data where resource='$resource' and resource_type_field=(select ref from resource_type_field where name='".escape_check($field)."' limit 1)","");
 	}
 }
 	
