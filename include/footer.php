@@ -14,6 +14,9 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 ?>
 <div class="clearer"> </div>
 
+<!-- Use aria-live assertive for high priority changes in the content: -->
+<span role="status" aria-live="assertive" class="ui-helper-hidden-accessible"></span>
+
 </div><!--End div-CentralSpace-->
 <?php if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="preview_all") && ($pagename!="user_request")) { ?></div><?php } ?><!--End div-CentralSpaceContainer-->
 
