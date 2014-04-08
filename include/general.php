@@ -3723,3 +3723,21 @@ function rs_setcookie($name, $value, $daysexpire = 0, $path = "", $domain = "", 
         setcookie($name, $value, $expire, $path);
         }
     }
+
+function get_editable_states($userref)
+	// Get an array of all the states that a user has edit access to
+	{
+	global $additional_archive_states, $lang;
+	if($userref==-1){return false;}
+	$editable_states=array();
+	$x=0;
+	for ($n=-2;$n<=3;$n++)
+		{
+		if (checkperm("e" . $n)) {$editable_states[$x]['id']=$n;$editable_states[$x]['name']=$lang["status" . $n];$x++;}		
+		}
+	foreach ($additional_archive_states as $additional_archive_state)
+		{
+		if (checkperm("e" . $additional_archive_state)) { $editable_states[$x]['id']=$additional_archive_state;$editable_states[$x]['name']=$lang["status" . $additional_archive_state];$x++;}		
+		}
+	return $editable_states;
+	}
