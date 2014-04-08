@@ -277,6 +277,11 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 	global $ref, $fieldcount, $tabcount, $show_expiry_warning, $access, $tabname, $search, $extra, $lang;
 	$value=$field["value"];
 	
+	$modified_field=hook("beforeviewdisplayfielddata_processing","",array($field));
+	if($modified_field){
+		$field=$modified_field;
+	}
+	
 	# Handle expiry fields
 	if (!$valueonly && $field["type"]==6 && $value!="" && $value<=date("Y-m-d H:i") && $show_expiry_warning) 
 		{
@@ -814,6 +819,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 	$path=get_resource_path($ref,true,"",false,$resource["file_extension"]);
 	if (file_exists($path))
 		{
+		hook("beforesingledownloadsizeresult");
 			if(!hook("origdownloadlink")):
 		?>
 		<tr class="DownloadDBlend">
@@ -899,6 +905,7 @@ if ($alt_access)
 			if ($alt_type!=$last_alt_type){
 				$alt_type_header=$alt_type;
 				if ($alt_type_header==""){$alt_type_header=$lang["alternativefiles"];}
+				hook("viewbeforealtheader");
 				?>
 				<tr class="DownloadDBlend">
 				<td colspan="3" id="altfileheader"><h2><?php echo $alt_type_header?></h2></td>
@@ -909,6 +916,7 @@ if ($alt_access)
 		}	
 		else if ($n==0)
 			{
+			hook("viewbeforealtheader");
 			?>
 			<tr>
 			<td colspan="3" id="altfileheader"><?php echo $lang["alternativefiles"]?></td>
@@ -977,10 +985,12 @@ if ($use_mp3_player && file_exists($mp3realpath) && $access==0){
 
 
 </table>
-<?php } ?>
+<?php } 
+if(!hook("replaceactionslistopen")){?>
 <br />
 <ul>
-<?php 
+<?php
+} # end hook("replaceactionslistopen")
 
 
 
@@ -988,7 +998,7 @@ if ($use_mp3_player && file_exists($mp3realpath) && $access==0){
 hook ("resourceactions") ?>
 <?php if ($k=="") { ?>
 <?php if (!hook("replaceresourceactions")) {
-	
+	hook("resourceactionstitle");
 	 if ($resource_contact_link)	{ ?>
 	<li><a href="<?php echo $baseurl_short?>pages/ajax/contactadmin.php?ref=<?php echo urlencode($ref)?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>" onClick="showContactBox();return false;" >&gt; <?php echo $lang["contactadmin"]?></a></li>
 	<?php }
@@ -1026,8 +1036,11 @@ hook("afterresourceactions2");
 <?php } /* End if ($k!="")*/ 
 hook("resourceactions_anonymous");
 ?>
-<?php } /* End of renderinnerresourcedownloadspace hook */ ?>
+<?php } /* End of renderinnerresourcedownloadspace hook */ 
+if(!hook('replaceactionslistclose')){
+?>
 </ul>
+<?php } # end hook('replaceactionslistclose') ?>
 <div class="clearerleft"> </div>
 
 <?php
