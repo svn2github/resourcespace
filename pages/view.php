@@ -778,7 +778,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 			{
 			echo get_size_info($sizes[$n]);
 			}
-		?></td><td><?php echo $sizes[$n]["filesize"]?></td>
+		?></td><td class="DownloadFileSize"><?php echo $sizes[$n]["filesize"]?></td>
 
 		<?php if ($showprice) {
 			?><td><?php echo get_display_price($ref, $sizes[$n]) ?></td>
@@ -795,7 +795,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 				{ 
 				# Add an extra line for previewing
 				?> 
-				<tr class="DownloadDBlend"><td class="DownloadFileName"><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td><?php echo $sizes[$n]["filesize"]?></td>
+				<tr class="DownloadDBlend"><td class="DownloadFileName"><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td class="DownloadFileSize"><?php echo $sizes[$n]["filesize"]?></td>
 				<?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td></td><?php } # Blank spacer column if displaying a price above (basket mode).
 				?>
 				<td class="DownloadButton">
@@ -818,7 +818,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		?>
 		<tr class="DownloadDBlend">
 		<td class="DownloadFileName"><h2><?php echo (isset($original_download_name)) ? str_replace_formatted_placeholder("%extension", $resource["file_extension"], $original_download_name, true) : str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["originalfileoftype"]); ?></h2></td>
-		<td><?php echo formatfilesize(filesize_unlimited($path))?></td>
+		<td class="DownloadFileSize"><?php echo formatfilesize(filesize_unlimited($path))?></td>
 		<td class="DownloadButton">
 		<?php if (!$direct_download || $save_as){ ?>
 			<a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&ext=" . $resource["file_extension"] ))) { ?>href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&k=<?php echo urlencode($k)?>&search=<?php echo $search ?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?> onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a>
@@ -869,7 +869,7 @@ if (isset($flv_download) && $flv_download)
 	?>
 	<tr class="DownloadDBlend">
 	<td class="DownloadFileName"><h2><?php echo (isset($ffmpeg_preview_download_name)) ? $ffmpeg_preview_download_name : str_replace_formatted_placeholder("%extension", $ffmpeg_preview_extension, $lang["cell-fileoftype"]); ?></h2></td>
-	<td><?php echo formatfilesize(filesize_unlimited($flvfile))?></td>
+	<td class="DownloadFileSize"><?php echo formatfilesize(filesize_unlimited($flvfile))?></td>
 	<td class="DownloadButton">
 	<?php if (!$direct_download || $save_as){?>
 		<a href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&search=<?php echo $search ?>&k=<?php echo urlencode($k)?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $ffmpeg_preview_extension . "&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a>
@@ -901,7 +901,7 @@ if ($alt_access)
 				if ($alt_type_header==""){$alt_type_header=$lang["alternativefiles"];}
 				?>
 				<tr class="DownloadDBlend">
-				<td colspan="3"><h2><?php echo $alt_type_header?></h2></td>
+				<td colspan="3" id="altfileheader"><h2><?php echo $alt_type_header?></h2></td>
 				</tr>
 				<?php
 			}
@@ -911,7 +911,7 @@ if ($alt_access)
 			{
 			?>
 			<tr>
-			<td colspan="3"><?php echo $lang["alternativefiles"]?></td>
+			<td colspan="3" id="altfileheader"><?php echo $lang["alternativefiles"]?></td>
 			</tr>
 			<?php
 			}	
@@ -940,7 +940,7 @@ if ($alt_access)
 		<h2 class="breakall"><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
 		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 		</td>
-		<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
+		<td class="DownloadFileSize"><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
 		
 		<?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td></td><?php } # Blank spacer column if displaying a price above (basket mode).
 		?>
