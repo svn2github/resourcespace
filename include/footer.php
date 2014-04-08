@@ -60,9 +60,9 @@ function SwapCSS(css){
 	if (count($available_themes!=0)){
 		foreach ($available_themes as $available_theme){
 		if (substr($available_theme,-5)=="space"){?>
-		&nbsp;<a href="#" onClick="SwapCSS('<?php echo $available_theme?>');return false;"><img src="<?php echo $baseurl?>/plugins/<?php echo $available_theme?>/gfx/interface/<?php echo ucfirst($available_theme)?>Chip.gif" alt="" width="11" height="11" /></a>
+		&nbsp;<a href="#" onClick="SwapCSS('<?php echo $available_theme?>');return false;" name="choosetheme"><label class="ui-helper-hidden-accessible" for="choosetheme"><?php echo $lang['changethemeto'] . ' ' . ucfirst($available_theme); ?></label><img src="<?php echo $baseurl?>/plugins/<?php echo $available_theme?>/gfx/interface/<?php echo ucfirst($available_theme)?>Chip.gif" alt="<?php echo ucfirst($available_theme); ?> Theme Chip" width="11" height="11" /></a>
 		<?php } else {?>
-		&nbsp;<a href="#" onClick="SwapCSS('<?php echo $available_theme?>');return false;"><img src="<?php echo $baseurl?>/gfx/interface/<?php echo ucfirst($available_theme)?>Chip.gif" alt="" width="11" height="11" /></a>
+		&nbsp;<a href="#" onClick="SwapCSS('<?php echo $available_theme?>');return false;" name="choosetheme"><label class="ui-helper-hidden-accessible" for="choosetheme"><?php echo $lang['changethemeto'] . ' ' . ucfirst($available_theme); ?></label><img src="<?php echo $baseurl?>/gfx/interface/<?php echo ucfirst($available_theme)?>Chip.gif" alt="<?php echo ucfirst($available_theme); ?> Theme Chip" width="11" height="11" /></a>
 		<?php } ?>
 	<?php }
 	}

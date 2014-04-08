@@ -190,6 +190,7 @@ $lang["teamcentre"]="Team Centre";
 # footer link
 $lang["aboutus"]="About us";
 $lang["interface"]="Interface";
+$lang["changethemeto"] = "Change theme to";
 
 # Search bar
 $lang["simplesearch"]="Simple search";
