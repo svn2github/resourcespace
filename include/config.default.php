@@ -600,6 +600,10 @@ $defaulttheme="multi";
  
 $available_themes=array("multi", "whitegry","greyblu","black");
 
+# NOTE: Do not add custom themes to $available_themes_by_default.
+# This is being used to know which themes are custom
+$available_themes_by_default = array("multi", "whitegry","greyblu","black");
+
 # Uncomment and set the next line to lock to one specific colour scheme (e.g. greyblu/whitegry).
 # $userfixedtheme="whitegry";
 
