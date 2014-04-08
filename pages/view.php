@@ -1152,8 +1152,8 @@ for ($n=0;$n<count($fields);$n++)
 			}
 		}
 	}
-?><?php hook("extrafields2");?><div class="clearerleft"></div>
-<?php echo $extra?>
+?><?php hook("extrafields2");?>
+<?php echo $extra?><div class="clearerleft"></div>
 </div>
 </div>
 <?php hook("renderafterresourcedetails"); ?>
