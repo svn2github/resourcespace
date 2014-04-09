@@ -9,7 +9,8 @@ if ($theme=="whitegry") {$color="ffffff";$bgcolor1="ffffff";$bgcolor2="dadada";$
 if ($theme=="black") {$bgcolor1="666666";$bgcolor2="111111";$buttoncolor="999999";}	
 # Flash MP3 Player was found at http://flash-mp3-player.net/players/maxi/
 ?>
-<?php if ($pagename!="search"){?>
+<?php if ($pagename!="search"){
+hook("beforemp3tablecells");?>
 <tr class="DownloadDBlend">
 <td><h2><?php echo $lang["preview"] ?></h2></td>
 <td align="center" colspan="2"><?php } ?><center>
@@ -19,5 +20,6 @@ if ($theme=="black") {$bgcolor1="666666";$bgcolor2="111111";$buttoncolor="999999
 </center><?php if ($pagename!="search"){?>
 </td>
 </tr>
-<?php } ?>
+<?php hook("aftermp3tablecells");
+} ?>
 <?php } ?>
