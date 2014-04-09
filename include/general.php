@@ -213,7 +213,7 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
     }
 
     $return = array();
-	$fieldsSQL = "select d.value,d.resource_type_field,f.*,f.required frequired,f.ref fref from resource_type_field f left join (select * from resource_data where resource='$ref') d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by ";
+	$fieldsSQL = "select d.value,d.resource_type_field,f.*,f.required frequired,f.ref fref from resource_type_field f left join (select * from resource_data where resource='$ref') d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") group by f.ref order by ";
     if ($ord_by) {
     	$fieldsSQL .= "f.order_by,f.resource_type,f.ref";
     } else {
