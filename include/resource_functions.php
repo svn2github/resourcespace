@@ -2145,7 +2145,6 @@ function get_edit_access($resource,$status=-999,$metadata=false,&$resourcedata="
 	
 	global $userref,$usereditfilter;
 	if (hook("customediteaccess")) {return true;}
-	debug("BANG2 " . $resource );
 	if (!is_array($resourcedata)) # Resource data  may not be passed 
 		{
 		$resourcedata=get_resource_data($resource);		

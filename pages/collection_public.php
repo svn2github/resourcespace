@@ -80,7 +80,7 @@ $atoz.="&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
-	$atoz.="<a href=\"".$baseurl_short."pages/collection_public.php?col_order_by=name&find=" . chr($n) . "&override_group_restrict=" . $override_group_restrict . "\" onClick=\"return CentralSpaceLoad(this);\">&nbsp;" . chr($n) . "&nbsp;</a> ";
+	$atoz.="<a href=\"".$baseurl_short."pages/collection_public.php?col_order_by=name&find=" . chr($n) . "&override_group_restrict=" . urlencode($override_group_restrict) . "\" onClick=\"return CentralSpaceLoad(this);\">&nbsp;" . chr($n) . "&nbsp;</a> ";
 	if ($find==chr($n)) {$atoz.="</span>";}
 	$atoz.=" ";
 	}

@@ -414,7 +414,7 @@ function EditNav() # Create a function so this can be repeated at the end of the
 ?>
 </script>
 
-<form method="post" action="<?php echo $baseurl_short?>pages/edit.php?ref=<?php echo urlencode($ref) ?>&amp;uploader=<?php echo getval("uploader","") ?>&amp;single=<?php echo getval("single","") ?>&amp;local=<?php echo getval("local","") ?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset) ?>&amp;order_by=<?php echo urlencode($order_by) ?>&amp;sort=<?php echo urlencode($sort) ?>&amp;archive=<?php echo urlencode($archive) ?>&amp;collection=<?php echo $collection ?>&amp;metadatatemplate=<?php echo getval("metadatatemplate","") ?>" id="mainform">
+<form method="post" action="<?php echo $baseurl_short?>pages/edit.php?ref=<?php echo urlencode($ref) ?>&amp;uploader=<?php echo urlencode(getvalescaped("uploader","")) ?>&amp;single=<?php echo urlencode(getvalescaped("single","")) ?>&amp;local=<?php echo urlencode(getvalescaped("local","")) ?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset) ?>&amp;order_by=<?php echo urlencode($order_by) ?>&amp;sort=<?php echo urlencode($sort) ?>&amp;archive=<?php echo urlencode($archive) ?>&amp;collection=<?php echo $collection ?>&amp;metadatatemplate=<?php echo getval("metadatatemplate","") ?>" id="mainform">
 <div class="BasicsBox">
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["next"]?>&nbsp;&nbsp;" class="defaultbutton" />
 <input type="hidden" name="submitted" value="true">
