@@ -203,7 +203,7 @@ $command .= $commandprefix . " \"$originalpath\" ";
 $resolution=getval("resolution","",TRUE);
 if ($resolution!="")
 	{
-	$command .= " -density " .  $resolution . " ";
+	$command .= " -units PixelsPerInch -density " .  $resolution . " ";
 	}
 	
 	
