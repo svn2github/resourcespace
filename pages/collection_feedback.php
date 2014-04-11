@@ -75,7 +75,7 @@ if ($errors!="")
 	{
 	?><h2><?php echo $lang["selectedresources"]?>:</h2><?php
 	# Show thumbnails and allow the user to select resources.
-	$result=do_search("!collection" . $collection);
+	$result=do_search("!collection" . $collection,"","resourceid",0,-1,"desc");
 	for ($n=0;$n<count($result);$n++)
 		{
 		$ref=$result[$n]["ref"];
