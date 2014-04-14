@@ -13,6 +13,10 @@ $image=(getvalescaped("image","")!="");
 # Load resource data
 $resource=get_resource_data($ref);
 
+# Allow alternative configuration settings for this resource type.
+resource_type_config_override($resource["resource_type"]);
+
+
 # Load access level
 $access=get_resource_access($ref);
 $use_watermark=check_use_watermark();
