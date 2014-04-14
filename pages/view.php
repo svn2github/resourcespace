@@ -398,7 +398,9 @@ if (!hook("viewallresults")) {
 <?php } ?>
 
 
-<h1><?php switch ($resource["archive"])
+<h1><?php
+# Display title prefix based on workflow state.
+if (!hook("replacetitleprefix","",array($resource["archive"]))) { switch ($resource["archive"])
 	{
 	case -2:
 	?><span class="ResourcePendingSubmissionTitle"><?php echo $lang["status-2"]?>:</span>&nbsp;<?php
@@ -415,7 +417,7 @@ if (!hook("viewallresults")) {
 	case 3:
 	?><span class="DeletedResourceTitle"><?php echo $lang["status3"]?>:</span>&nbsp;<?php
 	break;
-	}
+	} }
 if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } /* end hook replaceviewtitle */  
 ?>&nbsp;</h1>
 <?php } /* End of renderinnerresourceheader hook */ ?>
