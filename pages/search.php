@@ -784,14 +784,16 @@ if (true) # Always show search header now.
         # loop and display the results
         for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)
             {
-			
-			if ($order_by=="resourcetype" && $display!="list")
+	    # Allow alternative configuration settings for this resource type.
+	    resource_type_config_override($result[$n]["resource_type"]);
+		
+		if ($order_by=="resourcetype" && $display!="list")
+			{
+			if ($n==0 || ((isset($result[$n-1])) && $result[$n]["resource_type"]!=$result[$n-1]["resource_type"]))
 				{
-				if ($n==0 || ((isset($result[$n-1])) && $result[$n]["resource_type"]!=$result[$n-1]["resource_type"]))
-					{
-					echo "<h1 class=\"SearchResultsDivider\" style=\"clear:left;\">" . htmlspecialchars($rtypes[$result[$n]["resource_type"]]) .  "</h1>";
-					}
+				echo "<h1 class=\"SearchResultsDivider\" style=\"clear:left;\">" . htmlspecialchars($rtypes[$result[$n]["resource_type"]]) .  "</h1>";
 				}
+			}
 			
             $ref = $result[$n]["ref"];
             $GLOBALS['get_resource_data_cache'][$ref] = $result[$n];

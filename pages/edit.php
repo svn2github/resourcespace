@@ -94,6 +94,9 @@ else
 # Fetch resource data.
 $resource=get_resource_data($ref);
 
+# Allow alternative configuration settings for this resource type.
+resource_type_config_override($resource["resource_type"]);
+
 # If upload template, check if the user has upload permission.
 if ($ref<0 && !(checkperm("c") || checkperm("d")))
     {

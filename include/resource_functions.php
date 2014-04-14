@@ -2940,3 +2940,42 @@ function delete_resource_access_key($resource,$access_key)
     sql_query("delete from external_access_keys where access_key='$access_key' and resource='$resource'");
     }
 
+function resource_type_config_override($resource_type)
+    {
+    # Pull in the necessary config for a given resource type
+    # As this could be called many times, e.g. during search result display, only execute if the passed resourcetype is different from the previous.
+    global $resource_type_config_override_last,$resource_type_config_override_snapshot;
+    
+    # If the resource type has changed or if this is the first resource....
+    if (!isset($resource_type_config_override_last) || $resource_type_config_override_last!=$resource_type)
+        {
+        # Look for config and execute.
+        $config_options=sql_value("select config_options value from resource_type where ref='" . escape_check($resource_type) . "'","");
+        if ($config_options!="")
+            {
+            # Switch to global context and execute.
+            extract($GLOBALS, EXTR_REFS | EXTR_SKIP);
+            eval($config_options);
+            }
+        $resource_type_config_override_last=$resource_type;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
