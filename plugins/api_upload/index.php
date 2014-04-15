@@ -22,8 +22,12 @@ if (isset($_FILES['userfile'])){
  $resource_type=getvalescaped("resource_type",1,true);
 
  // work out status 
- if (!(checkperm("c") || checkperm("d"))){ die("No upload permissions\n");}
- if (checkperm("XU".$resource_type)){ die("Upload to this Resource Type not allowed.\n");}
+ if (!(checkperm("c") || checkperm("d"))){ header("HTTP/1.0 403 Forbidden.");
+	echo "HTTP/1.0 403 Forbidden. No upload permissions\n";
+	exit;}
+ if (checkperm("XU".$resource_type)){ header("HTTP/1.0 403 Forbidden.");
+	echo "HTTP/1.0 403 Forbidden. Upload to this Resource Type not allowed.";
+	exit;}
  
  $archive=getvalescaped("archive","");
  if ($archive!="" && checkperm('e'.$archive)){
@@ -36,6 +40,7 @@ if (isset($_FILES['userfile'])){
  $required_fields=sql_array("select ref value from resource_type_field where required=1 and (resource_type='$resource_type' or resource_type='0')");
 
  $missing_fields=false;
+ $error_message="";
  foreach ($required_fields as $required_field){
 	 $value=getvalescaped("field".$required_field,"");
 	 if ($value==''){
@@ -45,10 +50,13 @@ if (isset($_FILES['userfile'])){
 		 
 		 
 		 if ($options!="" && ($type==3 || $type==2)){$optionstring="Allowed Values: ".ltrim(implode("\n",explode(",",$options)),",")."\n";} else {$optionstring="";}
-		 echo ("$fieldname is required. Use field$required_field=[string] as a parameter. $optionstring\n");$missing_fields=true;
+		 $error_message.="$fieldname is required. Use field$required_field=[string] as a parameter. $optionstring\n";
+		 $missing_fields=true;
 	 } 
  } 
- if ($missing_fields){die();}
+ if ($missing_fields){header("HTTP/1.0 403 Forbidden.");
+	echo "HTTP/1.0 403 Forbidden. $error_message";
+	exit;}
 	
  // create resource
  $ref=create_resource(getval("resourcetype",1),$status,$userref);
@@ -83,7 +91,18 @@ if (isset($_FILES['userfile'])){
  $wait=create_previews($ref,false,$extension);
  // add resource to collection
  if ($collection!=""){
-     add_resource_to_collection($ref,$collection);
+	 $collection_exists=sql_value("select name value from collection where ref='".escape_check($collection)."'","");
+	 if ($collection_exists!=""){
+		if(!add_resource_to_collection($ref,$collection)){	
+			header("HTTP/1.0 403 Forbidden.");
+			echo "HTTP/1.0 403 Forbidden. Collection is not writable by this user.\n";
+			exit;
+		}
+	} else {
+		header("HTTP/1.0 403 Forbidden.");
+		echo "HTTP/1.0 403 Forbidden. Collection does not exist.\n";
+		exit;
+	}
  }
 
  $results=do_search("!list$ref","","relevance",$status);        
