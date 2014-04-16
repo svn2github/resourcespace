@@ -231,7 +231,7 @@ function save_resource_data($ref,$multi)
 					# If this is a 'joined' field we need to add it to the resource column
 					$joins=get_resource_table_joins();
 					if (in_array($fields[$n]["ref"],$joins)){
-						$val=strip_leading_comma($val);	
+						if(substr($val,0,1)==","){$val=substr($val,1);}
 						sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
 					}
                                         
