@@ -109,7 +109,7 @@ class ldapAuth
 			{
 				// get the shortname from the username (ie user@domain becomes user)
 				$usercn = stristr($username,"@",true);
-				if ($this->ldap_debug) { echo "user cn = ". $usercn . "\r\n"; }
+				if ($this->ldap_debug) { error_log ("user cn = ". $usercn ); }
 				// set the search filter * attributes we want
 				$filter="(samaccountname=".$usercn.")";
 				$attributes=array("dn","cn");
@@ -120,10 +120,39 @@ class ldapAuth
 				}	
 				// get the info
 				$number_returned = ldap_count_entries($this->ldapconn, $search);
+				
+				if ($number_returned == 0) 
+				{
+					// Houston we have a problem, we hae not managed to find the account even though we can bind with it !
+					// We are going to guess that samaccountname (pre windows 2000 logon name) is not the same as the 
+					// user portion of the userPrincipalName.
+					if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Num entries returned = " . $number_returned ); }
+					if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " searching on userPrincipalName " . $username ); }
+					$filter="(userprincipalname=".$username.")";
+					
+					// search
+					if (!($search = ldap_search($this->ldapconn, $this->ldapconfig['basedn'], $filter,$attributes))) {
+					     die($lang['posixldapauth_unable_to_search_ldap_server']);
+					}	
+					// get the info
+					$number_returned = ldap_count_entries($this->ldapconn, $search);
+					if ($number_returned == 0) 
+					{
+						// we still have a problem
+						if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " account not found with userPrincipalName " . $username ); }
+						// fail the auth
+						return 0;
+					}
+				}
+				
+				// we should definitly have the info now!
+				
 				$info = ldap_get_entries($this->ldapconn, $search);
+				
 				//print_r ($info);
 				// set the rdn
 				$this->ldaprdn = $info[0]["dn"];
+				
 			}
 	        return 1;
 	    } else {
