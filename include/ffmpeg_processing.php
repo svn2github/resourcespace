@@ -135,10 +135,7 @@ if ($config_windows)
 $output=run_command($shell_exec_cmd);
 
 
-
-
-
-if ($ffmpeg_get_par && !$snapshotcheck) {
+if ($ffmpeg_get_par && (isset($snapshotcheck)&&$snapshotcheck==false)) {
   if ($par > 0 && $par <> 1) {
     # recreate snapshot with correct PAR
     $width=$sourcewidth;
