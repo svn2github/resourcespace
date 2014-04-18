@@ -115,7 +115,9 @@ if ($height % 2) {$height++;}
 $tmp = hook("ffmpegbeforeexec", "", array($ffmpeg_fullpath, $file));
 if (is_array($tmp) and $tmp) {list($width, $height) = $tmp;}
 
-$shell_exec_cmd = $ffmpeg_fullpath . " $ffmpeg_global_options -y -t $ffmpeg_preview_seconds -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} " . escapeshellarg($targetfile);
+if (!hook("replacetranscode","",array($file,$targetfile,$ffmpeg_global_options,$ffmpeg_preview_options,$width,$height))){
+	$shell_exec_cmd = $ffmpeg_fullpath . " $ffmpeg_global_options -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -t $ffmpeg_preview_seconds -s {$width}x{$height} " . escapeshellarg($targetfile);
+}
 
 if (isset($ffmpeg_command_prefix))
     {$shell_exec_cmd = $ffmpeg_command_prefix . " " . $shell_exec_cmd;}
@@ -131,6 +133,10 @@ if ($config_windows)
 	}
 
 $output=run_command($shell_exec_cmd);
+
+
+
+
 
 if ($ffmpeg_get_par && !$snapshotcheck) {
   if ($par > 0 && $par <> 1) {

@@ -508,11 +508,10 @@ else if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $
 	if ($extension=="mxf")
 		{ $snapshottime = 0; }
 
-        if(!hook("previewpskipthumb")): 
+   if(!hook("previewpskipthumb","",array($file))){
      
    $output = run_command($ffmpeg_fullpath . " $ffmpeg_global_options -i " . escapeshellarg($file) . " -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target));
-        endif;
-
+	}
         if (file_exists($target)) 
             {
             $newfile=$target;
