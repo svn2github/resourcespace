@@ -117,25 +117,25 @@ if (is_array($tmp) and $tmp) {list($width, $height) = $tmp;}
 
 if (!hook("replacetranscode","",array($file,$targetfile,$ffmpeg_global_options,$ffmpeg_preview_options,$width,$height))){
 	$shell_exec_cmd = $ffmpeg_fullpath . " $ffmpeg_global_options -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -t $ffmpeg_preview_seconds -s {$width}x{$height} " . escapeshellarg($targetfile);
+
+
+	if (isset($ffmpeg_command_prefix))
+		{$shell_exec_cmd = $ffmpeg_command_prefix . " " . $shell_exec_cmd;}
+
+	$tmp = hook("ffmpegmodpreparams", "", array($shell_exec_cmd, $ffmpeg_fullpath, $file));
+	if ($tmp) {$shell_exec_cmd = $tmp;}
+
+	if ($config_windows)
+		{
+		# Windows systems have a hard time with the long paths used for video generation. This work-around creates a batch file containing the command, then executes that.
+		file_put_contents(get_temp_dir() . "/ffmpeg.bat",$shell_exec_cmd);
+		$shell_exec_cmd=get_temp_dir() . "/ffmpeg.bat";
+		}
+
+	$output=run_command($shell_exec_cmd);
 }
 
-if (isset($ffmpeg_command_prefix))
-    {$shell_exec_cmd = $ffmpeg_command_prefix . " " . $shell_exec_cmd;}
-
-$tmp = hook("ffmpegmodpreparams", "", array($shell_exec_cmd, $ffmpeg_fullpath, $file));
-if ($tmp) {$shell_exec_cmd = $tmp;}
-
-if ($config_windows)
-	{
-	# Windows systems have a hard time with the long paths used for video generation. This work-around creates a batch file containing the command, then executes that.
-	file_put_contents(get_temp_dir() . "/ffmpeg.bat",$shell_exec_cmd);
-	$shell_exec_cmd=get_temp_dir() . "/ffmpeg.bat";
-	}
-
-$output=run_command($shell_exec_cmd);
-
-
-if ($ffmpeg_get_par && (isset($snapshotcheck)&&$snapshotcheck==false)) {
+if ($ffmpeg_get_par && (isset($snapshotcheck) && $snapshotcheck==false)) {
   if ($par > 0 && $par <> 1) {
     # recreate snapshot with correct PAR
     $width=$sourcewidth;
