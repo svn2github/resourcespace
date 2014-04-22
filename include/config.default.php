@@ -2317,3 +2317,6 @@ $ffmpeg_no_new_snapshots=false;
 
 # Set the following to false to disable permission checking before showing edit_all link in collection bar and on Manage my collections page, useful as this can be a performance hit if there are many resources in collections
 $edit_all_checkperms=false;
+
+# Force fields with display templates to obey "order by" numbering.
+$force_display_template_order_by=false;

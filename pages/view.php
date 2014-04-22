@@ -1158,7 +1158,9 @@ for ($n=0;$n<count($fields);$n++)
 		}
 	}
 ?><?php hook("extrafields2");?>
-<?php echo $extra?><div class="clearerleft"></div>
+<?php if(!$force_display_template_order_by){ ?> <div class="clearerleft"></div> <?php } ?>
+<?php echo $extra?>
+<?php if($force_display_template_order_by){ ?> <div class="clearerleft"></div> <?php } ?>
 </div>
 </div>
 <?php hook("renderafterresourcedetails"); ?>
