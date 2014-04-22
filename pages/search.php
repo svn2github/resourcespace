@@ -367,7 +367,7 @@ if ($display_user_rating_stars && $k=="")
 	<?php
 	}
 
-	if ($allow_reorder && $display!="list" && $order_by=="relevance") {
+	if ($allow_reorder && $display!="list") {
 ?>
 	<script type="text/javascript">
 	
