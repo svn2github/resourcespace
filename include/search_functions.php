@@ -841,7 +841,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# View Collection
 	if (substr($search,0,11)=="!collection")
 		{
-		if ($orig_order=="relevance") {$order_by="c.sortorder asc,c.date_added desc,r.ref";}
+		if (true) {$order_by="c.sortorder asc,c.date_added desc,r.ref";}
 		$colcustperm=$sql_join;
 		$colcustfilter=$sql_filter; // to avoid allowing this sql_filter to be modified by the $access_override search in the smart collection update below!!!
 		
