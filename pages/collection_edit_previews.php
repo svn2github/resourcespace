@@ -53,6 +53,7 @@ if (getval("tweak","")!="")
 		break;
 		case "restore":
 		foreach ($resources as $resource){
+			$ref=$resource['ref'];
 			create_previews($resource['ref'],false,$resource["file_extension"]);
 		}
 		break;
