@@ -423,7 +423,9 @@ if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get
 <?php } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
-<?php if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1) { ?><div class="PageInformal"><?php echo $lang['resourceistranscoding']?></div><?php } ?>
+<?php if (!hook("replaceresourceistranscoding")){
+	if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1) { ?><div class="PageInformal"><?php echo $lang['resourceistranscoding']?></div><?php }
+	} //end hook replaceresourceistrancoding ?>
 
 <?php hook("renderbeforeresourceview"); ?>
 
