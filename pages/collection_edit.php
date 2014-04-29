@@ -256,7 +256,7 @@ if (checkperm("h") && $collection['public']==1)
 		
 		<div class="clearerleft"> </div>
 		</div>		
-		<?php
+		<?php hook("morehomepagepublishoptions");
 		}
 	}
 ?>
