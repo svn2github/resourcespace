@@ -989,7 +989,7 @@ function delete_resource($ref)
 			}
 		}
 
-	hook("beforedeleteresourcefromdb");
+	hook("beforedeleteresourcefromdb","",array($ref));
 
 	# Delete all database entries
 	sql_query("delete from resource where ref='$ref'");
