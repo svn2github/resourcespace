@@ -873,6 +873,8 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	
 	$templatevars['fromusername']=$fromusername;
 	$templatevars['from_name']=$from_name;
+	$templatevars['expires_date']=nicedate($expires);
+	$templatevars['expires_days']=round((strtotime($expires)-strtotime('now'))/(60*60*24));
 	
 	if(count($reflist)>1){$subject=$applicationname.": ".$lang['mycollections'];}
 	else { $subject=$applicationname.": ".$collectionname;}

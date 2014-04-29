@@ -900,6 +900,8 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		$templatevars['message']=$message;
 		$templatevars['resourcename']=$resourcename;
 		$templatevars['from_name']=$from_name;
+		$templatevars['expires_date']=nicedate($expires);
+		$templatevars['expires_days']=round((strtotime($expires)-strtotime('now'))/(60*60*24));
 		
 		# Build message and send.
 		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"] . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
