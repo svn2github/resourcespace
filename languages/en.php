@@ -1791,3 +1791,9 @@ $lang["download_usage_option_blocked"]="This usage option is not available. Plea
 
 $lang["tagcloudtext"]="With which metadata terms have people been tagging resources? The more a term has been used, the larger it appears in the cloud.<br /><br />You may also click on any term below to execute the search.";
 $lang["tagcloud"]="Tag Cloud";
+
+$lang["email_link_expires_never"]="This link will never expire.";
+$lang['email_link_expires_date']="This link will expire on ";
+$lang['email_link_expires_days']="Link expires: ";
+$lang['expire_days']='days';
+$lang['expire_day']='day';

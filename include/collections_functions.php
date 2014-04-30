@@ -875,8 +875,6 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	
 	$templatevars['fromusername']=$fromusername;
 	$templatevars['from_name']=$from_name;
-	$templatevars['expires_date']=nicedate($expires);
-	$templatevars['expires_days']=round((strtotime($expires)-strtotime('now'))/(60*60*24));
 	
 	if(count($reflist)>1){$subject=$applicationname.": ".$lang['mycollections'];}
 	else { $subject=$applicationname.": ".$collectionname;}
@@ -963,6 +961,28 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		//$list.=$htmlbreak;	
 		$templatevars['list']=$list;
 		$templatevars['from_name']=$from_name;
+		if(isset($k)){
+			if($expires==""){
+				$templatevars['expires_date']=$lang["email_link_expires_never"];
+				$templatevars['expires_days']=$lang["email_link_expires_never"];
+			}
+			else{
+				$day_count=round((strtotime($expires)-strtotime('now'))/(60*60*24));
+				$templatevars['expires_date']=$lang['email_link_expires_date'].nicedate($expires);
+				$templatevars['expires_days']=$lang['email_link_expires_days'].$day_count;
+				if($day_count>1){
+					$templatevars['expires_days'].=" ".$lang['expire_days'].".";
+				}
+				else{
+					$templatevars['expires_days'].=" ".$lang['expire_day'].".";
+				}
+			}
+		}
+		else{
+			# Set empty expiration tempaltevars
+			$templatevars['expires_date']='';
+			$templatevars['expires_days']='';
+		}
 		if ($emailcollectionmessageexternal ){
 			$template=($themeshare)?"emailthemeexternal":"emailcollectionexternal";
 		}
@@ -974,7 +994,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,$template,$templatevars,$from_name,$cc);
 		$viewlinktext=$origviewlinktext;
 		}
-		
+	hook("additional_email_collection","",array($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access,$expires,$useremail,$from_name,$cc,$themeshare,$themename,$themeurlsuffix,$template,$templatevars));
 	# Return an empty string (all OK).
 	return "";
 	}
