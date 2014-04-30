@@ -188,6 +188,6 @@ if ($noattach=="" && $alternative==-1) # Only for downloads (not previews)
 	{
 	if (file_exists($tmpfile)){delete_exif_tmpfile($tmpfile);}
 	}
-
+hook('beforedownloadresourceexit');
 exit();
 
