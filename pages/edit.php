@@ -308,7 +308,7 @@ jQuery(document).ready(function()
 		if($ctrls_to_save)
 			{?>
 			jQuery(document).bind('keydown',function (e)
-				{
+				{				
 				if (!(e.which == 115 && (e.ctrlKey || e.metaKey)) && !(e.which == 83 && (e.ctrlKey || e.metaKey)) && !(e.which == 19) )
 					{
 					return true;
@@ -376,8 +376,26 @@ function HideHelp(field)
 <?php
 # Function to automatically save the form on field changes, if configured.
 if ($edit_autosave) { ?>
+
+
+// Disable autosave on enter keypress as form will be submitted by this keypress anyway which can result in duplicate data
+jQuery(document).bind('keydown',function (e)
+	{				
+	if (e.which == 13)
+		{
+		preventautosave=true;
+		}
+	else
+		{		
+		preventautosave=false;	
+		}
+	})
+
 function AutoSave(field)
 	{
+	if (preventautosave) {   
+		return false;
+		}	
 	jQuery('#AutoSaveStatus' + field).html('<?php echo $lang["saving"] ?>');
 	jQuery('#AutoSaveStatus' + field).show();
 
