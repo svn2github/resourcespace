@@ -484,7 +484,7 @@ if ($submitted != "")
 		rmdir(get_temp_dir(false,$id));
 		collection_log($collection,"Z","","-".$size);
 		}
-
+	hook('beforedownloadcollectionexit');
 	exit();
 	}
 include "../include/header.php";
