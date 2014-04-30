@@ -900,8 +900,28 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		$templatevars['message']=$message;
 		$templatevars['resourcename']=$resourcename;
 		$templatevars['from_name']=$from_name;
-		$templatevars['expires_date']=nicedate($expires);
-		$templatevars['expires_days']=round((strtotime($expires)-strtotime('now'))/(60*60*24));
+		if(isset($k)){
+			if($expires==""){
+				$templatevars['expires_date']=$lang["email_link_expires_never"];
+				$templatevars['expires_days']=$lang["email_link_expires_never"];
+			}
+			else{
+				$day_count=round((strtotime($expires)-strtotime('now'))/(60*60*24));
+				$templatevars['expires_date']=$lang['email_link_expires_date'].nicedate($expires);
+				$templatevars['expires_days']=$lang['email_link_expires_days'].$day_count;
+				if($day_count>1){
+					$templatevars['expires_days'].=" ".$lang['expire_days'].".";
+				}
+				else{
+					$templatevars['expires_days'].=" ".$lang['expire_day'].".";
+				}
+			}
+		}
+		else{
+			# Set empty expiration tempaltevars
+			$templatevars['expires_date']='';
+			$templatevars['expires_days']='';
+		}
 		
 		# Build message and send.
 		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"] . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
@@ -911,7 +931,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		resource_log($resource,"E","",$notes=$unames[$n]);
 		
 		}
-		
+	hook("additional_email_resource","",array($resource,$resourcename,$fromusername,$userlist,$message,$access,$expires,$useremail,$from_name,$cc,$templatevars));
 	# Return an empty string (all OK).
 	return "";
 	}
