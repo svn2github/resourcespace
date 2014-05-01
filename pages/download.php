@@ -128,7 +128,7 @@ if ($noattach=="")
 		}
 
 	if ($download_filename_id_only){$filename=$ref . "." . $ext;}
-
+	
 	if (isset($download_filename_field))
 		{
 		$newfilename=get_data_by_field($ref,$download_filename_field);
