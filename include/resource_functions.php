@@ -2983,21 +2983,8 @@ function resource_type_config_override($resource_type)
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function update_archive_status($resource,$archive)
+    {
+    sql_query("update resource set archive='" . escape_check($archive) .  "' where ref='" . escape_check($resource) . "'");  
+    }
 
