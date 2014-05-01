@@ -172,7 +172,7 @@ jQuery(document).ready( function ()
 
 <?php if ($home_themeheaders && $enable_themes) { ?>
 	<div class="HomePanel"><div class="HomePanelIN HomePanelThemes<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
-	<h2><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/themes.php"><?php echo $lang["themes"]?></a></h2>
+	<h1><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/themes.php"><?php echo $lang["themes"]?></a></h1>
 	<span><?php echo text("themes")?></span>
 	<br />	<br />
 	<select id="themeselect" onChange="CentralSpaceLoad(this.value,true);">
@@ -196,7 +196,7 @@ jQuery(document).ready( function ()
 
 <?php if ($home_themes && $enable_themes) { ?>
 	<div class="HomePanel"><div class="HomePanelIN HomePanelThemes<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
-	<h2><a href="<?php echo $baseurl_short?>pages/themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"]?></a></h2>
+	<h1><a href="<?php echo $baseurl_short?>pages/themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"]?></a></h1>
 	<span><?php echo text("themes")?></span>
 	</div>
 	<div class="PanelShadow"></div>
@@ -205,7 +205,7 @@ jQuery(document).ready( function ()
 	
 <?php if ($home_mycollections && !checkperm("b") && $userrequestmode!=2 && $userrequestmode!=3) { ?>
 	<div class="HomePanel"><div class="HomePanelIN HomePanelMyCollections<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
-	<h2><a href="<?php echo $baseurl_short?>pages/collection_manage.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycollections"]?></a></h2>
+	<h1><a href="<?php echo $baseurl_short?>pages/collection_manage.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycollections"]?></a></h1>
 	<span><?php echo text("mycollections")?></span>
 	</div>
 	<div class="PanelShadow">
@@ -215,7 +215,7 @@ jQuery(document).ready( function ()
 
 <?php if ($home_advancedsearch) { ?>
 	<div class="HomePanel"><div class="HomePanelIN HomePanelAdvancedSearch<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
-	<h2><a href="<?php echo $baseurl_short?>pages/search_advanced.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["advancedsearch"]?></a></h2>
+	<h1><a href="<?php echo $baseurl_short?>pages/search_advanced.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["advancedsearch"]?></a></h1>
 	<span><?php echo text("advancedsearch")?></span>
 	</div>
 	<div class="PanelShadow"></div>
@@ -224,7 +224,7 @@ jQuery(document).ready( function ()
 
 <?php if ($home_mycontributions && (checkperm("d") || (checkperm("c") && checkperm("e0")))) { ?>
 	<div class="HomePanel"><div class="HomePanelIN HomePanelMyContributions<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
-	<h2><a href="<?php echo $baseurl_short?>pages/contribute.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycontributions"]?></a></h2>
+	<h1><a href="<?php echo $baseurl_short?>pages/contribute.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycontributions"]?></a></h1>
 	<span><?php echo text("mycontributions")?></span>
 	</div>
 	<div class="PanelShadow"></div>
@@ -233,7 +233,7 @@ jQuery(document).ready( function ()
 
 <?php if ($home_helpadvice) { ?>
 	<div class="HomePanel"><div class="HomePanelIN HomePanelHelp<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
-	<h2><a href="<?php echo $baseurl_short?>pages/help.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["helpandadvice"]?></a></h2>
+	<h1><a href="<?php echo $baseurl_short?>pages/help.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["helpandadvice"]?></a></h1>
 	<span><?php echo text("help")?></span>
 	</div>
 	<div class="PanelShadow"></div>
@@ -249,7 +249,7 @@ if (isset($custom_home_panels))
 		if (!hook("panelperm")) { 
 		?>
 		<div class="HomePanel"><div class="HomePanelIN<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>" <?php if ($custom_home_panels[$n]["text"]=="") {?>style="min-height:0;"<?php } ?>>
-		<h2><a href="<?php echo $custom_home_panels[$n]["link"] ?>" <?php if (isset($custom_home_panels[$n]["additional"])){ echo $custom_home_panels[$n]["additional"];} ?>><?php echo i18n_get_translated($custom_home_panels[$n]["title"]) ?></a></h2>
+		<h1><a href="<?php echo $custom_home_panels[$n]["link"] ?>" <?php if (isset($custom_home_panels[$n]["additional"])){ echo $custom_home_panels[$n]["additional"];} ?>><?php echo i18n_get_translated($custom_home_panels[$n]["title"]) ?></a></h1>
 		<span><?php echo i18n_get_translated($custom_home_panels[$n]["text"]) ?></span>
 		</div>
 		<div class="PanelShadow"></div>

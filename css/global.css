@@ -293,6 +293,7 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 .HomePanel {margin:0px 15px 15px 0px;width: 220px;float: left;} 
 .HomePanelIN {padding: 15px;min-height: 120px;}
 .HomePanel h2 {font-size: 1.75em;padding-left: 14px;display:block;margin: 5px 0px;}
+.HomePanel h1 {font-size: 1.75em;padding: 0.1em 0;padding-left: 14px;display:block;margin: 5px 0px;}
 .HomePanel p {margin: 0; padding: 5px 0 4px 0;}
 .HomePicturePanel {    margin:0px 15px 10px 0px;float: left;width: 519px;}
 .HomePicturePanelIN img {width:517px; height:350px;}
@@ -547,6 +548,10 @@ li.plupload_droptext
     padding-left: 17px;
     cursor: pointer;
     }
+
+h2.CollapsibleSectionHead {
+	padding: 0.1em 0 0.5em 17px;
+}
 
 .CollapsibleSection 
     {

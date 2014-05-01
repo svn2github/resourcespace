@@ -10,7 +10,7 @@ if ($ref<0)
 		}
 	else
 		{		
-		?></div><h1 class="CollapsibleSectionHead"><?php echo $lang["upload-options"] ?></h1>
+		?></div><h2 class="CollapsibleSectionHead"><?php echo $lang["upload-options"] ?></h2>
 		<div class="CollapsibleSection" id="UploadOptionsSection">
 		<?php
 		}

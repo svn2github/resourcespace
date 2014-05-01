@@ -626,7 +626,7 @@ if ($header=="" && !isset($themes[0]))
 <div class="clearerleft"> </div>
 <div class="BasicsBox">
 	<h2>&nbsp;</h2>
-    <h1><?php echo $lang["findpubliccollection"]?></h1>
+    <h2><?php echo $lang["findpubliccollection"]?></h2>
     <p class="tight"><?php echo text("findpublic")?></p>
     <p><a href="<?php echo $baseurl_short?>pages/collection_public.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>

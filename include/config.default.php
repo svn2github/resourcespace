@@ -1947,6 +1947,8 @@ $display_swf=false;
 
 # show the title of the resource being viewed in the browser title bar
 $show_resource_title_in_titlebar = false;
+# When displaying title of the resource, set the following to true if you want to show Upload resources or Edit resource when on edit page:
+$distinguish_uploads_from_edits=false;
 
 # add direct link to original file for each image size
 $direct_link_previews = false;

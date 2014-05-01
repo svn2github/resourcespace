@@ -132,9 +132,30 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
     // place resource titles
     else if (in_array($pagename,$resource_title_pages) && !isset($_GET['collection']) && !isset($_GET['java'])) /* for edit page */{
         $title =  str_replace('"',"''",i18n_get_translated(get_data_by_field($ref,$view_title_field)));
-        echo "<script language='javascript'>\n";
+        echo "<script type=\"text/javascript\" language='javascript'>\n";
+        
         if ($pagename=="edit"){$title=$lang['action-edit']." - ".$title;}
+        
         echo "document.title = \"$applicationname - $title\";\n";
+
+        if($pagename=='edit' && $distinguish_uploads_from_edits) {
+
+			$js = sprintf("
+				jQuery(document).ready(function() {
+					var h1 = jQuery(\"h1\").text();
+
+					if(h1 == \"%s\") {
+						document.title = \"%s - \" + h1;\n
+					}
+				});
+			",
+				$lang["addresourcebatchbrowser"],
+				$applicationname);
+
+			echo $js;
+
+        }
+        
         echo "</script>";
     }
 
