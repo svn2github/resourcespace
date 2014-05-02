@@ -60,6 +60,8 @@ class ldapAuth
 		$this->ldapconn = ldap_connect($this->ldapconfig['host'])
 	    	or die($lang['posixldapauth_could_not_connect_to_ldap_server']);
 		ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+		// set referals to 0 to search the entire AD! - Added April 2014
+		
 		if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Connected to LDAP Server " . $this->ldapconfig['host']); }
 		return 1;
 	}
@@ -85,10 +87,19 @@ class ldapAuth
 	*/
 	function auth($username,$pass,$ldapType,$userContainer)
 	{
+		// for testing we will mod this so it searches rom the AD base dn, hopefully the referalls 
+		//  setting will enable this.
+		
 		global $lang;
 
 		$this->userName = $username;
 		$this->ldappass = $pass;
+		
+		if ($ldapType == 1)
+		{
+			ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
+		}
+		
 		
 		if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Attempting to Auth " . $this->userName); }
 		
@@ -111,10 +122,15 @@ class ldapAuth
 				$usercn = stristr($username,"@",true);
 				if ($this->ldap_debug) { error_log ("user cn = ". $usercn ); }
 				// set the search filter * attributes we want
-				$filter="(samaccountname=".$usercn.")";
+				
+				// removed to specify user principal name as this might be more reliable. April 2014
+				//$filter="(samaccountname=".$usercn.")";
+				
+				$filter="(userprincipalname=".$username.")";
 				$attributes=array("dn","cn");
 				
-				// search
+				// search from the base dn down for the user:
+				if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Searching  " . $this->ldapconfig['basedn'] . " for " . $filter); }
 				if (!($search = ldap_search($this->ldapconn, $this->ldapconfig['basedn'], $filter,$attributes))) {
 				     die($lang['posixldapauth_unable_to_search_ldap_server']);
 				}	
@@ -296,9 +312,11 @@ class ldapAuth
 			{
 				case 1:
 					$userField = "userName";
+					error_log(  __FILE__ . " " . __METHOD__ . " " . __LINE__ ." - Switching member field to userName ");
 					break;
 				case 2:
 					$userField = "ldaprdn";
+					error_log(  __FILE__ . " " . __METHOD__ . " " . __LINE__ ." - Switching member field to ldapRDN ");
 					break;
 				default:
 					error_log(  __FILE__ . " " . __METHOD__ . " " . __LINE__ ." - Unknown Member Field Type: ".$memFieldType);	
@@ -404,8 +422,10 @@ class ldapAuth
 		
 		error_log(  __FILE__ . " " . __METHOD__ . " " . __LINE__ ." - ".$info["count"]." entries returned");
 		
+		$totalGroups = $info["count"];
+		
 		// create an array to return of each entry.
-		for ($i=0; $i < $info["count"]; $i++) 
+		for ($i=0; $i < $totalGroups; $i++) 
 		{
 			// map the attributes to the return array.
 	    	foreach ($attributes as $rField)
