@@ -832,7 +832,7 @@ $custom_access=true;
 # 		If the search keyword is numeric then the resource with the matching ID will be shown
 # If false:
 #		The search for the number provided will be performed as with any keyword. However, if a resource with a matching ID number if found then this will be shown first.
-$config_search_for_number=true;
+$config_search_for_number=false;
 
 # Display the download as a 'save as' link instead of redirecting the browser to the download (which sometimes causes a security warning).
 # For the Opera and Internet Explorer 7 browsers this will always be enabled regardless of the below setting as these browsers block automatic downloads by default.
