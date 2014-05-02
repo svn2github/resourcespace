@@ -6,9 +6,9 @@ include "../../../include/general.php";
 $usergroups = sql_query("SELECT ref,name FROM usergroup");
 /* Set the following debug flag to true for more debugging information
 */
-$ldap_debug = true;
+$ldap_debug = false;
 // Set the following to true to dump the post array to a file for debugging.
-//$dump_to_file=true;
+$dump_to_file=false;
 
 if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Pre submit check "); }
 
