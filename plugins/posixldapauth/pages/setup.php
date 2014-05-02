@@ -7,16 +7,24 @@ $usergroups = sql_query("SELECT ref,name FROM usergroup");
 /* Set the following debug flag to true for more debugging information
 */
 $ldap_debug = true;
+// Set the following to true to dump the post array to a file for debugging.
+//$dump_to_file=true;
 
+if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Pre submit check "); }
 
-// for test
-//$ldapauth['ldapgroupfield'] = 'memberUid';
-
-if (getval("submit","")!="") {
-
+// The following submit check doesn't seem to work reliably IIS servers
+//if (getval("submit","")!="") {
+if (isset($_POST["submit"])) {
+	if ($ldap_debug) { 
+		error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Submit detected"); 
+		if ($dump_to_file) {
+			error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Dumping POST array to file "); 
+			file_put_contents('post_array.txt', print_r($_POST, true));
+		}
+	}
 	$ldapauth=array();
 	$ldapauth['enable'] = isset($_POST['enable']);
-        $ldapauth['ldapserver'] = $_POST['ldapserver'];
+    $ldapauth['ldapserver'] = $_POST['ldapserver'];
 	$ldapauth['port'] = $_POST['port'];
 	$ldapauth['basedn']= $_POST['basedn'];
 	$ldapauth['loginfield'] = $_POST['loginfield'];
@@ -36,6 +44,7 @@ if (getval("submit","")!="") {
 	if (isset($_POST['ldapGroupName']))
 	{
 		$ldapGroupCount = count($_POST['ldapGroupName']);
+		if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." LDAP GROUP NAMES found, ".$ldapGroupCount." Groups "); }
 		
 		for ($ti= 0; $ti < $ldapGroupCount; $ti++)
 		{
@@ -44,15 +53,19 @@ if (getval("submit","")!="") {
 			$ldapauth['groupmap'][$grpName]['enabled'] = isset($_POST['ldapGroupEnable'][$grpName]);
 		}
 	}
+	//echo "<pre>";
+	//print_r($_POST);
+	//echo "</pre>";
 		
 	set_plugin_config("posixldapauth", $ldapauth);
-
-	redirect("pages/team/team_home.php");
+//	exit;
+	//redirect("pages/team/team_home.php");
 
 } else {
-	
+	if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Submit not Detected, attempting to load config from DB "); }
 	$ldapauth = get_plugin_config("posixldapauth");
 	if ($ldapauth == null){
+		if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." LDAP config is Null, setting defaults "); }
 	    $ldapauth['enable'] = false;
 	    $ldapauth['ldapserver'] = 'localhost';
 	    $ldapauth['port'] = '389';
@@ -70,14 +83,17 @@ if (getval("submit","")!="") {
 	}
 	if (!isset($ldapauth['ldapgroupcontainer']))
 	{
+		if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Group Conatiner not set, setting to blank "); }
 		$ldapauth['ldapgroupcontainer'] = "";	
 	}
 	if (!isset($ldapauth['ldapmemberfield']))
 	{
+		if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Member Field not set, setting to blank "); }
 		$ldapauth['ldapmemberfield'] = "";	
 	}
 	if (!isset($ldapauth['ldapmemberfieldtype']))
 	{
+		if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Member Field Type not set, setting to 0 "); }
 		$ldapauth['ldapmemberfieldtype'] = 0;	
 	}
 }
@@ -85,6 +101,7 @@ if (getval("submit","")!="") {
 //$ldapauth['ldaptype'] = 1;
 if ($ldapauth['enable'])
 {
+  if ($ldap_debug) { error_log(   __FILE__ . " " . __METHOD__ . " " . __LINE__ ." Auth is enabled "); }
   $enabled = "checked";
   // we get a list of groups from the LDAP;
   include_once ("../hooks/ldap_class.php");
@@ -217,7 +234,7 @@ include "../../../include/header.php";
 	  			<select id='ldapmemberfieldtype' name='ldapmemberfieldtype' style="width:150px">
 	  			<option value=0 <?php if($ldapauth['ldapmemberfieldtype'] == 0) {echo "selected"; } ?> ><?php echo $lang['posixldapauth_default'] ?></option>
 	  			<option value=1 <?php if($ldapauth['ldapmemberfieldtype'] == 1) {echo "selected"; } ?> ><?php echo $lang['posixldapauth_user_name'] ?></option>
-	  			<option value=1 <?php if($ldapauth['ldapmemberfieldtype'] == 2) {echo "selected"; } ?> ><?php echo $lang['posixldapauth_rdn'] ?></option>
+	  			<option value=2 <?php if($ldapauth['ldapmemberfieldtype'] == 2) {echo "selected"; } ?> ><?php echo $lang['posixldapauth_rdn'] ?></option>
 	  			</select> 
 	  			<?php echo $lang['posixldapauth_use_to_change_content_of_group_member_field'] ?>
 	  		</td>
@@ -325,8 +342,8 @@ include "../../../include/header.php";
 						}
 					}
 					echo ' />'; 
-					echo "</td>";
-					echo "</tr>";
+					echo "</td>\r\n";
+					echo "</tr>\r\n";
 				}
 		        
 		        
@@ -358,6 +375,7 @@ include "../../../include/header.php";
         <input id="lang_could_not_bind" name="lang_could_not_bind" type="hidden" value="<?php echo $lang['posixldapauth_passed']; ?>" size="30" />
         <input id="lang_test_passed" name="lang_test_passed" type="hidden" value="<?php echo $lang['posixldapauth_tests_passed_save_settings_and_set_group_mapping'] ; ?>" size="30" />
         <input id="lang_test_failed" name="lang_test_failed" type="hidden" value="<?php echo $lang['posixldapauth_tests_failed_check_settings_and_test_again']; ?>" size="30" />
+        
         <input type="submit" name="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;"/>
 		
     </form>
