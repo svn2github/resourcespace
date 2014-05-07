@@ -2322,3 +2322,6 @@ $edit_all_checkperms=false;
 
 # Force fields with display templates to obey "order by" numbering.
 $force_display_template_order_by=false;
+
+# Option to turn off email sharing.
+$email_sharing=true;
