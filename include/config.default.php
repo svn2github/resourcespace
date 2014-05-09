@@ -842,6 +842,12 @@ $save_as=false;
 $allow_share=true;
 $enable_theme_category_sharing=false;
 
+# Use a custom stylesheet when sharing externally.
+# Note: $custom_stylesheet_external_share_path can be set anywhere inside websites' root folder.
+# eg.: '/plugins/your plugin name/css/external_shares.css'
+$custom_stylesheet_external_share = false;
+$custom_stylesheet_external_share_path = '';
+
 # Hide display of internal URLs when sharing collections. Intended to prevent inadvertently sending external users invalid URLs
 $hide_internal_sharing_url=false;
 

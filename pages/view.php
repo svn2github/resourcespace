@@ -371,6 +371,13 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 	
 	}
 
+// Add custom CSS for external users: 
+if($k !='' && $custom_stylesheet_external_share) {
+    $css_path = dirname(__FILE__) . '/..' . $custom_stylesheet_external_share_path;
+    if(file_exists($css_path)) {
+        echo '<link href="' . $baseurl . $custom_stylesheet_external_share_path . '" rel="stylesheet" type="text/css" media="screen,projection,print" />';
+    }
+}
 ?>
 
 <!--Panel for record and details-->
