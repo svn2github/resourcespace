@@ -273,7 +273,7 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng" || $extension==
 as Apple Pages, Apple Keynote, and Apple Numbers. 
    ---------------------------------------- 
 */ 
-if ( (($extension=="pages") || ($extension=="numbers") || ($extension=="key")) && !isset($newfile)) 
+if ( (($extension=="pages") || ($extension=="numbers") || (!isset($unoconv_path) && $extension=="key")) && !isset($newfile)) 
 	{ 
     run_command("unzip -p ".escapeshellarg($file)." \"QuickLook/Thumbnail.jpg\" > $target");
 	$newfile = $target; 
