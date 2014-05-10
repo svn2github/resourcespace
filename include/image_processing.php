@@ -990,8 +990,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					//echo $runcommand."</br>";
 					
 					}
-				}
-				} // end hook replacewatermarkcreation
+				}// end hook replacewatermarkcreation
+				} 
 			}
 		# For the thumbnail image, call extract_mean_colour() to save the colour/size information
 		$target=@imagecreatefromjpeg(get_resource_path($ref,true,"thm",false,"jpg",-1,1,false,"",$alternative));
