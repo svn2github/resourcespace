@@ -500,7 +500,7 @@ function ajax_download()
 	document.getElementById('progress').innerHTML='<br /><br /><?php echo $lang["collectiondownloadinprogress"];?>';
 	document.getElementById('progress3').style.display='none';
 	document.getElementById('progressdiv').style.display='block';
-	jQuery('#downloadsize').attr('disabled', 'disabled');
+	<?php if (!$use_zip_extension){?>jQuery('#downloadsize').attr('disabled', 'disabled');<?php } ?>
 	jQuery('#text').attr('disabled', 'disabled');
 	jQuery('#archivesettings').attr('disabled', 'disabled');
 
