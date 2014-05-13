@@ -297,8 +297,4 @@ if ($search_titles)
 		$search_title.='</div>';
 		if ($display!="list"){$search_title_links.= '<br /><br />';}
 	}
-
-    if (!is_array($result) && empty($collections)) {
-        $search_title = '<h1 class="searchcrumbs"><a href="' . $baseurl_short . 'pages/search.php">No resources found</a></h1>';
-    }
 }  
