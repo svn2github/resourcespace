@@ -1261,6 +1261,8 @@ function swap_collection_order($resource1,$resource2,$collection)
 
 function update_collection_order($neworder,$collection,$offset=0)
 	{
+	debug("BANG update_collection_order (" . $collection . " " . $offset .")");
+	
 	if (!is_array($neworder)) {
 		exit ("Error: invalid input to update collection function.");
 	}

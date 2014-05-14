@@ -190,8 +190,14 @@ hook("searchstringprocessing");
 //setcookie("search",$search); # store the search in a cookie if not a special search
 $offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("saved_offset",$offset);}
 if ((!is_numeric($offset)) || ($offset<0)) {$offset=0;}
-$order_by=getvalescaped("order_by",$default_sort);if (strpos($search,"!")===false) {setcookie("saved_order_by",$order_by);}
-if ($order_by=="") {$order_by=$default_sort;}
+$order_by=getvalescaped("order_by","");if (strpos($search,"!")===false) {setcookie("saved_order_by",$order_by);}
+if ($order_by=="")
+	{
+	if (substr($search,0,11)=="!collection") // We want the default collection order to be applied
+		{$order_by="relevance";}
+	else
+		{$order_by=$default_sort;}
+	}
 $per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page);
 $archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
 $jumpcount=0;
@@ -209,9 +215,9 @@ else {$daylimit="";} // clear cookie for new search
 
 # Most sorts such as popularity, date, and ID should be descending by default,
 # but it seems custom display fields like title or country should be the opposite.
-$default_sort="DESC";
-if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
-$sort=getvalescaped("sort",$default_sort);setcookie("saved_sort",$sort);
+$default_sort_order="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort_order="ASC";}
+$sort=getvalescaped("sort",$default_sort_order);setcookie("saved_sort",$sort);
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 
 ## If displaying a collection
@@ -311,18 +317,7 @@ if (substr($search,0,11)=="!collection")
 		{
 		$allow_reorder=true;
 		}
-/*
-
-	if ($display_collection_title)
-		{
-        if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
-        $collection_title = '<div align="left"><h1><span id="coltitle'.$collection.'">'.$collection_tag.$collectiondata ["name"].'</span></h1> ';
-        if ($k==""){$collection_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">'.$lang["selectcollection"].'</a>';}
-        if ($k==""&&$preview_all){$collection_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
-        $collection_title.='</div>';
-        if ($display!="list"){$collection_title_links.= '<br /><br />';}
-		}
-*/	}
+	}
 
 # Include function for reordering
 if ($allow_reorder && $display!="list")
@@ -537,7 +532,11 @@ if (true) # Always show search header now.
 	if ($search!="!duplicates" && $search!="!unused") # Ordering enabled for collections/themes too now at the request of N Ward / Oxfam
 		{
 		$rel=$lang["relevance"];
-		if(!hook("replaceasadded")) { if (strpos($search,"!")!==false) {$rel=$lang["asadded"];} }
+		if(!hook("replaceasadded"))
+			{
+			if (isset($collection)){$rel=$lang["collection_order_description"];}
+			elseif (strpos($search,"!")!==false) {$rel=$lang["asadded"];}
+			}
 		?>
 		<div class="InpageNavLeftBlock "><?php echo $lang["sortorder"]?>:<br /><?php if ($order_by=="relevance") {?><span class="Selected"><?php echo $rel?></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=relevance&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $rel?></a><?php } ?>
 		

@@ -1797,3 +1797,4 @@ $lang['email_link_expires_date']="This link will expire on ";
 $lang['email_link_expires_days']="Link expires: ";
 $lang['expire_days']='days';
 $lang['expire_day']='day';
+$lang["collection_order_description"]="Collection order";
