@@ -64,12 +64,14 @@ function ldapsetDisplayFields()
 		hideObject('trootdn');	
 		hideObject('trootpass');
 		hideObject('taddomain');
+		hideObject('tadusesingledomain');
 		showObject('tldapgroupcontainer');
 		showObject('tloginfield');
 	} else {
 		showObject('trootdn');
 		showObject('trootpass');
 		showObject('taddomain');
+		showObject('tadusesingledomain');
 		hideObject('tldapgroupcontainer');
 		hideObject('tloginfield');
 		

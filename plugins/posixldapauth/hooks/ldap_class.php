@@ -85,15 +85,20 @@ class ldapAuth
 	* @return bool
 	* @access public
 	*/
-	function auth($username,$pass,$ldapType,$userContainer)
+	function auth($username,$pass,$ldapType,$userContainer,$singleDomain=false)
 	{
 		// for testing we will mod this so it searches rom the AD base dn, hopefully the referalls 
 		//  setting will enable this.
 		
 		global $lang;
-
+		if ($singleDomain) 
+		{
+			$username = $username . "@" . $this->ldapconfig['addomain'];
+		}
 		$this->userName = $username;
 		$this->ldappass = $pass;
+		
+		
 		
 		if ($ldapType == 1)
 		{
@@ -124,9 +129,9 @@ class ldapAuth
 				// set the search filter * attributes we want
 				
 				// removed to specify user principal name as this might be more reliable. April 2014
-				//$filter="(samaccountname=".$usercn.")";
+				$filter="(samaccountname=".$usercn.")";
 				
-				$filter="(userprincipalname=".$username.")";
+				//$filter="(userprincipalname=".$username.")";
 				$attributes=array("dn","cn");
 				
 				// search from the base dn down for the user:

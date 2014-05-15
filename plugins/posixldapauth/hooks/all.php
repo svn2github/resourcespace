@@ -68,6 +68,14 @@ function HookPosixldapauthAllExternalauth($uname, $pword)
 		// pass the config to the class
 		$ldapConf['host'] = $ldapauth['ldapserver'];
 		$ldapConf['basedn'] = $ldapauth['basedn'];
+		$ldapConf['addomain']	= $ldapauth['addomain'];
+		
+		if ($ldapauth['adusesingledomain']) {
+			$singleDomain=true;
+		} else {
+			$singleDomain=false;
+		}
+		
 		$objLdapAuth = new ldapAuth($ldapConf);	
 		if ($ldap_debug) { $objLdapAuth->ldap_debug = true; };
 		
@@ -76,7 +84,7 @@ function HookPosixldapauthAllExternalauth($uname, $pword)
 		{
 			
 			// see if we can bind with the username and password.
-			if($objLdapAuth->auth($uname,$pword,$ldapauth['ldaptype'],$ldapauth['ldapusercontainer']))
+			if($objLdapAuth->auth($uname,$pword,$ldapauth['ldaptype'],$ldapauth['ldapusercontainer'],$singleDomain))
 			{
 				if ($ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " auth to ldap server is successful ") ; }
 			
