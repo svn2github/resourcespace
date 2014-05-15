@@ -735,6 +735,10 @@ $disable_quoted_printable_enc=false;
 # if watermarks are enabled, we must assume restricted access requires the equivalent of the "w" permission
 # $watermark="gfx/watermark.png";
 
+# Set to true to watermark thumb/preview for groups with the 'w' permission even when access is 'open'.
+# This makes sense if $terms_download is active.
+$watermark_open=false;
+
 # Simple search even more simple
 # Set to 'true' to make the simple search bar more basic, with just the single search box.
 $basic_simple_search=false;

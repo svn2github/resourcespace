@@ -2434,11 +2434,12 @@ function download_summary($resource)
 function check_use_watermark(){
 	# access status must be available prior to this.
 	# This function checks whether to use watermarks or not.
-	# Two cases:
+	# Three cases:
 	# if access is restricted and the group has "w"
+	# if $watermark_open is true and the group has "w"
 	# if $watermark is set and it's an external share.
-	global $access,$k,$watermark;
-	if ($access==1 &&    (checkperm('w') || ($k!="" && isset($watermark)) )    ){return true;} else {return false;} 
+	global $access,$k,$watermark,$watermark_open;
+	if (($watermark_open || $access==1) && (checkperm('w') || ($k!="" && isset($watermark)))){return true;} else {return false;} 
 }
 
 function autocomplete_blank_fields($resource)
