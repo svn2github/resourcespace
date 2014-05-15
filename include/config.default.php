@@ -2333,3 +2333,6 @@ $force_display_template_order_by=false;
 
 # Option to turn off email sharing.
 $email_sharing=true;
+
+# Hide "Generate URL" from the collection_share.php page?
+$hide_collection_share_generate_url=false;
