@@ -157,10 +157,13 @@ if ($ldapauth['groupbased'])
 else
   $groupbased = "";
 
-if ($ldapauth['adusesingledomain'])
+
+if (isset($ldapauth['adusesingledomain']) && $ldapauth['adusesingledomain'])
+{
   $adusesingledomain= "checked";
-else
+} else {
   $adusesingledomain = "";
+}
 
 $headerinsert.="
 	<script src=\"ldap_functions.js\" language=\"JavaScript1.2\"></script>
