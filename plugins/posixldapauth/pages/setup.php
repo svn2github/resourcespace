@@ -6,7 +6,7 @@ include "../../../include/general.php";
 $usergroups = sql_query("SELECT ref,name FROM usergroup");
 /* Set the following debug flag to true for more debugging information
 */
-$ldap_debug = false;
+$ldap_debug = true;
 // Set the following to true to dump the post array to a file for debugging.
 $dump_to_file=false;
 
@@ -40,7 +40,8 @@ if (isset($_POST["submit"])) {
 	$ldapauth['ldapgroupcontainer'] = $_POST['ldapgroupcontainer'];
 	$ldapauth['ldapmemberfield'] = $_POST['ldapmemberfield'];
 	$ldapauth['ldapmemberfieldtype'] = $_POST['ldapmemberfieldtype'];
-	
+	$ldapauth['adusesingledomain'] = (isset($_POST['adusesingledomain']));
+
 	if (isset($_POST['ldapGroupName']))
 	{
 		$ldapGroupCount = count($_POST['ldapGroupName']);
@@ -80,6 +81,7 @@ if (isset($_POST["submit"])) {
 		$ldapauth['rootdn'] ="admin@example.com";
 		$ldapauth['rootpass'] = "";
 		$ldapauth['addomain'] = "example.com";
+		$ldapauth['adusesingledomain'] = false;
 	}
 	if (!isset($ldapauth['ldapgroupcontainer']))
 	{
@@ -155,6 +157,10 @@ if ($ldapauth['groupbased'])
 else
   $groupbased = "";
 
+if ($ldapauth['adusesingledomain'])
+  $adusesingledomain= "checked";
+else
+  $adusesingledomain = "";
 
 $headerinsert.="
 	<script src=\"ldap_functions.js\" language=\"JavaScript1.2\"></script>
@@ -212,6 +218,13 @@ include "../../../include/header.php";
 	   		<th><label for="addomian"><?php echo $lang['posixldapauth_ad_domain'] ?></label></th>
 	   		<td><input id="addomain"  name="addomain" type="text" value="<?php if (isset($ldapauth['addomain'])) { echo $ldapauth['addomain']; }?>" size="30" /></td>
 	   	</tr>
+	   	<tr id="tadusesingledomain">
+	   		<th><label for="adusesingledomain"><?php echo "Use Single Domain" ?></label></th>
+	   		<td>
+	   		<input  id="adusesingledomain"  name="adusesingledomain" type="checkbox" <?php  echo $adusesingledomain; ?> /></td>
+	   	</tr>
+	   	
+	   	
 	   	<tr id="tbasedn">
 	    	<th><label for="basedn"><?php echo $lang['posixldapauth_base_dn'] ?></label></th>
 	    	<td><input id="basedn" name="basedn" type="text" value="<?php echo $ldapauth['basedn']; ?>" size="50" /></td>
