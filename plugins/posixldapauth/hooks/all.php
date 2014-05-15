@@ -189,9 +189,18 @@ function HookPosixldapauthAllExternalauth($uname, $pword)
 						// we return false!	- we ned to modify this to use the group set if group based is not enabled!
 						if (!($match)) return false;
 						// Create the user
-						$ref=new_user($nuser['username']);
-						if (!$ref) return false; # Shouldn't ever get here.  Something strange happened
+						if ($ldap_debug) { error_log(  __METHOD__ . " " . __LINE__ . "  Creating User: " . $nuser['username']) ; }
 						
+						$ref=new_user($nuser['username']);
+						
+						if ($ldap_debug) { error_log(  __METHOD__ . " " . __LINE__ . "  User Ref: " . $ref) ; }
+						if (!$ref) 
+						{
+							if ($ldap_debug) { 
+								error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . "  Group based User creation ref NOT RETURNED, SOMETHING WEIRD HAPPENED!"); 
+								}
+							return false; # Shouldn't ever get here.  Something strange happened
+						}
 						// Update with information from LDAP
 						sql_query('update user set password="'.$nuser['password'].
 							'", fullname="'.$nuser['fullname'].'", email="'.$nuser['email'].'", usergroup="'.
@@ -203,13 +212,20 @@ function HookPosixldapauthAllExternalauth($uname, $pword)
 
 						// now unbind
 						$objLdapAuth->unBind();	
+						
+						if ($ldap_debug) { error_log(  __METHOD__ . " " . __LINE__ . "  returning true : successful user creation!") ; }
 						return true;
 					}
 				}	else {
 						// non group based user creation.
 	                    $ref=new_user($nuser['username']);
-	                    if (!$ref) return false; # Shouldn't ever get here.  Something strange happened
-	
+	                   	if (!$ref) 
+						{
+							if ($ldap_debug) { 
+								error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . "  NON Group based User creation ref NOT RETURNED, SOMETHING WEIRD HAPPENED!"); 
+							} 
+							return false; # Shouldn't ever get here.  Something strange happened
+						}
 	                    // Update with information from LDAP
 	                    sql_query('update user set password="'.$nuser['password'].
 	                            '", fullname="'.$nuser['fullname'].'", email="'.$nuser['email'].'", usergroup="'.

@@ -268,7 +268,10 @@ class ldapAuth
 
 		$found = false;
 		
-		$gid = "(cn=" . $groupName . ")";
+		// escape the string for AD
+		$escGroupName = $this->escapeStrForAD($groupName); 
+		
+		$gid = "(&(objectCategory=group)(cn=" . $escGroupName . "))";
 		//error_log(  __FILE__ . " " . __METHOD__ . " " . __LINE__ ." - memFieldType: ".$memFieldType);
 		
 		// check to see what type of directory we are using, and set parameters accordingly.
@@ -328,35 +331,42 @@ class ldapAuth
 			}			
 		}
 		
+		if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Group search filter =  " . $gid); }
+		
 		// search for the group
 		if (!($search = ldap_search($this->ldapconn, $this->ldapconfig['basedn'], $gid ,$attributes))) {
 			if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Group NOT Found " . $gid); }
 			die($lang['posixldapauth_unable_to_search_ldap_server']);
 			
 		}
-		if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Group WAS Found " . $gid); }
+		if ($this->ldap_debug) { error_log( __METHOD__ . " " . __LINE__ . " Group WAS Found " . $gid); }
 		
 		$info = ldap_get_entries($this->ldapconn, $search);
 		
 		// cycle through the group memebers to see if we can find the user.
 		// we check each part of the returned array to find the member field identify as the array might not be in order!
 		// This also helps prevent it bombing if it can't find the member field identifier, ie it's been overridden wrongly.
-		if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Searching for user  " . $this->$userField ); }
+		if ($this->ldap_debug) { error_log(  __METHOD__ . " " . __LINE__ . " Searching for user  " . $this->$userField ); }
+		//echo "<pre>";
+		//print_r($info);
 		
 		foreach ($info as $level1) 
 		{
+			
 			if ( (isset ($level1[0])) && ($level1[0] == $memField) )
 			{
 				// we've found the members array, so cycle through them.
 				foreach ($level1[$memField] as $member)
 				{
-					if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " Group Member Found " . $member ); }
+					if ($this->ldap_debug) { error_log( __METHOD__ . " " . __LINE__ . " Group Member Found " . $member ); }
 					// $this->$userfiled will be expanded to either $this->ldaprdn or $this->userName
 					if ($member == $this->$userField) { 
 						$found = true; 
-						if ($this->ldap_debug) { error_log( __FILE__ . " " . __METHOD__ . " " . __LINE__ . " MATCH FOUND " . $member . " : " . $this->$userField); }
+						if ($this->ldap_debug) { error_log( __METHOD__ . " " . __LINE__ . " MATCH FOUND " . $member . " : " . $this->$userField); }
 						}		
 				}
+			} else {
+				if ($this->ldap_debug) { error_log(  __METHOD__ . " " . __LINE__ . ": NO MEMBER FIELD FOUND IN GROUP"); }
 			}
 		}
 
@@ -364,6 +374,7 @@ class ldapAuth
 		{
 			return 1;
 		} else {
+			if ($this->ldap_debug) { error_log(  __METHOD__ . " " . __LINE__ . " User: " . $this->$userField ." NOT FOUND IN GROUP " . $gid); }
 			return 0;
 		}
 	}
@@ -443,6 +454,29 @@ class ldapAuth
 		}
 		return $retGroups;
 		
+	}
+
+	
+	function escapeStrForAD($str) 
+	{
+		/* There are a number of characters that need to be escaped to construct the search filter. these are:
+			
+				ASCII character	Escape sequence substitute
+				*	\2a
+				(	\28
+				)	\29
+				\	\5c
+				NUL	\00
+				/	\2f		
+		
+		*/
+		$escaped = str_replace ( "\\","\\5c",$str );
+		$escaped = str_replace ( "(","\\28",$escaped );
+		$escaped = str_replace ( ")","\\29",$escaped );
+		$escaped = str_replace ( "*","\\2a",$escaped );
+		$escaped = str_replace ( "*","\\2a",$escaped );
+		
+		return $escaped;	
 	}
 	
 }
