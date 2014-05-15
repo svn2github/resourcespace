@@ -1328,17 +1328,11 @@ function write_metadata($path, $ref, $uniqid="")
                     else {$writevalue = get_data_by_field($ref, $write_to[$i]['ref']);}
                     break;
                 case 4:
-                    # Date: write datetype fields as ISO 8601 date ("c")
+                case 6:
+                    # Date / Expiry Date: write datetype fields in exiftool preferred format
                     $datecheck=get_data_by_field($ref, $write_to[$i]['ref']);
                     if ($datecheck!=""){
-						$writevalue = date("c", strtotime($datecheck));
-					} 
-                    break;
-                case 6:
-                    # Expiry Date: write datetype fields as ISO 8601 date ("c")
-                                        $datecheck=get_data_by_field($ref, $write_to[$i]['ref']);
-                    if ($datecheck!=""){
-						$writevalue = date("c", strtotime($datecheck));
+						$writevalue = date("Y:m:d H:i:sP", strtotime($datecheck));
 					} 
                     break;
                 case 9:
@@ -1368,14 +1362,25 @@ function write_metadata($path, $ref, $uniqid="")
                     case "keywords":
                         # Keywords shall be written one at a time and not all together.
                         $keywords = explode(",", $writevalue); # "keyword1,keyword2, keyword3" (with or with spaces)
-                        foreach ($keywords as $keyword)
-                            {
-                            # Trim leading space if any.
-                            if (substr($keyword, 0, 1)==" ") {$keyword = substr($keyword, 1);}
-                            # Convert the data to UTF-8 if not already.
-                            if (!$exiftool_write_omit_utf8_conversion && (!isset($mysql_charset) || (isset($mysql_charset) && strtolower($mysql_charset)!="utf8"))){$keyword = mb_convert_encoding($keyword, 'UTF-8');}
-                            $command.= escapeshellarg("-" . $group_tag . "=" . htmlentities($keyword, ENT_QUOTES, "UTF-8")) . " ";
-                            }
+                        if (implode("", $keywords) == "")
+                        	{
+                        	# If no keywords set, write empty keyword field
+                        	$command.= escapeshellarg("-" . $group_tag . "=") . " ";
+                        	}
+                        else
+                        	{
+                        	# Only write non-empty keywords
+	                        foreach ($keywords as $keyword)
+	                            {
+	                            $keyword = trim($keyword);
+	                            if ($keyword != "")
+	                            	{
+		                            # Convert the data to UTF-8 if not already.
+		                            if (!$exiftool_write_omit_utf8_conversion && (!isset($mysql_charset) || (isset($mysql_charset) && strtolower($mysql_charset)!="utf8"))){$keyword = mb_convert_encoding($keyword, 'UTF-8');}
+		                            $command.= escapeshellarg("-" . $group_tag . "=" . htmlentities($keyword, ENT_QUOTES, "UTF-8")) . " ";
+		                        	}
+	                            }
+	                        }
                         break;
                     default:
                         # Convert the data to UTF-8 if not already.
