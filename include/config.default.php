@@ -1462,6 +1462,8 @@ $themes_category_navigate_levels=false;
 # If a theme header contains a single collection, allow the title to be a direct link to the collection.
 # Drilling down is still possible via the >Expand tool, which replaces >Select when a deeper level exists
 $themes_single_collection_shortcut=false;
+# Show only collections that have resources the current user can see?
+$themes_with_resources_only=false;
 
 # optional columns in themes collection lists
 $themes_column_sorting=false; // only works with themes_category_split_pages

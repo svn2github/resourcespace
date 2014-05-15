@@ -658,7 +658,7 @@ function get_themes($themes=array(""),$subthemes=false)
 	{	
 	$themes_order_by=getvalescaped("themes_order_by",getvalescaped("saved_themes_order_by","name"));
 	$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));	
-	global $themes_column_sorting;
+	global $themes_column_sorting,$themes_with_resources_only;
 	if (!$themes_column_sorting){$themes_order_by="name";$sort="ASC";} // necessary to avoid using a cookie that can't be changed if this is turned off.
 		
 	# Return a list of themes under a given header (theme category).
@@ -686,6 +686,17 @@ function get_themes($themes=array(""),$subthemes=false)
 		else if ($sort=="DESC"){usort($collections,'collections_comparator_desc');}
 	}
 	
+	if ($themes_with_resources_only) {
+		$collections_orig = $collections;
+		$collections = array();
+		for ($i=0;$i<count($collections_orig);$i++) {
+			$resources = do_search('!collection'.$collections_orig[$i]['ref']);
+			if (count($resources) > 0) {
+				$collections[] = $collections_orig[$i];
+			}
+		}
+	}	
+
 	return $collections;
 	}
 }
