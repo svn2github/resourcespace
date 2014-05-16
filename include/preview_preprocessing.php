@@ -720,6 +720,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!
 				
 			# Add a watermarked image too?
 			global $watermark;
+			if (!hook("replacewatermarkcreation","",array($ref,$size,$n,$alternative))){
     			if (isset($watermark) && $alternative==-1)
     				{
 				$path=get_resource_path($ref,true,$size,false,"",-1,$n,true,"",$alternative);
@@ -731,6 +732,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!
 				}
 				
 			}
+		}
 		
 		# Splitting of PDF files to multiple resources
 		global $pdf_split_pages_to_resources;
