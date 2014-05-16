@@ -63,7 +63,7 @@ $s=explode(",",$access);
   
 <input name="save" type="submit" value="<?php echo $lang["save"] ?>">
 </form>
-
+</div>
 
 
         
