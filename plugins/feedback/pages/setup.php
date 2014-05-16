@@ -89,7 +89,7 @@ include "../../../include/header.php";
   <h2>&nbsp;</h2>
   <h1><?php echo $lang["feedback_user feedback_configuration"]?></h1>
 
-  <div class="VerticalNav">
+
  <form id="form1" name="form1" method="post" action="">
 
 <p><?php echo $lang["feedback_pop-up_prompt_box_text"]?><br />
