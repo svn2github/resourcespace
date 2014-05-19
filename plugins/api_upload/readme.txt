@@ -11,7 +11,8 @@ archive=[integer]       archive status (default 0 active)
 collection=[integer]	collection to upload to
 prettyfieldnames=true   feedback shows field names instead of 'field#' (default '')
 contributedby=[true|false]  feedback shows Contributed By Username (default 'true')
-
+collectionlist=[true|false] return writeable collections for this user in JSON format (default 'false')
+collectionlist_search=[string]  filter the collectionlist with a searchstring
 
 For example, a watched "upload" folder could use a mac hotfolder with an custom upload script.
 
