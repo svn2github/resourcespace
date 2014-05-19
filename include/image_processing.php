@@ -16,7 +16,7 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 
 	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
 	
-	hook ("removeannotations");
+	hook ("removeannotations","",array($ref));
 
 	$exiftool_fullpath = get_utility_path("exiftool");
 	
