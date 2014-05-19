@@ -120,7 +120,7 @@ for ($n=0;$n<count($users);$n++)
 <div class="clearerleft"> </div>
 </div>
 
-<?php if (file_exists("plugins/research_request.php")) { include "plugins/research_request.php"; } ?>
+<?php if (file_exists(dirname(__FILE__) . "/../plugins/research_request.php")) { include dirname(__FILE__) . "/../plugins/research_request.php"; } ?>
 
 
 <div class="QuestionSubmit">
