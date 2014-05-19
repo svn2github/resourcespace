@@ -630,7 +630,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	
 	# Locate imagemagick.
     $convert_fullpath = get_utility_path("im-convert");
-    if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'");}
+    if ($convert_fullpath==false) {debug("ERROR: Could not find ImageMagick 'convert' utility at location '$imagemagick_path'"); return false;}
 
 	# Handle alternative image file generation.
 	global $image_alternatives;
@@ -837,7 +837,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 		# Locate imagemagick.
         $identify_fullpath = get_utility_path("im-identify");
-        if ($identify_fullpath==false) {exit("Could not find ImageMagick 'identify' utility at location '$imagemagick_path'.");}
+        if ($identify_fullpath==false) {debug("ERROR: Could not find ImageMagick 'identify' utility at location '$imagemagick_path'."); return false;}
 
 		# Get image's dimensions.
 		$identcommand = $identify_fullpath . ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
@@ -869,7 +869,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 			# Locate imagemagick.
             $convert_fullpath = get_utility_path("im-convert");
-            if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'.");}
+            if ($convert_fullpath==false) {debug("ERROR: Could not find ImageMagick 'convert' utility at location '$imagemagick_path'."); return false;}
 
 			if( $prefix == "cr2:" || $prefix == "nef:" || $extension=="png" || $extension=="gif") {
 			    $flatten = "";
@@ -1497,7 +1497,7 @@ function extract_text($ref,$extension,$path="")
 		{
 		$command=$antiword_path . "/antiword";
 		if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
-		if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
+		if (!file_exists($command)) {debug("ERROR: Antiword executable not found at '$antiword_path'"); return false;}
 		$text=run_command($command . " -m UTF-8 \"" . $path . "\"");
 		}
 	
@@ -1545,7 +1545,7 @@ function extract_text($ref,$extension,$path="")
 		{
 		$command=$pdftotext_path . "/pdftotext";
 		if (!file_exists($command)) {$command=$pdftotext_path . "\pdftotext.exe";}
-		if (!file_exists($command)) {exit("pdftotext executable not found at '$pdftotext_path'");}
+		if (!file_exists($command)) {debug("ERROR: pdftotext executable not found at '$pdftotext_path'"); return false;}
 		$text=run_command($command . " -enc UTF-8 \"" . $path . "\" -");
 		
 		}
