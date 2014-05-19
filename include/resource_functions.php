@@ -924,7 +924,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		}
 		
 		# Build message and send.
-		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"] . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
+		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"]."\n\n" . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
 		send_mail($emails[$n],$subject,$body,$fromusername,$useremail,"emailresource",$templatevars,$from_name,$cc);
 		
 		# log this
@@ -2438,8 +2438,8 @@ function check_use_watermark(){
 	# if access is restricted and the group has "w"
 	# if $watermark_open is true and the group has "w"
 	# if $watermark is set and it's an external share.
-	global $access,$k,$watermark,$watermark_open;
-	if (($watermark_open || $access==1) && (checkperm('w') || ($k!="" && isset($watermark)))){return true;} else {return false;} 
+	global $access,$k,$watermark,$watermark_open,$pagename;
+	if (($watermark_open && ($pagename == "preview" || $pagename == "view") || $access==1) && (checkperm('w') || ($k!="" && isset($watermark)))){return true;} else {return false;} 
 }
 
 function autocomplete_blank_fields($resource)
