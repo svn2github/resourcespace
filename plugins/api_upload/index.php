@@ -13,22 +13,7 @@ include(dirname(__FILE__)."/../../include/authenticate.php");
 // required: check that this plugin is available to the user
 if (!in_array("api_upload",$plugins)){die("no access");}
 
-$collectionlist=getvalescaped("collectionlist","false");
-if ($collectionlist=="true"){
-	// return a list of collections the user can upload to
-	$themes_in_my_collections=true;
-	$collection_array=array();
-	$collections=get_user_collections($userref,getvalescaped('collectionlist_search',''));
-	foreach ($collections as $collection){
-		if (collection_writeable($collection['ref'])){
-			$collection_array[]=$collection;
-		}
-	}
-	header('Content-type: application/json');
-	echo json_encode($collection_array);
-	exit();
-}
-
+hook("additionalapiuploadmethods");
 
 if (isset($_FILES['userfile'])){
 	
