@@ -31,7 +31,7 @@ function generate_transform_preview($ref){
                 $colorspace2 =  " -colorspace sRGB ";
         }
 
-        $command .= " \"$transformsourcepath\" +matte -delete 1--1 -flatten $colorspace1 -geometry 450 $colorspace2 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
+        $command .= " \"$transformsourcepath\"[0] +matte -flatten $colorspace1 -geometry 450 $colorspace2 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
         run_command($command);
 
 
