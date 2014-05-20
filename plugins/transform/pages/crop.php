@@ -197,7 +197,7 @@ if (strtoupper($new_ext)=="PNG" || strtoupper($new_ext)=="GIF")
     $commandprefix = " -background transparent ";
     }
     
-$command .= $commandprefix . " \"$originalpath\" ";
+$command .= $commandprefix . " \"$originalpath\"[0] ";
 
 
 $resolution=getval("resolution","",TRUE);
@@ -209,10 +209,7 @@ if ($resolution!="")
 	
 // below is a hack to make this work with multilayer images
 // the result will always be a flattened single-layer image
-// update: add -delete 1--1 to only use the first layer. This 
-// is important because in some cases an embedded preview gets treated
-// as a second layer and messes up the image if you just flatten.
-$command .= "-delete 1--1 -flatten ";
+$command .= "-flatten ";
 
 $command .= $colorspace1;
 
