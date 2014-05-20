@@ -2521,6 +2521,19 @@ function make_username($name)
 		$name=substr($s[$n],0,1) . $name;
 		}
 	$name=safe_file_name(strtolower($name));
+
+	# Create fullname usernames:
+	global $user_account_fullname_create;
+	if($user_account_fullname_create) {
+		$name = '';
+
+		foreach ($s as $name_part) {
+			$name .= '_' . $name_part;
+		}
+		
+		$name = substr($name, 1);
+		$name = safe_file_name($name);
+	}
 	
 	# Check for uniqueness... append an ever-increasing number until unique.
 	$unique=false;

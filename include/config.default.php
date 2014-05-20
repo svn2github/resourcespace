@@ -1192,6 +1192,10 @@ $auto_approve_accounts=false;
 
 $auto_approve_domains=array();
 
+# Allows for usernames to be created based on full name (eg. John Mac -> John_Mac)
+# Note: user_account_auto_creation needs to be true.
+$user_account_fullname_create=false;
+
 # Display a larger preview image on the edit page?
 $edit_large_preview=true;
 
