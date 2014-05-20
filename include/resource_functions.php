@@ -2242,7 +2242,13 @@ function filter_match($filter,$name,$value)
 	foreach ($s as $condition)
 		{
 		$s=explode("=",$condition);
-		$checkname=$s[0];
+		# Support for "NOT" matching. Return results only where the specified value or values are NOT set.
+		$checkname=$s[0];$filter_not=false;
+		if (substr($checkname,-1)=="!")
+			{
+			$filter_not=true;
+			$checkname=substr($checkname,0,-1);# Strip off the exclamation mark.
+			}
 		if ($checkname==$name)
 			{
 			$checkvalues=$s[1];
@@ -2251,9 +2257,12 @@ function filter_match($filter,$name,$value)
 			$v=trim_array(explode(",",strtoupper($value)));
 			foreach ($s as $checkvalue)
 				{
-				if (in_array($checkvalue,$v)) {return 2;}
+				if (in_array($checkvalue,$v))
+					{
+					return $filter_not ? 1 : 2;
+					}
 				}
-			return 1;
+			return $filter_not ? 2 : 1;
 			}
 		}
 	return 0;
