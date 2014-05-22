@@ -3754,3 +3754,27 @@ function get_editable_states($userref)
 		}
 	return $editable_states;
 	}
+        
+function validate_html($html)
+    {
+    # Returns true if $html is valid HTML, otherwise an error string describing the problem.
+    
+    $parser=xml_parser_create();
+    xml_parse_into_struct($parser,"<div>" . str_replace("&","&amp;",$html) . "</div>",$vals,$index);
+    $errcode=xml_get_error_code($parser);
+    if ($errcode!==0)
+	{
+	$line=xml_get_current_line_number($parser);
+        
+	$error=htmlspecialchars(xml_error_string($errcode)) . "<br>Line: " . $line . "<br><br>";
+	$s=explode("\n",$html);
+	$error.= "<pre>" . trim(htmlspecialchars(@$s[$line-2])) . "<br>";
+	$error.= "<strong>" . trim(htmlspecialchars(@$s[$line-1])) . "</strong><br>";
+	$error.= trim(htmlspecialchars(@$s[$line])) . "<br></pre>";		
+	return $error;
+	}
+    else
+        {
+        return true;
+        }
+    }
