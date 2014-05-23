@@ -161,7 +161,9 @@ jQuery(document).ready( function ()
     <h1><?php echo text("welcometitle")?></h1>
     <p><?php echo text("welcometext")?></p>
 </div>
-<?php } ?>
+<?php } 
+hook("homebeforehomepicpanelend");
+?>
 </div>
 <?php } # End of hook replaceslideshow
 ?>
