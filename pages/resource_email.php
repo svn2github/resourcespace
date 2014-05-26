@@ -35,6 +35,7 @@ if (getval("save","")!="")
 	$access=getvalescaped("access","");
 	if (hook("modifyresourceaccess")){$access=hook("modifyresourceaccess");}
 	$expires=getvalescaped("expires","");
+	$list_recipients=getvalescaped("list_recipients",""); if ($list_recipients=="") {$list_recipients=false;} else {$list_recipients=true;}
 	
 	$use_user_email=getvalescaped("use_user_email",false);
 	if ($use_user_email){$user_email=$useremail;} else {$user_email="";} // if use_user_email, set reply-to address
@@ -42,7 +43,7 @@ if (getval("save","")!="")
 	
 	if (getval("ccme",false)){ $cc=$useremail;} else {$cc="";}
 	
-	$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$access,$expires,$user_email,$from_name,$cc);
+	$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$access,$expires,$user_email,$from_name,$cc,$list_recipients);
 	if ($errors=="")
 		{
 		# Log this			
@@ -86,6 +87,13 @@ include "../include/header.php";
 <label for="users"><?php echo $lang["emailtousers"]?></label><?php include "../include/user_select.php"; ?>
 <div class="clearerleft"> </div>
 <?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
+</div>
+<?php } ?>
+
+<?php if ($list_recipients){?>
+<div class="Question">
+<label for="list_recipients"><?php echo $lang["list-recipients-label"]; ?></label><input type=checkbox id="list_recipients" name="list_recipients">
+<div class="clearerleft"> </div>
 </div>
 <?php } ?>
 

@@ -822,7 +822,7 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent,$levels)
 	}
 
 if (!function_exists("email_collection")){
-function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="",$useremail="",$from_name="",$cc="",$themeshare=false,$themename="",$themeurlsuffix="")
+function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="",$useremail="",$from_name="",$cc="",$themeshare=false,$themename="",$themeurlsuffix="",$list_recipients=false)
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
@@ -1000,7 +1000,13 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		else {
 			$template=($themeshare)?"emailtheme":"emailcollection";
 		}
-		$body=$templatevars['fromusername']." " . (($emailcollectionmessageexternal)?$externalmessage:$internalmessage) . "\n\n" . $templatevars['message']."\n\n" . $viewlinktext ."\n\n".$templatevars['list'];
+		if (count($emails > 1) && $list_recipients===true) {
+			$body = $lang["list-recipients"] ."\n". implode("\n",$emails) ."\n\n";
+		}
+		else {
+			$body = "";
+		}
+		$body.=$templatevars['fromusername']." " . (($emailcollectionmessageexternal)?$externalmessage:$internalmessage) . "\n\n" . $templatevars['message']."\n\n" . $viewlinktext ."\n\n".$templatevars['list'];
 		#exit ($body . "<br>" . $viewlinktext);	
 		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,$template,$templatevars,$from_name,$cc);
 		$viewlinktext=$origviewlinktext;

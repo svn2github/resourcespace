@@ -165,7 +165,7 @@ $mydesc = escape_check($description);
 # Is this a download only?
 $download=(getval("download","")!="");
 
-if (!$download && !$original && getval("slideshow","")=="")
+if ($cropper_enable_alternative_files && !$download && !$original && getval("slideshow","")=="")
 	{
 	$newfile=add_alternative_file($ref,$mytitle,$mydesc,'','',0,escape_check($alt_type));
 	$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);

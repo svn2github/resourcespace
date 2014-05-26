@@ -93,13 +93,14 @@ if (getval("save","")!="")
 	$access=getvalescaped("access",-1);
 	$expires=getvalescaped("expires","");	
 	$feedback=getvalescaped("request_feedback","");	if ($feedback=="") {$feedback=false;} else {$feedback=true;}
+	$list_recipients=getvalescaped("list_recipients",""); if ($list_recipients=="") {$list_recipients=false;} else {$list_recipients=true;}
 	
 	$use_user_email=getvalescaped("use_user_email",false);
 	if ($use_user_email){$user_email=$useremail;} else {$user_email="";} // if use_user_email, set reply-to address
 	if (!$use_user_email){$from_name=$applicationname;} else {$from_name=$userfullname;} // make sure from_name matches email
 	
 	if (getval("ccme",false)){ $cc=$useremail;} else {$cc="";}
-	$errors=email_collection($ref,i18n_get_collection_name($collection),$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name,$cc,$themeshare,$themename,$linksuffix);
+	$errors=email_collection($ref,i18n_get_collection_name($collection),$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name,$cc,$themeshare,$themename,$linksuffix,$list_recipients);
 
 	if ($errors=="")
 		{
@@ -236,6 +237,13 @@ else
 <?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
 </div>
 <?php } #end hook replaceemailtousers ?>
+
+<?php if ($list_recipients){?>
+<div class="Question">
+<label for="list_recipients"><?php echo $lang["list-recipients-label"]; ?></label><input type=checkbox id="list_recipients" name="list_recipients">
+<div class="clearerleft"> </div>
+</div>
+<?php } ?>
 
 <?php if(!hook("replaceemailaccessselector")){?>
 <div class="Question" id="question_access">

@@ -1581,6 +1581,8 @@ $lang["horizontal"] = "Horizontal";
 $lang["vertical"] = "Vertical";
 
 $lang["cc-emailaddress"] = "CC %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]
+$lang["list-recipients-label"] = "List all recipients in e-mail?";
+$lang["list-recipients"] = "This message was sent to the following e-mail addresses:";
 
 $lang["sort"] = "Sort";
 $lang["sortcollection"] = "Sort collection";

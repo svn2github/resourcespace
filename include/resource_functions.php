@@ -843,7 +843,7 @@ function update_field($resource,$field,$value)
 	}
 
 if (!function_exists("email_resource")){	
-function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="",$useremail="",$from_name="",$cc="")
+function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="",$useremail="",$from_name="",$cc="",$list_recipients=false)
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 
@@ -924,7 +924,13 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		}
 		
 		# Build message and send.
-		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"]."\n\n" . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
+		if (count($emails > 1) && $list_recipients===true) {
+			$body = $lang["list-recipients"] ."\n". implode("\n",$emails) ."\n\n";
+		}
+		else {
+			$body = "";
+		}
+		$body.=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"]."\n\n" . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
 		send_mail($emails[$n],$subject,$body,$fromusername,$useremail,"emailresource",$templatevars,$from_name,$cc);
 		
 		# log this

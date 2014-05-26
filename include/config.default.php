@@ -1909,6 +1909,9 @@ $upload_java_popup=false;
 # Allow a user to CC oneself when sending resources or collections.
 $cc_me=false;
 
+# Allow listing of all recipients when sending resources or collection.
+$list_recipients=false;
+
 # How many keywords should be included in the search when a single keyword expands via a wildcard. Setting this too high may cause performance issues.
 $wildcard_expand_limit=50;
 
