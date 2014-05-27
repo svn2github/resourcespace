@@ -7,7 +7,8 @@ function HookFormat_chooserCollection_downloadReplaceuseoriginal()
 	global $format_chooser_output_formats, $format_chooser_profiles, $lang, $use_zip_extension;
 
 	$disabled = '';
-	if (!empty(getvalescaped('submitted', null)))
+	$submitted = getvalescaped('submitted', null);
+	if (!empty($submitted))
 		$disabled = ' disabled="disabled"';
 
 	# Replace the existing ajax_download() with our own that disables our widgets, too
