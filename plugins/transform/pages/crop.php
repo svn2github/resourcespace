@@ -331,7 +331,7 @@ $newfileheight = $newfiledimensions[1];
 
 // generate previews if needed
 global $alternative_file_previews;
-if ($alternative_file_previews && !$download && !$original && getval("slideshow","")=="" && !$cropperestricted)
+if ($cropper_enable_alternative_files && $alternative_file_previews && !$download && !$original && getval("slideshow","")=="" && !$cropperestricted)
 	{
 	create_previews($ref,false,$new_ext,false,false,$newfile);
 	}
@@ -379,7 +379,7 @@ if ($mpcalc > 0){
 if (strlen($mydesc) > 0){ $deschyphen = ' - '; } else { $deschyphen = ''; }
 	
 // Do something with the final file:
-if (!$download && !$original && getval("slideshow","")=="" && !$cropperestricted){
+if ($cropper_enable_alternative_files && !$download && !$original && getval("slideshow","")=="" && !$cropperestricted){
     // we are supposed to make an alternative
     
 	// note that we will now record transformation applied to alt files for future use
