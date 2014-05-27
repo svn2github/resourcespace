@@ -318,7 +318,7 @@ function get_utility_version($utilityname)
             else {$expected = true;}
             break;
         case "ffmpeg":
-            if (strpos(strtolower($version), "ffmpeg")===false) {$expected = false;}
+            if (strpos(strtolower($version), "ffmpeg")===false && strpos(strtolower($version), "avconv")===false ) {$expected = false;}
             else {$expected = true;}
             break;
         case "exiftool":
