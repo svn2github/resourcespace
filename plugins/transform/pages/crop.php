@@ -349,7 +349,7 @@ $filename = preg_replace("/[^A-Za-z0-9_\- ]/",'',$filename);
 if ( $cropper_custom_filename && strlen($filename) > 0){
 	$filename = "$filename";
 } else {
-	if ($download || getval("slideshow","")!="")
+	if (!$alternative_file_previews || $download || getval("slideshow","")!="")
 		{
 		$filename=$ref . "_" . strtolower($lang['transformed']);
 		}
