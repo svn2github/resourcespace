@@ -38,7 +38,7 @@ function refine_api_resource_results($results){
 		
 		for ($n=0;$n<count($results);$n++){
 			if ($results[$n]['created_by']>0 && isset($users_array[$results[$n]['created_by']])){
-			$results[$n][$lang['contributedby']]=$users_array[$results[$n]['created_by']];
+			$results[$n][str_replace(' ', '_', $lang['contributedby'])]=$users_array[$results[$n]['created_by']];
 			}
 		}
 		
