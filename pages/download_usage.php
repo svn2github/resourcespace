@@ -67,7 +67,7 @@ if(isset($download_usage_prevent_options))
 for ($n=0;$n<count($download_usage_options);$n++)
 	{
 	?>
-	<option value="<?php echo $download_usage_options[$n]; ?>"><?php echo htmlspecialchars($download_usage_options[$n]) ?></option>
+	<option value="<?php echo $n; ?>"><?php echo htmlspecialchars($download_usage_options[$n]) ?></option>
 	<?php
 	}
 ?>
