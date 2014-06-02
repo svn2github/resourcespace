@@ -114,11 +114,13 @@ jQuery(document).ready( function ()
 
 <div class="HomePicturePanel"
 
-<?php if (isset($home_slideshow_width)) {
-	echo "style=\"";
-	$slide_width = $home_slideshow_width + 2;
-	echo"width:" .  (string)$slide_width ."px; ";
-	echo "\" ";
+<?php if(!hook("replaceeditslideshowwidth")){
+	if (isset($home_slideshow_width)) {
+		echo "style=\"";
+		$slide_width = $home_slideshow_width + 2;
+		echo"width:" .  (string)$slide_width ."px; ";
+		echo "\" ";
+		}
 	}
 	?>>
 	
