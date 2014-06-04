@@ -1682,6 +1682,13 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		$value=str_replace(";",",",$value); # Different syntax used for keyword separation when searching.
 		include "../pages/edit_fields/9.php";
 		break;		
+
+		// Radio buttons:
+		case 12:
+			// auto save is not needed when searching
+			$edit_autosave = false;
+			include '../pages/edit_fields/12.php';
+		break;
 		}
 	?>
 	<div class="clearerleft"> </div>
@@ -1970,6 +1977,12 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 				if ($search!="") {$search.=", ";}
 				$search.=$fields[$n]["name"] . ":" . $p;
 				}
+			break;
+
+			// Radio buttons:
+			case 12:
+				$value = getvalescaped('field_' . $fields[$n]['ref'], '');
+				$search = $fields[$n]['name'] . ':' . $value;
 			break;
 			}
 		}
