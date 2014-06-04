@@ -873,7 +873,7 @@ if (!$lazyload){
 			}
 		?>
 	  <?php if (!$disable_collection_toggle) { ?>
-		<li><a id="toggleThumbsLink" href="#" onClick="ToggleThumbs();return false;"><?php echo $lang["showthumbnails"]?></li>
+		<li><a id="toggleThumbsLink" href="#" onClick="ToggleThumbs();return false;"><?php echo $lang["showthumbnails"]?></a></li>
 	  <?php } ?>
 	</div>
 	<?php 
