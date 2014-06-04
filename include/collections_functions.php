@@ -8,7 +8,12 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	# Returns a list of user collections.
 	$sql="";
 	$keysql="";
-	if (strlen($find)==1 && !is_numeric($find))
+	if ($find=="!shared")
+		{
+		# only return shared collections
+		$sql=" where (public='1' or c.ref in (select distinct collection from user_collection where user<>'$user' union select distinct collection from external_access_keys))";				
+		}
+	elseif (strlen($find)==1 && !is_numeric($find))
 		{
 		# A-Z search
 		$sql=" where c.name like '$find%'";

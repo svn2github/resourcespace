@@ -1137,7 +1137,7 @@ $lang["addnewcontent"]="New content (page, name)";
 $lang["hitcount"]="Hit count";
 $lang["downloads"]="Downloads";
 
-$lang["addremove"]="";
+$lang["addremove"]="Add/remove";
 
 ##  Translations for standard log entries
 $lang["all_users"]="all users";
@@ -1800,3 +1800,7 @@ $lang['email_link_expires_days']="Link expires: ";
 $lang['expire_days']='days';
 $lang['expire_day']='day';
 $lang["collection_order_description"]="Collection order";
+$lang["view_shared_collections"]="View shared collections";
+$lang["shared_collections"]="Shared collections";
+$lang["internal"]="Internal";
+$lang["managecollectionslink"]="Manage collections";

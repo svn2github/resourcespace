@@ -441,6 +441,11 @@ if (!hook('collectionaccessmode')) {
 </div>
 <?php } ?>
 <?php } ?>
-<?php		
+<div class="BasicsBox">
+    <h1><?php echo $lang["view_shared_collections"]?></h1>
+    <p><a href="<?php echo $baseurl_short?>pages/view_shares.php" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["view_shared_collections"]?></a></p>
+</div>
+<?php
+
 include "../include/footer.php";
 ?>
