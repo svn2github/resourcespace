@@ -1457,7 +1457,7 @@ if (!function_exists("upload_preview")){
 function upload_preview($ref)
 	{
 		
-	hook ("removeannotations");		
+	hook ("removeannotations","",array($ref));		
 		
 	# Upload a preview image only.
 	$processfile=$_FILES['userfile'];
