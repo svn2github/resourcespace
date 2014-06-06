@@ -71,7 +71,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 					{
 					echo "<tr>";
 					echo "<td>" . "External " . "</td>";
-					echo "<td>" . (($extshare["access"]==0)?$lang["open"]:$lang["access1"]) . "</td>";
+					echo "<td>" . (($extshare["access"]==0)?$lang["access0"]:$lang["access1"]) . "</td>";
 					echo "<td>" .  str_replace("%date%",(($extshare["expires"]!="")?nicedate($extshare["expires"]):$lang["never"]),$lang["expires-date"]) . "</td>";
 					echo "<td><div class=\"ListTools\"><a onclick=\"return CentralSpaceLoad(this,true);\" href=\"" . $baseurl . "/pages/collection_share.php?ref=" . $collections[$n]["ref"] . "\">&gt;&nbsp;" . $lang["action-edit"] . "</a></div></td>";
 					echo "</tr>";
