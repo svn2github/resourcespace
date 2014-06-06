@@ -604,7 +604,10 @@ elseif ($k!="" && !$lazyload)
   	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     <?php if (checkperm("s")) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php">&gt; <?php echo $lang["managemycollections"];?></a></li>
 	<?php if ($contact_sheet==true) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/contactsheet_settings.php?ref=<?php echo urlencode($usercollection) ?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
-    <?php if ($allow_share) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_share.php?ref=<?php echo urlencode($usercollection) ?>">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
+    <?php if ($allow_share) { ?>
+    	<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_share.php?ref=<?php echo urlencode($usercollection) ?>">&gt; <?php echo $lang["share"]?></a></li><?php 
+    	hook('aftershareinbottomtoolbar', '', array($usercollection));
+    } ?>
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_edit.php?ref=<?php echo urlencode($usercollection) ?>">&gt;&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
 	<?php if ($preview_all){?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/preview_all.php?ref=<?php echo urlencode($usercollection) ?>">&gt;&nbsp;<?php echo $lang["preview_all"]?></a></li><?php } ?>
 	<?php hook("collectiontool2");?>

@@ -1030,7 +1030,9 @@ hook ("resourceactions") ?>
 	
 	<?php if ($allow_share && ($access==0 || ($access==1 && $restricted_share)) && !$hide_resource_share_link) { ?>
 		<li><a href="<?php echo $baseurl_short?>pages/resource_share.php?ref=<?php echo urlencode($ref) ?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>" onClick="return CentralSpaceLoad(this,true);" >&gt; <?php echo $lang["share"]?></a></li>
-	<?php } ?>
+	<?php 
+		hook('aftersharelink', '', array($ref, $search, $offset, $order_by, $sort, $archive));
+	} ?>
 	<?php if ($edit_access) { ?>
 		<li><a href="<?php echo $baseurl_short?>pages/edit.php?ref=<?php echo urlencode($ref)?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>"    onClick="return CentralSpaceLoad(this,true);">&gt; <?php echo $lang["action-edit"]?></a></li>
 		<?php if ($metadata_download)	{ ?>
