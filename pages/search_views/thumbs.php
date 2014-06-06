@@ -55,6 +55,7 @@
 
 		for ($x=0;$x<count($df);$x++)
 			{
+			if(!in_array($df[$x]['ref'],$thumbs_display_fields)){continue;}
 			#value filter plugin -tbd	
 			$value=@$result[$n]['field'.$df[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";

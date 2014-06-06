@@ -7,24 +7,25 @@
 		
 	
 		for ($x=0;$x<count($df);$x++){
-		$value=@$result[$n]['field'.$df[$x]['ref']];
-		$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
-		if ($df[$x]['value_filter']!=""){
-			eval($df[$x]['value_filter']);
-		}
-		else if (file_exists($plugin)) {include $plugin;}
-		# swap title fields if necessary
-		if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
-			if (($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
-				$value=$result[$n]['field'.$metadata_template_title_field];
-				}
+			if(!in_array($df[$x]['ref'],$list_display_fields)){continue;}
+			$value=@$result[$n]['field'.$df[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
+			if ($df[$x]['value_filter']!=""){
+				eval($df[$x]['value_filter']);
 			}
-		if ( (isset($metadata_template_title_field)&& $df[$x]['ref']!=$metadata_template_title_field ) || !isset($metadata_template_title_field) ) {
-			if (!hook("replacelisttitle")) {
-			?><td nowrap <?php hook("listviewcolumnstyle");?>><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>" onClick="return CentralSpaceLoad(this,true);"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?></div></td>
-			<?php } 
-			} //end replace list title
-		}
+			else if (file_exists($plugin)) {include $plugin;}
+			# swap title fields if necessary
+			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
+				if (($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
+					$value=$result[$n]['field'.$metadata_template_title_field];
+					}
+				}
+			if ( (isset($metadata_template_title_field)&& $df[$x]['ref']!=$metadata_template_title_field ) || !isset($metadata_template_title_field) ) {
+				if (!hook("replacelisttitle")) {
+				?><td nowrap <?php hook("listviewcolumnstyle");?>><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>" onClick="return CentralSpaceLoad(this,true);"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?></div></td>
+				<?php } 
+				} //end replace list title
+			}
 		
 		if ($display_user_rating_stars && $k==""){ ?>
 			<td <?php hook("listviewcolumnstyle");?>>
