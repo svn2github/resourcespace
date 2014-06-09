@@ -1471,8 +1471,8 @@ $searchwords=split_keywords($search);
 for ($n=0;$n<count($keywords);$n++)
 	{
 	?>
-	<div class="SearchSimilar"><input type=checkbox name="keyword_<?php echo urlencode($keywords[$n])?>" value="yes"
-	<?php if (in_array($keywords[$n],$searchwords)) {?>checked<?php } ?> onClick="UpdateFSResultCount();">&nbsp;<?php echo htmlspecialchars($keywords[$n])?></div>
+	<div class="SearchSimilar"><input type=checkbox id="similar_search_<?php echo urlencode($keywords[$n])?>" name="keyword_<?php echo urlencode($keywords[$n])?>" value="yes"
+	<?php if (in_array($keywords[$n],$searchwords)) {?>checked<?php } ?> onClick="UpdateFSResultCount();"><label for="similar_search_<?php echo urlencode($keywords[$n])?>">&nbsp;<?php echo htmlspecialchars($keywords[$n])?></label></div>
 	<?php
 	}
 ?>
