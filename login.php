@@ -132,15 +132,15 @@ if (!hook("replaceloginform")) {
 		</div>
 		
 		<div class="Question">
-			<label for="pass"><?php echo $lang["password"]?> </label>
+			<label for="password"><?php echo $lang["password"]?> </label>
 			<input type="password" name="password" id="password" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> />
 			 <div id="capswarning"><?php echo $lang["caps-lock-on"]; ?></div>
 			<div class="clearerleft"> </div>
 		</div>
 <?php if ($disable_languages==false) { ?>	
 		<div class="Question">
-			<label for="pass"><?php echo $lang["language"]?> </label>
-			<select class="stdwidth" name="language" onChange="document.getElementById('langupdate').value='YES';document.getElementById('loginform').submit();">
+			<label for="language"><?php echo $lang["language"]?> </label>
+			<select id="language" class="stdwidth" name="language" onChange="document.getElementById('langupdate').value='YES';document.getElementById('loginform').submit();">
 			<?php reset ($languages); foreach ($languages as $key=>$value) { ?>
 			<option value="<?php echo $key?>" <?php if ($language==$key) { ?>selected<?php } ?>><?php echo $value?></option>
 			<?php } ?>
