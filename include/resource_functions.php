@@ -955,7 +955,7 @@ function delete_resource($ref)
 	$current_state=$resource['archive'];
 	
 	global $resource_deletion_state;
-	if (isset($resource_deletion_state) && $current_state!=3) # Really delete if already in the 'deleted' state.
+	if (isset($resource_deletion_state) && $current_state!=$resource_deletion_state) # Really delete if already in the 'deleted' state.
 		{
 		# $resource_deletion_state is set. Do not delete this resource, instead move it to the specified state.
 		sql_query("update resource set archive='" . $resource_deletion_state . "' where ref='" . $ref . "'");
@@ -1985,13 +1985,15 @@ function get_resource_access($resource)
 	// get_resource_data doesn't contain permissions, so fix for the case that such an array could be passed into this function unintentionally.
 	if (is_array($resource) && !isset($resource['group_access']) && !isset($resource['user_access'])){$resource=$resource['ref'];}
 	
-	if (!is_array($resource)){
-	$resourcedata=get_resource_data($resource,true);
-	}
-	else {
-	$resourcedata=$resource;
-	$passthru="yes";
-	}
+	if (!is_array($resource))
+                {
+                $resourcedata=get_resource_data($resource,true);
+                }
+	else
+                {
+                $resourcedata=$resource;
+                $passthru="yes";
+                }
 	$ref=$resourcedata['ref'];
 	$access=$resourcedata["access"];
 	$resource_type=$resourcedata['resource_type'];
@@ -2049,19 +2051,27 @@ function get_resource_access($resource)
 	# Check for user-specific access (overrides any other restriction)
 	global $userref;
 
-	if ($passthru=="no"){
+	if ($passthru=="no")
+                {
 		$userspecific=get_custom_access_user($resource,$userref);	
 		//echo "checked user access: ".$userspecific;
 		} 
-	else {
+	else
+                {
 		$userspecific=$resourcedata['user_access'];
 		}
 
-		
+	
 	if ($userspecific!="")
 		{
 		return $userspecific;
 		}
+        
+        if (checkperm('T'.$resource_type))
+                {
+                // this resource type is always confidential/hidden for this user group
+				return 2;
+                }
 		
 	global $usersearchfilter, $search_filter_strict; 
 	if ((trim($usersearchfilter)!="") && $search_filter_strict)
@@ -2069,7 +2079,6 @@ function get_resource_access($resource)
 		# A search filter has been set. Perform filter processing to establish if the user can view this resource.		
 		# Always load metadata, because the provided metadata may be missing fields due to permissions.
 		$metadata=get_resource_field_data($ref,false,false);
-				
 		for ($n=0;$n<count($metadata);$n++)
 			{
 			$name=$metadata[$n]["name"];
@@ -2092,18 +2101,39 @@ function get_resource_access($resource)
 	if ($access==0 && !checkperm("g"))
 		{
 		# User does not have the 'g' permission. Always return restricted for active resources.
-		return 1; 
+		$access=1; 
 		}
 	
-	if (checkperm('X'.$resource_type)){
+	if ($access==0 && checkperm('X'.$resource_type)){
 		// this resource type is always restricted for this user group
-		return 1;
-	}
-
-	if (checkperm('T'.$resource_type)){
-		// this resource type is always confidential/hidden for this user group
-		return 2;
-	}
+		$access=1;
+		}
+		
+	// Check derestrict filter
+	global $userderestrictfilter;
+	if ($access==1 && trim($userderestrictfilter)!="")
+		{		
+		# A filter has been set to derestrict access when certain metadata criteria are met
+		if(!isset($metadata))
+                   {
+                    #  load metadata if not already loaded
+                   $metadata=get_resource_field_data($ref,false,false);
+                   }
+		$matchedfilter=false;
+		for ($n=0;$n<count($metadata);$n++)
+			{
+			$name=$metadata[$n]["name"];
+			$value=$metadata[$n]["value"];			
+			if ($name!="")
+				{
+				$match=filter_match($userderestrictfilter,$name,$value);
+				if ($match==1) {$matchedfilter=false;break;} 
+				if ($match==2) {$matchedfilter=true;} 
+				}
+			}
+			
+		if($matchedfilter){$access=0;}
+        }
 
 	return $access;	
 	}

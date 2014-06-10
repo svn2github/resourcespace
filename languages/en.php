@@ -154,6 +154,7 @@ $lang["property-display_condition"]="Display condition";
 $lang["information-display_condition"]="Display condition: this field will only display if the following conditions are met. Uses same format as group search filter i.e. shortname=value1|value2, shortnamea=validoptiona;shortnameb=validoptionb1|validoptionb2";
 $lang["property-onchange_macro"]="On change macro";
 $lang["information-onchange_macro"]="On change macro: code to be executed when field value is changed. CAUTION ADVISED";
+$lang["information-derestrict_filter"]="Derestrict filter. Can be used in conjunction wih g permission so that all resources resrticted unless metadata condition is met";
 
 $lang["property-query"]="Query";
 
