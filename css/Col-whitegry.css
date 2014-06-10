@@ -100,7 +100,6 @@ input[readonly] {color: #000000;}
 .BasicsBox .VerticalNav li, .ThemeBox li {list-style: url(../gfx/whitegry/interface/bullet.gif) none inside;}
 .ThemeBox {border-bottom: 1px solid #BBBBBB;}
 .HomePanel h2 {background: url(../gfx/whitegry/interface/HomeArrow.gif) no-repeat 1px 10px;}
-.HomePanel h1 {background: url(../gfx/whitegry/interface/HomeArrow.gif) no-repeat 1px 10px;}
 
 .highlight {color: #990000;}
 
