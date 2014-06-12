@@ -44,6 +44,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 		if ($sql==""){$sql=" where ";} else {$sql.=" and ";}	
    		$sql.=" (length(c.theme)=0 or c.theme is null) ";
    		}
+
    
 	$order_sort="";
 	if ($order_by!="name"){$order_sort=" order by $order_by $sort";}
@@ -1757,4 +1758,41 @@ function edit_collection_external_access($key,$access=-1,$expires="")
 	sql_query("update external_access_keys set access='$access', expires=" . (($expires=="")?"null":"'" . $expires . "'") . ",date=now() where access_key='$key'");	
 	return true;
 	}
+	
+function show_hide_collection($colref, $show=true, $user="")
+	{
+	global $userref;
+	if($user=="" || $user==$userref)
+		{
+		// Working with logged on user, use global variable 
+		$user=$userref;
+		global $hidden_collections;
+		}
+	else
+		{
+		//Get hidden collections for user
+		$hidden_collections=explode(",",sql_value("select hidden_collections from user where ref='$user'",""));
+		}
+		
+	if($show)
+		{
+		debug("Unhiding collection " . $colref . " from user " . $user);
+		if(($key = array_search($colref, $hidden_collections)) !== false)
+			{
+			unset($hidden_collections[$key]);
+			}
+		}
+	else
+		{
+		debug("Hiding collection " . $colref . " from user " . $user);
+		if(($key = array_search($colref, $hidden_collections)) === false) 
+			{
+			$hidden_collections[]=$colref;
+			}
+		}
+	sql_query("update user set hidden_collections ='" . implode(",",$hidden_collections) . "' where ref='$user'");
+	}
+	
+	
+
 	

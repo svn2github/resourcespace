@@ -1805,3 +1805,4 @@ $lang["view_shared_collections"]="View shared collections";
 $lang["shared_collections"]="Shared collections";
 $lang["internal"]="Internal";
 $lang["managecollectionslink"]="Manage collections";
+$lang["showcollectionindropdown"]="Show in collection bar";
