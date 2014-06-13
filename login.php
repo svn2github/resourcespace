@@ -7,8 +7,16 @@ include "include/login_functions.php";
 
 $url=getval("url","index.php");
 $api=getval("api","");
+
+# Allow the language to be posted here
 $language=getval("language","");
 
+# Check the provided language is valid (XSS vuln. fix)
+if (!empty($language) && !array_key_exists($language,$languages))
+	{
+        exit("Invalid language");
+        }
+        
 # process log in
 $error=getval("error","");
 if ($error!="") $error=$lang[$error];
@@ -97,6 +105,8 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     	}
     }
 
+    
+    
 if (getval("langupdate","")!="")
 	{
 	# Update language while remaining on this page.
