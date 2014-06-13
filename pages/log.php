@@ -21,7 +21,7 @@ if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 
 $offset=getvalescaped("offset",0);
-$per_page=getvalescaped("per_page_list",15);setcookie("per_page_list",$per_page);
+$per_page=getvalescaped("per_page_list",15);setcookie("per_page_list",$per_page, 0, '', '', false, true);
 
 
 

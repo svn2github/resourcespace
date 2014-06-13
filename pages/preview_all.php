@@ -25,20 +25,20 @@ $allow_reorder=false;
 
 # Fetch and set the values
 $search=getvalescaped("search","");
-if (strpos($search,"!")===false) {setcookie("search",$search);} # store the search in a cookie if not a special search
-$offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("saved_offset",$offset);}
+if (strpos($search,"!")===false) {setcookie("search",$search, 0, '', '', false, true);} # store the search in a cookie if not a special search
+$offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("saved_offset",$offset, 0, '', '', false, true);}
 if ((!is_numeric($offset)) || ($offset<0)) {$offset=0;}
-$order_by=getvalescaped("order_by",$default_sort);if (strpos($search,"!")===false) {setcookie("saved_order_by",$order_by);}
+$order_by=getvalescaped("order_by",$default_sort);if (strpos($search,"!")===false) {setcookie("saved_order_by",$order_by, 0, '', '', false, true);}
 if ($order_by=="") {$order_by=$default_sort;}
-$per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page);
-$archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
+$per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page, 0, '', '', false, true);
+$archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive, 0, '', '', false, true);}
 $jumpcount=0;
 
 # Most sorts such as popularity, date, and ID should be descending by default,
 # but it seems custom display fields like title or country should be the opposite.
 $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
-$sort=getval("sort",$default_sort);setcookie("saved_sort",$sort);
+$sort=getval("sort",$default_sort);setcookie("saved_sort",$sort, 0, '', '', false, true);
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 
 

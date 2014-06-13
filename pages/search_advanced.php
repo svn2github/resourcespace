@@ -7,7 +7,7 @@ include "../include/collections_functions.php";
 
 $archive=getvalescaped("archive",0,true);
 $starsearch=getvalescaped("starsearch","");	
-setcookie("starsearch",$starsearch);
+setcookie("starsearch",$starsearch, 0, '', '', false, true);
 if (!isset($_COOKIE["advancedsearchsection"])) 
     {
      if (isset($default_advanced_search_mode)) $opensections=$default_advanced_search_mode;
@@ -32,7 +32,7 @@ if (getval("submitted","")=="yes" && getval("resetform","")=="")
 		
 		    }
 		}
-	setcookie("restypes",$restypes);
+	setcookie("restypes",$restypes, 0, '', '', false, true);
 		
 	# advanced search - build a search query and redirect
 	$fields=array_merge(get_advanced_search_fields(false, $hiddenfields ),get_advanced_search_collection_fields(false, $hiddenfields ));

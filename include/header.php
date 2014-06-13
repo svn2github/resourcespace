@@ -10,7 +10,7 @@ $ajax=getval("ajax","");
 if ($ajax=="" && !hook("replace_header")) { 
 
 // blank starsearch cookie in case $star_search was turned off
-setcookie("starsearch","");
+setcookie("starsearch","",0,'','',false,true);
 
 // cookies have to go above the header output
 if ($display_user_rating_stars && $star_search){
@@ -22,7 +22,7 @@ if ($display_user_rating_stars && $star_search){
 	else
 		{
 		$starsearch=getvalescaped("starsearch","");	
-		setcookie("starsearch",$starsearch);
+		setcookie("starsearch",$starsearch,0,'','',false,true);
 	    }
 	}
 	

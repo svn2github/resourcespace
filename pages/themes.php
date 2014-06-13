@@ -5,9 +5,9 @@ include "../include/general.php";
 include "../include/collections_functions.php";
 
 global $default_perpage_list;
-$themes_order_by=getvalescaped("themes_order_by",getvalescaped("saved_themes_order_by","name"));setcookie("saved_themes_order_by",$themes_order_by);
-$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));setcookie("saved_themes_sort",$sort);
-$per_page=getvalescaped("per_page_list",$default_perpage_list,true);setcookie("per_page_list",$per_page);
+$themes_order_by=getvalescaped("themes_order_by",getvalescaped("saved_themes_order_by","name"));setcookie("saved_themes_order_by",$themes_order_by, 0, '', '', false, true);
+$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));setcookie("saved_themes_sort",$sort, 0, '', '', false, true);
+$per_page=getvalescaped("per_page_list",$default_perpage_list,true);setcookie("per_page_list",$per_page, 0, '', '', false, true);
 
 hook("themeheader");
 

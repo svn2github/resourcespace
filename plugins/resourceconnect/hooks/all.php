@@ -45,7 +45,7 @@ function HookResourceConnectAllInitialise()
 		$resourceconnect_selected=$resourceconnect_this;
 		}
 #	setcookie("resourceconnect_selected",$resourceconnect_selected);
-	setcookie("resourceconnect_selected",$resourceconnect_selected,0,"/");
+	setcookie("resourceconnect_selected",$resourceconnect_selected,0,"/",'',false,true);
 	}
 
 function HookResourceConnectAllSearchfiltertop()

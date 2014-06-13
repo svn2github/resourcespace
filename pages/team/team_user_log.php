@@ -18,7 +18,7 @@ $userdata=get_user($ref);
 $backurl=getval("backurl","");
 
 # pager
-$per_page=getvalescaped("per_page_list_log",15);setcookie("per_page_list_log",$per_page);
+$per_page=getvalescaped("per_page_list_log",15);setcookie("per_page_list_log",$per_page, 0, '', '', false, true);
 
 include "../../include/header.php";
 $log=get_user_log($ref, $offset+$per_page);

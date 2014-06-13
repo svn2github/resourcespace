@@ -21,7 +21,7 @@ include "../../../include/search_functions.php";
 
 $url=getvalescaped("url","");
 $search=getvalescaped("search","");
-setcookie("search",$search);
+setcookie("search",$search, 0, '', '', false, true);
 
 if ($url=="")
 	{

@@ -192,16 +192,16 @@ if (isset($_GET["language_set"]))
     if ($global_cookies)
         {
         # Remove previously set cookies to avoid clashes
-        setcookie("language", "", time() - 3600, $baseurl_short . "pages/");
-        setcookie("language", "", time() - 3600, $baseurl_short);
+        setcookie("language", "", time() - 3600, $baseurl_short . "pages/", '', false, true);
+        setcookie("language", "", time() - 3600, $baseurl_short, '', false, true);
         # Set new cookie
-        setcookie("language", $language, time() + (3600*24*1000), "/");
+        setcookie("language", $language, time() + (3600*24*1000), "/", '', false, true);
         }
     else
         {
         # Set new cookie
         setcookie("language", $language, time() + (3600*24*1000));
-        setcookie("language", $language, time() + (3600*24*1000), $baseurl_short . "pages/");
+        setcookie("language", $language, time() + (3600*24*1000), $baseurl_short . "pages/", '', false, true);
         }
     }
 

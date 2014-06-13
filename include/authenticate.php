@@ -252,7 +252,7 @@ else
     
     # Set a cookie that we'll check for again on the login page after the redirection.
     # If this cookie is missing, it's assumed that cookies are switched off or blocked and a warning message is displayed.
-    setcookie("cookiecheck","true",0,'/');
+    setcookie("cookiecheck","true",0,'/', '', false, true);
     }
 
 if (!$valid && !$api)

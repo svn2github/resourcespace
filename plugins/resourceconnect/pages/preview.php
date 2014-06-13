@@ -20,7 +20,7 @@ include "../../../include/search_functions.php";
 # Wrap the remote view page with the local header/footer.
 
 $search=getvalescaped("search","");
-setcookie("search",$search);
+setcookie("search",$search, 0, '', '', false, true);
 
 # Assemble a URL from the existing parameters.
 $url=getvalescaped("resourceconnect_source","") . "/pages/preview.php?" . $_SERVER["QUERY_STRING"];

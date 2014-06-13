@@ -55,7 +55,7 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
         rs_setcookie("user", $result['session_hash'], $expires, "", "", substr($baseurl,0,5)=="https", true);
 
         # Set default resource types
-        setcookie("restypes",$default_res_types);
+        setcookie("restypes",$default_res_types, 0, '', '', false, true);
 
 		# If the redirect URL is the collection frame, do not redirect to this as this will cause
 		# the collection frame to appear full screen.
@@ -84,9 +84,9 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     rs_setcookie("user", "", time() - 3600);
 
     # Also blank search related cookies
-    setcookie("search","");	
-    setcookie("saved_offset","");	
-    setcookie("saved_archive","");	
+    setcookie("search","",0,'','',false,true);	
+    setcookie("saved_offset","",0,'','',false,true);
+    setcookie("saved_archive","",0,'','',false,true);
     
     unset($username);
     

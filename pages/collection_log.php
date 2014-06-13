@@ -8,7 +8,7 @@ $offset=getvalescaped("offset",0);
 $ref=getvalescaped("ref","",true);
 
 # pager
-$per_page=getvalescaped("per_page_list_log",15);setcookie("per_page_list_log",$per_page);
+$per_page=getvalescaped("per_page_list_log",15);setcookie("per_page_list_log",$per_page, 0, '', '', false, true);
 
 include "../include/header.php";
 $log=get_collection_log($ref, $offset+$per_page);
