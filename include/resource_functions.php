@@ -3039,3 +3039,66 @@ function update_archive_status($resource,$archive)
     sql_query("update resource set archive='" . escape_check($archive) .  "' where ref='" . escape_check($resource) . "'");  
     }
 
+function delete_resources_in_collection($collection) {
+
+	global $resource_deletion_state;
+
+	// Always find all resources in deleted state and delete them permanently:
+	// Note: when resource_deletion_state is null it will find all resources in collection and delete them permanently
+	$query = sprintf("
+				SELECT ref AS value
+				  FROM resource
+			INNER JOIN collection_resource ON collection_resource.resource = resource.ref AND collection_resource.collection = '%s'
+				 %s;
+	",
+		$collection,
+		isset($resource_deletion_state) ? "WHERE archive = '" . $resource_deletion_state . "'" : ''
+	);
+
+	$resources_in_deleted_state = array();
+	$resources_in_deleted_state = sql_array($query);
+
+	if(!empty($resources_in_deleted_state)) {
+		foreach ($resources_in_deleted_state as $resource_in_deleted_state) {
+			delete_resource($resource_in_deleted_state);
+		}
+		collection_log($collection,'D', '', 'Resource ' . $resource_in_deleted_state . ' deleted permanently.');
+	}
+
+	// Create a comma separated list of all resources remaining in this collection:
+	$resources = sql_array("SELECT resource AS value FROM collection_resource WHERE collection = '" . $collection . "';");
+	$resources = implode(',', $resources);
+	
+	// If all resources had their state the same as resource_deletion_state, stop here:
+	// Note: when resource_deletion_state is null it will always stop here
+	if(empty($resources)) {
+		return TRUE;
+	}
+
+	// Delete (ie. move to resource_deletion_state set in config):
+	if(isset($resource_deletion_state)) {
+		$query = sprintf("
+				    UPDATE resource
+				INNER JOIN collection_resource ON collection_resource.resource = resource.ref AND collection_resource.collection = '%s'
+				       SET archive = '%s';
+		",
+			$collection,
+			$resource_deletion_state
+		);
+		sql_query($query);
+
+		collection_log($collection,'D', '', 'All resources of this collection have been deleted by moving them to state ' . $resource_deletion_state);
+
+		$query = sprintf("
+				DELETE FROM collection_resource 
+				      WHERE resource IN (%s);
+		",
+			$resources
+		);
+		sql_query($query);
+
+	}
+
+	return TRUE;
+
+}

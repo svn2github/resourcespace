@@ -565,15 +565,11 @@ function save_collection($ref)
 	# Delete all resources?
 	if (getval("deleteall","")!="" && !checkperm("D"))
 		{
-		$resources=do_search("!collection" . $ref);
-		for ($n=0;$n<count($resources);$n++)
-			{
-			if (get_edit_access($resources[$n]["ref"]))
-				{
-				delete_resource($resources[$n]["ref"]);	
-				collection_log($ref,"D",$resources[$n]["ref"]);
-				}
-			}
+		
+		if(allow_multi_edit($ref)) {
+			delete_resources_in_collection($ref);
+		}
+
 		}
 		
 	# Update limit count for saved search
