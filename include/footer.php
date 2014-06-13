@@ -348,7 +348,7 @@ else {?><div class="ui-layout-south" ></div><script>myLayout=jQuery('body').layo
 
 
 <?php hook("afteruilayout");?>
-
+<?php hook("responsivescripts"); ?>
 
 </body>
 </html>

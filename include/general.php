@@ -3568,7 +3568,7 @@ function get_utility_path($utilityname, &$checked_path = null)
             else { return $return; }
             break;
         case "exiftool":
-            if (!isset($exiftool_path)) {return false;} # Exiftool path not configured.
+            //if (!isset($exiftool_path)) {return false;} # Exiftool path not configured.
             return get_executable_path($exiftool_path, array("unix"=>"exiftool", "win"=>"exiftool.exe"), $checked_path);
             break;
         case "antiword":

@@ -460,9 +460,11 @@ if ($infobox_image_mode)
 if (true) # Always show search header now.
 	{
 	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".urlencode($sort)."&amp;offset=" . urlencode($offset) . "&amp;archive=" . urlencode($archive)."&amp;sort=".urlencode($sort) . "&amp;restypes=" . urlencode($restypes);
+	hook("responsiveresultoptions");
 	?>
 	<div class="TopInpageNav">
-	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php
+	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected">
+	<?php
 	$resources_count=is_array($result)?count($result):0;
 	if (isset($collections)) 
 	    {

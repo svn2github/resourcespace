@@ -290,6 +290,8 @@ if ($pagename=="login" || $pagename=="user_request" || $pagename=="user_password
 
 <?php hook("beforeheader"); ?>
 <div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
+<?php hook("responsiveheader"); ?>
+
 <?php if ($header_link && !$header_text_title && getval("k","")=="") {
 	$linkUrl=isset($header_link_url) ? $header_link_url : $homepage_url;
 	if (substr($linkUrl, 0, strlen($baseurl)) === $baseurl
@@ -363,7 +365,8 @@ include (dirname(__FILE__) . "/header_links.php");
 
 <?php hook("headerbottom"); ?>
 
-<div class="clearer"></div><?php if ($pagename!="preview" && $pagename!="preview_all") { ?></div><?php } ?>
+<div class="clearer"></div><?php if ($pagename!="preview" && $pagename!="preview_all") { ?></div><?php } #end of header ?>
+
 <?php
 # Include simple search sidebar?
 $omit_searchbar_pages=array("index","preview_all","search_advanced","preview","admin_header");
@@ -381,8 +384,9 @@ if (!in_array($pagename,$omit_searchbar_pages) && ($loginterms==false))
     </div>
     <?php
     }	
+    ?>
 
-
+<?php
 # Determine which content holder div to use
 if (($pagename=="login") || ($pagename=="user_password") || ($pagename=="user_request")) {$div="CentralSpaceLogin";}
 else {$div="CentralSpace";}

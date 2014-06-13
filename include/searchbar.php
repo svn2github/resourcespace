@@ -226,11 +226,12 @@ if (!$basic_simple_search)
 	if ($display_user_rating_stars && $star_search) { $searchbuttons.="StarSearchRatingDisplay(0,'StarCurrent');document.getElementById('starsearch').value='';window['StarSearchRatingDone']=true;"; } 
 	if ($resourceid_simple_search) {$searchbuttons.=" document.getElementById('searchresourceid').value='';"; }
 	$searchbuttons.="ResetTicks();\"/>"; }
-	$searchbuttons.="<input name=\"Submit\" id=\"searchbutton\" class=\"searchbutton\" type=\"submit\" value=\"&nbsp;&nbsp;". $lang['searchbutton']."&nbsp;&nbsp;\" /></div>";?>
-	
+	$searchbuttons.="<input name=\"Submit\" id=\"searchbutton\" class=\"searchbutton\" type=\"submit\" value=\"&nbsp;&nbsp;". $lang['searchbutton']."&nbsp;&nbsp;\" />";?>
+	<?php hook("responsivesimplesearch"); ?>
 	<?php if (!$searchbar_buttons_at_bottom){ echo $searchbuttons."<br/>"; } ?>
 
 	<?php
+	$searchbuttons.="</div>";
 	if (!$basic_simple_search) {
 	
 	// Include simple search items (if any)
