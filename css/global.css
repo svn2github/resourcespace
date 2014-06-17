@@ -523,7 +523,7 @@ li.plupload_droptext
 	color:#999;
 	font-size: 14px;
 	}
-	
+.plupload_file_size{color:#777;}	
 
 .ui-layout-toggler-open-hover
 	{
@@ -662,4 +662,4 @@ width: 90px;
 
 #ssearchbox {margin-top:10px;}
 
-.CollectionsCompactToolsContainer {display:inline-block;}
+.CollectionsCompactToolsContainerDummy, .CollectionsCompactToolsContainer {display:inline-block;}
