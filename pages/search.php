@@ -675,7 +675,6 @@ if (true) # Always show search header now.
 		}
 	}
 	if (!$collections_compact_style){echo $search_title_links;}
-
 	hook("beforesearchresults2");
 	hook("beforesearchresultsexpandspace");
 	?>
