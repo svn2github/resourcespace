@@ -45,6 +45,9 @@ http://www.resourcespace.org/
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+
+<?php hook("responsivemeta"); ?>
+
 <title><?php echo htmlspecialchars($applicationname)?></title>
 <link rel="icon" type="image/png" href="<?php echo $baseurl."/".$header_favicon?>" />
 
