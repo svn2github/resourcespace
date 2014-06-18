@@ -173,7 +173,7 @@ hook("homebeforehomepicpanelend");
 <?php if (checkperm("s")) {
 	hook("homebeforepanels");
 ?>
-
+<div id="HomePanelContainer" class="">
 <?php if ($home_themeheaders && $enable_themes) { ?>
 	<a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/themes.php" class="HomePanel"><div class="HomePanelIN HomePanelThemes<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
 	<h2><?php echo $lang["themes"]?></h2>
@@ -269,23 +269,23 @@ if(!hook("homefeaturedcol")):
 foreach ($home_collections as $home_collection)
 	{
 	?>
-	<div class="HomePanel HomePanelPromoted"><div class="HomePanelIN HomePanelPromotedIN">
+	<a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"class="HomePanel HomePanelPromoted"><div class="HomePanelIN HomePanelPromotedIN">
 	<div class="HomePanelPromotedImageWrap">
 	
 	<div style="padding-top:<?php echo floor((155-$home_collection["thumb_height"])/2) ?>px;">
-	<a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"><img class="ImageBorder" src="<?php echo get_resource_path($home_collection["home_page_image"],false,"thm",false) ?>" width="<?php echo $home_collection["thumb_width"] ?>" height="<?php echo $home_collection["thumb_height"] ?>" /></div>
+	<img class="ImageBorder" src="<?php echo get_resource_path($home_collection["home_page_image"],false,"thm",false) ?>" width="<?php echo $home_collection["thumb_width"] ?>" height="<?php echo $home_collection["thumb_height"] ?>" /></div>
 	</div>
 		
 	<p><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo i18n_get_translated($home_collection["home_page_text"]) ?></a></p>
 	
 	</div>
 	<div class="PanelShadow"></div>
-	</div>
+	</a>
 	<?php
 	}
 endif; # end hook homefeaturedcol
 ?>
-
+</div> <!-- END HomePanelContainer -->
 
 	<div class="clearerleft"></div>
 

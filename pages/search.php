@@ -460,20 +460,24 @@ if ($infobox_image_mode)
 if (true) # Always show search header now.
 	{
 	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".urlencode($sort)."&amp;offset=" . urlencode($offset) . "&amp;archive=" . urlencode($archive)."&amp;sort=".urlencode($sort) . "&amp;restypes=" . urlencode($restypes);
+	$resources_count=is_array($result)?count($result):0;
+    if (isset($collections)) 
+        {
+        $results_count=count($collections)+$resources_count;
+    	}
+
 	hook("responsiveresultoptions");
 	?>
 	<div class="TopInpageNav">
-	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected">
+	<div id="SearchResultFound" class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected">
 	<?php
-	$resources_count=is_array($result)?count($result):0;
 	if (isset($collections)) 
 	    {
-	    $results_count=count($collections)+$resources_count;
-        echo number_format($results_count)?><?php echo ($results_count==$max_results)?"+":""?></span> <?php if ($results_count==1){echo $lang["youfoundresult"];} else {echo $lang["youfoundresults"];}
+        echo number_format($results_count)?> </span><?php echo ($results_count==1) ? $lang["youfoundresult"] : $lang["youfoundresults"];
 	    } 
-	else 
+	else
 	    {
-	    echo number_format($resources_count)?><?php echo ($resources_count==$max_results)?"+":""?></span> <?php if ($resources_count==1){echo $lang["youfoundresource"];} else {echo $lang["youfoundresources"];}
+	    echo number_format($resources_count)?> </span><?php echo ($resources_count==1)? $lang["youfoundresource"] : $lang["youfoundresources"];
 	    }
 	 ?></div>
 	<div class="InpageNavLeftBlock <?php if($iconthumbs) {echo 'icondisplay';} ?>"><?php echo $lang["display"]?>:<br />
