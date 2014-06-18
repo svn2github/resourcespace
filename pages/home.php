@@ -251,7 +251,7 @@ if (isset($custom_home_panels))
 		{
 		if (!hook("panelperm")) { 
 		?>
-		<a href="<?php echo $custom_home_panels[$n]["link"] ?>" <?php if (isset($custom_home_panels[$n]["additional"])){ echo $custom_home_panels[$n]["additional"];} ?>> class="HomePanel"><div class="HomePanelIN<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>" <?php if ($custom_home_panels[$n]["text"]=="") {?>style="min-height:0;"<?php } ?>>
+		<a href="<?php echo $custom_home_panels[$n]["link"] ?>" <?php if (isset($custom_home_panels[$n]["additional"])){ echo $custom_home_panels[$n]["additional"];} ?> class="HomePanel"><div class="HomePanelIN<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>" <?php if ($custom_home_panels[$n]["text"]=="") {?>style="min-height:0;"<?php } ?>>
 		<h2> <?php echo i18n_get_translated($custom_home_panels[$n]["title"]) ?></h2>
 		<span><?php echo i18n_get_translated($custom_home_panels[$n]["text"]) ?></span>
 		</div> 
@@ -269,7 +269,7 @@ if(!hook("homefeaturedcol")):
 foreach ($home_collections as $home_collection)
 	{
 	?>
-	<a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"class="HomePanel HomePanelPromoted">
+	<a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);" class="HomePanel HomePanelPromoted">
 		<div class="HomePanelIN HomePanelPromotedIN">
 			<div class="HomePanelPromotedImageWrap">
 				<div style="padding-top:<?php echo floor((155-$home_collection["thumb_height"])/2) ?>px;">
