@@ -269,16 +269,17 @@ if(!hook("homefeaturedcol")):
 foreach ($home_collections as $home_collection)
 	{
 	?>
-	<a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"class="HomePanel HomePanelPromoted"><div class="HomePanelIN HomePanelPromotedIN">
-	<div class="HomePanelPromotedImageWrap">
-	
-	<div style="padding-top:<?php echo floor((155-$home_collection["thumb_height"])/2) ?>px;">
-	<img class="ImageBorder" src="<?php echo get_resource_path($home_collection["home_page_image"],false,"thm",false) ?>" width="<?php echo $home_collection["thumb_width"] ?>" height="<?php echo $home_collection["thumb_height"] ?>" /></div>
-	</div>
-		
-	<p><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo i18n_get_translated($home_collection["home_page_text"]) ?></a></p>
-	
-	</div>
+	<a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"class="HomePanel HomePanelPromoted">
+		<div class="HomePanelIN HomePanelPromotedIN">
+			<div class="HomePanelPromotedImageWrap">
+				<div style="padding-top:<?php echo floor((155-$home_collection["thumb_height"])/2) ?>px;">
+					<img class="ImageBorder" src="<?php echo get_resource_path($home_collection["home_page_image"],false,"thm",false) ?>" width="<?php echo $home_collection["thumb_width"] ?>" height="<?php echo $home_collection["thumb_height"] ?>" />
+				</div>
+			</div>
+			<p>
+			<?php echo i18n_get_translated($home_collection["home_page_text"]) ?>
+			</p>
+		</div>
 	<div class="PanelShadow"></div>
 	</a>
 	<?php
