@@ -154,7 +154,7 @@ $lang["property-display_condition"]="Display condition";
 $lang["information-display_condition"]="Display condition: this field will only display if the following conditions are met. Uses same format as group search filter i.e. shortname=value1|value2, shortnamea=validoptiona;shortnameb=validoptionb1|validoptionb2";
 $lang["property-onchange_macro"]="On change macro";
 $lang["information-onchange_macro"]="On change macro: code to be executed when field value is changed. CAUTION ADVISED";
-$lang["information-derestrict_filter"]="Derestrict filter. Can be used in conjunction wih g permission so that all resources resrticted unless metadata condition is met";
+$lang["information-derestrict_filter"]="Derestrict filter. Can be used in conjunction with g permission so that all resources resrticted unless metadata condition is met";
 
 $lang["property-query"]="Query";
 
@@ -870,7 +870,7 @@ $lang["size"]="Size";
 $lang["orientation"]="Orientation";
 $lang["requiredfield"]="This is a required field";
 $lang["requiredfields"]="Please review the form and try again. The following fields were not completed:";
-$lang["requiredantispam"]="The anti-spam code has been entered correctly, please try again";
+$lang["requiredantispam"]="The anti-spam code has not been entered correctly, please try again";
 $lang["viewduplicates"]="View duplicate resources";
 $lang["duplicateresources"]="Duplicate resources";
 $lang["duplicateresourcesfor"]="Duplicate resources for ";

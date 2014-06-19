@@ -14,6 +14,7 @@
 # Updated by Stefan Wild 20110730 for version 2852, translated the missing $lang keys from the en.php.
 # Updated by Stefan Wild 20130124 for version 4220, translated the missing $lang keys from the en.php.
 # Updated by Stefan Wild 20140220 for version 5313, translated the missing $lang keys from the en.php.
+# Updated by Stefan Wild 20140619 for version 5550, translated the missing $lang keys from the en.php.
 
 # User group names (for the default user groups)
 $lang["usergroup-administrators"]="Administratoren";
@@ -118,6 +119,7 @@ $lang["property-allow_registration_selection"]="In der Registrierungsauswahl anz
 $lang["property-resource_type_id"]="Ressourcen-Typ ID";
 $lang["information-allowed_extensions"]="Wenn gesetzt, können nur die angegebenen Dateierweiterungen hochgeladen werden, z.B. jpg,gif";
 $lang["property-allowed_extensions"]="Erlaubte Dateierweiterungen";
+$lang["information-resource_type_config_override"]="Erlaubt individuelle Konfigurationsoptionen für jeden Ressourcen-Typ. Beeinflusst Suchresultate, Ressourcenansicht und -bearbeitung. Bitte vergessen Sie nicht, Ihre Änderungen hier ggf. bei den anderen Ressourcen-Typen wieder zu überschreiben.";
 
 $lang["property-field_id"]="Feld ID";
 $lang["property-title"]="Titel";
@@ -162,6 +164,9 @@ $lang["property-sync_with_field"]="Abgleichen mit Feld";
 $lang["information-copy_field"]="<a href=field_copy.php?ref=%ref>Feld kopieren</a>";
 $lang["property-display_condition"]="Voraussetzung zur Anzeige";
 $lang["information-display_condition"]="Voraussetzung zur Anzeige: Dieses Feld wird nur angezeigt, wenn die folgenden Voraussetzungen erfüllt sind. Verwenden Sie das gleiche Format wie bei Suchfiltern, z.B. kurzname=wert1|wert2, kurznamea=optiona;kurznameb=optionb1|optionb2";
+$lang["property-onchange_macro"]="Makro bei Veränderung";
+$lang["information-onchange_macro"]="Makro bei Veränderung: wird ausgeführt, wenn der Wert des Feldes sich ändert. VORSICHT";
+$lang["information-derestrict_filter"]="Einschränkung aufheben. Kann zusammen mit der g Berechtigung genutzt werden, so dass alle Ressourcen eingeschränkt sind, es sei denn die hier angegebenen Kriterien sind erfüllt";
 
 $lang["property-query"]="Abfrage";
 
@@ -199,6 +204,7 @@ $lang["teamcentre"]="Administration";
 # footer link
 $lang["aboutus"]="Über uns";
 $lang["interface"]="Darstellung";
+$lang["changethemeto"] = "Darstellung wechseln zu";
 
 # Search bar
 $lang["simplesearch"]="Einfache Suche";
@@ -875,10 +881,11 @@ $lang["contactsheetintrotext"]="Bitte wählen Sie die Blattgröße und die Spalt
 $lang["size"]="Größe";
 $lang["orientation"]="Ausrichtung";
 $lang["requiredfield"]="Das ist ein Pflichtfeld";
-$lang["requiredfields"]="Bitte überprüfen Sie das Formular! Die folgenden Felder wurden noch nicht ausgefüllt: ";
+$lang["requiredfields"]="Bitte überprüfen Sie das Formular. Die folgenden Felder wurden noch nicht ausgefüllt: ";
 $lang["requiredantispam"]="Der Anti-Spam Code wurde nicht korrekt eingegeben, bitte versuchen Sie es erneut";
 $lang["viewduplicates"]="Doppelte Ressourcen anzeigen";
 $lang["duplicateresources"]="Doppelte Ressourcen";
+$lang["duplicateresourcesfor"]="Doppelte Ressourcen für ";
 $lang["userlog"]="Benutzer-Statistik";
 $lang["ipaddressrestriction"]="IP-Adressen Beschränkung (optional)";
 $lang["wildcardpermittedeg"]="Wildcard erlaubt; z.B.";
@@ -1796,7 +1803,18 @@ $lang["contactadminemailtext"]=" hat Ihnen eine Ressource gesendet";
 $lang["showgeolocationpanel"]="Geodaten anzeigen";
 $lang["hidegeolocationpanel"]="Geodaten ausblenden";
 $lang["download_usage_option_blocked"]="Diese Nutzungsoption ist nicht verfügbar. Bitte kontaktieren Sie Ihren Administrator";
-$lang["information-onchange_macro"]="Makro bei Veränderung: Auszuführender Code bei Veränderungen. VORSICHT";
 
 $lang["tagcloudtext"]="Mit welchen Begriffen haben die Benutzer Ressourcen versehen? Je häufiger ein Begriff vorkommt, desto größer wird er angezeigt.<br /><br />Sie können außerdem jeden Begriff anklicken, um eine Suche auszuführen.";
 $lang["tagcloud"]="Tagwolke";
+
+$lang["email_link_expires_never"]="Dieser Link wird niemals ablaufen";
+$lang['email_link_expires_date']="Dieser Link läuft ab am ";
+$lang['email_link_expires_days']="Link läuft ab: ";
+$lang['expire_days']='Tage';
+$lang['expire_day']='Tag';
+$lang["collection_order_description"]="Kollektionssortierung";
+$lang["view_shared_collections"]="Weitergegebene Kollektionen anzeigen";
+$lang["shared_collections"]="Weitergegebene Kollektionen";
+$lang["internal"]="Intern";
+$lang["managecollectionslink"]="Kollektionen verwalten";
+$lang["showcollectionindropdown"]="Kollektionen in Dropdown Menü anzeigen";
