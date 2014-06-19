@@ -183,3 +183,7 @@ input[readonly] {color: #FFFFFF;}
 .smallthumbsiconactive {background: url(../gfx/black/interface/smalliconactive.png) no-repeat 0px;}
 .largethumbsiconactive{background: url(../gfx/black/interface/largeiconactive.png) no-repeat 0px;}
 .smalllisticonactive {background: url(../gfx/black/interface/listiconactive.png) no-repeat 0px;}
+
+.plupload_file_name {color: #000;}
+.plupload_buttons  a{color: #000;}
+.plupload_buttons .plupload_disabled {color: #B5C3D4;}
