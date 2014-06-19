@@ -72,7 +72,7 @@ include "../../include/header.php";
 
 <?php } else { ?>
 
-<p><?php echo str_replace("%","<input type=text name=months value=12>",$lang["purgeuserscommand"]) ?>
+<p><?php echo str_replace("%","<input type='number' class='PurgeUsersMonths' name=months value=12>",$lang["purgeuserscommand"]) ?>
 <br /><br />
 <input name="purge1" type="submit" value="&nbsp;&nbsp;<?php echo $lang["purgeusers"]?>&nbsp;&nbsp;" />
 </p>
