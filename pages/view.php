@@ -434,14 +434,16 @@ if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get
 	if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1) { ?><div class="PageInformal"><?php echo $lang['resourceistranscoding']?></div><?php }
 	} //end hook replaceresourceistrancoding ?>
 
-<?php hook("renderbeforeresourceview"); ?>
+<?php hook("renderbeforeresourceview"); 
+$download_multisize=true;
+?>
 
 <div class="RecordResource">
 <?php if (!hook("renderinnerresourceview")) { ?>
 <?php if (!hook("replacerenderinnerresourcepreview")) { ?>
 <?php if (!hook("renderinnerresourcepreview")) { ?>
 <?php
-$download_multisize=true;
+
 
 $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
 if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
