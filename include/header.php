@@ -133,10 +133,10 @@ jQuery(document).ready(function() {
 <?php if (!hook("ajaxcollections")) { ?>
 <script src="<?php echo $baseurl;?>/lib/js/ajax_collections.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <?php } ?>
-<link href="<?php echo $baseurl_short;?>lib/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css?<?php echo $css_reload_key;?>" rel="stylesheet" type="text/css" media="screen,projection,print"  />
+<link href="<?php echo $baseurl_short;?>lib/plupload_2.1.2/jquery.plupload.queue/css/jquery.plupload.queue.css?<?php echo $css_reload_key;?>" rel="stylesheet" type="text/css" media="screen,projection,print"  />
 <script type="text/javascript" src="<?php echo $baseurl_short;?>lib/js/browserplus-min.js?<?php echo $css_reload_key;?>"></script>
-<script type="text/javascript" src="<?php echo $baseurl_short;?>lib/plupload/plupload.full.js?<?php echo $css_reload_key;?>"></script>
-<script type="text/javascript" src="<?php echo $baseurl_short;?>lib/plupload/jquery.plupload.queue/jquery.plupload.queue.js?<?php echo $css_reload_key;?>"></script>
+<script type="text/javascript" src="<?php echo $baseurl_short;?>lib/plupload_2.1.2/plupload.full.min.js?<?php echo $css_reload_key;?>"></script>
+<script type="text/javascript" src="<?php echo $baseurl_short;?>lib/plupload_2.1.2/jquery.plupload.queue/jquery.plupload.queue.min.js?<?php echo $css_reload_key;?>"></script>
 
 <script type="text/javascript">
 var baseurl_short="<?php echo $baseurl_short?>";

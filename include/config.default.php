@@ -2140,6 +2140,9 @@ $plupload_autostart=false;
 #Clear the queue after uploads have completed
 $plupload_clearqueue=true;
 
+# Maximum number of attempts to upload a file chunk before erroring
+$plupload_max_retries=5;
+
 #Send confirmation emails to user when request sent or assigned
 $request_senduserupdates=true;
 
