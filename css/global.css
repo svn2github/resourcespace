@@ -59,6 +59,7 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 #FooterNavRight {float:right;text-align:right;margin-top: 10px;clear: right;}
 #FooterNavRightBottom {float:right;text-align:right;margin-top: 10px;clear: right;}
 #FooterNavLeft {float:left;text-align:left;margin-top: 10px;}
+#FooterLanguages{margin-left:15px;}
 
 #CentralSpaceContainer {margin:0px 25px 20px;padding:0 282px 0 0;text-align:left;}
 #CentralSpaceContainerRestrict {margin:0px 15px 20px 25px;padding:0;text-align:left;}

@@ -54,7 +54,7 @@ function SwapCSS(css){
 <?php } ?>
 
 <?php if (getval("k","")=="") { ?>
-<div id="FooterNavLeft" class=""><?php if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?php echo $lang["interface"]?>:&nbsp;&nbsp;
+<div id="FooterNavLeft" class=""><span id="FooterThemes"><?php if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?php echo $lang["interface"]?>:&nbsp;&nbsp;
 <?php if (!hook("replacecustomthemechips"))	{
 	// enable custom theme chips 
 	if (count($available_themes!=0)){
@@ -67,12 +67,12 @@ function SwapCSS(css){
 	<?php }
 	}
 	}/*End hook("replacecustomthemechips")*/
-?>	
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php } ?>
+?>	</span><span id="FooterLanguages">
+<?php } ?>
 <?php if ($disable_languages==false && $show_language_chooser){?>
 <?php echo $lang["language"]?>: <a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl?>/pages/change_language.php"><?php echo $languages[$language]?></a>
 <?php } ?>
-</div>
+</span></div>
 
 
 <?php if (!hook("replacefooternavright")){?>
