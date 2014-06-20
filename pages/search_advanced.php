@@ -666,7 +666,7 @@ render_advanced_search_buttons();
 <script type="text/javascript">UpdateResultCount();</script>	
 <?php if ($swap_clear_and_search_buttons){?>
 <script type="text/javascript">
-	jQuery("#resetform").before(jQuery("#dosearch"));
+	jQuery("#resetform").before(jQuery(".dosearch"));
 </script>
 <?php } ?>
 </div> <!-- BasicsBox -->
