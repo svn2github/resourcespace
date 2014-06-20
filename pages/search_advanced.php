@@ -142,7 +142,7 @@ function render_advanced_search_buttons() {
  global $lang;
  ?><div class="QuestionSubmit">
  <label for="buttons"> </label>
- <input name="resetform" id="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />
+ <input name="resetform" class="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />
  &nbsp;
  <input name="dosearch" class="dosearch" type="submit" value="<?php echo $lang["action-viewmatchingresults"]?>" />
  </div>
@@ -666,7 +666,7 @@ render_advanced_search_buttons();
 <script type="text/javascript">UpdateResultCount();</script>	
 <?php if ($swap_clear_and_search_buttons){?>
 <script type="text/javascript">
-	jQuery("#resetform").before(jQuery(".dosearch"));
+	jQuery(".resetform").before(jQuery(".dosearch"));
 </script>
 <?php } ?>
 </div> <!-- BasicsBox -->
