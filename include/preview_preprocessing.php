@@ -637,10 +637,11 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!
 		*/
 
 			if ($extension=="pdf"){
+				
 				$pdfinfocommand="pdfinfo ".escapeshellarg($file);
-				$pdfinfo=run_command($pdfinfocommand);
+				$pdfinfo=shell_exec($pdfinfocommand);
 				$pdfinfo=explode("\n",$pdfinfo);
-				$pdfinfo=preg_grep("/Page size/",$pdfinfo);
+				$pdfinfo=preg_grep("/\bPage\b.+\bsize\b/",$pdfinfo);
 				sort($pdfinfo);
 				#die(print_r($pdfinfo));
 				if (isset($pdfinfo[0])){
@@ -650,20 +651,22 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!
 					$pdfinfo="";
 					}
 				if ($pdfinfo!=""){	
-					$pdfinfo=str_replace("Page size:","",$pdfinfo);
-					$pdfinfo=str_replace("pts","",$pdfinfo);
-					$pdfinfo=str_replace(" x","",$pdfinfo);
-					$pdfinfo=explode(" ",trim($pdfinfo));
-					if($pdfinfo[0]>$pdfinfo[1]){
-						$pdf_max_dim=$pdfinfo[0];
+					$pdfinfo=explode(":",$pdfinfo);
+					$wh=explode("x",$pdfinfo[1]);	
+					$w=round(trim($wh[0]));
+					$h=explode(" ",$wh[1]);	
+					$h=round(trim($h[1]));
+					if($w>$h){
+						$pdf_max_dim=$w;
 						}
 					else{
-						$pdf_max_dim=$pdfinfo[1];
+						$pdf_max_dim=$h;
 						}
+					$resolution=ceil((max($scr_width,$scr_height)*2)/($pdf_max_dim/72));
+				}
 				
-				}
-				$resolution=ceil((max($scr_width,$scr_height)*2)/($pdf_max_dim/72));
-				}
+				
+			}
 			if ($extension=="eps"){
 				$pdfinfocommand="identify ".escapeshellarg($file);
 				$pdfinfo=run_command($pdfinfocommand);
@@ -687,7 +690,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!
 						}
 				}
 				$resolution=ceil((max($scr_width,$scr_height)*2)/($pdf_max_dim/72));
-				}
+			}
 		}
 		
 	# Create multiple pages.
