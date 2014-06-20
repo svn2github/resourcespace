@@ -74,14 +74,21 @@ if (getval("submitted","")=="yes" && getval("resetform","")=="")
 		?>
 		<html>
 		<script type="text/javascript">
-	
+			
+			function populate_view_buttons(content) {
+				var inputs = parent.document.getElementsByTagName('input'), i;
+
+				for(i in inputs) {
+					if((' ' + inputs[i].className + ' ').indexOf('dosearch') > -1) {
+						inputs[i].value = content;
+					}
+				}
+			}
 		
 		<?php if ($count==0) { ?>
-		//parent.document.getElementById("dosearch").disabled=true;
-		parent.document.getElementById("dosearch").value="<?php echo $lang["nomatchingresults"]?>";
+			populate_view_buttons("<?php echo $lang["nomatchingresults"]?>");
 		<?php } else { ?>
-		parent.document.getElementById("dosearch").value="<?php echo $lang["view"] . " " . number_format($count) . " " . $lang["matchingresults"] ?>";
-		parent.document.getElementById("dosearch").disabled=false;
+			populate_view_buttons("<?php echo $lang["view"] . " " . number_format($count) . " " . $lang["matchingresults"] ?>");
 		<?php } ?>
 		</script>
 		</html>
@@ -137,7 +144,7 @@ function render_advanced_search_buttons() {
  <label for="buttons"> </label>
  <input name="resetform" id="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />
  &nbsp;
- <input name="dosearch" id="dosearch" type="submit" value="<?php echo $lang["action-viewmatchingresults"]?>" />
+ <input name="dosearch" class="dosearch" type="submit" value="<?php echo $lang["action-viewmatchingresults"]?>" />
  </div>
 
  <?php 
