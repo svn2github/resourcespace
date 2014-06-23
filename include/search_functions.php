@@ -522,7 +522,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 							$wildcards=sql_array("select ref value from keyword where keyword like '" . escape_check(str_replace("*","%",$keyword)) . "' order by hit_count desc limit " . $wildcard_expand_limit);
                             }		
 
-                                                $keyref=resolve_keyword($keyword); # Resolve keyword. Ignore any wildcards when resolving. We need wildcards to be present later but not here.
+                                                $keyref=resolve_keyword(str_replace('*','',$keyword)); # Resolve keyword. Ignore any wildcards when resolving. We need wildcards to be present later but not here.
                                                 if ($keyref===false && !$omit && !$empty && count($wildcards)==0)
                                                         {
                                                         $fullmatch=false;
