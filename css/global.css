@@ -119,6 +119,7 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 #CollectionMinDrop form{margin:0;padding:0}
 #CollectionMinitems{float: left;margin: 5px 10px 0px;padding:0.2em 0em}
 #CollectionMinRightNav{float: right;margin: 5px 25px 0px 0px;padding:0.25em 0em}
+.CollectionTitleLinks a {margin: 5px 4px;}
 
 #CollectionMinDrop .SearchWidth {width: 150px;font: 0.7em Ubuntu, Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
 #CollectionMinDrop .SearchWidthExp {width: 200px;font: 0.7em Ubuntu, Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}

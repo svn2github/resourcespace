@@ -635,49 +635,48 @@ if (true) # Always show search header now.
 	if ($display_search_titles)
 		{
 		hook("beforesearchtitle");
-		if (!$collections_compact_style){
-	        echo $search_title;hook("aftersearchtitle");
+		if (!$collections_compact_style)
+			{
+	        echo $search_title;
+	        hook("aftersearchtitle");
 	        }
-	    else {
-	    echo $search_title;hook("aftersearchtitle");
-	    ?><?php if (substr($search,0,11)=="!collection" && $k==""){
-	        $cinfo=get_collection(substr($search,11));
-	        $feedback=$cinfo["request_feedback"];
-	        $count_result=count($result);
-	        $collections_compact_style_titleview=true;
-	        hook("beforecollectiontoolscolumn");
-	         
-	        echo $lang["tools"].": ";
-	        draw_compact_style_selector($cinfo["ref"]);
-	        ?><br /><br /><div class="clearerleft"></div><?php
-	        $collection_compact_style_titleview=false;
-	        ?>
-	    <?php } /*end if a collection search and compact_style - action selector*/ ?>    
-    <?php }
-    	}
-     ?>
-
-    <?php		
-
+	    else 
+	    	{
+	    	echo $search_title;hook("aftersearchtitle");
+	    	if (substr($search,0,11)=="!collection" && $k=="")
+		    	{
+		        $cinfo=get_collection(substr($search,11));
+		        $feedback=$cinfo["request_feedback"];
+		        $count_result=count($result);
+		        $collections_compact_style_titleview=true;
+		        hook("beforecollectiontoolscolumn");
+		        echo $lang["tools"].": ";
+		        draw_compact_style_selector($cinfo["ref"]);
+		        ?><br /><br /><div class="clearerleft"></div><?php
+		        $collection_compact_style_titleview=false;
+		        } /*end if a collection search and compact_style - action selector*/   
+    		}
+    	}	
 	hook("beforesearchresults");
 	
 	# Archive link
-	if (($archive==0) && (strpos($search,"!")===false) && $archive_search) { 
-	$arcresults=do_search($search,$restypes,$order_by,2,0);
-	if (is_array($arcresults)) {$arcresults=count($arcresults);} else {$arcresults=0;}
-	if ($arcresults>0) 
-		{
-		?>
-		<div class="SearchOptionNav"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;archive=2" onClick="return CentralSpaceLoad(this);">&gt;&nbsp;<?php echo $lang["view"]?> <span class="Selected"><?php echo number_format($arcresults)?></span> <?php echo ($arcresults==1)?$lang["match"]:$lang["matches"]?> <?php echo $lang["inthearchive"]?></a></div>
-		<?php 
+	if (($archive==0) && (strpos($search,"!")===false) && $archive_search) 
+		{ 
+		$arcresults=do_search($search,$restypes,$order_by,2,0);
+		if (is_array($arcresults)) {$arcresults=count($arcresults);} else {$arcresults=0;}
+		if ($arcresults>0) 
+			{
+			?>
+			<div class="SearchOptionNav"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;archive=2" onClick="return CentralSpaceLoad(this);">&gt;&nbsp;<?php echo $lang["view"]?> <span class="Selected"><?php echo number_format($arcresults)?></span> <?php echo ($arcresults==1)?$lang["match"]:$lang["matches"]?> <?php echo $lang["inthearchive"]?></a></div>
+			<?php 
+			}
+		else
+			{
+			?>
+			<div class="InpageNavLeftBlock">&gt;&nbsp;<?php echo $lang["nomatchesinthearchive"]?></div>
+			<?php 
+			}
 		}
-	else
-		{
-		?>
-		<div class="InpageNavLeftBlock">&gt;&nbsp;<?php echo $lang["nomatchesinthearchive"]?></div>
-		<?php 
-		}
-	}
 	if (!$collections_compact_style){echo $search_title_links;}
 	hook("beforesearchresults2");
 	hook("beforesearchresultsexpandspace");
