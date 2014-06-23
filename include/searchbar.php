@@ -538,7 +538,7 @@ if (!$basic_simple_search)
 	
 	
 	    <?php if ($star_search && $display_user_rating_stars){?>
-        <div class="SearchItem"><?php echo $lang["starsminsearch"];?><br />
+        <div class="SearchItem StarRatings"><?php echo $lang["starsminsearch"];?><br />
         <input type="hidden" id="starsearch" name="starsearch" class="SearchWidth" value="<?php echo htmlspecialchars($starsearch);?>">
                 <?php if ($starsearch=="") {$starsearch=0;}?>           
                 <div  class="RatingStars" onMouseOut="StarSearchRatingDisplay(document.getElementById('starsearch').value,'StarCurrent');">&nbsp;<?php 
