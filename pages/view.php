@@ -405,7 +405,7 @@ if (!hook("viewallresults")) {
 <?php } ?>
 
 
-<h1><?php
+<h1><?php hook("beforeviewtitle");?><?php
 # Display title prefix based on workflow state.
 if (!hook("replacetitleprefix","",array($resource["archive"]))) { switch ($resource["archive"])
 	{
