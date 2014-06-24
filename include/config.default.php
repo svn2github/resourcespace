@@ -906,6 +906,8 @@ $enable_related_resources=true;
 # Enable the 'keep me logged in at this workstation' option at the login form
 # If the user then selects this, a 100 day expiry time is set on the cookie.
 $allow_keep_logged_in=true;
+#Remember Me Checked By Default
+$remember_me_checked = true;
 
 # Show the link to 'user contributed assets' on the My Contributions page
 # Allows non-admin users to see the assets they have contributed
@@ -1564,8 +1566,6 @@ $resource_field_column_limit=200;
 $load_ubuntu_font=true;
 
 
-
-
 #
 # ------------------------ eCommerce Settings -----------------------------
 #
@@ -1583,33 +1583,6 @@ $paypal_url="https://www.paypal.com/cgi-bin/webscr";
 
 # Ability to set a field which will store 'Portrait' or 'Landscape' depending on image dimensions
 # $portrait_landscape_field=1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # ------------------------------------------------------------------------------------------------------------------
