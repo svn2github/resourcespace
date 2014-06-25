@@ -29,7 +29,7 @@ $height=ceil(count($options)/$cols);
 
 if ($edit_autosave) { ?>
 	<script type="text/javascript">
-		// Function to allow radio buttons to save automatically when $edit_autosave from config is set: 
+		// Function to allow checkboxes to save automatically when $edit_autosave from config is set: 
 		function checkbox_allow_save() {
 			preventautosave=false;
 			
