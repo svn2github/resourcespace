@@ -27,6 +27,19 @@ if ($l>25) {$cols=2;}
 
 $height=ceil(count($options)/$cols);
 
+if ($edit_autosave) { ?>
+	<script type="text/javascript">
+		// Function to allow radio buttons to save automatically when $edit_autosave from config is set: 
+		function checkbox_allow_save() {
+			preventautosave=false;
+			
+			setTimeout(function () {
+		        preventautosave=true;
+		    }, 500);
+		}
+	</script>
+<?php }
+
 global $checkbox_ordered_vertically;
 if ($checkbox_ordered_vertically)
 	{
@@ -49,8 +62,8 @@ if ($checkbox_ordered_vertically)
 					{
 					?>
 					<td width="1"><input type="checkbox" id="<?php echo $name; ?>" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
-					<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } ?>
-					/></td><td><label class="customFieldLabel" for="<?php echo $name; ?>"><?php echo htmlspecialchars($trans)?></label></td>
+					<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');" onmousedown="checkbox_allow_save();"<?php } ?>
+					/></td><td><label class="customFieldLabel" for="<?php echo $name; ?>" <?php if($edit_autosave) { ?>onmousedown="checkbox_allow_save();" <?php } ?>><?php echo htmlspecialchars($trans)?></label></td>
 					<?php
 					}
 				}
