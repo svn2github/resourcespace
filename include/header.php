@@ -26,10 +26,7 @@ if ($display_user_rating_stars && $star_search){
 	    }
 	}
 	
-if (getval("thumbs", "")=="")
-    {
-    rs_setcookie("thumbs", $thumbs_default, 1000,"","",false,false);
-    }
+
 ?><!DOCTYPE html>
 <html>	<?php if ($include_rs_header_info){?>
 <!--<?php hook("copyrightinsert");?>
