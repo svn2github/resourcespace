@@ -2,8 +2,6 @@
 # Do not display header / footer when dynamically loading CentralSpace contents.
 if (getval("ajax","")=="" && !hook("replace_footer")) { 
 
-
-
 hook("beforefooter");
 
 # Include theme bar?
@@ -12,7 +10,7 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 	?></td></tr></table><?php
 	}
 ?>
-<div class="clearer"> </div>
+<div class="clearer"></div>
 
 <!-- Use aria-live assertive for high priority changes in the content: -->
 <span role="status" aria-live="assertive" class="ui-helper-hidden-accessible"></span>
@@ -101,13 +99,7 @@ function SwapCSS(css){
 
 <?php echo $extrafooterhtml; ?>
 
-
-
 <?php } // end ajax ?>
-
-
-
-
 
 <?php /* always include the below as they are perpage */?>
 
@@ -311,33 +303,33 @@ function setContent() {
 		resizerTip: '<?php echo $lang["resize"]?>',
 		south__onclose_start: function(pane){
 			if (pane=="south"){
-			if(jQuery('.ui-layout-south').height()>=<?php echo $collection_frame_height?> && thumbs!="hide"){
-				ToggleThumbs();
-			} else if(jQuery('.ui-layout-south').height()==40 && thumbs=="hide"){
-				ToggleThumbs();
-			}
-			return false;
+				if(jQuery('.ui-layout-south').height()>=<?php echo $collection_frame_height?> && thumbs!="hide"){
+					ToggleThumbs();
+				} else if(jQuery('.ui-layout-south').height()==40 && thumbs=="hide"){
+					ToggleThumbs();
+				}
+				return false;
 			}
 		},
 		south__onresize: function(pane){
 			if (pane=="south"){
-			if(jQuery('.ui-layout-south').height()<<?php echo $collection_frame_height?> && thumbs!="hide"){
-				ToggleThumbs();
-			} else if(jQuery('.ui-layout-south').height()>40 && jQuery('.ui-layout-south').height()<<?php echo $collection_frame_height?> && thumbs=="hide"){
-				myLayout.sizePane("south", <?php echo $collection_frame_height?>);
-				ToggleThumbs();
-			} else if(jQuery('.ui-layout-south').height()>40 && thumbs=="hide"){
-				thumbs="show";console.log('showthumbs');
-				SetCookie('thumbs',thumbs,1000);
-				jQuery('#CollectionMinDiv').hide();
-				jQuery('#CollectionMaxDiv').show();jQuery('.ui-layout-south').animate({scrollTop:0}, 'fast');
-			}return false;
+				if(jQuery('.ui-layout-south').height()<<?php echo $collection_frame_height?> && thumbs!="hide"){
+					ToggleThumbs();
+				} else if(jQuery('.ui-layout-south').height()>40 && jQuery('.ui-layout-south').height()<<?php echo $collection_frame_height?> && thumbs=="hide"){
+					myLayout.sizePane("south", <?php echo $collection_frame_height?>);
+					ToggleThumbs();
+				} else if(jQuery('.ui-layout-south').height()>40 && thumbs=="hide"){
+					thumbs="show";console.log('showthumbs');
+					SetCookie('thumbs',thumbs,1000);
+					jQuery('#CollectionMinDiv').hide();
+					jQuery('#CollectionMaxDiv').show();
+					jQuery('.ui-layout-south').animate({scrollTop:0}, 'fast');
+				}return false;
 			}
 		}
 		
 	});
-	return;
-	
+	return;	
 }
 
 window.onload = function() {
