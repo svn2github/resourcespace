@@ -187,3 +187,8 @@ input[readonly] {color: #FFFFFF;}
 .plupload_file_name {color: #000;}
 .plupload_buttons  a{color: #000;}
 .plupload_buttons .plupload_disabled {color: #B5C3D4;}
+
+/* RS SpriteSheet */
+.glyph_user {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -20px 0;}
+.glyph_menu {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') 0 0;}
+.glyph_result {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -40px 0;}

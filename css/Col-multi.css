@@ -243,3 +243,8 @@ input[readonly] {color: #000000;}
 #basicyear, #basicmonth { background-color: #0DA4CF; color: white;}
 
 #SearchBox select {background-color:#0DA4CF; color: white;}
+
+/* RS SpriteSheet */
+.glyph_user {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_charcoal.png') -20px 0;}
+.glyph_menu {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_charcoal.png') 0 0;}
+.glyph_result {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_charcoal.png') -40px 0;}
