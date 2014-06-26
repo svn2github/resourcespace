@@ -285,6 +285,7 @@ include "../include/header.php";
   <style>.ListviewTitleBoxed {background-color:#fff;}</style>
 
 <?php
+if(!hook('replacethemesbacklink')){
 if ($themes_category_split_pages && isset($themes[0]) && !$theme_direct_jump)
 	{
 	# Display back link
@@ -300,7 +301,7 @@ if ($themes_category_split_pages && isset($themes[0]) && !$theme_direct_jump)
 	<?php
 
 }
-
+} # end hook('replacethemesbacklink')
 
 #if ($themes_category_split_pages && $theme1=="" && $smart_theme=="")
 if ($smart_theme!="")

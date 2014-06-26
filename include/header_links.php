@@ -18,7 +18,9 @@
 		)
 		{?>
 		<?php if ($search_results_link){?><li><a href="<?php echo $baseurl?>/pages/search.php"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
+		<?php if (!hook("replacethemelink")) { ?>
 		<?php if (checkperm("s") && $enable_themes && !$theme_direct_jump) { ?><li><a href="<?php echo $baseurl?>/pages/themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"]?></a></li><?php } ?>
+		<?php } /* end hook replacethemelink */?>
 		<?php if (checkperm("s") && ($public_collections_top_nav || $public_collections_header_only)) { ?><li><a href="<?php echo $baseurl?>/pages/collection_public.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["publiccollections"]?></a></li><?php } ?>
 		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a href="<?php echo $baseurl?>/pages/collection_manage.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycollections"]?></a></li><?php } ?>
 		<?php if (!hook("replacerecentlink")) { ?>
