@@ -1559,6 +1559,7 @@ $lang["editresourcetypewarning"]="Warning: changing the resource type will delet
 
 $lang["geodragmode"]="Drag mode";
 $lang["geodragmodearea"]="position pin";
+$lang["geodragmodeareaselect"]="select search area";
 $lang["geodragmodepan"]="pan";
 
 $lang["substituted_original"] = "substituted original";
