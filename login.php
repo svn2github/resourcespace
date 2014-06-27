@@ -11,6 +11,10 @@ $api=getval("api","");
 # Allow the language to be posted here
 $language=getval("language","");
 
+if($disable_languages) {
+	$language = $defaultlanguage;
+}
+
 # Check the provided language is valid (XSS vuln. fix)
 if (!empty($language) && !array_key_exists($language,$languages))
 	{
