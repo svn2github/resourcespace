@@ -751,6 +751,8 @@ function check_display_condition($n, $field)
 			if ($s[0]==$fields[$cf]["name"]) # this field needs to be checked
 				{
 				$scriptconditions[$condref]["field"] = $fields[$cf]["ref"];  # add new jQuery code to check value
+				$scriptconditions[$condref]['type'] = $fields[$cf]['type'];
+				$scriptconditions[$condref]['options'] = $fields[$cf]['options'];
 
 				$checkvalues=$s[1];
 				$validvalues=explode("|",strtoupper($checkvalues));
@@ -782,6 +784,33 @@ function check_display_condition($n, $field)
 								?>
 							});
 						</script><?php
+						}
+						# add onChange event to each radio button
+						else if($fields[$cf]['type'] == 12) {
+
+							$options = explode(',', $fields[$cf]['options']); ?>
+
+							<script type="text/javascript">
+							jQuery(document).ready(function() {
+
+							<?php
+							foreach ($options as $option) {
+								$element_id = 'field_' . $fields[$cf]['ref'] . '_' . $option;
+								$jquery = sprintf('
+										jQuery("#%s").change(function() {
+											checkDisplayCondition%s();
+										});
+								',
+									$element_id,
+									$field["ref"]
+								);
+								echo $jquery;
+							} ?>
+							
+							});
+							</script>
+
+							<?php
 						}
 					else
 						{
@@ -832,6 +861,33 @@ function check_display_condition($n, $field)
 			else
 				{
 				";
+
+				# Handle Radio Buttons type:
+				if($scriptcondition['type'] == 12) {
+				?>
+
+					var options_string = '<?php echo $scriptcondition["options"]; ?>';
+					var field<?php echo $scriptcondition["field"]; ?>_options = options_string.split(',');
+					
+					var checked = null;
+
+					for(var i=0; i < field<?php echo $scriptcondition["field"]; ?>_options.length; i++){
+						
+						if(jQuery('#field_<?php echo $scriptcondition["field"]; ?>_' + field<?php echo $scriptcondition["field"]; ?>_options[i]).is(':checked')) {
+							checked = jQuery('#field_<?php echo $scriptcondition["field"]; ?>_' + field<?php echo $scriptcondition["field"]; ?>_options[i] + ':checked').val();
+							checked = checked.toUpperCase();
+						}
+					}
+
+					fieldokvalues<?php echo $scriptcondition["field"]; ?> = [<?php echo $scriptcondition["valid"]; ?>];
+
+					if(checked !== null && jQuery.inArray(checked, fieldokvalues<?php echo $scriptcondition["field"]; ?>) > -1) {
+						newfield<?php echo $field["ref"]; ?>provisionaltest = true;
+					}
+				
+				<?php
+				}
+
 				echo "fieldvalues" . $scriptcondition["field"] . "=new Array();
 				";
 				echo "checkedvals" . $scriptcondition["field"] . "=jQuery('input[name^=" . $scriptcondition["field"] . "_]')
