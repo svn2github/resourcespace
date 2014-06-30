@@ -216,7 +216,7 @@ if (!$basic_simple_search)
 	hook("searchfiltertop");
 	?>
 
-	<?php $searchbuttons="<div class=\"SearchItem\">";
+	<?php $searchbuttons="<div class=\"SearchItem\" id=\"simplesearchbuttons\">";
 	
 	$cleardate="";
 	if ($simple_search_date){$cleardate.=" document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';" ;}
