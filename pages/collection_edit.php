@@ -291,9 +291,12 @@ if (checkperm("h") && $collection['public']==1)
 <div class="Question">
 <label for="deleteall"><?php echo $lang["deleteallresourcesfromcollection"]?></label><input type=checkbox id="deleteall" name="deleteall" onClick="if (this.checked) {return confirm('<?php echo $lang["deleteallsure"]?>');}">
 <div class="clearerleft"> </div>
-</div><?php } ?>
+</div><?php } 
 
-<?php
+
+hook('additionalfields2');
+
+
 if ($enable_collection_copy) 
 	{
 	?>
