@@ -1103,8 +1103,7 @@ function display_field($n, $field, $newtab=false)
 			display:none;
 			<?php }
 		}
-		echo "\""; # close the style attribute
-		?>>
+		?>">
 		<?php 
 			$labelname = $name;
 			
@@ -1567,7 +1566,7 @@ if($collapsible_sections)
 	</div><!-- end of collapsible section -->
 	<?php
 	}?>
-
+</div>
 </form>
 
 <?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>
