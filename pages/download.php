@@ -127,7 +127,11 @@ if ($noattach=="")
 			}
 		}
 
-	if ($download_filename_id_only){$filename=$ref . "." . $ext;}
+	if ($download_filename_id_only){
+		if(!hook('customdownloadidonly', '', array($ref, $ext, $alternative))) {
+			$filename=$ref . "." . $ext;
+		}
+	}
 	
 	if (isset($download_filename_field))
 		{
