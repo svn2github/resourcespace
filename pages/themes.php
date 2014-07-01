@@ -158,16 +158,16 @@ function DisplayTheme($themes=array())
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
-		<td><?php if ($themes_order_by=="name") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=name&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["collectionname"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="name") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
+		<td class="name"><?php if ($themes_order_by=="name") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=name&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["collectionname"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="name") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
 		<?php if ($themes_ref_column){?>
-		<td><?php if ($themes_order_by=="ref") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=ref&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["id"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="ref") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
+		<td class="ref"><?php if ($themes_order_by=="ref") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=ref&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["id"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="ref") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
 		<?php if ($themes_date_column){?>
-		<td><?php if ($themes_order_by=="created") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=created&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["created"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="created") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
+		<td class="created"><?php if ($themes_order_by=="created") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=created&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["created"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="created") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
-		<td><?php if ($themes_order_by=="c") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=c&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["itemstitle"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="c") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
+		<td class="count"><?php if ($themes_order_by=="c") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>themes_order_by=c&sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["itemstitle"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($themes_order_by=="c") {?><div class="<?php echo htmlspecialchars($sort)?>">&nbsp;</div><?php } ?></td>
 		<?php hook("beforecollectiontoolscolumnheader","themes",array($themeslinks));?>
-		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
+		<td class="tools"><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 
 		<?php
@@ -175,18 +175,18 @@ function DisplayTheme($themes=array())
 			{
 			?>
 			<tr <?php hook("collectionlistrowstyle");?>>
-			<td width="50%"><div class="ListTitle"><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>" onClick="return CentralSpaceLoad(this,true);"><?php echo i18n_get_collection_name($getthemes[$m])?></a>
+			<td class="name" width="50%"><div class="ListTitle"><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>" onClick="return CentralSpaceLoad(this,true);"><?php echo i18n_get_collection_name($getthemes[$m])?></a>
 			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
 			<?php if ($themes_ref_column){?>
-			<td><?php echo $getthemes[$m]["ref"];?></td>
+			<td class="ref"><?php echo $getthemes[$m]["ref"];?></td>
 			<?php } ?>
 			<?php if ($themes_date_column){?>
-			<td><?php echo nicedate($getthemes[$m]["created"],true)?></td>
+			<td class="created"><?php echo nicedate($getthemes[$m]["created"],true)?></td>
 			<?php } ?>
-			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
+			<td class="count" width="5%"><?php echo $getthemes[$m]["c"]?></td>
 			<?php hook("beforecollectiontoolscolumn");?>
-			<td nowrap><div class="ListTools">
+			<td class="tools" nowrap><div class="ListTools">
             <?php if ($collections_compact_style){
             draw_compact_style_selector($getthemes[$m]["ref"]);
             } else {
