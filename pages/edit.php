@@ -1565,8 +1565,8 @@ if($collapsible_sections)
 	?>
 	</div><!-- end of collapsible section -->
 	<?php
-	}?>
-</div>
+	}
+	if($multiple){echo "</div>";} ?>
 </form>
 
 <?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>
