@@ -392,7 +392,7 @@ if (!$basic_simple_search)
 			echo "<a href=\"#\" onClick=\"jQuery('#cattree_" . $fields[$n]["name"] . "').css('top', (jQuery(this).position().top)-200);jQuery('#cattree_" . $fields[$n]["name"] . "').css('left', (jQuery(this).position().left)-400);jQuery('#cattree_" . $fields[$n]["name"] . "').css('position', 'fixed');jQuery('#cattree_" . $fields[$n]["name"] . "').show();jQuery('#cattree_" . $fields[$n]["name"] . "').draggable();return false;\">" . $lang["select"] . "</a></div>";
 
 			# Add to clear function
-			$clear_function.="DeselectAll('" . $fields[$n]["name"] ."');";
+			$clear_function.="DeselectAll('" . $fields[$n]["name"] ."', true);";
 			
 			break;			
 			
