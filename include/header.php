@@ -9,10 +9,17 @@ $ajax=getval("ajax","");
 
 if ($ajax=="" && !hook("replace_header")) { 
 
+if(!isset($thumbs) && ($pagename!="login") && ($pagename!="user_password") && ($pagename!="preview_all") && ($pagename!="user_request"))
+    {
+    $thumbs=getval("thumbs","unset");
+    if($thumbs == "unset")
+        {
+        $thumbs = $thumbs_default;
+        rs_setcookie("thumbs", $thumbs, 1000,"","",false,false);
+        }
+    }
 // blank starsearch cookie in case $star_search was turned off
 setcookie("starsearch","",0,'','',false,true);
-
-// cookies have to go above the header output
 if ($display_user_rating_stars && $star_search){
 	# if seardch is not a special search (ie. !recent), use starsearchvalue.
 	if (getval("search","")!="" && strpos(getval("search",""),"!")!==false)
