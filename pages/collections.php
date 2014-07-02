@@ -412,7 +412,6 @@ if ($count_result>$max_collection_thumbs && $k=="")
 if (!$lazyload){?>
 <script>
 
-
 function ToggleThumbs()
 	{
 	thumbs=getCookie('thumbs');

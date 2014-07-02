@@ -282,6 +282,7 @@ if (isset($k) && $k!="" && isset($search) && !isset($usercollection))
 	usercollection='';
 <?php } else { ?>
 	usercollection='<?php echo htmlspecialchars($usercollection) ?>';
+	var collections_popout = <?php echo $collection_bar_popout? "true": "false"; ?>;
 <?php } ?>
 </script><?php 
 
