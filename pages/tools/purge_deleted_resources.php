@@ -16,10 +16,10 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 echo "error - aborting.";
 exit;
 }
-include "../../include/db.php";
-include "../../include/general.php";
-include "../../include/resource_functions.php";
-include "../../include/image_processing.php";
+include __DIR__ . "/../../include/db.php"; ob_end_clean(); // Discard output buffering as it's causing the script to stop working
+include __DIR__ . "/../../include/general.php";
+include __DIR__ . "/../../include/resource_functions.php";
+include __DIR__ . "/../../include/image_processing.php";
 
 
 // restore the default system error handler
