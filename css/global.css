@@ -667,3 +667,18 @@ width: 90px;
 
 .CollectionsCompactToolsContainerDummy, .CollectionsCompactToolsContainer {display:inline-block;}
 #GeoDragMode{margin-bottom: 10px;}
+
+.sharerelatedresources {
+	float: left;
+	width: 65%;
+	}	
+	
+.sharerelatedtype .CollectionPanelShell{
+	height: 150px;
+	}
+
+.sharerelatedresources .Title {
+	margin-bottom: 10px;
+	font-weight: bold;
+	}
+	

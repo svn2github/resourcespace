@@ -1807,3 +1807,5 @@ $lang["shared_collections"]="Shared collections";
 $lang["internal"]="Internal";
 $lang["managecollectionslink"]="Manage collections";
 $lang["showcollectionindropdown"]="Show in collection bar";
+$lang["sharerelatedresources"]="Include related resources.<br>A new collection will be created and shared if any of these are selected";
+$lang["sharerelatedresourcesaddremove"]="If sharing related resources, allow other users to add/remove resources from the new collection";

@@ -2328,3 +2328,6 @@ $hide_collection_share_generate_url=false;
 
 # Pop-out Collection Bar Upon Collection Interaction such as "Select Collection"
 $collection_bar_popout=false;
+
+# Add option to include related resources when sharing single resource (creates a new collection)
+$share_resource_include_related=false;
