@@ -1489,8 +1489,7 @@ function change_collection_link($collection)
     {
     # Generates a HTML link for adding a changing the current collection
     global $lang;
-    return '<a onClick="return CollectionDivLoad(this);" href="collections.php?collection='.$collection.'">&gt;&nbsp;'.$lang["selectcollection"].'</a>';
-
+    return '<a onClick="ChangeCollection('.$collection.',\'\');return false;" href="collections.php?collection='.$collection.'">&gt;&nbsp;'.$lang["selectcollection"].'</a>';
     }
 
 function get_collection_external_access($collection)
