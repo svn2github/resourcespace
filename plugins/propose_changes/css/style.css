@@ -1,0 +1,77 @@
+
+.ProposeChangesSection{
+    border-collapse: collapse;
+	width: 100%;
+    }
+    
+.ProposeChangesQuestion{
+	padding: 0.5em 0em 1em;
+    border-bottom: 1px solid #000;
+    vertical-align: top;
+    }
+    
+.ProposeChangesLabel, .propose_changes_current, .propose_change_button, .proposed_change {
+    vertical-align: top;
+    min-height: 10px;
+    float: left;
+    }
+
+.proposed_change, .proposed_change textarea {
+    min-width: 380px !important;
+    }   
+
+.ProposeChangesLabel	{
+	width: 20% !important;
+	margin-top: 0.4em;
+	}
+        
+.ProposeChangesTitle {
+    font-weight: bold;
+    float: left;
+    }
+	
+.ProposeChangesTitlestdwidth {
+    width: 360px !important;
+    }
+	
+    
+.ProposeChangesAcceptDeleteColumn {
+    float: right;
+    }
+
+@media(max-width:1024px) {
+    .proposed_change , .ProposeChangesTitlestdwidth, .ProposeChangesAcceptDeleteColumn, .ProposeChangesTitle, .ProposeChangesLabel {
+           
+        width:100%;
+		float: left;
+        }  
+		
+	.proposed_change  .stdwidth {
+		width: 100%;
+		}
+		
+		
+	.propose_change_button, .proposed_change  input  {
+		margin-top: 5px;
+		clear: left;
+		}
+	
+	.ProposeChangesLabel {
+           
+		font-weight: bold;
+		  }
+	
+	.ProposeChangesQuestion td label{
+		display:block;
+		}
+    }
+
+
+        
+    
+    
+  
+    
+
+
+    
