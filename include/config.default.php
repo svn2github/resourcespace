@@ -2331,3 +2331,6 @@ $collection_bar_popout=false;
 
 # Add option to include related resources when sharing single resource (creates a new collection)
 $share_resource_include_related=false;
+
+# Allow users to skip upload and create resources with no attached file
+$upload_no_file=false;

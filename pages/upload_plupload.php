@@ -325,7 +325,17 @@ if ($_FILES)
 		
 
     }
-
+	
+elseif ($upload_no_file && getval("createblank","")!="")
+	{
+    $ref=copy_resource(0-$userref);    
+	# Add to collection?
+	if ($collection_add!="")
+		{
+		add_resource_to_collection($ref,$collection_add);
+		}
+    redirect($baseurl_short."pages/edit.php?refreshcollectionframe=true&ref=" . $ref."&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
+	}
 
 include "../include/header.php";
 ?>
@@ -626,8 +636,14 @@ if (!hook("replacemetadatacheckbox"))
 </div>
 <?php if (!$hide_uploadertryother) { ?>
 	<p><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/upload_java.php?resource_type=<?php echo urlencode(getvalescaped("resource_type","")); ?>&alternative=<?php echo urlencode($alternative) ?>&collection_add=<?php echo urlencode($collection_add);?>&entercolname=<?php echo urlencode($collectionname);?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>&replace_resource=<?php echo urlencode($replace_resource)?>"> &gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
-<?php } ?>
+<?php } 
 
+if($upload_no_file)
+	{
+	?>
+	<p><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/upload_plupload.php?createblank=true&replace=<?php echo urlencode($replace) ?>&alternative=<?php echo urlencode($alternative) ?>&collection_add=<?php echo urlencode($collection_add)?>&resource_type=<?php echo urlencode($resource_type)?>&replace_resource=<?php echo urlencode($replace_resource)?>"> &gt; <?php echo $lang["create_empty_resource"]; ?></a></p>
+	<?php
+	}?>
 
 </div>
 
