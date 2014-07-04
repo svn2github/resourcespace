@@ -9,12 +9,16 @@ include "../include/search_functions.php";
 include "../include/collections_functions.php";
 include "../include/resource_functions.php";
 
-# Save the thumbs status, this value will be restored when leaving the page
-$saved_thumbs_state=getvalescaped("thumbs",$thumbs_default);
-# Hide the thumbs
-rs_setcookie("thumbs", "hide", 1000);
-# Restore the thumbs status when leaving the page
-$headerinsert.="<script type='text/javascript'>jQuery(window).unload(function(){SetCookie('thumbs','".$saved_thumbs_state."');});</script>";
+# Save Existing Thumb Cookie Status Then Hide the collection Bar 
+# - Restores Status on Unload (See Foot of page)
+$saved_thumbs_state = "";
+$thumbs=getval("thumbs","unset");
+if($thumbs != "unset" && $thumbs != "hide")
+    {
+    $saved_thumbs_state = "show";
+    }
+$thumbs = "hide";
+rs_setcookie("thumbs", $thumbs, 1000,"","",false,false);
 
 $ref=getvalescaped("ref","",true);
 $search=getvalescaped("search","");
@@ -233,6 +237,8 @@ if ($show_resource_title_in_titlebar){
 		echo "</script>";
 	}
 }
-
+if($saved_thumbs_state == "show") {
+	echo "<script type='text/javascript'>jQuery('window').unload(function(){ShowThumbs();});</script>";
+}
 include "../include/footer.php";
 ?>

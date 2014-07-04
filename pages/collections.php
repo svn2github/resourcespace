@@ -31,9 +31,15 @@ if ($k!="") {$infobox=false;}
 # Disable checkboxes for external users.
 if ($k!="") {$use_checkboxes_for_selection=false;}
 
-# Hide/show thumbs - set cookie must be before header is sent
-$thumbs=getval("thumbs",$thumbs_default);
-if ($thumbs=="undefined"){$thumbs=$thumbs_default;}
+if(!isset($thumbs))
+    {
+    $thumbs=getval("thumbs","unset");
+    if($thumbs == "unset")
+        {
+        $thumbs = $thumbs_default;
+        rs_setcookie("thumbs", $thumbs, 1000,"","",false,false);
+        }
+    }
 
 # Basket mode? - this is for the e-commerce user request modes.
 if ($userrequestmode==2 || $userrequestmode==3)
@@ -408,48 +414,7 @@ if ($count_result>$max_collection_thumbs && $k=="")
 	 # Empty the result set so nothing is drawn; the window will be resized shortly anyway.
 	}
 	*/
-
-if (!$lazyload){?>
-<script>
-
-function ToggleThumbs()
-	{
-	thumbs=getCookie('thumbs');
-		if (thumbs=="show"){
-			thumbs="hide";SetCookie('thumbs',thumbs,1000);
-			myLayout.sizePane("south", 40);
-			jQuery('#CollectionMinDiv').show();
-			jQuery('#CollectionMaxDiv').hide();jQuery('.ui-layout-south').animate({scrollTop:0}, 'fast');
-		} else { 
-			thumbs="show";console.log('showthumbs');
-			SetCookie('thumbs',thumbs,1000);
-			jQuery('#CollectionMinDiv').hide();
-			jQuery('#CollectionMaxDiv').show();
-			myLayout.sizePane("south", <?php echo $collection_frame_height?>);jQuery('.ui-layout-south').animate({scrollTop:0}, 'fast');
-		} 
-		//setContent();
-	}
-	
-
-
-if (getCookie('thumbs')=="hide") { 
-	thumbs="hide";
-	myLayout.sizePane("south", 40);
-	jQuery('#CollectionMinDiv').show();
-	jQuery('#CollectionMaxDiv').hide();jQuery('.ui-layout-south').animate({scrollTop:0}, 'fast');
-} else { 
-	thumbs="show";
-	jQuery('#CollectionMinDiv').hide();
-	jQuery('#CollectionMaxDiv').show();
-	if (jQuery('.ui-layout-south').height()<=<?php echo $collection_frame_height?>){
-	myLayout.sizePane("south", <?php echo $collection_frame_height?>);
-	jQuery('.ui-layout-south').animate({scrollTop:0}, 'fast');
-	}
-	
-} </script>
-<?php } ?>
-
-<?php if (true) { // draw both
+if (true) { // draw both
 
 if (!$lazyload){?><div id="CollectionMaxDiv" style="display:<?php if ($thumbs=="show") { ?>block<?php } else { ?>none<?php } ?>"><?php }
 # ---------------------------- Maximised view -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ $ajax=getval("ajax","");
 
 if ($ajax=="" && !hook("replace_header")) { 
 
-if(!isset($thumbs) && ($pagename!="login") && ($pagename!="user_password") && ($pagename!="preview_all") && ($pagename!="user_request"))
+if(!isset($thumbs) && ($pagename!="login") && ($pagename!="user_password") && ($pagename!="user_request"))
     {
     $thumbs=getval("thumbs","unset");
     if($thumbs == "unset")
