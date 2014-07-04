@@ -157,7 +157,6 @@ if ($allow_reorder &&!$lazyload)
 		
 	</script>
 <?php } 
-
 else if (!$lazyload) { ?>
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -166,7 +165,7 @@ else if (!$lazyload) { ?>
 		});	
 	</script>
 	<?php } 
-
+	hook("responsivethumbsloaded");
 
 if (!$lazyload){?>
 	<style>
