@@ -437,7 +437,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !i
    ----------------------------------------
 */
 
-if ($extension=="mp3" && !isset($newfile))
+if (($extension=="mp3" || $extension=="flac") && !isset($newfile))
 	{
 	if ($exiftool_fullpath!=false)
 		{
@@ -449,6 +449,7 @@ if ($extension=="mp3" && !isset($newfile))
 		if (filesize_unlimited($target)>0){$newfile = $target;}else{unlink($target);}
 		}
 	}
+
 
 
 /* ----------------------------------------
