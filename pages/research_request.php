@@ -47,22 +47,22 @@ for ($n=0;$n<count($users);$n++)
 <?php } ?>
 
 <div class="Question">
-<label><?php echo $lang["nameofproject"]?></label>
-<input name="name" class="stdwidth" value="<?php echo htmlspecialchars(getval("description","")) ?>">
+<label for="name"><?php echo $lang["nameofproject"]?></label>
+<input id="name" name="name" class="stdwidth" value="<?php echo htmlspecialchars(getval("description","")) ?>">
 <div class="clearerleft"> </div>
 <?php if (isset($error_name)) { ?><div class="FormError">!! <?php echo $lang["noprojectname"]?> !!</div><?php } ?>
 </div>
 
 <div class="Question">
-<label><?php echo $lang["descriptionofproject"]?><br/><span class="OxColourPale"><?php echo $lang["descriptionofprojecteg"]?></span></label>
-<textarea rows=5 cols=50 name="description" class="stdwidth"><?php echo htmlspecialchars(getval("description","")) ?></textarea>
+<label for="description"><?php echo $lang["descriptionofproject"]?><br/><span class="OxColourPale"><?php echo $lang["descriptionofprojecteg"]?></span></label>
+<textarea id="description" rows=5 cols=50 name="description" class="stdwidth"><?php echo htmlspecialchars(getval("description","")) ?></textarea>
 <div class="clearerleft"> </div>
 <?php if (isset($error_description)) { ?><div class="FormError">!! <?php echo $lang["noprojectdescription"]?> !!</div><?php } ?>
 </div>
 
 <div class="Question">
-<label><?php echo $lang["deadline"]?></label>
-<select name="deadline" class="stdwidth">
+<label for="deadline"><?php echo $lang["deadline"]?></label>
+<select id="deadline" name="deadline" class="stdwidth">
 <option value=""><?php echo $lang["nodeadline"]?></option>
 <?php for ($n=0;$n<=150;$n++)
 	{
@@ -79,22 +79,22 @@ for ($n=0;$n<count($users);$n++)
 # Anonymous access - we need to collect their e-mail address.
 ?>
 <div class="Question" id="email">
-<label><?php echo $lang["email"]?></label>
-<input name="email" class="stdwidth" value="<?php echo htmlspecialchars(getval("email","")) ?>">
+<label for="email"><?php echo $lang["email"]?></label>
+<input id="email" name="email" class="stdwidth" value="<?php echo htmlspecialchars(getval("email","")) ?>">
 <div class="clearerleft"> </div>
 <?php if (isset($error_email)) { ?><div class="FormError">!! <?php echo $lang["setup-emailerr"]?> !!</div><?php } ?>
 </div>
 <?php } ?>
 
 <div class="Question" id="contacttelephone">
-<label><?php echo $lang["contacttelephone"]?></label>
-<input name="contact" class="stdwidth" value="<?php echo htmlspecialchars(getval("contact","")) ?>">
+<label for="contact"><?php echo $lang["contacttelephone"]?></label>
+<input id="contact" name="contact" class="stdwidth" value="<?php echo htmlspecialchars(getval("contact","")) ?>">
 <div class="clearerleft"> </div>
 </div>
 
-<div class="Question" id="finaluse">
-<label><?php echo $lang["finaluse"]?><br/><span class="OxColourPale"><?php echo $lang["finaluseeg"]?></span></label>
-<input name="finaluse" class="stdwidth" value="<?php echo htmlspecialchars(getval("finaluse","")) ?>">
+<div class="Question">
+<label for="finaluse"><?php echo $lang["finaluse"]?><br/><span class="OxColourPale"><?php echo $lang["finaluseeg"]?></span></label>
+<input id="finaluse" name="finaluse" class="stdwidth" value="<?php echo htmlspecialchars(getval("finaluse","")) ?>">
 <div class="clearerleft"> </div>
 </div>
 
@@ -107,14 +107,14 @@ for ($n=0;$n<count($users);$n++)
 </div>
 
 <div class="Question" id="noresourcesrequired">
-<label><?php echo $lang["noresourcesrequired"]?></label>
-<input name="noresources" class="shrtwidth" value="<?php echo htmlspecialchars(getval("noresources",""))?>">
+<label for="noresources"><?php echo $lang["noresourcesrequired"]?></label>
+<input id="noresources" name="noresources" class="shrtwidth" value="<?php echo htmlspecialchars(getval("noresources",""))?>">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question" id="shaperequired">
-<label><?php echo $lang["shaperequired"]?></label>
-<select name="shape" class="stdwidth">
+<label for="shape"><?php echo $lang["shaperequired"]?></label>
+<select id="shape" name="shape" class="stdwidth">
 <option><?php echo $lang["portrait"]?></option><option><?php echo $lang["landscape"]?></option><option selected><?php echo $lang["either"]?></option>
 </select>
 <div class="clearerleft"> </div>
