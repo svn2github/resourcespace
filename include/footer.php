@@ -52,7 +52,7 @@ function SwapCSS(css){
 <?php } ?>
 
 <?php if (getval("k","")=="") { ?>
-<div id="FooterNavLeft" class=""><span id="FooterThemes"><?php if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?php echo $lang["interface"]?>:&nbsp;&nbsp;
+<div id="FooterNavLeft" class=""><span id="FooterThemes" aria-hidden="true" role="presentation"><?php if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?php echo $lang["interface"]?>:&nbsp;&nbsp;
 <?php if (!hook("replacecustomthemechips"))	{
 	// enable custom theme chips 
 	if (count($available_themes!=0)){
