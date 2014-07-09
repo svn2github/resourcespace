@@ -175,26 +175,27 @@ hook("homebeforehomepicpanelend");
 ?>
 <div id="HomePanelContainer" class="">
 <?php if ($home_themeheaders && $enable_themes) { ?>
-	<a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/themes.php" class="HomePanel"><div class="HomePanelIN HomePanelThemes<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
-	<h2><?php echo $lang["themes"]?></h2>
-	<span><?php echo text("themes")?></span>
-	<br />	<br />
-	<select id="themeselect" onChange="CentralSpaceLoad(this.value,true);">
-	<option value=""><?php echo $lang["select"] ?></option>
-	<?php
-	$headers=get_theme_headers();
-	for ($n=0;$n<count($headers);$n++)
-		{
-		?>
-		<option value="<?php echo $baseurl_short?>pages/themes.php?header=<?php echo urlencode($headers[$n])?>"><?php echo i18n_get_translated(str_replace("*","",$headers[$n]))?></option>
+	<div class="HomePanel">
+	<div class="HomePanelIN HomePanelThemes<?php if (count($home_collections)>0) { ?> HomePanelMatchPromotedHeight<?php } ?>">
+		<a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/themes.php"><h2><?php echo $lang["themes"]?></h2></a>
+		<span><?php echo text("themes")?></span>
+		<br />	<br />
+		<select id="themeselect" onChange="CentralSpaceLoad(this.value,true);">
+		<option value=""><?php echo $lang["select"] ?></option>
 		<?php
-		}
-	?>
-	</select>
-	<br />&gt;&nbsp;<a href="<?php echo $baseurl_short?>pages/themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewall"] ?></a>
+		$headers=get_theme_headers();
+		for ($n=0;$n<count($headers);$n++)
+			{
+			?>
+			<option value="<?php echo $baseurl_short?>pages/themes.php?header=<?php echo urlencode($headers[$n])?>"><?php echo i18n_get_translated(str_replace("*","",$headers[$n]))?></option>
+			<?php
+			}
+		?>
+		</select>
+		<br />&gt;&nbsp;<a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/themes.php"><?php echo $lang["viewall"] ?></a>
 	</div>
 	<div class="PanelShadow"></div>
-	</a>
+	</div>
 <?php } ?>
 
 
