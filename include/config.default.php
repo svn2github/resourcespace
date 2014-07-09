@@ -1712,6 +1712,10 @@ $use_collection_name_in_zip_name=false;
 # Enable a permanently visible 'themes bar' on the left hand side of the screen for quick access to themes.
 $use_theme_bar=false;
 
+# PDF/EPS base ripping quality in DPI. Note, higher values might greatly increase the resource usage
+# on preview generation (see $pdf_dynamic_rip on how to avoid that)
+$pdf_resolution=150;
+
 # PDF/EPS dynamic ripping
 # Use pdfinfo (pdfs) or identify (eps) to extract document size in order to calculate an efficient ripping resolution 
 # Useful mainly if you have odd sized pdfs, as you might in the printing industry; 

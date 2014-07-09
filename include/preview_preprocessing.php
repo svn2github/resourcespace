@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $imagemagick_colorspace, $ghostscript_path, $pdf_pages, $antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_supported_extensions, $qlpreview_exclude_extensions, $ffmpeg_global_options,$ffmpeg_snapshot_fraction, $ffmpeg_snapshot_seconds,$ffmpeg_no_new_snapshots;
+global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $imagemagick_colorspace, $ghostscript_path, $pdf_pages, $antiword_path, $unoconv_path, $pdf_resolution, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_supported_extensions, $qlpreview_exclude_extensions, $ffmpeg_global_options,$ffmpeg_snapshot_fraction, $ffmpeg_snapshot_seconds,$ffmpeg_no_new_snapshots;
 global $dUseCIEColor;
 
 # Locate utilities
@@ -621,7 +621,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!
 	if ($extension=="eps") {$pdf_pages=1;}
 	if ($extension=="ai") {$pdf_pages=1;}
 	if ($extension=="ps") {$pdf_pages=1;}
-	$resolution=150;
+	$resolution=$pdf_resolution;
 	$scr_size=sql_query("select width,height from preview_size where id='scr'");
 	$scr_width=$scr_size[0]['width'];
 	$scr_height=$scr_size[0]['height'];
@@ -703,7 +703,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions))&& (!
 		if (file_exists($target)) {unlink($target);}
 
 		if ($dUseCIEColor){$dUseCIEColor=" -dUseCIEColor ";} else {$dUseCIEColor="";}
-		$gscommand2 = $ghostscript_fullpath . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop -dUseCropBox " . escapeshellarg($file);
+		$gscommand2 = $ghostscript_fullpath . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -dJPEGQ=".$imagemagick_quality." -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop -dUseCropBox " . escapeshellarg($file);
  		$output=run_command($gscommand2);
 
     	debug("PDF multi page preview: page $n, executing " . $gscommand2);
