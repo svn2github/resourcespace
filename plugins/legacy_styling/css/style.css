@@ -65,3 +65,8 @@ h1, h2, .RecordPanel .Title {font: normal 1.5em Arial, Helvetica, sans-serif;}
 
 .HomePanelPromotedIN {min-height: 130px;}
 
+#themeselect {
+width: 150px;
+font-family:inherit;
+margin-bottom:10px;
+}
