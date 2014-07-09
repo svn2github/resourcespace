@@ -1102,8 +1102,10 @@ function display_field($n, $field, $newtab=false)
 			{?>
 			display:none;
 			<?php }
+			?>"<?php
+
 		}
-		?>">
+		?>>
 		<?php 
 			$labelname = $name;
 			
