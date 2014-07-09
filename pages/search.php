@@ -465,10 +465,10 @@ if (true) # Always show search header now.
         {
         $results_count=count($collections)+$resources_count;
     	}
-
-	hook("responsiveresultoptions");
 	?>
 	<div class="TopInpageNav">
+	<div class="TopInpageNavLeft">
+	<?php hook("responsiveresultoptions"); ?>
 	<div id="SearchResultFound" class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected">
 	<?php
 	if (isset($collections)) 
@@ -625,13 +625,19 @@ if (true) # Always show search header now.
 	if ($offset>$results) {$offset=0;}
 	$curpage=floor($offset/$per_page)+1;
 	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=" . urlencode($sort) . "&amp;archive=" . $archive . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
-	
-	pager();
-	$draw_pager=true;
 	?>
 	</div>
-        <?php hook("stickysearchresults"); ?>
+	<div class="TopInpageNavRight">
 	<?php
+	    pager();
+		$draw_pager=true;
+	?>
+	</div>
+	<div class="clearerleft"></div>
+	</div>
+        <?php 
+		hook("stickysearchresults");
+
 	if ($display_search_titles)
 		{
 		hook("beforesearchtitle");
@@ -867,7 +873,7 @@ if (true) # Always show search header now.
 ?>
 <!--Bottom Navigation - Archive, Saved Search plus Collection-->
 <div class="BottomInpageNav">
-
+	<div class="BottomInpageNavLeft">
 	<?php if (!checkperm("b") && $k=="") { ?>
 	<?php if($allow_save_search) { ?><div class="InpageNavLeftBlock"><a onClick="return CollectionDivLoad(this);" href="<?php echo $baseurl_short?>pages/collections.php?addsearch=<?php echo urlencode($search)?>&amp;restypes=<?php echo urlencode($restypes)?>&amp;archive=<?php echo urlencode($archive) ?>&amp;daylimit=<?php echo urlencode($daylimit) ?>">&gt;&nbsp;<?php echo $lang["savethissearchtocollection"]?></a></div><?php } ?>
 	<?php if($allow_smart_collections && substr($search,0,11)!="!collection") { ?><div class="InpageNavLeftBlock"><a onClick="return CollectionDivLoad(this);" href="<?php echo $baseurl_short?>pages/collections.php?addsmartcollection=<?php echo urlencode($search)?>&amp;restypes=<?php echo urlencode($restypes)?>&amp;archive=<?php echo urlencode($archive) ?>&amp;starsearch=<?php echo urlencode($starsearch) ?>">&gt;&nbsp;<?php echo $lang["savesearchassmartcollection"]?></a></div><?php } ?>
@@ -886,11 +892,16 @@ if (true) # Always show search header now.
 	
 	<?php 
 	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".$sort."&amp;archive=" . $archive . "&amp;daylimit=" . urlencode($daylimit) . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
-
-	if (isset($draw_pager)) {pager(false);} ?>
-</div>	
-
-<?php 
+	?>
+	</div>
+	<div class="BottomInpageNavRight">	
+	<?php 
+	if (isset($draw_pager)) {pager(false);} 
+	?>
+	</div>
+	<div class="clearerleft"></div>
+</div>
+	<?php
 } # End of replace all results hook conditional
 
 hook("endofsearchpage");?>
