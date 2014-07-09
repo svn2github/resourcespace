@@ -1462,13 +1462,13 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 									if ($option!="")
 										{
 										?>
-										<br /><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span>
+										<br /><div class="checkoption"><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span></div>
 
 										<?php
 										}
 									else
 										{
-										?><span class="checkbox"></span><span class="checkboxtext"></span><?php
+										?><div class="checkoption"><span class="checkbox"></span><span class="checkboxtext"></span></div><?php
 										}
 									}
 								}
@@ -1487,7 +1487,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 						if ($option!="")
 							{
 							?>
-							<span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo htmlspecialchars($name) ?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($option),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span>
+							<div class="checkoption"><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo htmlspecialchars($name) ?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($option),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span></div>
 							<?php
 							}
 						}

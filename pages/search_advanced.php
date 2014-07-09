@@ -359,19 +359,19 @@ if(!hook("advsearchrestypes")): ?>
 <label><?php echo $lang["search-mode"]?></label><?php
 $rt=explode(",",getvalescaped("restypes",""));
 $wrap=0;
-?><div class="checkboxes"><span class="checkbox"><input type=checkbox class="SearchTypeCheckbox" id="SearchGlobal" name="resourcetypeGlobal" value="yes" <?php if (in_array("Global",$opensections)) { ?>checked<?php }?>></span><span class="checkboxtext"><?php echo $lang["resources-all-types"]; ?></span>
+?><div class="checkboxes"><div class="checkoption"><span class="checkbox"><input type=checkbox class="SearchTypeCheckbox" id="SearchGlobal" name="resourcetypeGlobal" value="yes" <?php if (in_array("Global",$opensections)) { ?>checked<?php }?>></span><span class="checkboxtext"><?php echo $lang["resources-all-types"]; ?></span></div>
 <?php
 $hiddentypes=Array();
 for ($n=0;$n<count($types);$n++)
 	{
 	$wrap++;if ($wrap>4) {$wrap=1;?></tr><tr><?php }
-	?><span class="checkbox"><input type=checkbox class="SearchTypeCheckbox SearchTypeItemCheckbox" name="resourcetype<?php echo $types[$n]["ref"]?>" value="yes" <?php if (in_array($types[$n]["ref"],$opensections) || in_array("Global",$opensections)) { ?>checked<?php } else $hiddentypes[]=$types[$n]["ref"]; ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($types[$n]["name"])?></span><?php	
+	?><div class="checkoption"><span class="checkbox"><input type=checkbox class="SearchTypeCheckbox SearchTypeItemCheckbox" name="resourcetype<?php echo $types[$n]["ref"]?>" value="yes" <?php if (in_array($types[$n]["ref"],$opensections) || in_array("Global",$opensections)) { ?>checked<?php } else $hiddentypes[]=$types[$n]["ref"]; ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($types[$n]["name"])?></span></div><?php	
 	}
 ?>
 <?php if ($search_includes_user_collections || $search_includes_public_collections ||$search_includes_themes)
     {
 ?>
-<span class="checkbox"><input type=checkbox id="SearchCollectionsCheckbox" class="SearchTypeCheckbox" name="resourcetypeCollections" value="yes" <?php if (in_array("Collections",$opensections)) { ?>checked<?php }?>></span><span class="checkboxtext"><?php print $lang["collections"]; ?></span>
+<div class="checkoption"><span class="checkbox"><input type=checkbox id="SearchCollectionsCheckbox" class="SearchTypeCheckbox" name="resourcetypeCollections" value="yes" <?php if (in_array("Collections",$opensections)) { ?>checked<?php }?>></span><span class="checkboxtext"><?php print $lang["collections"]; ?></span></div>
 <?php
     }
 ?>
@@ -584,26 +584,26 @@ function resetTickAllColl(){
 $types=get_resource_types();
 $wrap=0;
 ?><div class="checkboxes">
-<span class="checkbox"><input type='checkbox' id='rttickallcoll' name='rttickallcoll' checked onclick='jQuery("#advancedform .tickboxcoll").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#rttickallcoll").attr("checked")=="checked"));}); UpdateResultCount(); ' /></span><span class="checkboxtext"><?php echo $lang['allcollectionssearchbar']?></span>
+<div class="checkoption"><span class="checkbox"><input type='checkbox' id='rttickallcoll' name='rttickallcoll' checked onclick='jQuery("#advancedform .tickboxcoll").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#rttickallcoll").attr("checked")=="checked"));}); UpdateResultCount(); ' /></span><span class="checkboxtext"><?php echo $lang['allcollectionssearchbar']?></span></div>
 
 <?php
 
 $clear_function="";
 if ($search_includes_user_collections) 
     { ?>
-    <span class="checkbox"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxMyCol" type="checkbox" name="resourcetypemycol" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("mycol",$rt))) {?>checked="checked"<?php } ?>onClick="resetTickAllColl();" onChange="UpdateResultCount();"/></span><span class="checkboxtext"><?php echo $lang["mycollections"]?></span><?php	
+    <div class="checkoption"><span class="checkbox"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxMyCol" type="checkbox" name="resourcetypemycol" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("mycol",$rt))) {?>checked="checked"<?php } ?>onClick="resetTickAllColl();" onChange="UpdateResultCount();"/></span><span class="checkboxtext"><?php echo $lang["mycollections"]?></span></div><?php	
     $clear_function.="document.getElementById('TickBoxMyCol').checked=true;";
     $clear_function.="resetTickAllColl();";
     }
 if ($search_includes_public_collections) 
     { ?>
-    <span class="checkbox"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxPubCol" type="checkbox" name="resourcetypepubcol" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("pubcol",$rt))) {?>checked="checked"<?php } ?>onClick="resetTickAllColl();" onChange="UpdateResultCount();"/></span><span class="checkboxtext"><?php echo $lang["findpubliccollection"]?></span><?php	
+    <div class="checkoption"><span class="checkbox"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxPubCol" type="checkbox" name="resourcetypepubcol" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("pubcol",$rt))) {?>checked="checked"<?php } ?>onClick="resetTickAllColl();" onChange="UpdateResultCount();"/></span><span class="checkboxtext"><?php echo $lang["findpubliccollection"]?></span></div><?php	
     $clear_function.="document.getElementById('TickBoxPubCol').checked=true;";
     $clear_function.="resetTickAllColl();";
     }
 if ($search_includes_themes) 
     { ?>
-    <span class="checkbox"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxThemes" type="checkbox" name="resourcetypethemes" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("themes",$rt))) {?>checked="checked"<?php } ?>onClick="resetTickAllColl();" onChange="UpdateResultCount();"/></span><span class="checkboxtext"><?php echo $lang["findcollectionthemes"]?></span><?php	
+    <div class="checkoption"><span class="checkbox"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxThemes" type="checkbox" name="resourcetypethemes" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("themes",$rt))) {?>checked="checked"<?php } ?>onClick="resetTickAllColl();" onChange="UpdateResultCount();"/></span><span class="checkboxtext"><?php echo $lang["findcollectionthemes"]?></span></div><?php	
     $clear_function.="document.getElementById('TickBoxThemes').checked=true;";
     $clear_function.="resetTickAllColl();";
     }
