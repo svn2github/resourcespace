@@ -519,13 +519,13 @@ for ($n=0;$n<count($result);$n++){
 		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path); # Path 
 
         $ghostscript_fullpath = get_utility_path("ghostscript");
-        $command = $ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg(get_temp_dir() . "/contactsheetrip.jpg") . " " . escapeshellarg(get_temp_dir() . "/contactsheet.pdf"). " 2>&1";
+        $command = $ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg(get_temp_dir() . "/contactsheetrip.jpg") . " " . escapeshellarg(get_temp_dir() . "/contactsheet.pdf") . (($config_windows)?"":" 2>&1");
 		run_command($command);
 
         $convert_fullpath = get_utility_path("im-convert");
         if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'");}
 
-        $command = $convert_fullpath . " -resize ".$contact_sheet_preview_size." -quality 90 -colorspace ".$imagemagick_colorspace." \"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.jpg\"  2>&1";
+        $command = $convert_fullpath . " -resize ".$contact_sheet_preview_size." -quality 90 -colorspace ".$imagemagick_colorspace." \"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.jpg\"" . (($config_windows)?"":" 2>&1");
 
 		run_command($command);
 		exit();
