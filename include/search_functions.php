@@ -1375,126 +1375,127 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 	
 		case 2: 
 		case 3:
-		if(!hook("customchkboxes", "", array($field, $value, $autoupdate, $class, $forsearchbar, $limit_keywords))):
-		# -------- Show a check list or dropdown for dropdowns and check lists?
-		# By default show a checkbox list for both (for multiple selections this enabled OR functionality)
-		
-		# Translate all options
-		$options=trim_array(explode(",",$field["options"]));
-		
-		$adjusted_dropdownoptions=hook("adjustdropdownoptions");
-		if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
-		
-		$option_trans=array();
-		$option_trans_simple=array();
-		for ($m=0;$m<count($options);$m++)
+		if(!hook("customchkboxes", "", array($field, $value, $autoupdate, $class, $forsearchbar, $limit_keywords)))
 			{
-			$trans=i18n_get_translated($options[$m]);
-			$option_trans[$options[$m]]=$trans;
-			$option_trans_simple[]=$trans;
-			}
-
-		if ($auto_order_checkbox) {asort($option_trans);}
-		$options=array_keys($option_trans); # Set the options array to the keys, so it is now effectively sorted by translated string		
-		
-		if ($field["display_as_dropdown"])
-			{
-			# Show as a dropdown box
-			$set=trim_array(explode(";",cleanse_string($value,true)));
-			?><select class="<?php echo $class ?>" name="field_<?php echo $field["ref"]?>" id="field_<?php echo $field["ref"]?>" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>><option value=""></option><?php
-			foreach ($option_trans as $option=>$trans)
-				{
-				if (trim($trans)!="")
-					{
-					?>
-					<option value="<?php echo htmlspecialchars(trim($trans))?>" <?php if (in_array(cleanse_string($trans,true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim($trans))?></option>
-					<?php
-					}
-				}
-			?></select><?php
-			}
-		else
-			{
-			# Show as a checkbox list (default)
+			# -------- Show a check list or dropdown for dropdowns and check lists?
+			# By default show a checkbox list for both (for multiple selections this enabled OR functionality)
 			
-			$set=trim_array(explode(";",cleanse_string($value,true)));
-			$wrap=0;
-			$l=average_length($option_trans_simple);
-			$cols=10;
-			if ($l>5)  {$cols=6;}
-			if ($l>10) {$cols=4;}
-			if ($l>15) {$cols=3;}
-			if ($l>25) {$cols=2;}
-
-			# Filter the options array for blank values and ignored keywords.
-			$newoptions=array();
-			foreach ($options as $option)
-				{
-				if ($option!="" && (count($limit_keywords)==0 || in_array($option,$limit_keywords)))
-					{
-					$newoptions[]=$option;
-					}
-				}
-			$options=$newoptions;
-
+			# Translate all options
+			$options=trim_array(explode(",",$field["options"]));
 			
-			$height=ceil(count($options)/$cols);
-			global $checkbox_ordered_vertically;
-			if ($checkbox_ordered_vertically)
+			$adjusted_dropdownoptions=hook("adjustdropdownoptions");
+			if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
+			
+			$option_trans=array();
+			$option_trans_simple=array();
+			for ($m=0;$m<count($options);$m++)
 				{
-				if(!hook('rendersearchchkboxes')):
-				# ---------------- Vertical Ordering (only if configured) -----------
-				?><table cellpadding=2 cellspacing=0><tr><?php
-				for ($y=0;$y<$height;$y++)
-					{
-					for ($x=0;$x<$cols;$x++)
-						{
-						# Work out which option to fetch.
-						$o=($x*$height)+$y;
-						if ($o<count($options))
-							{
-							$option=$options[$o];
-							$trans=$option_trans[$option];
-
-							$name=$field["ref"] . "_" . md5($option);
-							if ($option!="")
-								{
-								?>
-								<td valign=middle><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</td>
-
-								<?php
-								}
-							else
-								{
-								?><td></td><td></td><?php
-								}
-							}
-						}
-					?></tr><tr><?php
-					}
-				?></tr></table><?php
-				endif;
+				$trans=i18n_get_translated($options[$m]);
+				$option_trans[$options[$m]]=$trans;
+				$option_trans_simple[]=$trans;
 				}
-			else
+
+			if ($auto_order_checkbox) {asort($option_trans);}
+			$options=array_keys($option_trans); # Set the options array to the keys, so it is now effectively sorted by translated string		
+			
+			if ($field["display_as_dropdown"])
 				{
-				# ---------------- Horizontal Ordering (Standard) ---------------------				
-				?><table cellpadding=2 cellspacing=0><tr><?php
+				# Show as a dropdown box
+				$set=trim_array(explode(";",cleanse_string($value,true)));
+				?><select class="<?php echo $class ?>" name="field_<?php echo $field["ref"]?>" id="field_<?php echo $field["ref"]?>" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>><option value=""></option><?php
 				foreach ($option_trans as $option=>$trans)
 					{
-					$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
-					$name=$field["ref"] . "_" . md5($option);
-					if ($option!="")
+					if (trim($trans)!="")
 						{
 						?>
-						<td valign=middle><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo htmlspecialchars($name) ?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($option),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</td>
+						<option value="<?php echo htmlspecialchars(trim($trans))?>" <?php if (in_array(cleanse_string($trans,true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim($trans))?></option>
 						<?php
 						}
 					}
-				?></tr></table><?php
+				?></select><?php
 				}
+			else
+				{
+				# Show as a checkbox list (default)
 				
+				$set=trim_array(explode(";",cleanse_string($value,true)));
+				$wrap=0;
+				$l=average_length($option_trans_simple);
+				$cols=10;
+				if ($l>5)  {$cols=6;}
+				if ($l>10) {$cols=4;}
+				if ($l>15) {$cols=3;}
+				if ($l>25) {$cols=2;}
+
+				# Filter the options array for blank values and ignored keywords.
+				$newoptions=array();
+				foreach ($options as $option)
+					{
+					if ($option!="" && (count($limit_keywords)==0 || in_array($option,$limit_keywords)))
+						{
+						$newoptions[]=$option;
+						}
+					}
+				$options=$newoptions;
+
+				
+				$height=ceil(count($options)/$cols);
+				global $checkbox_ordered_vertically;
+				if ($checkbox_ordered_vertically)
+					{
+					if(!hook('rendersearchchkboxes'))
+						{
+						# ---------------- Vertical Ordering (only if configured) -----------
+						?><div class="verticalcheckboxes stdwidth"><?php
+						for ($y=0;$y<$height;$y++)
+							{
+							for ($x=0;$x<$cols;$x++)
+								{
+								# Work out which option to fetch.
+								$o=($x*$height)+$y;
+								if ($o<count($options))
+									{
+									$option=$options[$o];
+									$trans=$option_trans[$option];
+
+									$name=$field["ref"] . "_" . md5($option);
+									if ($option!="")
+										{
+										?>
+										<br /><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span>
+
+										<?php
+										}
+									else
+										{
+										?><span class="checkbox"></span><span class="checkboxtext"></span><?php
+										}
+									}
+								}
+							}
+						?></div><?php
+						}
+					}
+				else
+					{
+					# ---------------- Horizontal Ordering (Standard) ---------------------				
+					?><div class="checkboxes"<?php
+					foreach ($option_trans as $option=>$trans)
+						{
+						$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
+						$name=$field["ref"] . "_" . md5($option);
+						if ($option!="")
+							{
+							?>
+							<span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo htmlspecialchars($name) ?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($option),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span>
+							<?php
+							}
+						}
+					?></div><?php
+					}
+					
+				}
 			}
-		endif;
 		break;
 		
 		case 4:
