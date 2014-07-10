@@ -404,7 +404,7 @@ else {$div="CentralSpace";}
 <!-- Loading graphic -->
 <div id="LoadingBox"><?php echo $lang["pleasewait"] ?><img src="<?php echo $baseurl_short ?>gfx/interface/loading.gif"></div>
 
-<div id="<?php echo $div?>" name="<?php echo $div; ?>">
+<div id="<?php echo $div?>">
 
 
 <?php
