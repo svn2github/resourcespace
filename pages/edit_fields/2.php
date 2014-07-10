@@ -45,7 +45,7 @@ if ($checkbox_ordered_vertically)
 	{
 	if(!hook('rendereditchkboxes')):
 	# ---------------- Vertical Ordering (only if configured) -----------
-	?><fieldset class="customFieldset" name="<?php echo $field['title']; ?>"><table cellpadding=2 cellspacing=0><tr><?php
+	?><fieldset id="<?php echo $name; ?>" class="customFieldset" name="<?php echo $field['title']; ?>"><table cellpadding=2 cellspacing=0><tr><?php
 	for ($y=0;$y<$height;$y++)
 		{
 		for ($x=0;$x<$cols;$x++)
