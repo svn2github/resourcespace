@@ -67,8 +67,12 @@ if (getval("splice","")!="" && count($videos)>1)
 		# Encode intermediary
 		$intermediary = get_temp_dir() . "/video_splice_temp_" . $videos[$n]["ref"] . ".mpg";
 		if ($config_windows) {$intermediary = str_replace("/", "\\", $intermediary);}
-		$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($source) . " -sameq " . escapeshellarg($intermediary);
-		#echo $shell_exec_cmd;
+		$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($source);
+		$shell_exec_cmd .= ($ffmpeg_use_qscale)? " -qscale 0 " : " -sampleq ";
+		$shell_exec_cmd .= escapeshellarg($intermediary);
+
+		echo $shell_exec_cmd;
+
 		$output = exec($shell_exec_cmd);
 		
 		$vidlist.= " " . escapeshellarg($intermediary);
@@ -90,7 +94,9 @@ if (getval("splice","")!="" && count($videos)>1)
 	$output = exec($shell_exec_cmd);
 
 	# Convert the MPEG file back to FLV.
-	$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($targetmpg) . " -sameq " . escapeshellarg($target);
+	$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($targetmpg);
+	$shell_exec_cmd .= ($ffmpeg_use_qscale)? " -qscale 0 " : " -sampleq ";
+	$shell_exec_cmd .= escapeshellarg($target);
 	if ($config_windows) {$shell_exec_cmd = str_replace("/", "\\", $shell_exec_cmd);}
 	$output = exec($shell_exec_cmd);
 
@@ -117,8 +123,8 @@ include "../../../include/header.php";
 <h1><?php echo $lang["splice"]?></h1>
 <p><?php echo $lang["intro-splice"]?></p>
 <p><?php echo $lang["drag_and_drop_to_rearrange"]?></p>
-<div id="splice_scroll" style="width:90%;height:140px;overflow:auto;background-image: url('../gfx/FilmStrip.gif');background-repeat:repeat-x;">
-<div id="splice_reel" style="white-space:nowrap;padding:20px;">
+<div id="splice_scroll">
+<div id="splice_reel">
 <?php
 foreach ($videos as $video)
 	{
@@ -130,23 +136,44 @@ foreach ($videos as $video)
 		{
 		$img="../../../gfx/" . get_nopreview_icon($video["resource_type"],$video["file_extension"],true);
 		}
-	?><img src="<?php echo $img ?>" id="splice_<?php echo $video["ref"] ?>" style="vertical-align:middle;padding:3px;"><?php
+	?><img src="<?php echo $img ?>" id="splice_<?php echo $video["ref"] ?>" class="splice_item"><?php
 	}
 ?>
 </div></div>
 
 <script type="text/javascript">
-Sortable.create("splice_reel", {
-    onUpdate: function() {
-        new Ajax.Request("splice.php", {
-            method: "post",
-            parameters: { data: Sortable.serialize("splice_reel") },
-            evalJS: "force"
-        });
-    }
-,tag:'img',scroll:'splice_scroll'
-
-});
+	function ReorderResourcesInCollectionSplice(idsInOrder){
+		var newOrder = [];
+		jQuery.each(idsInOrder, function() {
+			newOrder.push(this.substring(7));
+			}); 
+		
+		jQuery.ajax({
+		  type: 'POST',
+		  url: '<?php echo $baseurl_short?>pages/collections.php?collection=<?php echo urlencode($usercollection) ?>&reorder=true',
+		  data: {order:JSON.stringify(newOrder)},
+		  success: function() {
+		    var results = new RegExp('[\\?&amp;]' + 'search' + '=([^&amp;#]*)').exec(window.location.href);
+		    var ref = new RegExp('[\\?&amp;]' + 'ref' + '=([^&amp;#]*)').exec(window.location.href);
+		    if ((ref==null)&&(results!== null)&&('<?php echo urlencode("!collection" . $usercollection); ?>' === results[1])) CentralSpaceLoad('<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection); ?>',true);
+		  }
+		});		
+	}
+	jQuery("#splice_reel").sortable();
+	jQuery(document).ready(function() {
+		var collection = <?php echo $usercollection; ?>;
+		var k = <?php echo $k? $k : "''"; ?>;
+		jQuery('#splice_reel').sortable({
+			helper:"clone",
+			items: ".splice_item",
+			stop: function(event, ui) {
+				var idsInOrder = jQuery('#splice_reel').sortable("toArray");
+				ReorderResourcesInCollectionSplice(idsInOrder);
+				ChangeCollection(collection,k);
+			}
+		});
+		jQuery('.CollectionPanelShell').disableSelection();
+	});
 </script>
 
 <form method="post">
