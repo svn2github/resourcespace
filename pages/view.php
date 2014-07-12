@@ -1001,7 +1001,10 @@ if ($use_mp3_player && file_exists($mp3realpath) && $access==0){
 
 
 </table>
-<?php } 
+
+<?php
+hook("additionalresourcetools3");
+ } 
 if(!hook("replaceactionslistopen")){?>
 <br />
 <ul>
