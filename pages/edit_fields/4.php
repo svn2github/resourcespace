@@ -49,8 +49,9 @@ elseif ($value!="")
 ><option value=""><?php echo $lang["month"]?></option>
 <?php for ($m=1;$m<=12;$m++) {?><option <?php if($m==$dm){echo " selected";}?> value="<?php echo sprintf("%02d",$m)?>"><?php echo $lang["months"][$m-1]?></option><?php } ?>
 </select>
-   
-<input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>" <?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"]?>');"<?php } ?>>
+
+<label class="accessibility-hidden" for="<?php echo $name; ?>-y"><?php echo $lang["year"]; ?></label>
+<input id="<?php echo $name; ?>-y" type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>" <?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"]?>');"<?php } ?>>
 
 <?php if ($field["type"]!=10) { ?>
 <!-- Time (optional) -->

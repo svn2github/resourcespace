@@ -682,4 +682,13 @@ width: 90px;
 	margin-bottom: 10px;
 	font-weight: bold;
 	}
-	
+
+/*Accessibility (screen readers)*/
+.accessibility-hidden {
+	height: 1px;
+	width: 1px;
+	position: absolute;
+	left: -10000px;
+	top: auto;
+	overflow: hidden;
+}
