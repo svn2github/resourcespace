@@ -363,7 +363,7 @@ include (dirname(__FILE__) . "/header_links.php");
 ?>
 </div> 
 
-<?php }  else { # Empty Header?>
+<?php } else if (!hook("replaceloginheader")) { # Empty Header?>
 <div id="HeaderNav1" class="HorizontalNav ">&nbsp;</div>
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">&nbsp;</div>
 <?php } ?>
