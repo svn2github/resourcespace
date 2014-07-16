@@ -110,7 +110,7 @@ if ($_FILES)
 
 	// Clean the filename for security reasons
 	$plfilename = preg_replace('/[^\w\._]+/', '_', $plfilename);
-
+	
 	// Make sure the fileName is unique but only if chunking is disabled
 	if ($chunks < 2 && file_exists($targetDir . DIRECTORY_SEPARATOR . $plfilename)) {
 		$ext = strrpos($plfilename, '.');
@@ -120,7 +120,6 @@ if ($_FILES)
 		$count = 1;
 		while (file_exists($targetDir . DIRECTORY_SEPARATOR . $plfilename_a . '_' . $count . $plfilename_b))
 			$count++;
-
 		$plfilename = $plfilename_a . '_' . $count . $plfilename_b;
 	}
 
@@ -276,8 +275,18 @@ if ($_FILES)
                             {
                             # Standard upload of a new resource
 
-                            $ref=copy_resource(0-$userref); # Copy from user template
-                            
+							# create ref via copy_resource() or other method
+							$modified_ref=hook("modifyuploadref");
+							if ($modified_ref!=""){
+								
+								$ref=$modified_ref;
+							
+							} else {
+								
+								$ref=copy_resource(0-$userref); # Copy from user template
+                               
+							}
+							
                             # Add to collection?
                             if ($collection_add!="")
                                     {
@@ -287,13 +296,16 @@ if ($_FILES)
                             # Log this			
                             daily_stat("Resource upload",$ref);
                             $status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
+                            $wait=hook("afterpluploadfile","",array($ref)); 
                             echo "SUCCESS: " . htmlspecialchars($ref);
                             exit();
                             }
                     elseif ($replace=="" && $replace_resource!="")
                             {
                             # Replacing an existing resource file
+                            $wait=hook("beforepluploadreplacefile","",array($replace_resource));
                             $status=upload_file($replace_resource,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
+                            $wait=hook("afterpluploadfile","",array($replace_resource));
                             hook("additional_replace_existing");
                             echo "SUCCESS: " . htmlspecialchars($replace_resource);
                             exit();
@@ -313,7 +325,7 @@ if ($_FILES)
                                             $status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
                                             }
                                     }
-
+							$wait=hook("afterpluploadfile","",array($ref)); 
                             echo "SUCCESS: " . htmlspecialchars($ref);
                             exit();
                             }
@@ -378,9 +390,11 @@ var pluploadconfig = {
         // Silverlight settings
         silverlight_xap_url : '../lib/plupload_2.1.2/Moxie.xap',
         
-        
         preinit: {
                 PostInit: function(uploader) {
+					
+					
+					
                     <?php hook('upload_uploader_defined'); ?>
         
                         //Show link to java if chunking not supported
@@ -495,7 +509,7 @@ var pluploadconfig = {
         jQuery(document).ready(function () {            
                 
                 jQuery("#pluploader").pluploadQueue(pluploadconfig);        
-	             
+	             	                   
             });
 	
 	
@@ -587,7 +601,7 @@ else
 ?>
 <?php hook("upload_page_top"); ?>
 
-<h1><?php echo $titleh1 ?></h1>
+<?php if (!hook("replacepluploadtitle")){?><h1><?php echo $titleh1 ?></h1><?php } ?>
 <h2><?php echo $titleh2 ?></h2>
 <div id="plupload_instructions"><p><?php echo $intro?></p></div>
 <?php if (isset($plupload_max_file_size))
@@ -620,11 +634,13 @@ if (!hook("replacemetadatacheckbox"))
     	}
     } ?>
 
+<?php hook ("beforepluploadform");?>
 <br>
-
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
 
 <form class="pluploadform" action="<?php echo $baseurl_short?>pages/upload_plupload.php">
+
+	
 	<div id="pluploader">
 	</div>
 </form>
