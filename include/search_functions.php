@@ -356,7 +356,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 							}
 						$sql_join.=" join resource_data rd" . $c . " on rd" . $c . ".resource=r.ref and rd" . $c . ".resource_type_field='" . $rangefield . "'";
 						}
-					else
+					else if (!hook('customsearchkeywordfilter', null, array($kw)))
 						{
 						$ckeywords=explode(";",$kw[1]);
 
