@@ -209,8 +209,13 @@ if (isset($ffmpeg_alternatives))
 			
 			endif;
 
+			$alt_type = '';
+			if(isset($ffmpeg_alternatives[$n]['alt_type'])) {
+				$alt_type = $ffmpeg_alternatives[$n]["alt_type"];
+			}
+
 			# Create the alternative file.
-			$aref=add_alternative_file($ref,$ffmpeg_alternatives[$n]["name"]);
+			$aref=add_alternative_file($ref,$ffmpeg_alternatives[$n]["name"],'', '', '', 0, $alt_type);
 			$apath=get_resource_path($ref,true,"",true,$ffmpeg_alternatives[$n]["extension"],-1,1,false,"",$aref);
 			
 			# Process the video 

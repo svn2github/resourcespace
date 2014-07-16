@@ -357,13 +357,15 @@ $ffmpeg_use_qscale = true;
 # $ffmpeg_alternatives[0]["filename"]="quicktime_h264";
 # $ffmpeg_alternatives[0]["extension"]="mov";
 # $ffmpeg_alternatives[0]["params"]="-vcodec h264 -s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
-# $ffmpeg_alternatives[0]["lines_min"]=480
+# $ffmpeg_alternatives[0]["lines_min"]=480;
+# $ffmpeg_alternatives[0]["alt_type"]='mywebversion';
 
 # $ffmpeg_alternatives[1]["name"]="Larger FLV";
 # $ffmpeg_alternatives[1]["filename"]="flash";
 # $ffmpeg_alternatives[1]["extension"]="FLV";
 # $ffmpeg_alternatives[1]["params"]="-s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
-# $ffmpeg_alternatives[0]["lines_min"]=480
+# $ffmpeg_alternatives[1]["lines_min"]=480;
+# $ffmpeg_alternatives[1]["alt_type"]='mywebversion';
 
 # To be able to run certain actions asyncronus (eg. preview transcoding), define the path to php:
 # $php_path="/usr/bin";
