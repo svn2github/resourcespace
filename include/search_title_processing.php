@@ -198,7 +198,8 @@ if ($search_titles)
         $resource=substr($search,8);
 		$resource=explode(",",$resource);
 		$resource=$resource[0];
-        $search_title = '<h1 class="searchcrumbs"><a href="'.$baseurl_short.'pages/search.php?search=!related'.$resource.$parameters_string.'" onClick="return CentralSpaceLoad(this,true);">'.str_replace('%id%', $resource, $lang["relatedresources-id"]).'</a>'.$searchcrumbs.'</h1> ';
+		$filename=get_data_by_field($resource,$filename_field);
+        $search_title = '<h1 class="searchcrumbs"><a href="'.$baseurl_short.'pages/search.php?search=!related'.$resource.$parameters_string.'" onClick="return CentralSpaceLoad(this,true);">'.str_replace('%id%', $filename, $lang["relatedresources-id"]).'</a>'.$searchcrumbs.'</h1> ';
         }
     elseif (substr($search,0,7)=="!unused")
         {
@@ -325,7 +326,7 @@ if ($search_titles)
                     {
                     $search_title_links.="<input type=hidden name='purge' id='collectionpurge' value=''>"; 
                     }
-                if (checkperm("e0") && $collectiondata["cant_delete"] == 0) 
+                if (isset($collections) && checkperm("e0") && $collectiondata["cant_delete"] == 0) 
                     {
                     $search_title_links.="&nbsp;<a href='#' onclick=\"if (confirm('".$lang["purgecollectionareyousure"]."')){document.getElementById('collectionpurge').value='".urlencode($collections[$n]["ref"])."';document.getElementById('collectionform').submit();} return false;\">&gt;&nbsp;".$lang["purgeanddelete"]."</a>"; 
                     }
