@@ -5,7 +5,7 @@ $search_title = "";
 $search_title_links = "";
 $display_user_and_access=false;
 $is_theme=false;
-global $baseurl_short;
+global $baseurl_short,$filename_field;
 # Display a title of the search (if there is a title)
 $searchcrumbs="";
 if ($search_titles_searchcrumbs && $use_refine_searchstring){
