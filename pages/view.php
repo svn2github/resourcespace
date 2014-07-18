@@ -176,7 +176,7 @@ if ($metadata_report && isset($exiftool_path))
 
 if ($direct_download && !$save_as){
 ?>
-<iframe id="dlIFrm" frameborder=0 scrolling="auto" <?php if ($debug_direct_download){?>width="600" height="200"<?php } else { ?>width="0" height="0"<?php } ?>> This browser can not use IFRAME. </iframe>
+<iframe id="dlIFrm" frameborder=0 scrolling="auto" <?php if ($debug_direct_download){?>width="600" height="200" style="display:block;"<?php } else { ?>style="display:none"<?php } ?>> This browser can not use IFRAME. </iframe>
 <?php }
 
 if($resource_contact_link && $k=="")
@@ -306,7 +306,7 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 		if (($field["type"]==2) || ($field["type"]==3) || ($field["type"]==7) || ($field["type"]==9)) {$value=TidyList($value);}
 		$value_unformatted=$value; # store unformatted value for replacement also
 
-		if ($field["type"]!=8) # Do not convert HTML formatted fields (that are already HTML) to HTML.
+		if ($field["type"]!=8|| ($field["type"]==8 && $value == strip_tags($value))) # Do not convert HTML formatted fields (that are already HTML) to HTML. Added check for extracted fields set to ckeditor that have not yet been edited.
 			{
 			$value=nl2br(htmlspecialchars($value));
 			}
