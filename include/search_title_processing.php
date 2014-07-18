@@ -211,8 +211,9 @@ if ($search_titles)
         $ref=explode(" ",$search);$ref=str_replace("!duplicates","",$ref[0]);
 		$ref=explode(",",$ref);// just get the number
 		$ref=escape_check($ref[0]);
+		$filename=get_data_by_field($ref,$filename_field);
 		if ($ref!="") {
-			$search_title = '<h1 class="searchcrumbs"><a href='.$baseurl_short.'pages/search.php?search=!duplicates'.$ref.$parameters_string.' onClick="return CentralSpaceLoad(this,true);">'.$lang["duplicateresourcesfor"].$ref.'</a>'.$searchcrumbs.'</h1> ';
+			$search_title = '<h1 class="searchcrumbs"><a href='.$baseurl_short.'pages/search.php?search=!duplicates'.$ref.$parameters_string.' onClick="return CentralSpaceLoad(this,true);">'.$lang["duplicateresourcesfor"].$filename.'</a>'.$searchcrumbs.'</h1> ';
         	}
         else {
         	$search_title = '<h1 class="searchcrumbs"><a href='.$baseurl_short.'pages/search.php?search=!duplicates'.$parameters_string.' onClick="return CentralSpaceLoad(this,true);">'.$lang["duplicateresources"].'</a>'.$searchcrumbs.'</h1> ';
