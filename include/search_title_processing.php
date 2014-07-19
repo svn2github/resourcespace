@@ -237,6 +237,10 @@ if ($search_titles)
 	elseif (substr($search,0,10)=="!nopreview")
 		{
 		$search_title = '<h1 class="searchcrumbs"><a href="'.$baseurl_short.'pages/search.php?search=!nopreview'.$parameters_string.'" onClick="return CentralSpaceLoad(this,true);">'.$lang["nopreviewresources"].'</a>'.$searchcrumbs.'</h1> ';
+		}
+	elseif (substr($search,0,4)=="!geo")
+		{
+		$search_title = '<h1 class="searchcrumbs"><a href="'.$baseurl_short.'pages/search.php?search=!geo'.$parameters_string.'" onClick="return CentralSpaceLoad(this,true);">'.$lang["geographicsearch"].'</a>'.$searchcrumbs.'</h1> ';
 		}	
     elseif (substr($search,0,14)=="!contributions")
         {
