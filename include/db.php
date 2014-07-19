@@ -154,7 +154,7 @@ if ($use_plugins_manager){
     # Need verbatum queries for this query
     $mysql_vq = $mysql_verbatim_queries;
     $mysql_verbatim_queries = true;
-	$active_plugins = (sql_query("SELECT name,enabled_groups,config,config_json FROM plugins WHERE inst_version>=0 order by priority DESC"));
+	$active_plugins = (sql_query("SELECT name,enabled_groups,config,config_json FROM plugins WHERE inst_version>=0 order by priority"));
     $mysql_verbatim_queries = $mysql_vq;
 	foreach($active_plugins as $plugin){
 

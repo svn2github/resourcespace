@@ -2348,7 +2348,7 @@ function check_access_key($resource,$key)
 			if ($emulate_plugins_set!==true)
 				{
 				global $plugins;
-				$enabled_plugins = (sql_query("SELECT name,enabled_groups, config, config_json FROM plugins WHERE inst_version>=0 AND length(enabled_groups)>0"));
+				$enabled_plugins = (sql_query("SELECT name,enabled_groups, config, config_json FROM plugins WHERE inst_version>=0 AND length(enabled_groups)>0  ORDER BY priority"));
 				foreach($enabled_plugins as $plugin)
 					{
 					$s=explode(",",$plugin['enabled_groups']);
