@@ -514,7 +514,7 @@ elseif ($resource["has_image"]==1)
 		@list($pw) = @getimagesize($imagepath);
 		display_field_data($previewcaption, true, $pw);
 		}
-	
+	hook("previewextras");
 	?></div><?php 
 	if ($image_preview_zoom)
 		{ 
