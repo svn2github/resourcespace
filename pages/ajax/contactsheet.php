@@ -180,65 +180,6 @@ function contact_sheet_add_image()
 		}
 	}
 
-## Sizing calculations
-function do_contactsheet_sizing_calculations(){
-global $sheetstyle,$deltay,$add_contactsheet_logo,$pageheight,$pagewidth,$column,$config_sheetthumb_fields,$config_sheetthumb_include_ref,$leading,$refnumberfontsize,$imagesize,$columns,$rowsperpage,$cellsize,$logospace,$page,$rowsperpage,$contact_sheet_logo_resize,$contact_sheet_custom_footerhtml,$footerspace,$contactsheet_header,$config_sheetsingle_fields,$config_sheetsingle_include_ref,$orientation;
-
-
-if ($sheetstyle=="thumbnails")
-	{
-	if ($add_contactsheet_logo && $contact_sheet_logo_resize)
-	{$logospace=$pageheight/9;}
-
-	$columns=$column;
-	#calculating sizes of cells, images, and number of rows:
-	$cellsize[0]=$cellsize[1]=($pagewidth-1.7)/$columns;
-	$imagesize=$cellsize[0]-.3;
-	# estimate rows per page based on config lines
-	$extralines=(count($config_sheetthumb_fields)!=0)?count($config_sheetthumb_fields):0;
-	if ($contact_sheet_custom_footerhtml!=''){$footerspace=$pageheight*.05;}
-	if ($config_sheetthumb_include_ref){$extralines++;}
-	$rowsperpage=($pageheight-.5-$logospace-$footerspace-($cellsize[1]+($extralines*(($refnumberfontsize+$leading)/72))))/($cellsize[1]+($extralines*(($refnumberfontsize+$leading)/72)));
-	$page=1;	
-	}
-else if ($sheetstyle=="list")
-	{ 
-	if ($add_contactsheet_logo && $contact_sheet_logo_resize)
-	{$logospace=$pageheight/9;}
-	#calculating sizes of cells, images, and number of rows:
-	$columns=1;
-	$imagesize=1.0;
-	$cellsize[0]=$pagewidth-1.7;
-	$cellsize[1]=1.2;
-	if ($contact_sheet_custom_footerhtml!=''){$footerspace=$pageheight*.05;}
-	$rowsperpage=($pageheight-1.2-$logospace-$footerspace-$cellsize[1])/$cellsize[1];
-	$page=1;
-	}
-else if ($sheetstyle=="single")
-	{
-	$extralines=(count($config_sheetsingle_fields)!=0)?count($config_sheetsingle_fields):0;
-	if ($add_contactsheet_logo && $contact_sheet_logo_resize)
-		{
-		if ($orientation=="L"){$logospace=$pageheight/11;if ($contactsheet_header){$extralines=$extralines + 2;}} else {$logospace=$pageheight/9;}
-		}
-	$columns=$column;	
-	if ($config_sheetsingle_include_ref){$extralines++;}
-	
-	# calculate size of single cell per page, allowing for extra lines. Needs to be smaller if landscape.
-	if ($orientation=="L")
-		{
-		$cellsize[0]=$cellsize[1]=($pageheight*0.65)-($extralines*(($refnumberfontsize+$leading)/72));
-		}
-	else 
-		{
-		$cellsize[0]=$cellsize[1]=($pagewidth*0.8);
-		}
-	$imagesize=$cellsize[0]-0.3;
-	$rowsperpage=1;
-	$page=1;
-	$columns=1;
-	}
-}
 $deltay=1;
 do_contactsheet_sizing_calculations();
 
