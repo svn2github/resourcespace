@@ -2009,7 +2009,7 @@ function pager($break=true)
 	global $curpage,$url,$totalpages,$offset,$per_page,$lang,$jumpcount,$pager_dropdown;
 	$jumpcount++;global $pagename;
     if ($totalpages!=0 && $totalpages!=1){?>     
-        <span class="HorizontalWhiteNav"><?php if ($break) { ?>&nbsp;<br /><?php } hook("custompagerstyle"); if ($curpage>1) { ?><a class="prevLink" href="<?php echo $url?>&amp;go=prev&amp;offset=<?php echo urlencode($offset-$per_page) ?>" onClick="return CentralSpaceLoad(this, true);"><?php } ?>&lt;&nbsp;<?php echo $lang["previous"]?><?php if ($curpage>1) { ?></a><?php } ?>&nbsp;|
+        <span class="TopInpageNavRight"><?php if ($break) { ?>&nbsp;<br /><?php } hook("custompagerstyle"); if ($curpage>1) { ?><a class="prevLink" href="<?php echo $url?>&amp;go=prev&amp;offset=<?php echo urlencode($offset-$per_page) ?>" onClick="return CentralSpaceLoad(this, true);"><?php } ?>&lt;&nbsp;<?php echo $lang["previous"]?><?php if ($curpage>1) { ?></a><?php } ?>&nbsp;|
 
         <?php if ($pager_dropdown){
             $id=rand();?>
