@@ -75,7 +75,7 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 .BottomInpageNav {clear: left;padding-top: 5px;margin: 20px 15px 0px 0px;}
 .BottomInpageKey {margin-right: 15px; clear: left; text-align: left;}
 .TopInpageNavLeft{float:left;}
-.TopInpageNavRight{text-align:right;margin-right:20px;}
+.TopInpageNavRight{float:right;}
 .InpageNavLeftBlock {display:inline-block; *display: inline; *zoom: 1;text-align:left;margin: 0 20px 0 0;}
 .InpageNavRightBlock {display:inline-block; *display: inline; *zoom: 1;text-align:left;margin: 0 15px 0 0;}
 .BottomInpageNavLeft {float:left;}
