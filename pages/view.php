@@ -543,6 +543,7 @@ else
 		echo "<div class=\"clearerleft\"> </div>";	
 		display_field_data($previewcaption, true);
 		}
+	hook("previewextras");
 	?></div><?php	
 	}
 
