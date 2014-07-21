@@ -193,6 +193,8 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <?php } ?>
 <!-- end edit metadata -->
 
+<?php hook("collectiontoolcompact3","",array("collection"=>$collection,"count_result"=>$count_result,"cinfo"=>$cinfo,"colresult"=>$colresult,"col_editable"=>$col_editable)); ?>
+
 <!-- edit previews -->
 <?php if ($count_result>0 && $col_editable) { ?>
 <option value="<?php echo htmlspecialchars($collection) ?>|0|0|<?php echo $baseurl_short?>pages/collection_edit_previews.php?ref=<?php echo urlencode($collection) ?>&amp;offset=<?php echo urlencode($offset) ?>&amp;order_by=<?php echo urlencode($order_by) ?>&amp;col_order_by=<?php echo urlencode($col_order_by) ?>&amp;sort=<?php echo urlencode($sort) ?>&amp;find=<?php echo urlencode($find)?>&amp;backto=<?php if (in_array($pagename,$main_pages)){echo htmlspecialchars($pagename) ;}?>|main|false">&gt;&nbsp;<?php echo $lang['editcollectionresources']?>...</option>
