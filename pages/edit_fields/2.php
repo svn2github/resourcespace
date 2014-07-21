@@ -4,6 +4,10 @@ if(!hook("customchkboxes")):
 
 # Translate all options
 $options=trim_array(explode(",",$field["options"]));
+
+$modified_options=hook("modify_field_options","",array($field));
+if($modified_options!=""){$options=$modified_options;}
+
 $option_trans=array();
 $option_trans_simple=array();
 for ($m=0;$m<count($options);$m++)
@@ -63,11 +67,13 @@ if ($checkbox_ordered_vertically)
 				$name=$field["ref"] . "_" . md5($option);
 				if ($option!="")
 					{
-					?>
-					<td width="1"><input type="checkbox" id="<?php echo $name; ?>" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
-					<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');" onmousedown="checkbox_allow_save();"<?php } ?>
-					/></td><td><label class="customFieldLabel" for="<?php echo $name; ?>" <?php if($edit_autosave) { ?>onmousedown="checkbox_allow_save();" <?php } ?>><?php echo htmlspecialchars($trans)?></label></td>
-					<?php
+					if(!hook("replace_checkbox_vertical_rendering","",array($name,$option,$ref=$field["ref"],$set))){
+						?>
+						<td width="1"><input type="checkbox" id="<?php echo $name; ?>" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
+						<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');" onmousedown="checkbox_allow_save();"<?php } ?>
+						/></td><td><label class="customFieldLabel" for="<?php echo $name; ?>" <?php if($edit_autosave) { ?>onmousedown="checkbox_allow_save();" <?php } ?>><?php echo htmlspecialchars($trans)?></label></td>
+						<?php
+						} # end hook("replace_checkbox_vertical_rendering")
 					}
 				}
 			}
