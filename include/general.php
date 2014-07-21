@@ -465,14 +465,24 @@ function cleanse_string($string,$preserve_separators,$preserve_hyphen=false,$is_
 
 if (!function_exists("resolve_keyword")){
 function resolve_keyword($keyword,$create=false)
-	{
-        $keyword=substr($keyword,0,100); # Trim keywords to 100 chars for indexing, as this is the length of the keywords column.
-
+	{	
+	debug("resolving keyword " . $keyword  . ". Create=" . (($create)?"true":"false"));
+	
+    $keyword=substr($keyword,0,100); # Trim keywords to 100 chars for indexing, as this is the length of the keywords column.
+    
+	global $quoted_string;	
+	if(!$quoted_string)
+		{
+		$keyword=normalize_keyword($keyword);		
+		debug("resolving normalized keyword " . $keyword  . ".");
+		}
+		
 	# Returns the keyword reference for $keyword, or false if no such keyword exists.
 	$return=sql_value("select ref value from keyword where keyword='" . trim(escape_check($keyword)) . "'",false);
 	if ($return===false && $create)
 		{
 		# Create a new keyword.
+		debug("Creating new keyword for " . $keyword);
 		sql_query("insert into keyword (keyword,soundex,hit_count) values ('" . escape_check($keyword) . "',soundex('" . escape_check($keyword) . "'),0)");
 		$return=sql_insert_id();
 		}
@@ -1887,7 +1897,7 @@ function rs_quoted_printable_encode_subject($string, $encoding='UTF-8')
 if (!function_exists("highlightkeywords")){
 function highlightkeywords($text,$search,$partial_index=false,$field_name="",$keywords_index=1)
 	{
-	# do not hightlight if the field is not indexed, so it is clearer where results came from.	
+	# do not highlight if the field is not indexed, so it is clearer where results came from.	
 	if ($keywords_index!=1){return $text;}
         
 	# Highlight searched keywords in $text

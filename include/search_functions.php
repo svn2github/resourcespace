@@ -41,8 +41,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 
 
 	# Recognise a quoted search, which is a search for an exact string
+	global $quoted_string;
 	$quoted_string=false;
-	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {$quoted_string=true;$search=substr($search,1,-1);}
+	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {debug("BANG: YES");$quoted_string=true;$search=substr($search,1,-1);}
 
 
 	$order_by=$order[$order_by];

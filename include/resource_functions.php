@@ -722,19 +722,38 @@ function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_inde
 		{
 		if (is_array($keywords[$n])){
 			$keywords[$n]=$keywords[$n]['keyword'];
-		}
-		
-			if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and include this condition
-				{
-				sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' and $optional_column= $optional_value limit 1");
-				}
-			else{
-				sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' limit 1");
-				}
-			sql_query("update keyword set hit_count=hit_count-1 where keyword='" . escape_check($keywords[$n]) . "' limit 1");
+		}		
+		remove_keyword_from_resource($ref,$keywords[$n],$resource_type_field,$optional_column='',$optional_value='',false);
 		}	
 	}
 }
+
+function remove_keyword_from_resource($ref,$keyword,$resource_type_field,$optional_column='',$optional_value='',$normalized=false)
+    {
+    if(!$normalized)
+        {
+		global $unnormalized_index;
+        $kworig=$keyword;
+        $keyword=normalize_keyword($keyword);
+        if($keyword!=$kworig && $unnormalized_index)
+			{
+			// $keyword has been changed by normalizing, also remove the original value
+			remove_keyword_from_resource($ref,$keyword,$resource_type_field,$optional_column='',$optional_value='',true);
+			}
+        }		
+		
+	if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and include this condition
+		{
+		sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keyword) . "') and resource_type_field='$resource_type_field' and $optional_column= $optional_value limit 1");
+		}
+	else{
+		sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keyword) . "') and resource_type_field='$resource_type_field' limit 1");
+		}
+	sql_query("update keyword set hit_count=hit_count-1 where keyword='" . escape_check($keyword) . "' limit 1");
+			
+    }
+
+
 
 if (!function_exists("add_keyword_mappings")){		
 function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false,$optional_column='',$optional_value='',$is_html=false)
@@ -757,34 +776,52 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 		}
 
 		$kw=$keywords[$n]; 		
-		if (!isset($kwpos)){$kwpos=$n;}
-		global $noadd;
-		if (!(in_array($kw,$noadd)))
-			{
-			#echo "<li>adding " . $keywords[$n];
-			$keyword=resolve_keyword($kw);
-			if ($keyword===false)
-				{
-				# This is a new keyword. Create and discover the new keyword ref.
-				sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($kw) . 	"',left('".soundex(escape_check($kw))."',10),0)");
-				$keyword=sql_insert_id();
-				#echo "<li>New keyword.";
-				}
-			# create mapping, increase hit count.
-			if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and add this
-				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyword','$kwpos','$resource_type_field','$optional_value')");}
-			else  
-				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$kwpos','$resource_type_field')");}
-		
-			sql_query("update keyword set hit_count=hit_count+1 where ref='$keyword'");
-			
-			# Log this
-			daily_stat("Keyword added to resource",$keyword);
-			}	
+		if (!isset($kwpos)){$kwpos=$n;}                                
+                add_keyword_to_resource($ref,$kw,$resource_type_field,$kwpos,$optional_column,$optional_value,false);		
 		}	
 	}
 }
-	
+
+function add_keyword_to_resource($ref,$keyword,$resource_type_field,$position,$optional_column='',$optional_value='',$normalized=false)
+    {
+    if(!$normalized)
+        {
+		global $unnormalized_index;
+        $kworig=$keyword;
+        $keyword=normalize_keyword($keyword);
+        if($keyword!=$kworig && $unnormalized_index)
+                    {
+                    // $keyword has been changed by normalizing, also index the original value
+                    add_keyword_to_resource($ref,$kworig,$resource_type_field,$position,$optional_column,$optional_value,true);
+                    }
+        }
+    global $noadd;
+    if (!(in_array($keyword,$noadd)))
+            {           
+            debug("adding " . $keyword);
+            $keyword=resolve_keyword($keyword);			
+            
+            debug("adding resolved " . $keyword);
+            if ($keyword===false)
+                    {
+                    # This is a new keyword. Create and discover the new keyword ref.
+                    sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($kw) . 	"',left('".soundex(escape_check($kw))."',10),0)");
+                    $keyword=sql_insert_id();
+                    #echo "<li>New keyword.";
+                    }
+            # create mapping, increase hit count.
+            if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and add this
+                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyword','$kwpos','$resource_type_field','$optional_value')");}
+            else  
+                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$position','$resource_type_field')");}
+    
+            sql_query("update keyword set hit_count=hit_count+1 where ref='$keyword'");
+            
+            # Log this
+            daily_stat("Keyword added to resource",$keyword);
+            }  	
+    }
+    
 function update_field($resource,$field,$value)
 	{
 	# Updates a field. Works out the previous value, so this is not efficient if we already know what this previous value is (hence it is not used for edit where multiple fields are saved)

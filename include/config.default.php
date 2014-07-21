@@ -2343,3 +2343,13 @@ $share_resource_include_related=false;
 
 # Allow users to skip upload and create resources with no attached file
 $upload_no_file=false;
+
+# Normalize keywords when indexing and searching? Having this set to true means that various character encodings of e.g. diacritics will be standardised when indexing and searching. Requires internationalization functions (PHP versions >5.3)
+$normalize_keywords=true;
+
+# Having keywords_remove_diacritics set to true means that diacritics will be removed for indexing e.g. 'zwälf' is indexed as 'zwalf', 'café' is indexed as 'cafe'.
+# The actual data is not changed, this only affects searching and indexing
+$keywords_remove_diacritics=false;
+
+# Index the unnormalized keyword in addition to the normalized version, also applies to keywords with diacritics removed. Quoted search can then be used to find matches for original unnormalized keyword.
+$unnormalized_index=false;
