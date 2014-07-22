@@ -306,10 +306,15 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 		if (($field["type"]==2) || ($field["type"]==3) || ($field["type"]==7) || ($field["type"]==9)) {$value=TidyList($value);}
 		$value_unformatted=$value; # store unformatted value for replacement also
 
-		if ($field["type"]!=8|| ($field["type"]==8 && $value == strip_tags($value))) # Do not convert HTML formatted fields (that are already HTML) to HTML. Added check for extracted fields set to ckeditor that have not yet been edited.
+		if ($field["type"]!=8 || ($field["type"]==8 && $value == strip_tags($value))) # Do not convert HTML formatted fields (that are already HTML) to HTML. Added check for extracted fields set to ckeditor that have not yet been edited.
 			{
 			$value=nl2br(htmlspecialchars($value));
 			}
+		
+		$modified_value = hook('display_field_modified_value', '', array($field));
+		if($modified_value) {		
+			$value = $modified_value['value'];
+		}
 		
 		# draw new tab panel?
 		if (!$valueonly && ($tabname!=$field["tab_name"]) && ($fieldcount>0))
