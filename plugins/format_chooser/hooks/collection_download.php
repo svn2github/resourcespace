@@ -25,6 +25,7 @@ function HookFormat_chooserCollection_downloadReplaceuseoriginal()
 		}
 
 	?><div class="Question">
+	<input type=hidden name="useoriginal" value="yes" />
 	<label for="downloadformat"><?php echo $lang["downloadformat"]?></label>
 	<select name="ext" class="stdwidth" id="downloadformat"<?php echo $disabled ?>>
 		<option value="" selected="selected"><?php echo $lang['format_chooser_keep_format'] ?></option>
@@ -78,8 +79,8 @@ function HookFormat_chooserCollection_downloadReplacedownloadextension($resource
 
 	if (!supportsInputFormat($inputFormat))
 		{
-		# Do not replace the extension for this resource
-		return false;
+		# Download the original file for this resource
+		return $inputFormat;
 		}
 
 	$ext = strtoupper(getvalescaped('ext', getDefaultOutputFormat($inputFormat)));

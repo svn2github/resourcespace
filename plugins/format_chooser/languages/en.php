@@ -11,3 +11,6 @@ $lang['format_chooser_choose_profile'] = 'Choose color profile';
 $lang['format_chooser_keep_profile'] = 'Keep profile';
 $lang['format_chooser_remove_profile'] = 'Remove profile';
 $lang['downloadformat'] = 'Download format';
+
+# Overwrite existing strings (we always download all files)
+$lang['are_available-0'] = $lang['are_available-1'] = $lang['are_available-2'] = 'will be converted';
