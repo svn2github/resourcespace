@@ -395,84 +395,12 @@ for ($n=0;$n<count($types);$n++)
 <div class="clearerleft"> </div>
 </div>
 
-<div class="Question"><label><?php echo $lang["bydate"]?></label>
+
 <?php 
-if ($daterange_search)
-	{ ?>
-	<!--  date range search -->
-	<div><label class="InnerLabel"><?php echo $lang["fromdate"]?></label>
-	<select name="startyear" class="SearchWidth" style="width:98px;" onChange="UpdateResultCount();">
-	  <option value=""><?php echo $lang["anyyear"]?></option>
-	  <?php
-	  $y=date("Y");
-	  for ($n=$minyear;$n<=$y;$n++)
-		{
-		?><option <?php if ($n==substr($found_start_date,0,4)) { ?>selected<?php } ?>><?php echo $n?></option><?php
-		}
-	  ?>
-	</select>
-	<select name="startmonth" class="SearchWidth" style="width:98px;" onChange="UpdateResultCount();">
-	  <option value=""><?php echo $lang["anymonth"]?></option>
-	  <?php
-	  for ($n=1;$n<=12;$n++)
-		{
-		$m=str_pad($n,2,"0",STR_PAD_LEFT);
-		?><option <?php if ($n==substr($found_start_date,5,2)) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $lang["months"][$n-1]?></option><?php
-		}
-	  ?>
-	</select>
-	<select name="startday" class="SearchWidth" style="width:98px;" onChange="UpdateResultCount();">
-	  <option value=""><?php echo $lang["anyday"]?></option>
-	  <?php
-	  for ($n=1;$n<=31;$n++)
-		{
-		$m=str_pad($n,2,"0",STR_PAD_LEFT);
-		?><option <?php if ($n==substr($found_start_date,8,2)) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $m?></option><?php
-		}
-	  ?>
-	</select>
-	<!-- end date -->	
-	</div><br><div><label></label><label class="InnerLabel"><?php echo $lang["todate"]?></label>
-	<select name="endyear" class="SearchWidth" style="width:98px;" onChange="UpdateResultCount();">
-	  <option value=""><?php echo $lang["anyyear"]?></option>
-	  <?php
-	  $y=date("Y");
-	  for ($n=$minyear;$n<=$y;$n++)
-		{
-		?><option <?php if ($n==substr($found_end_date,0,4)) { ?>selected<?php } ?>><?php echo $n?></option><?php
-		}
-	  ?>
-	</select>
-	<select name="endmonth" class="SearchWidth" style="width:98px;" onChange="UpdateResultCount();">
-	  <option value=""><?php echo $lang["anymonth"]?></option>
-	  <?php
-	  for ($n=1;$n<=12;$n++)
-		{
-		$m=str_pad($n,2,"0",STR_PAD_LEFT);
-		?><option <?php if ($n==substr($found_end_date,5,2)) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $lang["months"][$n-1]?></option><?php
-		}
-	  ?>
-	</select>
-	<select name="endday" class="SearchWidth" style="width:98px;" onChange="UpdateResultCount();">
-	  <option value=""><?php echo $lang["anyday"]?></option>
-	  <?php
-	  for ($n=1;$n<=31;$n++)
-		{
-		$m=str_pad($n,2,"0",STR_PAD_LEFT);
-		?><option <?php if ($n==substr($found_end_date,8,2)) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $m?></option><?php
-		}
-	  ?>
-	</select>
-	</div>
-
-	<!--  end of date range search -->
-
-	<?php
-	}
-else
+if (!$daterange_search)
 	{
 	?>
-	
+	<div class="Question"><label><?php echo $lang["bydate"]?></label>
 	<select name="year" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
 	  <option value=""><?php echo $lang["anyyear"]?></option>
 	  <?php
@@ -503,12 +431,9 @@ else
 		}
 	  ?>
 	</select>
-
+	<div class="clearerleft"> </div>
+	</div>
 	<?php } ?>
-
-
-<div class="clearerleft"> </div>
-</div>
 <?php if ($star_search && $display_user_rating_stars){?>
 <div class="Question"><label><?php echo $lang["starsminsearch"];?></label>
 <select id="starsearch" name="starsearch" class="stdwidth" onChange="UpdateResultCount();">
