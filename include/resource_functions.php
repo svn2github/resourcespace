@@ -805,7 +805,7 @@ function add_keyword_to_resource($ref,$keyword,$resource_type_field,$position,$o
             if ($keyword===false)
                     {
                     # This is a new keyword. Create and discover the new keyword ref.
-                    sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($kw) . 	"',left('".soundex(escape_check($kw))."',10),0)");
+                    sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($keyword) . 	"',left('".soundex(escape_check($keyword))."',10),0)");
                     $keyword=sql_insert_id();
                     #echo "<li>New keyword.";
                     }
