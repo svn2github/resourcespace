@@ -2131,6 +2131,7 @@ $request_senduserupdates=true;
 # Allow users to create new collections. Set to false to prevent creation of new collections.
 $collection_allow_creation=true;
 
+# Allow Dates to be set within Date Ranges: Ensure to allow By Date to be used in Advanced Search if required.
 $daterange_search=false;
 
 # Keyboard navigation allows using left and right arrows to browse through resources in view/search/preview modes
