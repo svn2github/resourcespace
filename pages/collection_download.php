@@ -426,30 +426,27 @@ if ($submitted != "")
     # Get the file size of the archive.
     $filesize = @filesize_unlimited($zipfile);
 
-    if ($use_collection_name_in_zip_name)
-        {
-        # Use collection name (if configured)
-        if ($archiver)
-            {
-            $filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name(i18n_get_collection_name($collectiondata)) . "-" . $size . "." . $collection_download_settings[$settings_id]["extension"];
-            }
-        else
-            {
-            $filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name(i18n_get_collection_name($collectiondata)) . "-" . $size . ".zip";
-            }
-        }
-    else
-        {
-        # Do not include the collection name in the filename (default)
-        if ($archiver)
-            {
-            $filename = $lang["collectionidprefix"] . $collection . "-" . $size . "." . $collection_download_settings[$settings_id]["extension"];
-            }
-        else
-            {
-            $filename = $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";
-            }
-        }
+	if ($archiver)
+		$suffix = '.' . $collection_download_settings[$settings_id]['extension'];
+	else
+		$suffix = '.zip';
+
+	$filename = hook('changecollectiondownloadname', null, array($collection, $size, $suffix));
+	if (empty($filename))
+		{
+		if ($use_collection_name_in_zip_name)
+			{
+			# Use collection name (if configured)
+			$filename = $lang["collectionidprefix"] . $collection . "-"
+					. safe_file_name(i18n_get_collection_name($collectiondata)) . "-" . $size
+					. $suffix;
+			}
+		else
+			{
+			# Do not include the collection name in the filename (default)
+			$filename = $lang["collectionidprefix"] . $collection . "-" . $size . $suffix;
+			}
+		}
 
 	header("Content-Disposition: attachment; filename=" . $filename);
     if ($archiver) {header("Content-Type: " . $collection_download_settings[$settings_id]["mime"]);}
