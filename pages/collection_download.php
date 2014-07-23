@@ -497,14 +497,17 @@ function ajax_download()
 	document.getElementById('progress').innerHTML='<br /><br /><?php echo $lang["collectiondownloadinprogress"];?>';
 	document.getElementById('progress3').style.display='none';
 	document.getElementById('progressdiv').style.display='block';
-	<?php if (!$use_zip_extension){?>jQuery('#downloadsize').attr('disabled', 'disabled');<?php } ?>
-	jQuery('#text').attr('disabled', 'disabled');
-	jQuery('#archivesettings').attr('disabled', 'disabled');
 
 	var ifrm = document.getElementById('downloadiframe');
 	
-    ifrm.src = "<?php echo $baseurl_short?>pages/collection_download.php?submitted=true&"+jQuery('#myform').serialize();
-    
+	ifrm.src = "<?php echo $baseurl_short?>pages/collection_download.php?submitted=true&"+jQuery('#myform').serialize();
+
+	// Disable form controls -- this needs to happen after serializing the form or else they are ignored
+	jQuery('#downloadsize').attr('disabled', 'disabled');
+	jQuery('#use_original').attr('disabled', 'disabled');
+	jQuery('#text').attr('disabled', 'disabled');
+	jQuery('#archivesettings').attr('disabled', 'disabled');
+
 	progress= jQuery("progress3").PeriodicalUpdater("<?php echo $baseurl_short?>pages/ajax/collection_download_progress.php?id=<?php echo urlencode($uniqid) ?>", {
         method: 'post',          // method; get or post
         data: '',               //  e.g. {name: "John", greeting: "hello"}
@@ -512,8 +515,6 @@ function ajax_download()
         maxTimeout: 2000,       // maximum length of time between requests
         multiplier: 1.5,          // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)
         type: 'text'           // response type - text, xml, json, etc.  
-       
-
     }, function(remoteData, success, xhr, handle) {
          if (remoteData.indexOf("file")!=-1){
 					var numfiles=remoteData.replace("file ","");
