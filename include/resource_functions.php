@@ -799,26 +799,26 @@ function add_keyword_to_resource($ref,$keyword,$resource_type_field,$position,$o
     if (!(in_array($keyword,$noadd)))
             {           
             debug("adding " . $keyword);
-            $keyword=resolve_keyword($keyword);			
+            $keyref=resolve_keyword($keyword);			
             
-            debug("adding resolved " . $keyword);
-            if ($keyword===false)
+            debug("adding resolved " . $keyref);
+            if ($keyref===false)
                     {
                     # This is a new keyword. Create and discover the new keyword ref.
                     sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($keyword) . 	"',left('".soundex(escape_check($keyword))."',10),0)");
-                    $keyword=sql_insert_id();
+                    $keyref=sql_insert_id();
                     #echo "<li>New keyword.";
                     }
             # create mapping, increase hit count.
             if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and add this
-                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyword','$kwpos','$resource_type_field','$optional_value')");}
+                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyref','$kwpos','$resource_type_field','$optional_value')");}
             else  
-                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$position','$resource_type_field')");}
+                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyref','$position','$resource_type_field')");}
     
-            sql_query("update keyword set hit_count=hit_count+1 where ref='$keyword'");
+            sql_query("update keyword set hit_count=hit_count+1 where ref='$keyref'");
             
             # Log this
-            daily_stat("Keyword added to resource",$keyword);
+            daily_stat("Keyword added to resource",$keyref);
             }  	
     }
     
