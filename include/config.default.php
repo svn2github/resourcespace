@@ -499,9 +499,9 @@ $themes_navlink = true;
 # only affects users with permissions to do this.
 $team_centre_alert_icon = false;
 
-# Display a 'My Contributions' link in the top navigation for all users, even if they have team center access
-# (Displays automatically for regular users)
+# Hide mycontributions link from regular users
 $mycontributions_userlink=true;
+# Display a 'My Contributions' link in the top navigation for admin (permission C)
 $mycontributions_link = false;
 
 # Require terms for download?
