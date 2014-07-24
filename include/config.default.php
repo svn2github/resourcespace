@@ -491,6 +491,9 @@ $myrequests_link=false;
 # Display a 'Research Request' link in the top navigation
 $research_link=true;
 
+# Display a Themes link in Top Navigation if Themes is enabled
+$themes_navlink = true;
+
 # display an alert icon next to the team centre link 
 # and the relevant team centre item when there are requests that need managing
 # only affects users with permissions to do this.
@@ -498,7 +501,8 @@ $team_centre_alert_icon = false;
 
 # Display a 'My Contributions' link in the top navigation for all users, even if they have team center access
 # (Displays automatically for regular users)
-$mycontributions_link=false;
+$mycontributions_userlink=true;
+$mycontributions_link = false;
 
 # Require terms for download?
 $terms_download=false;

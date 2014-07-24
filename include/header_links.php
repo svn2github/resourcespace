@@ -1,4 +1,3 @@
-
 		<?php if (!hook("replaceheadernav2")) { ?>
 		<ul>
 		<?php if (!hook("replacehomelinknav")) { ?>
@@ -19,7 +18,7 @@
 		{?>
 		<?php if ($search_results_link){?><li><a href="<?php echo $baseurl?>/pages/search.php"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
 		<?php if (!hook("replacethemelink")) { ?>
-		<?php if (checkperm("s") && $enable_themes && !$theme_direct_jump) { ?><li><a href="<?php echo $baseurl?>/pages/themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"]?></a></li><?php } ?>
+		<?php if (checkperm("s") && $enable_themes && !$theme_direct_jump && $themes_navlink) { ?><li><a href="<?php echo $baseurl?>/pages/themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"]?></a></li><?php } ?>
 		<?php } /* end hook replacethemelink */?>
 		<?php if (checkperm("s") && ($public_collections_top_nav || $public_collections_header_only)) { ?><li><a href="<?php echo $baseurl?>/pages/collection_public.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["publiccollections"]?></a></li><?php } ?>
 		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a href="<?php echo $baseurl?>/pages/collection_manage.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycollections"]?></a></li><?php } ?>
@@ -28,7 +27,7 @@
 		<?php } /* end hook replacerecentlink */?>
 		<?php if (checkperm("s") && $myrequests_link && checkperm("q")) { ?><li><a href="<?php echo $baseurl?>/pages/requests.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["myrequests"]?></a></li><?php } ?>
 		<?php if (!hook("replacemycontributionslink")) { ?>
-		<?php if (checkperm("d")||(isset($mycontributions_link) && $mycontributions_link && checkperm("c"))) { ?><li><a href="<?php echo $baseurl?>/pages/contribute.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
+		<?php if ((checkperm("d") && $mycontributions_userlink)||($mycontributions_link && checkperm("c"))) { ?><li><a href="<?php echo $baseurl?>/pages/contribute.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
 		<?php } /* end hook replacemycontributionslink */?>
 		<?php if (!hook("replaceresearchrequestlink")) { ?>
 		<?php if (($research_request) && ($research_link) && (checkperm("s")) && (checkperm("q"))) { ?><li><a href="<?php echo $baseurl?>/pages/research_request.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["researchrequest"]?></a></li><?php } ?>
