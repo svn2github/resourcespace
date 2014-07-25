@@ -493,6 +493,7 @@ else if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $
         {
         $snapshottime = 1;
         $out = run_command($ffmpeg_fullpath . " -i " . escapeshellarg($file), true);
+
         if(preg_match("/Duration: (\d+):(\d+):(\d+)\.\d+, start/", $out, $match))
         	{
 		$duration = $match[1]*3600+$match[2]*60+$match[3];
