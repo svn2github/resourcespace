@@ -43,9 +43,16 @@ include "../../include/header.php";
 			<li><a href="<?php echo $baseurl_short?>pages/edit.php?ref=-<?php echo $userref?>&amp;local=true" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchlocalfolder"]?></a></li>
 		<?php endif // Test if Add Resource Batch - Fetch from local upload folder is allowed. ?>
 
-		<?php hook("addteamresourcetool");?>
+		<?php 
+		hook("addteamresourcetool");
+		
+		$no_exif = '';
+		if(!$metadata_read_default) {
+			$no_exif = '&no_exif=yes';
+		}
+		?>
 
-		<li><a href="<?php echo $baseurl_short?>pages/upload_plupload.php?replace=true" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["replaceresourcebatch"]?></a></li>    
+		<li><a href="<?php echo $baseurl_short?>pages/upload_plupload.php?replace=true<?php echo $no_exif; ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["replaceresourcebatch"]?></a></li>    
 
 		<li><a href="<?php echo $baseurl_short?>pages/team/team_copy.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["copyresource"]?></a></li>
 		
