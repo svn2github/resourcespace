@@ -101,6 +101,8 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     setcookie("saved_archive","",0,'','',false,true);
     
     unset($username);
+	
+	hook ("postlogout");
     
     if (isset($anonymous_login))
     	{
