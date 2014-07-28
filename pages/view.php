@@ -220,7 +220,7 @@ if(isset($display_field_below_preview) && is_int($display_field_below_preview))
 		{
 		if($field["fref"]==$display_field_below_preview)
 			{
-			$displaycondition=check_display_condition($fields,$df);
+			$displaycondition=check_view_display_condition($fields,$df);
 			if($displaycondition)
 				{
 				$previewcaption=$fields[$df];
@@ -238,7 +238,7 @@ if(isset($display_field_below_preview) && is_int($display_field_below_preview))
 $edit_access=get_edit_access($ref,$resource["archive"],$fields,$resource);
 if ($k!="") {$edit_access=0;}
 
-function check_display_condition($fields,$n)	
+function check_view_display_condition($fields,$n)	
 	{
 	#Check if field has a display condition set
 	$displaycondition=true;
@@ -1169,7 +1169,7 @@ $extra="";
 for ($n=0;$n<count($fields);$n++)
 	{
 	
-	$displaycondition=check_display_condition($fields,$n);	
+	$displaycondition=check_view_display_condition($fields,$n);	
 	
 	if ($displaycondition)
 		{
