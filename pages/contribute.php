@@ -29,6 +29,7 @@ include "../include/header.php";
 	<li><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=!contributions<?php echo urlencode($userref) ?>&archive=0"><?php echo $lang["viewcontributedsubittedl"]?></a></li>
 	<?php } ?>
 	
+	<?php hook('custommycontributionlink'); ?>
 	</ul>
 	</div>
 	
