@@ -342,7 +342,7 @@ else
 	}	/* end replacesitetextloader */
 
 # Load group specific plugins
-$active_plugins = (sql_query("SELECT name,enabled_groups, config, config_json FROM plugins WHERE inst_version>=0 AND length(enabled_groups)>0 ORDER BY priority"));
+$active_plugins = (sql_query("SELECT name,enabled_groups, config, config_json FROM plugins WHERE inst_version>=0 AND length(enabled_groups)>0 ORDER BY priority DESC"));
 foreach($active_plugins as $plugin)
 	{ 
 	# Check group access, only enable for global access at this point
