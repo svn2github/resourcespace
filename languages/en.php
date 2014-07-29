@@ -1543,7 +1543,7 @@ $lang["done"]="Done.";
 
 $lang["latlong"]="Lat / long";
 $lang["geographicsearch"]="Geographic search";
-
+$lang["geographicsearchresults"]="Geographic search results";
 $lang["geographicsearch_help"]="Drag to select a search area.";
 
 $lang["purge"]="Purge";
