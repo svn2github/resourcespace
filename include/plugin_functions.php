@@ -1387,7 +1387,7 @@ function config_custom_select($name, $label, $available, $value)
 function get_plugin_css($theme){
 	global $plugins,$baseurl,$language,$css_reload_key;
 	$plugincss="";
-	for ($n=0;$n<count($plugins);$n++)
+	for ($n=count($plugins)-1;$n>=0;$n--)
 	{
 	$csspath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/css/style.css";
 	if (file_exists($csspath))

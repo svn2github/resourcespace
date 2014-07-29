@@ -154,7 +154,7 @@ if ($use_plugins_manager){
     # Need verbatum queries for this query
     $mysql_vq = $mysql_verbatim_queries;
     $mysql_verbatim_queries = true;
-	$active_plugins = (sql_query("SELECT name,enabled_groups,config,config_json FROM plugins WHERE inst_version>=0 order by priority DESC"));
+	$active_plugins = (sql_query("SELECT name,enabled_groups,config,config_json FROM plugins WHERE inst_version>=0 order by priority"));
     $mysql_verbatim_queries = $mysql_vq;
 	foreach($active_plugins as $plugin){
 
@@ -234,7 +234,11 @@ for ($n=0;$n<count($plugins);$n++)
 	{
 	register_plugin($plugins[$n]);
 	}
-
+for ($n=count($plugins)-1;$n>=0;$n--)
+    {
+    register_plugin_language($plugins[$n]);
+    }
+    
 # Set character set.
 if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text/html; charset=UTF-8");} // Make sure we're using UTF-8.
 #------------------------------------------------------
@@ -287,7 +291,7 @@ function hook($name,$pagename="",$params=array())
 	# this will hold all of the functions to call when hitting this hook name and page combination
 	$function_list = array();
 	
-	for ($n=count($plugins)-1;$n>=0;$n--)
+	for ($n=0;$n<count($plugins);$n++)
 		{	
 		# "All" hooks
 		$function="Hook" . ucfirst($plugins[$n]) . "All" . ucfirst($name);		
@@ -1078,20 +1082,25 @@ function include_plugin_config($plugin_name,$config="",$config_json="")
 		$$name = $value;
 		}
 	}
-
+function register_plugin_language($plugin)
+    {
+    global $plugins,$language,$pagename,$lang,$applicationname;
+    
+    	# Include language file
+    	$langpath=dirname(__FILE__)."/../plugins/" . $plugin . "/languages/";
+    	if (file_exists($langpath . "en.php")) {include $langpath . "en.php";}
+    	if ($language!="en")
+    		{
+    		if (substr($language, 2, 1)=='-' && substr($language, 0, 2)!='en')
+    			@include $langpath . safe_file_name(substr($language, 0, 2)) . ".php";
+    		@include $langpath . safe_file_name($language) . ".php";
+    		}
+    
+    }
 function register_plugin($plugin)
 	{
 	global $plugins,$language,$pagename,$lang,$applicationname;
 
-	# Include language file
-	$langpath=dirname(__FILE__)."/../plugins/" . $plugin . "/languages/";
-	if (file_exists($langpath . "en.php")) {include $langpath . "en.php";}
-	if ($language!="en")
-		{
-		if (substr($language, 2, 1)=='-' && substr($language, 0, 2)!='en')
-			@include $langpath . safe_file_name(substr($language, 0, 2)) . ".php";
-		@include $langpath . safe_file_name($language) . ".php";
-		}
 
 	# Also include plugin hook file for this page.
 	if ($pagename=="collections_frameless_loader"){$pagename="collections";}
