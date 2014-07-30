@@ -54,7 +54,9 @@ if (getval("tweak","")!="")
 		case "restore":
 		foreach ($resources as $resource){
 			$ref=$resource['ref'];
-			create_previews($resource['ref'],false,$resource["file_extension"]);
+			if(!empty($resource['file_path'])){$ingested=false;}
+			else{$ingested=true;}
+			create_previews($resource['ref'],false,$resource["file_extension"],false,false,-1,true,$ingested);
 		}
 		break;
 		}

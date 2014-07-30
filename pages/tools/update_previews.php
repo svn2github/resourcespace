@@ -32,9 +32,11 @@ include_once "../../include/collections_functions.php";
  */
 function update_preview($ref){
     global $previewbased;
-    $resourceinfo=sql_query("select ref, file_extension from resource where ref='$ref'");
+    $resourceinfo=sql_query("select ref, file_extension, file_path from resource where ref='$ref'");
     if (count($resourceinfo)>0){
-        create_previews($ref, false,($previewbased?"jpg":$resourceinfo[0]["file_extension"]),false, $previewbased);
+    	if(!empty($resourceinfo[0]['file_path'])){$ingested=false;}
+    	else{$ingested=true;}
+        create_previews($ref, false,($previewbased?"jpg":$resourceinfo[0]["file_extension"]),false, $previewbased,-1,false,$ingested);
         hook("afterupdatepreview");
         return true;
     }

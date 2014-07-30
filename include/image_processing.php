@@ -569,15 +569,15 @@ function iptc_return_utf8($text)
 	return $text;
 	}
  
-function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1,$ignoremaxsize=false)
+function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1,$ignoremaxsize=false,$ingested=false)
 	{
-    global $keep_for_hpr,$imagemagick_path, $preview_generate_max_file_size;
+    global $keep_for_hpr,$imagemagick_path, $preview_generate_max_file_size,$autorotate_no_ingest;
    
     // keep_for_hpr will be set to true if necessary in preview_preprocessing.php to indicate that an intermediate jpg can serve as the hpr.
     // otherwise when the file extension is a jpg it's assumed no hpr is needed.
 
 	# Debug
-	debug("create_previews(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative)");
+	debug("create_previews(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative,ingested=$ingested)");
 
 	if (!$previewonly) {generate_file_checksum($ref,$extension);}
 	# first reset preview tweaks to 0
@@ -593,7 +593,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	# pages/tools/update_previews.php?previewbased=true
 	# use previewbased to avoid touching original files (to preserve manually-uploaded preview images
 	# when regenerating previews (i.e. for watermarks)
-	if($previewbased)
+	if($previewbased || ($autorotate_no_ingest && !$ingested))
 		{
 		$file=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,"",$alternative);	
 		if (!file_exists($file))
@@ -602,6 +602,10 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 			if (!file_exists($file))
 				{
 				$file=get_resource_path($ref,true,"pre",false,"jpg",-1,1,false,"",$alternative);		
+				if(!file_exists($file) && $autorotate_no_ingest && !$ingested)
+					{
+					$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",$alternative);
+					}
 				}
 			}
 		}
@@ -683,7 +687,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		{
 		if (isset($imagemagick_path))
 			{
-			create_previews_using_im($ref,$thumbonly,$extension,$previewonly,$previewbased,$alternative);
+			create_previews_using_im($ref,$thumbonly,$extension,$previewonly,$previewbased,$alternative,$ingested);
 			}
 		else
 			{
@@ -784,12 +788,12 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	return true;
 	}
 
-function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
+function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1,$ingested=false)
 	{
-	global $keep_for_hpr,$imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$imagemagick_colorspace,$default_icc_file;
+	global $keep_for_hpr,$imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$imagemagick_colorspace,$default_icc_file,$autorotate_no_ingest;
 
 	$icc_transform_complete=false;
-	debug("create_previews_using_im(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative)");
+	debug("create_previews_using_im(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative,ingested=$ingested)");
 
 	if (isset($imagemagick_path))
 		{
@@ -800,16 +804,26 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 		# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
 		# Set thumbonly=true to (re)generate thumbnails only.
-		if($previewbased)
+		if($previewbased || ($autorotate_no_ingest && !$ingested))
 			{
-			$file=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,"");	
+			$file=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,""); 
 			if (!file_exists($file))
 				{
 				$file=get_resource_path($ref,true,"scr",false,"jpg",-1,1,false,"");		
 				if (!file_exists($file))
 					{
 					$file=get_resource_path($ref,true,"pre",false,"jpg",-1,1,false,"");		
+					/* staged, but not needed in testing
+					if(!file_exists($file) && $autorotate_no_ingest && !$ingested)
+						{
+						$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",$alternative);
+						}*/
 					}
+				}
+			if ($autorotate_no_ingest && !$ingested && !$previewonly)
+				{
+					# extra check for !previewonly should there also be ingested resources in the system
+					$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",$alternative);
 				}
 			}
 		else if (!$previewonly)
@@ -851,6 +865,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
 
 		$ps=sql_query("select * from preview_size $sizes order by width desc, height desc");
+		$created_count=0;
 		for ($n=0;$n<count($ps);$n++)
 			{ 
 			# If this is just a jpg resource, we avoid the hpr size because the resource itself is an original sized jpg. 
@@ -953,6 +968,13 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				$runcommand = $command ." ".(($extension!="png" && $extension!="gif")?" +matte $profile ":"")." -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
                                 if(!hook("imagepskipthumb")):
 				$output=run_command($runcommand);
+				$created_count++;
+				# if this is the first file generated for non-ingested resources check rotation
+				if($autorotate_no_ingest && $created_count==1 && !$ingested){
+					# first preview created for non-ingested file...auto-rotate
+					if($id=="thm" || $id=="col" || $id=="pre" || $id=="scr"){AutoRotateImage($path,$ref);}
+					else{AutoRotateImage($path);}
+				}
                                 endif;
 				
 				// checkerboard
@@ -1622,7 +1644,8 @@ function get_image_orientation($file)
         }
     }
 
-function AutoRotateImage ($src_image){
+function AutoRotateImage ($src_image,$ref=false){
+	# use $ref to pass a resource ID in case orientation data needs to be taken from a non-ingested image to properly rotate a preview image
 	global $imagemagick_path;
 	global $camera_autorotation_ext, $camera_autorotation_gm;
 
@@ -1661,8 +1684,26 @@ function AutoRotateImage ($src_image){
 		$command = $exiftool_fullpath. ' Orientation=1 '. $new_image;
 	}
 	else {
-	    $command = $convert_fullpath . ' ' . escapeshellarg($src_image) . ' -auto-orient ' .  escapeshellarg($new_image);
-		run_command($command);
+		if($ref!=false){
+			# use the original file to get the orientation info
+			$extension=sql_value("select file_extension value from resource where ref=$ref",'');
+			$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",-1);
+			# get the orientation
+			$orientation=get_image_orientation($file);
+			if ($orientation!=0){
+                if ($convert_fullpath!=false){
+                    $command = $convert_fullpath . ' -rotate +' . $orientation .' '. escapeshellarg($src_image) .' ' .escapeshellarg($new_image);
+                    $wait=run_command($command);
+                    # change the orientation metadata
+                    $exiftool_fullpath=get_utility_path("exiftool");
+                    $command = $exiftool_fullpath. ' Orientation=1 '. escapeshellarg($new_image);
+                }
+			}
+		}
+		else{
+	    	$command = $convert_fullpath . ' ' . escapeshellarg($src_image) . ' -auto-orient ' .  escapeshellarg($new_image);
+			run_command($command);
+		}
 	}
 	if (file_exists($new_image)){
 		unlink($src_image);

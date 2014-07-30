@@ -234,7 +234,9 @@ if (getval("tweak","")!="")
 		sql_query("update resource set preview_attempts=0 WHERE ref='" . $ref . "'");
 		if ($enable_thumbnail_creation_on_upload)
 			{
-			create_previews($ref,false,$resource["file_extension"],false,false,-1,true);
+			if(!empty($resource['file_path'])){$ingested=false;}
+			else{$ingested=true;}
+			create_previews($ref,false,$resource["file_extension"],false,false,-1,true,$ingested);
 			refresh_collection_frame();
 			}
 		else

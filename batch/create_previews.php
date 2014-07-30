@@ -215,7 +215,9 @@ foreach($resources as $resource) // For each resources
 			
 		elseif ($resource['preview_attempts']<5 and $resource['file_extension']!="") 
 			{
-			create_previews($resource['ref'], false, $resource['file_extension'],false,false,-1,$ignoremaxsize);
+			if(!empty($resource['file_path'])){$ingested=false;}
+			else{$ingested=true;}
+			create_previews($resource['ref'], false, $resource['file_extension'],false,false,-1,$ignoremaxsize,$ingested);
 			echo sprintf("Processed resource %d in %01.2f seconds.\n", $resource['ref'], microtime(true) - $start_time);
 			}
 		else

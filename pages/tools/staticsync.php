@@ -353,7 +353,7 @@ function ProcessFolder($folder)
 							update_field($rref,$filename_field,$file);	
 							}
 						
-						create_previews($rref,false,$rd["file_extension"]);
+						create_previews($rref,false,$rd["file_extension"],false,false,-1,false,$staticsync_ingest);
 						sql_query("update resource set file_modified=now() where ref='$rref'");
 						}
 					}
