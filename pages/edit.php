@@ -176,7 +176,7 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 				if ((getval("uploader","")!="")&&(getval("uploader","")!="local"))
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/upload_" . getval("uploader","") . ".php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public','') . " &archive=" . $archive);}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/upload_" . getval("uploader","") . ".php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public','') . " &archive=" . $archive . hook("addtouploadurl"));}
 					}
 				elseif ((getval("local","")!="")||(getval("uploader","")=="local")) // Test if fetching resource from local upload folder.
 					{

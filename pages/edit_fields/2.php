@@ -79,7 +79,7 @@ if ($checkbox_ordered_vertically)
 			}
 		?></tr><tr><?php
 		}
-	?></tr></table></fielset><?php
+	?></tr></table></fieldset><?php
 	endif;
 	}
 else
