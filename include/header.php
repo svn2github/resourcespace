@@ -356,7 +356,7 @@ else
 hook("afterheadernav1");
 ?>
 </div>
-
+<?php hook("midheader"); ?>
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">
 <?php
 include (dirname(__FILE__) . "/header_links.php");
