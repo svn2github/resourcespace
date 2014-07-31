@@ -178,12 +178,15 @@ jQuery(document).ready(function() {
         var modCtrl=e.ctrlKey;
         var modMeta=e.metaKey;
         var modOn=(modAlt || modShift || modCtrl || modMeta);
+        
          switch (e.which) 
          {
 			 
 		    <?php hook ("addhotkeys"); //this comes first so overriding the below is possible ?>
             // left arrow
             case <?php echo $keyboard_navigation_prev; ?>: if (jQuery('.prevLink').length > 0) jQuery('.prevLink').click();
+              if (<?php if ($keyboard_navigation_pages_use_alt) echo "modAlt&&"; ?>(jQuery('.prevPageLink').length > 0)) jQuery('.prevPageLink').click();
+              
                      <?php 
                      if (($pagename=="preview_all") && $keyboard_scroll_jump) { ?>
                      currentX=jQuery(window).scrollLeft();
@@ -198,6 +201,7 @@ jQuery(document).ready(function() {
                      break;
             // right arrow
             case <?php echo $keyboard_navigation_next; ?>: if (jQuery('.nextLink').length > 0) jQuery('.nextLink').click();
+              if (<?php if ($keyboard_navigation_pages_use_alt) echo "modAlt&&"; ?>(jQuery('.nextPageLink').length > 0)) jQuery('.nextPageLink').click();
                      <?php 
                      if (($pagename=="preview_all") && $keyboard_scroll_jump) { ?>
                      currentX=jQuery(window).scrollLeft();

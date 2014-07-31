@@ -2147,6 +2147,7 @@ $keyboard_navigation=true;
 # Previous/next resource, default: left/right arrows
 $keyboard_navigation_prev=37;
 $keyboard_navigation_next=39;
+$keyboard_navigation_pages_use_alt=false;
 # add resource to collection, default 'a'
 $keyboard_navigation_add_resource=65;
 # remove resource from collection, default 'r'
