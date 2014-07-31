@@ -679,25 +679,26 @@ function make_download_preview_link($ref, $size, $label)
 	return "<a href='$direct_link' target='dl_window_$ref'>$label</a>";
 	}
 
-function add_download_column($ref, $size, $downloadthissize)
+function add_download_column($ref, $size_info, $downloadthissize)
 	{
-	global $save_as, $direct_download, $order_by, $lang, $baseurl_short, $baseurl, $k, $search,
-			$request_adds_to_collection, $offset, $archive, $sort;
+	global $save_as, $direct_download, $order_by, $lang, $baseurl_short, $baseurl, $k, $search, $request_adds_to_collection, $offset, $archive, $sort;
 	if ($downloadthissize)
 		{
 		?><td class="DownloadButton"><?php
 		if (!$direct_download || $save_as)
 			{
+			global $size_info_array;
+			$size_info_array = $size_info;
 			if(!hook("downloadbuttonreplace"))
 				{
 				?><a id="downloadlink" <?php
-				if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&size=" . $size["id"]
-						. "&ext=" . $size["extension"])))
+				if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&size=" . $size_info["id"]
+						. "&ext=" . $size_info["extension"])))
 					{
 					?>href="<?php echo $baseurl ?>/pages/terms.php?ref=<?php echo urlencode($ref)?>&amp;search=<?php
 							echo urlencode($search) ?>&amp;k=<?php echo urlencode($k)?>&amp;url=<?php
-							echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $size["id"]
-									. "&ext=" . $size["extension"] . "&k=" . $k . "&search=" . urlencode($search)
+							echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $size_info["id"]
+									. "&ext=" . $size_info["extension"] . "&k=" . $k . "&search=" . urlencode($search)
 									. "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by="
 									. urlencode($order_by))?>"<?php
 					}
@@ -708,9 +709,10 @@ function add_download_column($ref, $size, $downloadthissize)
 			{
 			?><a id="downloadlink" href="#" onclick="directDownload('<?php
 					echo $baseurl_short?>pages/download_progress.php?ref=<?php echo urlencode($ref) ?>&size=<?php
-					echo $size['id']?>&ext=<?php echo $size['extension']?>&k=<?php
+					echo $size_info['id']?>&ext=<?php echo $size_info['extension']?>&k=<?php
 					echo urlencode($k)?>')"><?php echo $lang["action-download"]?></a><?php
 			}
+			unset($size_info_array);
 			?></td><?php
 		}
 	else if (checkperm("q"))
@@ -720,7 +722,7 @@ function add_download_column($ref, $size, $downloadthissize)
 			?><td class="DownloadButton"><?php
 			if ($request_adds_to_collection)
 				{
-				echo add_to_collection_link($ref,$search,"alert('" . $lang["requestaddedtocollection"] . "');",$size["id"]);
+				echo add_to_collection_link($ref,$search,"alert('" . $lang["requestaddedtocollection"] . "');",$size_info["id"]);
 				}
 			else
 				{
