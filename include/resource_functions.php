@@ -811,7 +811,7 @@ function add_keyword_to_resource($ref,$keyword,$resource_type_field,$position,$o
                     }
             # create mapping, increase hit count.
             if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and add this
-                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyref','$kwpos','$resource_type_field','$optional_value')");}
+                    {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyref','$position','$resource_type_field','$optional_value')");}
             else  
                     {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyref','$position','$resource_type_field')");}
     
