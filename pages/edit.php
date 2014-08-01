@@ -1407,7 +1407,7 @@ if (!checkperm("F*")&&!hook("editstatushide")) # Only display Status / Access / 
     hook("beforeaccessselector");
     if (!hook("replaceaccessselector"))
         {
-        if ($ref<0 && $show_status_and_access_on_upload==false)
+        if ($ref<0 && $show_status_and_access_on_upload==false && $show_access_on_upload ==false)
             { 
             # Upload template and the status and access fields are configured to be hidden on uploads.
             ?>
