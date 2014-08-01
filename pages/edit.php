@@ -1354,7 +1354,7 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
     {
     if(!hook("replacestatusandrelationshipsheader"))
         {
-        if ($ref>0 || $show_status_and_access_on_upload==true)
+        if ($ref>0 || $show_status_and_access_on_upload==true || $show_access_on_upload==true)
         	{
 	        if ($enable_related_resources && ($multiple || $ref>0)) # Showing relationships
 	        	{
