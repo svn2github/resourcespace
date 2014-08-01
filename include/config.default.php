@@ -1117,6 +1117,10 @@ $banned_extensions=array("php","cgi","pl","exe","asp","jsp");
 # Set the below option to 'true' to enable these options during this process.
 $show_status_and_access_on_upload=false;
 $show_access_on_upload = false;
+# Permission required to show "access" field on upload. False = No permission required. 
+# Recommended line (commented out) below ensures they have edit of active resources permission.
+# $show_access_on_upload_perm = !checkperm("e0"); #Stack permissions= !checkperm("e0") && !checkperm("c");
+$show_access_on_upload_perm = false;
 
 # Mime types by extensions.
 # used by pages/download.php to detect the mime type of the file proposed to download.
