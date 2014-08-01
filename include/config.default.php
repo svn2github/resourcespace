@@ -1116,9 +1116,12 @@ $banned_extensions=array("php","cgi","pl","exe","asp","jsp");
 # When adding resource(s), in the upload template by the status and access fields are hidden.
 # Set the below option to 'true' to enable these options during this process.
 $show_status_and_access_on_upload=false;
+# Set Permission required to show "access" and "status" fields on upload. False = No permission required.
+$show_status_and_access_on_upload_perm = !checkperm("F*"); #Stack permissions= !checkperm("e0") && !checkperm("c");
+
 $show_access_on_upload = false;
 # Permission required to show "access" field on upload. False = No permission required. 
-# Recommended line (commented out) below ensures they have edit of active resources permission.
+# Example below ensures they have permissions to edit active resources.
 # $show_access_on_upload_perm = !checkperm("e0"); #Stack permissions= !checkperm("e0") && !checkperm("c");
 $show_access_on_upload_perm = false;
 

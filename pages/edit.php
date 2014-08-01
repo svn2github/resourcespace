@@ -1350,7 +1350,7 @@ else # Edit Resource(s).
     }
 
 # Status / Access / Related Resources
-if (!checkperm("F*")&&!hook("editstatushide")) # Only display Status / Access / Related Resources if full write access field access has been granted.
+if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only display Status / Access / Related Resources if permissions match.
     {
     if(!hook("replacestatusandrelationshipsheader"))
         {
@@ -1412,7 +1412,7 @@ if (!checkperm("F*")&&!hook("editstatushide")) # Only display Status / Access / 
             # Upload template and the status and access fields are configured to be hidden on uploads.
             ?><input type=hidden name="access" value="<?php echo htmlspecialchars($resource["access"])?>"><?php
             }
-        elseif($ref<0 && ($show_status_and_access_on_upload==true || $show_access_on_upload==true) && $show_access_on_upload_perm) 
+        else if($ref<0 && ($show_status_and_access_on_upload==true || $show_access_on_upload==true) && $show_access_on_upload_perm) 
         	{
         	?><input type=hidden name="access" value="<?php echo htmlspecialchars($resource["access"])?>"><?php
         	}
