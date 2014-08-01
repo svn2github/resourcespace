@@ -37,7 +37,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 			<table>
 			<tr>
 				<td style="margin:0px;padding:0px;">
-					<h1><?php echo i18n_get_collection_name($collections[$n]);  ?></h1>
+					<h1><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $collections[$n]['ref']?>" onclick="return CentralSpaceLoad(this);" ><?php echo i18n_get_collection_name($collections[$n]);  ?></a></h1>
 				</td>
 			</tr>
 			</table>
@@ -85,7 +85,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 				echo "<tr>";
 				echo "<td>" . $lang["users"] . "</td>";
 				echo "<td>" . (($collections[$n]["allow_changes"]==0)?$lang["view"]:$lang["addremove"]) . "</td>";
-				echo "<td>" . $lang["users"] . ":-<br>";
+				echo "<td>" . $lang["users"] . ":<br>";
 				foreach($colusers as $coluser)
 					{
 					echo (($coluser["fullname"]!="")?$coluser["fullname"]:$coluser["username"]) . "<br>";											

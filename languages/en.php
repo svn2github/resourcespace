@@ -250,7 +250,7 @@ $lang["resourceidnotfound"]="The resource ID was not found";
 $lang["inclusive"]="(inclusive)";
 $lang["pluginssetup"]="Manage plugins";
 $lang["pluginmanager"]="Plugin manager";
-$lang["users"]="users";
+$lang["users"]="Users";
 
 
 # Team Centre - Bulk E-mails
