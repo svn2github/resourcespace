@@ -102,7 +102,7 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     
     unset($username);
 	
-	hook ("postlogout");
+	hook("postlogout");
     
     if (isset($anonymous_login))
     	{
@@ -111,6 +111,7 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     	}
     }
 
+hook("postlogout2");
     
     
 if (getval("langupdate","")!="")
