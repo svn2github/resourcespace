@@ -1448,7 +1448,7 @@ function bulk_mail($userlist,$subject,$text,$html=false)
     return "";
     }
 
-function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="")
+function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="",$bcc="")
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	
@@ -1473,13 +1473,13 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	if($always_email_copy_admin)
 		{
 		global $email_notify;
-		$cc.="," . $email_notify;
+		$bcc.="," . $email_notify;
 		}
 
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	global $use_phpmailer;
 	if ($use_phpmailer){
-		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars,$from_name,$cc); 
+		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars,$from_name,$cc,$bcc); 
 		return true;
 		}
 	
@@ -1548,6 +1548,25 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 		$headers.=$eol;
 	}
 	
+	if ($bcc!=""){
+		global $userfullname;
+		#add bcc 
+		$bccs=explode(",",$bcc);
+		$headers .= "Bcc: ";
+		for ($n=0;$n<count($bccs);$n++){
+			if ($n!=0){$headers.=",";}
+			if (strstr($bccs[$n],"<")){ 
+				$bccparts=explode("<",$bccs[$n]);
+				$headers.=$bccparts[0]." <".$bccparts[1];
+			}
+			else {
+				mb_internal_encoding("UTF-8");
+				$headers.=mb_encode_mimeheader($userfullname, "UTF-8"). " <".$bccs[$n].">";
+			}
+		}
+		$headers.=$eol;
+	}
+	
 	$headers .= "Date: " . date("r") .  $eol;
    	$headers .= "Message-ID: <" . date("YmdHis") . $from . ">" . $eol;
    	#$headers .= "Return-Path: returnpath" . $eol;
@@ -1567,7 +1586,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	}
 
 if (!function_exists("send_mail_phpmailer")){
-function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="")
+function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="",$bcc="")
 	{
 	
 	# if ($use_phpmailer==true) this function is used instead.
@@ -1753,6 +1772,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		$mail->Password = $smtp_password; // password
 	}
 	$reply_tos=explode(",",$reply_to);
+
 	// only one from address is possible, so only use the first one:
 	if (strstr($reply_tos[0],"<")){
 		$rtparts=explode("<",$reply_tos[0]);
@@ -1806,6 +1826,24 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 			}
 		}
 	}
+	if ($bcc!=""){
+		# modification for multiple is also necessary here, though a broken cc seems to be simply removed by phpmailer rather than breaking it.
+		$bccs = $bcc;
+		$bccs = explode(',', $bccs);
+		$bccs = array_map('trim', $bccs);
+		global $userfullname;
+		foreach ($bccs as $bccemail){
+			if (strstr($bccemail,"<")){
+				$bccparts=explode("<",$bccemail);
+				$mail->AddBCC(str_replace(">","",$bccparts[1]),$bccparts[0]);
+			}
+			else{
+				$mail->AddBCC($bccemail,$userfullname);
+			}
+		}
+	}
+	
+	
 	$mail->CharSet = "utf-8"; 
 	
 	if (is_html($body)) {$mail->IsHTML(true);}  	
