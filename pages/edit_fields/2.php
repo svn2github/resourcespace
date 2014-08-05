@@ -52,7 +52,7 @@ if ($checkbox_ordered_vertically)
 	?>
 	<fieldset class="customFieldset" name="<?php echo $field['title']; ?>">
 		<legend class="accessibility-hidden"><?php echo $field['title']; ?></legend>
-		<table cellpadding=2 cellspacing=0><tr><?php
+		<div class="verticaleditcheckboxes stdwidth"><?php
 	for ($y=0;$y<$height;$y++)
 		{
 		for ($x=0;$x<$cols;$x++)
@@ -69,24 +69,23 @@ if ($checkbox_ordered_vertically)
 					{
 					/*if(!hook("replace_checkbox_vertical_rendering","",array($name,$option,$ref=$field["ref"],$set))){*/
 						?>
-						<td width="1"><input type="checkbox" id="<?php echo $name; ?>" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
+						<div class="checkoption"><span class="checkbox"><input type="checkbox" id="<?php echo $name; ?>" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
 						<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');" onmousedown="checkbox_allow_save();"<?php } ?>
-						/></td><td><label class="customFieldLabel" for="<?php echo $name; ?>" <?php if($edit_autosave) { ?>onmousedown="checkbox_allow_save();" <?php } ?>><?php echo htmlspecialchars($trans)?></label></td>
+						/></span><span class="checkboxtext"><label class="customFieldLabel" for="<?php echo $name; ?>" <?php if($edit_autosave) { ?>onmousedown="checkbox_allow_save();" <?php } ?>><?php echo htmlspecialchars($trans)?></label></span></div><br/>
 						<?php
 						/*} # end hook("replace_checkbox_vertical_rendering")*/
 					}
 				}
 			}
-		?></tr><tr><?php
 		}
-	?></tr></table></fieldset><?php
+	?></div></fieldset><?php
 	endif;
 	}
 else
 	{				
 	# ---------------- Horizontal Ordering (Standard) ---------------------				
 	?>
-	<table cellpadding=2 cellspacing=0><tr>
+	<div class="editcheckboxes stdwidth">
 	<?php
 
 	foreach ($option_trans as $option=>$trans)
@@ -94,12 +93,12 @@ else
 		$name=$field["ref"] . "_" . md5($option);
 		$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 		?>
-		<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?>
+		<div class="checkoption"><span class="checkbox"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?>
 		<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } ?>
-		 /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
+		 /></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;</span></div>
 		<?php
 		}
-	?></tr></table><?php
+	?></div><?php
 	}
 	
 endif;

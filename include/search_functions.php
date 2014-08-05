@@ -1480,7 +1480,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 				else
 					{
 					# ---------------- Horizontal Ordering (Standard) ---------------------				
-					?><div class="checkboxes"<?php
+					?><div class="checkboxes"><?php
 					foreach ($option_trans as $option=>$trans)
 						{
 						$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }

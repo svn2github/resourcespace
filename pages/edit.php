@@ -1442,7 +1442,7 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
             </select>
 
             <div class="clearerleft"> </div>
-            <table id="custom_access" cellpadding=3 cellspacing=3 style="padding-left:150px;<?php if (!$custom_access || $resource["access"]!=3) { ?>display:none;<?php } ?>"><?php
+            <div id="custom_access" style="<?php if (!$custom_access || $resource["access"]!=3) { ?>display:none;<?php } ?>"><?php
 
             $groups=get_resource_custom_access($ref);
             for ($n=0;$n<count($groups);$n++)
@@ -1453,29 +1453,29 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
 
                 if (in_array("v",$perms)) {$access=0;$editable=false;} ?>
                     
-                <tr>
-                <td valign=middle nowrap><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</td>
+                <div class="radiooption">
+                <span class="radiotext customaccessgroupname"><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</span>
 
-                <td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked <?php }
-                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></td>
+                <span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked <?php }
+                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
 
-                <td align=left valign=middle><?php echo $lang["access0"]?></td>
+                <span class="radiotext customaccesstext"><?php echo $lang["access0"]?></span>
 
-                <td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked <?php }
-                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></td>
+                <span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked <?php }
+                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
 
-                <td align=left valign=middle><?php echo $lang["access1"]?></td><?php
+                <span class="radiotext customaccesstext"><?php echo $lang["access1"]?></span><?php
 
                 if (checkperm("v"))
                     { ?>
-                    <td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked <?php }
-                    if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></td>
+                    <span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked <?php }
+                    if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
 
-                    <td align=left valign=middle><?php echo $lang["access2"]?></td><?php
+                    <span class="radiotext customaccesstext"><?php echo $lang["access2"]?></span><?php
                     } ?>
-                </tr><?php
+                </div><?php
                 } ?>
-            </table>
+            </div>
             <div class="clearerleft"> </div>
             </div><?php
             }

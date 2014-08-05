@@ -34,9 +34,8 @@ if ($edit_autosave) { ?>
 	</script>
 <?php } ?>
 
-<table id="" cellpadding="3" cellspacing="3" style="padding-left: 150px; display: block;">                    
-	<tbody>
-		<tr>
+<div class="radioblock">                    
+		<div class="radiooption">
 			<?php 
 			$row = 1;
 			$col = 1;
@@ -50,14 +49,13 @@ if ($edit_autosave) { ?>
 				$col++;
 				?>
 		
-			<td width="10" valign="middle">
+			<span class="radio">
 				<input type="radio" id="field_<?php echo $field["ref"] . '_' . $value; ?>" name="field_<?php echo $field["ref"]; ?>" value="<?php echo $value; ?>" <?php if($value == $set) {?>checked<?php } ?> <?php if($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>/>
-			</td>
-			<td align="left" valign="middle">
+			</span>
+			<span class="radiotext">
 				<label class="customFieldLabel" for="field_<?php echo $field["ref"] . '_' . $value; ?>" <?php if($edit_autosave) { ?>onmousedown="radio_allow_save();" <?php } ?>><?php echo $value; ?></label>
-			</td>
+			</span>
 
 			<?php } ?>
-		</tr>
-	</tbody>
-</table>
+		</div>
+</div>
