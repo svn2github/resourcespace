@@ -1453,25 +1453,26 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
 
                 if (in_array("v",$perms)) {$access=0;$editable=false;} ?>
                     
-                <div class="radiooption">
+                <div class="radiooptions">
+
                 <span class="radiotext customaccessgroupname"><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</span>
 
-                <span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked <?php }
+                <div class="radiooption"><span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked <?php }
                 if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
 
-                <span class="radiotext customaccesstext"><?php echo $lang["access0"]?></span>
+                <span class="radiotext customaccesstext"><?php echo $lang["access0"]?></span></div>
 
-                <span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked <?php }
+                <div class="radiooption"><span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked <?php }
                 if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
 
-                <span class="radiotext customaccesstext"><?php echo $lang["access1"]?></span><?php
+                <span class="radiotext customaccesstext"><?php echo $lang["access1"]?></span></div><?php
 
                 if (checkperm("v"))
                     { ?>
-                    <span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked <?php }
+                    <div class="radiooption"><span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked <?php }
                     if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
 
-                    <span class="radiotext customaccesstext"><?php echo $lang["access2"]?></span><?php
+                    <span class="radiotext customaccesstext"><?php echo $lang["access2"]?></span></div><?php
                     } ?>
                 </div><?php
                 } ?>

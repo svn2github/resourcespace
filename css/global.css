@@ -55,8 +55,9 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 .radioblock { float: left;width: auto;}
 .radiotext label.customFieldLabel {float:none;}
 .radio{margin: 1px;vertical-align: middle;}
+.radiooption {display: inline;}
 #custom_access {padding-left: 300px;}
-#custom_access .radiooption{margin: 5px;}
+#custom_access .radiooptions{margin: 5px;}
 /*General layout*/
 #Header {margin:20px 25px;padding:0;text-align:left;}
 #TextHeader{font-size:25px;float:left;}
