@@ -508,7 +508,8 @@ function resetTickAllColl(){
 
 $types=get_resource_types();
 $wrap=0;
-?><div class="checkboxes">
+?>
+<div class="checkboxes">
 <div class="checkoption"><span class="checkbox"><input type='checkbox' id='rttickallcoll' name='rttickallcoll' checked onclick='jQuery("#advancedform .tickboxcoll").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#rttickallcoll").attr("checked")=="checked"));}); UpdateResultCount(); ' /></span><span class="checkboxtext"><?php echo $lang['allcollectionssearchbar']?></span></div>
 
 <?php
