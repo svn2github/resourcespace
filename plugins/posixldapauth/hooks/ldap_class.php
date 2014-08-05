@@ -268,10 +268,15 @@ class ldapAuth
 
 		$found = false;
 		
-		// escape the string for AD
-		$escGroupName = $this->escapeStrForAD($groupName); 
+		// set the gid for the relevant ldap type.
 		
-		$gid = "(&(objectCategory=group)(cn=" . $escGroupName . "))";
+		if ($ldapType == 1) {
+			// escape the string for AD
+			$escGroupName = $this->escapeStrForAD($groupName); 		
+			$gid = "(&(objectCategory=group)(cn=" . $escGroupName . "))";
+		} else {
+			$gid = "(cn=" . $groupName . ")";
+		}	
 		//error_log(  __FILE__ . " " . __METHOD__ . " " . __LINE__ ." - memFieldType: ".$memFieldType);
 		
 		// check to see what type of directory we are using, and set parameters accordingly.
