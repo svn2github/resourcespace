@@ -37,7 +37,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 			<table>
 			<tr>
 				<td style="margin:0px;padding:0px;">
-					<h1><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $collections[$n]['ref']?>" onclick="return CentralSpaceLoad(this);" ><?php echo i18n_get_collection_name($collections[$n]);  ?></a></h1>
+					<h1 class="shared_collection_title"><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $collections[$n]['ref']?>" onclick="return CentralSpaceLoad(this);" ><?php echo i18n_get_collection_name($collections[$n]);  ?></a></h1>
 				</td>
 			</tr>
 			</table>
