@@ -75,7 +75,7 @@ foreach($plugins as $plugin){
 
 
 </table>
-</div>
+</div></div>
 <?php
 include "../../include/footer.php";
 ?>
