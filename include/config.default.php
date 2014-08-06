@@ -1117,7 +1117,7 @@ $banned_extensions=array("php","cgi","pl","exe","asp","jsp");
 # Set the below option to 'true' to enable these options during this process.
 $show_status_and_access_on_upload=false;
 # Set Permission required to show "access" and "status" fields on upload. False = No permission required.
-$show_status_and_access_on_upload_perm = !checkperm("F*"); #Stack permissions= !checkperm("e0") && !checkperm("c");
+$show_status_and_access_on_upload_perm = function_exists(checkperm) ? !checkperm("F*") : false; #Stack permissions= !checkperm("e0") && !checkperm("c");
 
 $show_access_on_upload = false;
 # Permission required to show "access" field on upload. False = No permission required. 
