@@ -2351,6 +2351,9 @@ $email_sharing=true;
 # Hide "Generate URL" from the collection_share.php page?
 $hide_collection_share_generate_url=false;
 
+# Hide "Generate URL" from the resource_share.php page?
+$hide_resource_share_generate_url=false;
+
 # Pop-out Collection Bar Upon Collection Interaction such as "Select Collection"
 $collection_bar_popout=false;
 
