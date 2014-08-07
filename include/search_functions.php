@@ -1421,12 +1421,6 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 				
 				$set=trim_array(explode(";",cleanse_string($value,true)));
 				$wrap=0;
-				$l=average_length($option_trans_simple);
-				$cols=10;
-				if ($l>5)  {$cols=6;}
-				if ($l>10) {$cols=4;}
-				if ($l>15) {$cols=3;}
-				if ($l>25) {$cols=2;}
 
 				# Filter the options array for blank values and ignored keywords.
 				$newoptions=array();
@@ -1439,15 +1433,20 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 					}
 				$options=$newoptions;
 
-				
-				$height=ceil(count($options)/$cols);
 				global $checkbox_ordered_vertically;
 				if ($checkbox_ordered_vertically)
 					{
+					$l=average_length($option_trans_simple);
+					$cols=10;
+					if ($l>5)  {$cols=6;}
+					if ($l>10) {$cols=4;}
+					if ($l>15) {$cols=3;}
+					if ($l>25) {$cols=2;}
+					$height=ceil(count($options)/$cols);
 					if(!hook('rendersearchchkboxes'))
 						{
 						# ---------------- Vertical Ordering (only if configured) -----------
-						?><div class="verticalcheckboxes stdwidth"><?php
+						?><div class="verticalcheckboxes"><?php
 						for ($y=0;$y<$height;$y++)
 							{
 							for ($x=0;$x<$cols;$x++)
@@ -1463,7 +1462,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 									if ($option!="")
 										{
 										?>
-										<br /><div class="checkoption"><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span></div>
+										<div class="checkoption"><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span></div>
 
 										<?php
 										}
@@ -1472,7 +1471,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 										?><div class="checkoption"><span class="checkbox"></span><span class="checkboxtext"></span></div><?php
 										}
 									}
-								}
+								}?><br /><?php
 							}
 						?></div><?php
 						}
@@ -1483,7 +1482,6 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 					?><div class="checkboxes"><?php
 					foreach ($option_trans as $option=>$trans)
 						{
-						$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 						$name=$field["ref"] . "_" . md5($option);
 						if ($option!="")
 							{
