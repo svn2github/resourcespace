@@ -580,7 +580,7 @@ function compute_dpi($width, $height, &$dpi, &$dpi_unit, &$dpi_w, &$dpi_h)
 	if (isset($size['resolution'])&& $size['resolution']!=0) { $dpi=$size['resolution']; }
 	else if (!isset($dpi) || $dpi==0) { $dpi=300; }
 
-	if ((isset($size['unit']) && trim(strtolower($size['unit']))=="inches") || $imperial_measurements)
+	if (((isset($size['unit']) && trim(strtolower($size['unit']))=="inches")) || $imperial_measurements)
 		{
 		# Imperial measurements
 		$dpi_unit=$lang["inch-short"];
@@ -605,7 +605,7 @@ function get_size_info($size, $originalSize = null)
 {
 	global $lang;
 	global $ffmpeg_supported_extensions;
-
+	
 	$newWidth = intval($size['width']);
 	$newHeight = intval($size['height']);
 
@@ -631,7 +631,7 @@ function get_size_info($size, $originalSize = null)
 	$output='<p>' . $newWidth . " x " . $newHeight . " " . $lang["pixels"];
 
 	$mp=compute_megapixel($newWidth, $newHeight);
-	if ($mp>=1)
+	if ($mp>=0)
 		{
 		$output.=" (" . $mp . " " . $lang["megapixel-short"] . ")";
 		}
@@ -640,10 +640,12 @@ function get_size_info($size, $originalSize = null)
 
 	if (!isset($size['extension']) || !in_array(strtolower($size['extension']), $ffmpeg_supported_extensions))
 	    {
+		if (!hook("replacedpi")){	
 	    # Do DPI calculation only for non-videos
 	    compute_dpi($newWidth, $newHeight, $dpi, $dpi_unit, $dpi_w, $dpi_h);
 	    $output.= '<p>' . $dpi_w . " " . $dpi_unit . " x " . $dpi_h . " " . $dpi_unit . " " . $lang["at-resolution"]
 		   . " " . $dpi ." " . $lang["ppi"] . '</p>';
+		}
 	    }
 
 	return $output;
