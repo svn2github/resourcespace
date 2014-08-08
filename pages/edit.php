@@ -475,11 +475,19 @@ if ((!$is_template && !checkperm("F*"))||$custompermshowfile)
 { ?>
 <div class="Question" id="question_file">
 <label><?php echo $lang["file"]?></label>
-<div class="Fixed">
+<div class="Fixed" style="width:50%;">
 <?php
 if ($resource["has_image"]==1)
 	{
-	?><img align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" style="margin-right:10px;"/><br />
+	?><img id="preview" align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,false)?>" class="ImageBorder" style="margin-right:10px;"/>
+	<?php // check for watermarked version and show it if it exists
+	if (checkperm("w")){
+		$wmpath=get_resource_path($ref,true,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,true);
+		if (file_exists($wmpath)){?>
+		<img style="display:none;" id="wmpreview" align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,true)?>" class="ImageBorder"/>
+		<?php }
+	}?>
+	<br />
 	<?php
 	}
 else
@@ -490,7 +498,7 @@ else
 	<br />
 	<?php
 	}
-if ($resource["file_extension"]!="") { ?><strong><?php echo str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["cell-fileoftype"]) . " (" . formatfilesize(@filesize_unlimited(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><?php } ?>
+if ($resource["file_extension"]!="") { ?><strong><?php echo str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["cell-fileoftype"]) . " (" . formatfilesize(@filesize_unlimited(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><?php if (checkperm("w") && $resource["has_image"]==1 && file_exists($wmpath)){?> &nbsp;&nbsp;<a href="#" onclick="jQuery('#wmpreview').toggle();jQuery('#preview').toggle();if (jQuery(this).text()=='<?php echo $lang['showwatermark']?>'){jQuery(this).text('<?php echo $lang['hidewatermark']?>');} else {jQuery(this).text('<?php echo $lang['showwatermark']?>');}"><?php echo $lang['showwatermark']?></a><?php } ?><br /><?php } ?>
 	
 	<?php
 	if ($top_nav_upload_type=="local") $replace_upload_type="plupload"; else $replace_upload_type=$top_nav_upload_type;

@@ -363,6 +363,6 @@ if ($search_titles)
 	}
 
     if (!is_array($result) && empty($collections) && getvalescaped("addsmartcollection","") == '') {
-        $search_title = '<h1 class="searchcrumbs"><a href="' . $baseurl_short . 'pages/search.php">No resources found</a></h1>';
+        $search_title = '<h1 class="searchcrumbs"><a href="' . $baseurl_short . 'pages/search.php">'.$lang["noresourcesfound"].'</a></h1>';
     }
 }  
