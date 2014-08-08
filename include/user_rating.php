@@ -6,6 +6,9 @@
 #
 
 $rating=$resource["user_rating"];
+$modified_user_rating=hook("modifyuserrating");
+if ($modified_user_rating){$result[$n]['user_rating']=$modified_user_rating;}
+
 $rating_count=$resource["user_rating_count"];
 global $user_rating_remove;
 if ($rating=="") {$rating=0;}
