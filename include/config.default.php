@@ -518,6 +518,8 @@ $thumbs_default="show";
 $autoshow_thumbs = false;
 # How many thumbnails to show in the collections panel until a 'View All...' link appears, linking to a search in the main window.
 $max_collection_thumbs=150;
+# Show an Empty Collection link which will empty the collection of resources (not delete them)
+$emptycollection = false;
 
 # Options for number of results to display per page:
 $results_display_array=array(24,48,72,120,240);

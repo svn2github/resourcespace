@@ -26,6 +26,12 @@ if ($addcollection!="")
 	}
 /////
 
+#Remove all from collection
+	$ref = getvalescaped("ref","",true);
+if($ref!='' && getvalescaped("submitted","")=='removeall' && getval("removeall","")!="") 
+	{
+	remove_all_resources_from_collection($ref);
+	}
 # Disable info box for external access.
 if ($k!="") {$infobox=false;} 
 # Disable checkboxes for external users.
@@ -463,8 +469,8 @@ elseif ($k!="" && !$lazyload)
   	<?php echo $count_result . " " . $lang["youfoundresources"]?><br />
     <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
 	<a href="<?php echo $baseurl_short?>pages/terms.php?k=<?php echo urlencode($k) ?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" onclick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
-	<?php } ?>
-    <?php if ($feedback) {?><br /><br /><a onclick="return CentralSpaceLoad(this);" href="<?php echo $baseurl_short?>pages/collection_feedback.php?collection=<?php echo urlencode($usercollection) ?>&k=<?php echo urlencode($k) ?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
+	<?php }
+     if ($feedback) {?><br /><br /><a onclick="return CentralSpaceLoad(this);" href="<?php echo $baseurl_short?>pages/collection_feedback.php?collection=<?php echo urlencode($usercollection) ?>&k=<?php echo urlencode($k) ?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
     <?php if ($count_result>0 && checkperm("q"))
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
@@ -588,11 +594,14 @@ elseif ($k!="" && !$lazyload)
     
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
-    if ((count($result)>0) && $show_edit_all_link && (!$edit_all_checkperms || allow_multi_edit($result))) { ?>
-    <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>">&gt; <?php echo $lang["viewall"]?></a></li>
-    <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/edit.php?collection=<?php echo urlencode($usercollection) ?>">&gt; <?php echo $lang["action-editall"]?></a></li>
-
-    <?php } else { ?>
+    if ((count($result)>0) && $show_edit_all_link && (!$edit_all_checkperms || allow_multi_edit($result))) 
+    	{ ?>
+	    <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>">&gt; <?php echo $lang["viewall"]?></a></li>
+	    <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/edit.php?collection=<?php echo urlencode($usercollection) ?>">&gt; <?php echo $lang["action-editall"]?></a></li>
+	    <?php 
+	    echo (isset($emptycollection)) ? '<li><a href="'.$baseurl_short.'pages/collections.php?ref='.urlencode($usercollection).'&removeall=true&submitted=removeall&ajax=true" onclick="if(!confirm(\''.$lang['emptycollectionareyousure'].'\')){return false;}return CollectionDivLoad(this);">&gt;&nbsp;'.$lang["emptycollection"].'</a></li>' : "";
+	    } 
+	else { ?>
     <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>">&gt; <?php echo $lang["viewall"]?></a></li>
     <?php } ?>
     
@@ -883,7 +892,9 @@ if (!$lazyload){
 		if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($result)) { ?>
 		<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>"><?php echo $lang["viewall"]?></a></li>
 		<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/edit.php?collection=<?php echo $usercollection?>"><?php echo $lang["action-editall"]?></a></li>    
-		<?php } else { ?>
+		<?php 
+		echo (isset($emptycollection)) ? '<li><a href="'.$baseurl_short.'pages/collections.php?ref='.urlencode($usercollection).'&removeall=true&submitted=removeall&ajax=true" onclick="if(!confirm(\''.$lang['emptycollectionareyousure'].'\')){return false;}return CollectionDivLoad(this);">'.$lang["emptycollection"].'</a></li>' : "";
+		 } else { ?>
 		<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>"><?php echo $lang["viewall"]?></a></li>
 		<?php } ?>
 		<?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
