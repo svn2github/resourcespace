@@ -649,6 +649,13 @@ height: 20px;
 float:left;
 }
 
+/* astec migrated 072515 - not sure who's edit this is*/
+.InpageNavLeftBlock {
+text-align:left;
+margin-right: 20px;
+margin-bottom: 10px;
+}
+
 .icondisplay {
 width: 90px;
 }
@@ -704,4 +711,7 @@ width: 90px;
 	left: -10000px;
 	top: auto;
 	overflow: hidden;
+}
+.collectionin {
+	text-align: center;
 }
