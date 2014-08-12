@@ -18,7 +18,7 @@ if ($adjusted_dropdownoptiontrans){$option_trans=$adjusted_dropdownoptiontrans;}
 
 if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leading comma if it exists	
 
-?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>
+?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; hook("additionaldropdownattributes","",array($field)); ?>
 <?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } ?>
 >
 <?php if (!hook("replacedropdowndefault","",array($field))){?><option value=""></option><?php } ?>
