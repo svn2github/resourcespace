@@ -208,7 +208,7 @@ input[readonly] {color: #000000;}
 	
 .CommentFlag { background-image: url('../gfx/whitegry/interface/FlagOff.png'); }
 
-.CommentEntryInfoCommenterName { color: #3070bf; }
+.CommentEntryInfoCommenterName { color: #737373; }
 .CommentBody { color: #000000}
 
 .smalllisticon{background: url(../gfx/interface/listicon.png) no-repeat 0px;}

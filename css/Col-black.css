@@ -175,7 +175,7 @@ input[readonly] {color: #FFFFFF;}
 	
 .CommentFlag { background-image: url('../gfx/black/interface/FlagOff.png'); }
 
-.CommentEntryInfoCommenterName { color: #000000; }
+.CommentEntryInfoCommenterName { color: #ffffff; }
 .CommentBody { color: #ffffff}
 
 .xlthumbsiconactive {background: url(../gfx/black/interface/xliconactive.png) no-repeat 0px;}

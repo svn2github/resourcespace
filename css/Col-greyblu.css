@@ -176,7 +176,7 @@ input[readonly] {color: #FFFFFF;}
 
 .CommentFlag { background-image: url('../gfx/greyblu/interface/FlagOff.png'); }
 
-.CommentEntryInfoCommenterName { color: #051933; }
+.CommentEntryInfoCommenterName { color: #ffffff; }
 .CommentBody { color: #ffffff}
 
 .xlthumbsiconactive {background: url(../gfx/black/interface/xliconactive.png) no-repeat 0px;}
@@ -192,3 +192,4 @@ input[readonly] {color: #FFFFFF;}
 .glyph_user {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -20px 0;}
 .glyph_menu {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') 0 0;}
 .glyph_result {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -40px 0;}
+
