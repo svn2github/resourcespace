@@ -3,12 +3,14 @@
 function show_table_headers($showprice)
 	{
 	global $lang;
+	if(!hook("replacedownloadspacetableheaders")){
 	?><tr><td><?php echo $lang["fileinformation"]?></td>
 	<td><?php echo $lang["filetype"]?></td>
 	<?php if ($showprice) { ?><td><?php echo $lang["price"] ?></td><?php } ?>
 	<td class="textcenter"><?php echo $lang["options"]?></td>
 	</tr>
 	<?php
+	} # end hook("replacedownloadspacetableheaders")
 	}
 
 function HookFormat_chooserViewReplacedownloadoptions()
@@ -27,7 +29,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 	$tableHeadersDrawn = false;
 
 	?><table cellpadding="0" cellspacing="0"><?php
-
+	hook("formatchooserbeforedownloads");
 	$sizes = get_image_sizes($ref, false, $resource['file_extension'], false);
 	$downloadCount = 0;
 	$originalSize = -1;
@@ -65,12 +67,12 @@ function HookFormat_chooserViewReplacedownloadoptions()
 			}
 
 		?><tr class="DownloadDBlend" id="DownloadBox<?php echo $n?>">
-		<td><h2><?php echo $headline?></h2><p><?php
+		<td class="DownloadFileName"><h2><?php echo $headline?></h2><p><?php
 		echo $sizes[$n]["filesize"];
 		if (is_numeric($sizes[$n]["width"]))
 			echo preg_replace('/^<p>/', ', ', get_size_info($sizes[$n]), 1);
 
-		?></p><td><?php echo str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["field-fileextension"]) ?></td><?php
+		?></p><td class="DownloadFileFormat"><?php echo str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["field-fileextension"]) ?></td><?php
 
 		if ($showprice)
 			{
@@ -87,7 +89,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 			show_table_headers($showprice);
 
 		?><tr class="DownloadDBlend">
-		<td><select id="size"><?php
+		<td class="DownloadFileSizePicker"><select id="size"><?php
 
 		$sizes = get_all_image_sizes();
 
@@ -123,7 +125,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 			{
 			?><td>-</td><?php
 			}
-		?><td style="vertical-align: top;"><select id="format"><?php
+		?><td class="DownloadFileFormatPicker" style="vertical-align: top;"><select id="format"><?php
 
 		foreach ($format_chooser_output_formats as $format)
 			{
@@ -137,6 +139,7 @@ function HookFormat_chooserViewReplacedownloadoptions()
 		</tr><?php
 		}
 	?></table><?php
+	hook("formatchooseraftertable");
 	if ($downloadCount > 0)
 		{
 	?><script type="text/javascript">
