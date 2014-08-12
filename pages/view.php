@@ -577,6 +577,8 @@ if ($download_summary) {include "../include/download_summary.php";}
 function compute_dpi($width, $height, &$dpi, &$dpi_unit, &$dpi_w, &$dpi_h)
 	{
 	global $lang, $imperial_measurements;
+	echo "sizes";
+	print_r($size);
 	if (isset($size['resolution'])&& $size['resolution']!=0) { $dpi=$size['resolution']; }
 	else if (!isset($dpi) || $dpi==0) { $dpi=300; }
 
