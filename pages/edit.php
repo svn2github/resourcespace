@@ -378,6 +378,7 @@ function HideHelp(field)
 <?php
 # Function to automatically save the form on field changes, if configured.
 if ($edit_autosave) { ?>
+	preventautosave=false;
 
 
 // Disable autosave on enter keypress as form will be submitted by this keypress anyway which can result in duplicate data
