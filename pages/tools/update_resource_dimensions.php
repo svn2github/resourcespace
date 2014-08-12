@@ -28,7 +28,7 @@ else{
 				$dimensions_resolution_unit=explode("\t",run_command($command));
 				
 				# if anything was extracted, update the database.
-				if (count($dimensions_resolution_unit)>=1){
+				if (count($dimensions_resolution_unit)>=1 && $dimensions_resolution_unit[0]!=''){
 					# check db for existing record
 					$delete=sql_query("delete from resource_dimensions where resource=".$resource['ref']);
 					# break down the width and height
