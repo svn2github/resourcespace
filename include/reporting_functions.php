@@ -205,7 +205,7 @@ function send_periodic_report_emails()
 	global $lang,$baseurl;
 
 	# Query to return all 'pending' report e-mails, i.e. where we haven't sent one before OR one is now overdue.
-	$reports=sql_query("select pe.*,u.email,r.name,pe.send_all_users from report_periodic_emails pe join user u on pe.user=u.ref join report r on pe.report=r.ref where pe.last_sent is null or date_add(pe.last_sent,interval pe.email_days day)<=now()");
+	$reports=sql_query("select pe.*,u.email,r.name from report_periodic_emails pe join user u on pe.user=u.ref join report r on pe.report=r.ref where pe.last_sent is null or date_add(date(pe.last_sent),interval pe.email_days day)<=date(now())");
 	foreach ($reports as $report)
 		{
 		$start=time()-(60*60*24*$report["period"]);
