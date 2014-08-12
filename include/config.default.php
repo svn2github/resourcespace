@@ -2121,6 +2121,9 @@ $remove_collections_vertical_line=false;
 # Make dropdown selectors for Display and Results Display menus
 $display_selector_dropdowns=false;
 
+# Option that specifically allows the per-page dropdown without needing $display_selector_dropdown=true. This is useful if you'd like to use the display selector icons with per-page dropdowns.
+$perpage_dropdown=false;
+
 #Display link to request log on view page
 $display_request_log_link=false;
 
