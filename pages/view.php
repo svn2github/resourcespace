@@ -576,13 +576,12 @@ if ($download_summary) {include "../include/download_summary.php";}
 # DPI calculations
 function compute_dpi($width, $height, &$dpi, &$dpi_unit, &$dpi_w, &$dpi_h)
 	{
-	global $lang, $imperial_measurements;
-	echo "sizes";
-	print_r($size);
-	if (isset($size['resolution'])&& $size['resolution']!=0) { $dpi=$size['resolution']; }
+	global $lang, $imperial_measurements,$sizes,$n;
+	
+	if (isset($sizes[$n]['resolution'])&& $sizes[$n]['resolution']!=0) { $dpi=$sizes[$n]['resolution']; }
 	else if (!isset($dpi) || $dpi==0) { $dpi=300; }
 
-	if (((isset($size['unit']) && trim(strtolower($size['unit']))=="inches")) || $imperial_measurements)
+	if (((isset($sizes[$n]['unit']) && trim(strtolower($sizes[$n]['unit']))=="inches")) || $imperial_measurements)
 		{
 		# Imperial measurements
 		$dpi_unit=$lang["inch-short"];
