@@ -1,6 +1,6 @@
 <?php /* -------- Check box list ------------------ */ 
 
-if(!hook("customchkboxes")):
+if(!hook("customchkboxes","",array($field))):
 
 # Translate all options
 $options=trim_array(explode(",",$field["options"]));
