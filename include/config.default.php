@@ -1733,6 +1733,9 @@ $use_collection_name_in_zip_name=false;
 # Enable a permanently visible 'themes bar' on the left hand side of the screen for quick access to themes.
 $use_theme_bar=false;
 
+# Default DPI setting for the view page if no resolution is stored in the db.
+$view_default_dpi=300;
+
 # PDF/EPS base ripping quality in DPI. Note, higher values might greatly increase the resource usage
 # on preview generation (see $pdf_dynamic_rip on how to avoid that)
 $pdf_resolution=150;
