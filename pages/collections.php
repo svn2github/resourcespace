@@ -232,11 +232,30 @@ if ($add!="")
 $remove=getvalescaped("remove","");
 if ($remove!="")
 	{
-	hook("preremovefromcollection");
-	#remove from current collection
-	if (remove_resource_from_collection($remove,$usercollection)==false)
-		{ ?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
-	hook("postremovefromcollection");
+	if(strpos($remove,",")>0)
+		{
+		$removearray=explode(",",$remove);
+		}
+	else
+		{
+		$removearray[0]=$remove;
+		unset($remove);
+		}	
+	foreach ($removearray as $remove)
+		{
+		hook("preremovefromcollection");
+		#remove from current collection
+		if (remove_resource_from_collection($remove,$usercollection)==false)
+			{
+			?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php
+			}
+		else
+			{
+			# Log this	
+			daily_stat("Removed resource from collection",$remove);		
+			hook("postremovefromcollection");
+			}
+		}
 	}
 	
 $addsearch=getvalescaped("addsearch",-1);
