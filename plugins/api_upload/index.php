@@ -57,7 +57,10 @@ if (isset($_FILES['userfile'])){
 	exit;}
 	
  // create resource
- $ref=create_resource(getval("resourcetype",1),$status,$userref);
+ $ref=hook('apiuploadreplaceref');
+ if (!$ref){
+	$ref=create_resource(getval("resourcetype",1),$status,$userref);
+ }
  
  // set required fields
   foreach ($required_fields as $required_field){
