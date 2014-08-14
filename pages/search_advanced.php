@@ -359,8 +359,7 @@ if(!hook("advsearchrestypes")): ?>
 <label><?php echo $lang["search-mode"]?></label><?php
 $rt=explode(",",getvalescaped("restypes",""));
 $wrap=0;
-?><div class="checkboxes"><div class="checkoption"><span class="checkbox"><input type=checkbox class="SearchTypeCheckbox" id="SearchGlobal" name="resourcetypeGlobal" value="yes" <?php if (in_array("Global",$opensections)) { ?>checked<?php }?>></span><span class="checkboxtext"><?php echo $lang["resources-all-types"]; ?></span></div>
-<?php
+?><div class="checkboxes"><div class="checkoption"><span class="checkbox"><input type=checkbox class="SearchTypeCheckbox" id="SearchGlobal" name="resourcetypeGlobal" value="yes" <?php if (in_array("Global",$opensections)) { ?>checked<?php }?>></span><span class="checkboxtext"><?php echo $lang["resources-all-types"]; ?></span></div><?php
 $hiddentypes=Array();
 for ($n=0;$n<count($types);$n++)
 	{
