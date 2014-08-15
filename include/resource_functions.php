@@ -826,6 +826,9 @@ function update_field($resource,$field,$value)
 	{
 	# Updates a field. Works out the previous value, so this is not efficient if we already know what this previous value is (hence it is not used for edit where multiple fields are saved)
 
+	# accept shortnames in addition to field refs
+	if (!is_numeric($field)){$field=sql_value("select ref value from resource_type_field where name='".escape_check($field)."'","");}
+
 	# Fetch some information about the field
 	$fieldinfo=sql_query("select keywords_index,resource_column,partial_index,type, onchange_macro from resource_type_field where ref='$field'");
 
