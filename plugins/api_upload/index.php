@@ -62,14 +62,6 @@ if (isset($_FILES['userfile'])){
 	$ref=create_resource(getval("resourcetype",1),$status,$userref);
  }
  
- // set required fields
-  foreach ($required_fields as $required_field){
-	 $value=getvalescaped("field".$required_field,"");
-
-	 update_field($ref,$required_field,$value);
- } 
- 
- 
  $path_parts=pathinfo($_FILES['userfile']['name']);
  $extension=strtolower($path_parts['extension']);  
  $filepath=get_resource_path($ref,true,"",true,$extension);
@@ -105,6 +97,17 @@ if (isset($_FILES['userfile'])){
 		exit;
 	}
  }
+
+// make sure non-required fields get written. Note this behavior is somewhat different than in the system since these override extracted data
+reset($_POST);reset($_GET);
+foreach (array_merge($_GET, $_POST) as $key=>$value) {
+if (substr($key,0,5)=="field" && $value!=""){
+	$value=getvalescaped($key,"");
+	$field=str_replace("field","",$key);
+	update_field($ref,$field,$value);
+	}
+}
+
 
  $results=do_search("!list$ref","","relevance",$status);        
  
