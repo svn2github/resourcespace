@@ -715,3 +715,20 @@ width: 90px;
 .collectionin {
 	text-align: center;
 }
+.ViewPanelTitles {
+    clear: left;
+   padding:0.1em 0 0.5em;margin:0 0 10px;
+}
+.ViewPanelTitles .Title {
+    border-bottom: 0;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-right: 25px;
+    padding-bottom: 5px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.ViewPanelTitles .Selected {
+    opacity: 1;
+}

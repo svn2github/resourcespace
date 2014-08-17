@@ -80,6 +80,8 @@ input[readonly] {color: #000000;}
 .NoFind .highlight {color:#000000;font-weight: bold;}
 .NoFind a:link, .NoFind a:visited, .NoFind a:hover, .NoFind a:active {color:#000000;text-decoration:underline;}
 .RecordPanel .Title,  {	border-bottom: 1px solid #BBBBBB;}
+.ViewPanelTitles { 	border-bottom: 1px solid #BBBBBB;}
+.ViewPanelTitles .Title { border-bottom: 0; }
 .RecordPanel .RecordDownload {background-color: #ccc;}
 .RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #E2E2E2;color: #FFFFFF;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #000 url(../gfx/whitegry/interface/CollectBack.gif?nc=1);background-position: 0 -8px;}

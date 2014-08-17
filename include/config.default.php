@@ -2380,3 +2380,6 @@ $keywords_remove_diacritics=false;
 
 # Index the unnormalized keyword in addition to the normalized version, also applies to keywords with diacritics removed. Quoted search can then be used to find matches for original unnormalized keyword.
 $unnormalized_index=false;
+
+# Show tabbed panels in view. Metadata, Location, Comments are grouped in tabs, Related Collection, Related Galleries and Related Resources, Search for Similar are grouped too
+$view_panels=false;

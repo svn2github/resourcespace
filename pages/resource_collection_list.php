@@ -16,7 +16,8 @@ if (count($collections)!=0){
 ?>
 
         <div class="RecordBox">
-        <div class="RecordPanel">  
+        <div class="RecordPanel">
+        <div id="AssociatedCollections"> 
         <div class="Title"><?php echo $lang['associatedcollections']?></div>
 
 <div class="Listview nopadding" >
@@ -99,6 +100,7 @@ else
 }
 ?>
 </table></div>
+        </div>
         </div>
         <div class="PanelShadow"></div>
         </div>

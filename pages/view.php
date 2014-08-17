@@ -383,8 +383,73 @@ if($k !='' && $custom_stylesheet_external_share) {
         echo '<link href="' . $baseurl . $custom_stylesheet_external_share_path . '" rel="stylesheet" type="text/css" media="screen,projection,print" />';
     }
 }
+if ($view_panels) {
 ?>
+<script type="text/javascript">
 
+
+jQuery(document).ready(function () {		
+    
+	
+    
+    jQuery("#Metadata").appendTo("#Panel1");
+    jQuery("#Metadata").addClass("TabPanel");
+    
+    jQuery("#GeolocationData").children(".Title").attr("panel", "GeolocationData").appendTo("#Titles1");
+    removePanel=jQuery("#GeolocationData").parents(".RecordBox");
+    jQuery("#GeolocationData").appendTo("#Panel1").addClass("TabPanel").css("position","absolute").css("left","-1200px");
+	removePanel.remove();
+	
+	jQuery("#CommentsPanelHeaderRowTitle").children(".Title").attr("panel", "Comments").appendTo("#Titles1");
+	removePanel=jQuery("#Comments").parents(".RecordBox");
+	jQuery("#Comments").appendTo("#Panel1").addClass("TabPanel").hide();
+	removePanel.remove();
+
+    jQuery("#RelatedResources").children().children(".Title").attr("panel", "RelatedResources").addClass("Selected").appendTo("#Titles2");
+    removePanel=jQuery("#RelatedResources").parents(".RecordBox");
+    jQuery("#RelatedResources").appendTo("#Panel2").addClass("TabPanel");
+    removePanel.remove();
+    
+
+    jQuery("#SearchSimilar").children().children(".Title").attr("panel", "SearchSimilar").appendTo("#Titles2");
+    removePanel=jQuery("#SearchSimilar").parents(".RecordBox");
+    jQuery("#SearchSimilar").appendTo("#Panel2").addClass("TabPanel").hide();
+    removePanel.remove();
+    // if there are no related resources
+    if (jQuery("#RelatedResources").length==0) {
+        jQuery("#SearchSimilar").show();
+        jQuery("div[panel='SearchSimilar']").addClass("Selected"); 
+    }    
+    
+    // if there are no collections and themes
+    if (jQuery("#resourcecollections").is(':empty')) {
+       jQuery("div[panel='CollectionsThemes']").addClass("Selected"); 
+       jQuery("#CollectionsThemes").show(); 
+    }
+    
+    jQuery(".ViewPanelTitles").children(".Title").click(function(){
+    // function to switch tab panels
+        jQuery(this).parent().parent().children(".TabPanel").hide();
+        jQuery(this).parent().children(".Title").removeClass("Selected");
+        jQuery(this).addClass("Selected");
+        jQuery("#"+jQuery(this).attr("panel")).css("position", "relative").css("left","0px");
+        jQuery("#"+jQuery(this).attr("panel")).show();
+        if (jQuery(this).attr("panel")=="Comments") {
+        jQuery("#CommentsContainer").load(
+        	"../pages/ajax/comments_handler.php?ref=<?php echo $ref;?>", 
+        	function() {
+        	if (jQuery.type(jQuery(window.location.hash)[0])!=="undefined")				
+        		jQuery(window.location.hash)[0].scrollIntoView();
+        	}						
+        );	
+        }
+    });
+    
+   
+});
+
+</script>
+<?php } ?>
 <!--Panel for record and details-->
 <div class="RecordBox">
 <div class="RecordPanel"> 
@@ -1092,8 +1157,13 @@ if ($user_rating && $k=="") { include "../include/user_rating.php"; }
 
 <?php hook("renderbeforeresourcedetails"); ?>
 
-<div class="Title"><?php if (!hook("customdetailstitle")) echo $lang["resourcedetails"]?></div>
 
+<div id="Panel1" class="ViewPanel">
+    <div id="Titles1" class="ViewPanelTitles">
+        <div class="Title Selected" panel="Metadata"><?php if (!hook("customdetailstitle")) echo $lang["resourcedetails"]?></div>
+    </div>
+</div>
+<div id="Metadata">
 <?php
 $extra="";
 
@@ -1192,10 +1262,30 @@ for ($n=0;$n<count($fields);$n++)
 </div>
 <?php hook("renderafterresourcedetails"); ?>
 <!-- end of tabbed panel-->
+</div>
 </div></div>
 <div class="PanelShadow"></div>
 </div>
 
+<?php if ($view_panels) { ?>
+<div class="RecordBox">
+    <div class="RecordPanel">  
+        <div id="Panel2" class="ViewPanel">
+            <div id="Titles2" class="ViewPanelTitles"></div>
+        </div>
+    </div>
+    <div class="PanelShadow"></div>
+</div>
+
+<div class="RecordBox">
+    <div class="RecordPanel">  
+        <div id="Panel3" class="ViewPanel">
+            <div id="Titles3" class="ViewPanelTitles"></div>
+        </div>
+    </div>
+    <div class="PanelShadow"></div>
+</div>
+<?php } ?>
 <?php hook("custompanels"); //For custom panels immediately below resource display area ?>
 
 <?php 
@@ -1219,7 +1309,33 @@ if (!$disable_geocoding) {
 if ($view_resource_collections){ ?>
 	<div id="resourcecollections"></div>
 	<script type="text/javascript">
-	jQuery("#resourcecollections").load('<?php echo $baseurl_short?>pages/resource_collection_list.php?ref=<?php echo urlencode($ref)?>&k=<?php echo urlencode($k)?>'); 
+	jQuery("#resourcecollections").load('<?php echo $baseurl_short?>pages/resource_collection_list.php?ref=<?php echo urlencode($ref)?>&k=<?php echo urlencode($k)?>'
+	<?php
+	if ($view_panels) {
+	?>
+    	, function() {
+    	
+    	jQuery("#AssociatedCollections").children(".Title").attr("panel", "AssociatedCollections").addClass("Selected").appendTo("#Titles3");
+    	removePanel=jQuery("#AssociatedCollections").parents(".RecordBox");
+    	jQuery("#AssociatedCollections").appendTo("#Panel3").addClass("TabPanel");
+    	removePanel.remove();
+    	
+    	jQuery("#CollectionsThemes").children().children(".Title").attr("panel", "CollectionsThemes").appendTo("#Titles3");
+    	removePanel=jQuery("#CollectionsThemes").parents(".RecordBox");
+    	jQuery("#CollectionsThemes").appendTo("#Panel3").addClass("TabPanel").hide();
+    	removePanel.remove();
+    	
+        jQuery(".ViewPanelTitles").children(".Title").click(function(){
+        // function to switch tab panels
+            jQuery(this).parent().parent().children(".TabPanel").hide();
+            jQuery(this).parent().children(".Title").removeClass("Selected");
+            jQuery(this).addClass("Selected");
+            jQuery("#"+jQuery(this).attr("panel")).show();
+        });
+    	}
+	<?php
+	}
+	?>); 
 	</script>
 	<?php }
 
@@ -1257,7 +1373,7 @@ if (count($result)>0)
 		?><!--Panel for related resources-->
 		<div class="RecordBox">
 		<div class="RecordPanel">  
-
+         <div id="RelatedResources">
 		<div class="RecordResouce">
 		<div class="Title"><?php echo str_replace_formatted_placeholder("%extension", $rext, $lang["relatedresources-filename_extension"]); ?></div>
 		<?php
@@ -1297,6 +1413,7 @@ if (count($result)>0)
 		<?php $count_extensions++; if ($count_extensions==count($related_file_extensions)){?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!related" . $ref) ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["clicktoviewasresultset"]?></a><?php }?>
 		</div>
 		</div>
+		</div>
 		<div class="PanelShadow"></div>
 		</div><?php
 		} #end of display loop by resource extension
@@ -1317,7 +1434,7 @@ if (count($result)>0)
 		?><!--Panel for related resources-->
 		<div class="RecordBox">
 		<div class="RecordPanel">  
-
+         <div id="RelatedResources">
 		<div class="RecordResouce">
 		<div class="Title"><?php echo str_replace_formatted_placeholder("%restype%", $restypename, $lang["relatedresources-restype"]); ?></div>
 		<?php
@@ -1357,6 +1474,7 @@ if (count($result)>0)
 		<?php $count_restypes++; if ($count_restypes==count($related_restypes)){?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!related" . $ref) ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["clicktoviewasresultset"]?></a><?php }?>
 		</div>
 		</div>
+		</div>
 		<div class="PanelShadow"></div>
 		</div><?php
 		} #end of display loop by resource extension
@@ -1368,7 +1486,7 @@ if (count($result)>0)
 		 ?><!--Panel for related resources-->
 		<div class="RecordBox">
 		<div class="RecordPanel">  
-
+         <div id="RelatedResources">
 		<div class="RecordResouce">
 		<div class="Title"><?php echo $lang["relatedresources"]?></div>
 		<?php
@@ -1407,6 +1525,7 @@ if (count($result)>0)
 
     </div>
     </div>
+    </div>
     <div class="PanelShadow"></div>
     </div><?php
 		}# end related resources display
@@ -1423,7 +1542,7 @@ if (count($result)>0)
 	?><!--Panel for related themes / collections -->
 	<div class="RecordBox">
 	<div class="RecordPanel">  
-	
+	<div id="CollectionsThemes">
 	<div class="RecordResouce BasicsBox nopadding">
 	<div class="Title"><?php echo $lang["collectionsthemes"]?></div>
 
@@ -1439,6 +1558,7 @@ if (count($result)>0)
 	
 	</div>
 	</div>
+	</div>
 	<div class="PanelShadow"></div>
 	</div><?php
 	}} 
@@ -1450,7 +1570,7 @@ if (count($result)>0)
 <!--Panel for search for similar resources-->
 <div class="RecordBox">
 <div class="RecordPanel"> 
-
+<div id="SearchSimilar">
 
 <div class="RecordResouce">
 <div class="Title"><?php echo $lang["searchforsimilarresources"]?></div>
@@ -1501,6 +1621,7 @@ for ($n=0;$n<count($keywords);$n++)
 <iframe src="<?php echo $baseurl_short?>pages/blank.html" frameborder=0 scrolling=no width=1 height=1 style="visibility:hidden;" name="resultcount" id="resultcount"></iframe>
 </form>
 <div class="clearerleft"> </div>
+</div>
 </div>
 </div>
 <div class="PanelShadow"></div>
