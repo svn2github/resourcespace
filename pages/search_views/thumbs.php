@@ -100,7 +100,9 @@
 		<?php if(!hook("thumbscheckboxes")){?>
 		<?php if ($use_checkboxes_for_selection){?><input type="checkbox" id="check<?php echo htmlspecialchars($ref)?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if (jQuery('#check<?php echo htmlspecialchars($ref)?>').attr('checked')=='checked'){ AddResourceToCollection(event,<?php echo htmlspecialchars($ref)?>); } else if (jQuery('#check<?php echo htmlspecialchars($ref)?>').attr('checked')!='checked'){ RemoveResourceFromCollection(event,<?php echo htmlspecialchars($ref)?>); }">&nbsp;<?php } ?>
 		<?php } # end hook thumbscheckboxes?>
+		<?php if(!hook("replacethumbsidinthumbnail")){?>
 		<?php if ($display_resource_id_in_thumbnail && $ref>0) { echo htmlspecialchars($ref); } else { ?>&nbsp;<?php } ?>
+		<?php } # end hook("replacethumbsidinthumbnail") ?>
 		
 
 		<?php if (!hook("replaceresourcetools")){?>
