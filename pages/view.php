@@ -425,7 +425,6 @@ jQuery(document).ready(function () {
     
     // if there are no collections and themes
     if (jQuery("#resourcecollections").is(':empty')) {
-        if (jQuery("#CollectionThemes").length==0) jQuery("#Panel3").parent().remove();
        jQuery("div[panel='CollectionsThemes']").addClass("Selected"); 
        jQuery("#CollectionsThemes").show(); 
     }
