@@ -401,6 +401,8 @@ jQuery(document).ready(function () {
 	removePanel.remove();
 	
 	jQuery("#CommentsPanelHeaderRowTitle").children(".Title").attr("panel", "Comments").appendTo("#Titles1");
+	jQuery("#CommentsPanelHeaderRowTitle").remove();
+	jQuery("#CommentsPanelHeaderRowPolicyLink").css("width","300px").css("float","right");
 	removePanel=jQuery("#Comments").parents(".RecordBox");
 	jQuery("#Comments").appendTo("#Panel1").addClass("TabPanel").hide();
 	removePanel.remove();
@@ -423,6 +425,7 @@ jQuery(document).ready(function () {
     
     // if there are no collections and themes
     if (jQuery("#resourcecollections").is(':empty')) {
+        if (jQuery("#CollectionThemes").length==0) jQuery("#Panel3").parent().remove();
        jQuery("div[panel='CollectionsThemes']").addClass("Selected"); 
        jQuery("#CollectionsThemes").show(); 
     }
