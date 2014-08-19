@@ -192,8 +192,9 @@ EOT;
 		echo<<<EOT
 				<br />				
 				<input class="CommentFormSubmit" type="submit" value="${lang['comments_submit-button-label']}" onClick="${validateFunction} { submitForm(this.parentNode) } else { alert ('${lang['comments_validation-fields-failed']}'); } ;"></input>
-			</form>			
-		</div>	<!-- end of comments_container -->
+			</form>	
+		</div> 	<!-- end of comment_form -->	
+		
 EOT;
 	
 		$sql .= $bcollection_mode ? "where c.collection_ref=${ref}" : "where c.resource_ref=${ref}";  // first level will look for either collection or resource comments		
@@ -339,7 +340,7 @@ EOT;
 
 			
 		}			
-		echo "</div>";  // end of comments_container
+		if ($level == 1)  echo "</div>";  // end of comments_container
 	}
 	
 ?>
