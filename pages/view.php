@@ -1326,7 +1326,7 @@ if ($view_resource_collections){ ?>
     	removePanel=jQuery("#CollectionsThemes").parents(".RecordBox");
     	jQuery("#CollectionsThemes").appendTo("#Panel3").addClass("TabPanel").hide();
     	removePanel.remove();
-    	
+    	if (jQuery("#Titles3").children().length==0) jQuery("#Panel3").parent().remove();	
         jQuery(".ViewPanelTitles").children(".Title").click(function(){
         // function to switch tab panels
             jQuery(this).parent().parent().children(".TabPanel").hide();
