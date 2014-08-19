@@ -70,3 +70,8 @@ width: 150px;
 font-family:inherit;
 margin-bottom:10px;
 }
+
+.checkboxes, .verticalcheckboxes {padding-left:190px;}
+.checkboxtext {width:170px;}
+
+
