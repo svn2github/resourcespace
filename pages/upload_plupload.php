@@ -390,6 +390,8 @@ var pluploadconfig = {
         // Silverlight settings
         silverlight_xap_url : '../lib/plupload_2.1.2/Moxie.xap',
         
+dragdrop: true,
+        
         preinit: {
                 PostInit: function(uploader) {
 					
@@ -422,14 +424,18 @@ var pluploadconfig = {
                                 // show any errors
                                 if (info.response.indexOf("error") > 0)
                                         {
-                                        uploadError = JSON.parse(info.response);
+                                        /*uploadError = JSON.parse(info.response);
                                         alert("<?php echo $lang["error"] ?> " + uploadError.error.code + " : " + uploadError.error.message);
-                                        file.status = plupload.FAILED;
+                                        file.status = plupload.FAILED;*/
                                         }
                                 //update collection div if uploading to active collection
                                 <?php if ($usercollection==$collection_add) { ?>
                                         CollectionDivLoad("<?php echo $baseurl . '/pages/collections.php?nowarn=true&nc=' . time() ?>");
                                         <?php } ?>
+                                
+                                
+                                <?php hook("afterfileuploaded");?>      
+                             
                                 });
                 
                 
