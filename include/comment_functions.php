@@ -223,7 +223,7 @@ EOT;
 			echo "<div class='CommentEntryInfoCommenter'>";						
 			
 			if (empty($comment['name'])) $comment['name'] = $comment['username'];
-			
+			if (!hook("commentername", "all",array("ref"=>$comment["ref"])))
 			echo "<div class='CommentEntryInfoCommenterName'>" . htmlspecialchars($comment['name']) . "</div>";		
 			
 			if ($comments_show_anonymous_email_address && !empty($comment['email']))
