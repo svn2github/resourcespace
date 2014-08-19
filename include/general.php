@@ -483,7 +483,7 @@ function resolve_keyword($keyword,$create=false)
 		{
 		# Create a new keyword.
 		debug("Creating new keyword for " . $keyword);
-		sql_query("insert into keyword (keyword,soundex,hit_count) values ('" . escape_check($keyword) . "',soundex('" . escape_check($keyword) . "'),0)");
+		sql_query("insert into keyword (keyword,soundex,hit_count) values ('" . escape_check($keyword) . "',left('".soundex(escape_check($keyword))."',10),0)");
 		$return=sql_insert_id();
 		}
 	return $return;
@@ -3795,8 +3795,8 @@ function rs_setcookie($name, $value, $daysexpire = 0, $path = "", $domain = "", 
     if ($global_cookies)
         {
         # Remove previously set cookies to avoid clashes
-        setcookie($name, "", time() - 3600, $baseurl_short . "pages/", $domain, $secure, $httponly);
-        setcookie($name, "", time() - 3600, $baseurl_short, $domain, $secure, $httponly);
+        //setcookie($name, "", time() - 3600, $baseurl_short . "pages/", $domain, $secure, $httponly);
+        //setcookie($name, "", time() - 3600, $baseurl_short, $domain, $secure, $httponly);
         # Set new cookie
         setcookie($name, $value, $expire, "/", $domain, $secure, $httponly);
         }

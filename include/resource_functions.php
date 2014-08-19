@@ -799,16 +799,8 @@ function add_keyword_to_resource($ref,$keyword,$resource_type_field,$position,$o
     if (!(in_array($keyword,$noadd)))
             {           
             debug("adding " . $keyword);
-            $keyref=resolve_keyword($keyword);			
+            $keyref=resolve_keyword($keyword,true);			
             
-            debug("adding resolved " . $keyref);
-            if ($keyref===false)
-                    {
-                    # This is a new keyword. Create and discover the new keyword ref.
-                    sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($keyword) . 	"',left('".soundex(escape_check($keyword))."',10),0)");
-                    $keyref=sql_insert_id();
-                    #echo "<li>New keyword.";
-                    }
             # create mapping, increase hit count.
             if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and add this
                     {sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyref','$position','$resource_type_field','$optional_value')");}
