@@ -1480,7 +1480,7 @@ function remove_from_collection_link($resource,$search="")
     # Generates a HTML link for removing a resource to a collection
     global $lang, $pagename;
 
-    return "<a class=\"removeFromCollection\" href=\"#\" title=\"" . $lang["removefromcurrentcollection"] . "\" onClick=\"RemoveResourceFromCollection('" . $resource . "','" . $pagename . "');return false;\">";
+    return "<a class=\"removeFromCollection\" href=\"#\" title=\"" . $lang["removefromcurrentcollection"] . "\" onClick=\"RemoveResourceFromCollection(new Event('click'),'" . $resource . "','" . $pagename . "');return false;\">";
 
     }
 }
