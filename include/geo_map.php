@@ -1,6 +1,6 @@
 
 
-<div id="map_canvas" style="width: *; height: <?php echo isset($mapheight)?$mapheight:"500" ?>px; display:block; float:none;" class="Picture" ></div>
+<div id="map_canvas" style="width: *; height: <?php echo isset($mapheight)?$mapheight:"500" ?>px; display:block; float:none;overflow: hidden;" class="Picture" ></div>
 
 
 <script>
