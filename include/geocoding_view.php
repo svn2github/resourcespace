@@ -42,7 +42,6 @@
  if (!isset($geolocation_panel_only))
 	{
 	?>
-	altert
 	<!-- Begin Geolocation Section -->
 	<div class="RecordBox">
 	<div class="RecordPanel"><?php
@@ -109,11 +108,12 @@
 		<?php if ($view_panels) { ?>
 			<script>
 			    jQuery(document).ready(function () {
-
+    
 		    		jQuery("#GeolocationData").children(".Title").attr("panel", "GeolocationData").appendTo("#Titles1");
-		    		removePanel=jQuery("#GeolocationData").parents(".RecordBox");
+		    		removePanel=jQuery("#GeolocationData").parent().parent(".RecordBox");
 		    		jQuery("#GeolocationData").appendTo("#Panel1").addClass("TabPanel").hide();
-//		    		removePanel.remove();
+		    		removePanel.remove();
+		    		
 		         });
 		    </script>
 				<?php } ?>
