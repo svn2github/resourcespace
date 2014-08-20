@@ -395,10 +395,6 @@ jQuery(document).ready(function () {
     jQuery("#Metadata").appendTo("#Panel1");
     jQuery("#Metadata").addClass("TabPanel");
     
-    jQuery("#GeolocationData").children(".Title").attr("panel", "GeolocationData").appendTo("#Titles1");
-    removePanel=jQuery("#GeolocationData").parents(".RecordBox");
-    jQuery("#GeolocationData").appendTo("#Panel1").addClass("TabPanel").css("position","absolute").css("left","-1200px");
-	removePanel.remove();
 	
 	jQuery("#CommentsPanelHeaderRowTitle").children(".Title").attr("panel", "Comments").appendTo("#Titles1");
 	jQuery("#CommentsPanelHeaderRowTitle").remove();
