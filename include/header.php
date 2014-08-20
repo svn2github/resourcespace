@@ -433,6 +433,11 @@ if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("themes"
 	
 
 
+if (getval("k","")!="") { ?>
+<style>
+#CentralSpaceContainer  {padding-right:0;margin: 0px 10px 20px 25px;}
+</style>
+<?php }
 // Ajax specific hook
 if ($ajax) {hook("afterheaderajax");}
 ?>
