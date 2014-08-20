@@ -42,6 +42,7 @@
  if (!isset($geolocation_panel_only))
 	{
 	?>
+	altert
 	<!-- Begin Geolocation Section -->
 	<div class="RecordBox">
 	<div class="RecordPanel"><?php
@@ -98,11 +99,24 @@
 		    <?php } ?>
     
 		map.setCenter (lonLat, Math.min(<?php echo $zoom ?>, map.getNumZoomLevels() - 1));
+	
 	      </script>
 		<?php     
 		    } else {?>
 		<a href="<?php echo $baseurl_short?>pages/geo_edit.php?ref=<?php echo urlencode($ref); ?>" onClick="return CentralSpaceLoad(this,true);">&gt; <?php echo $lang['location-add'];?></a>
+	
 		<?php }?>
+		<?php if ($view_panels) { ?>
+			<script>
+			    jQuery(document).ready(function () {
+
+		    		jQuery("#GeolocationData").children(".Title").attr("panel", "GeolocationData").appendTo("#Titles1");
+		    		removePanel=jQuery("#GeolocationData").parents(".RecordBox");
+		    		jQuery("#GeolocationData").appendTo("#Panel1").addClass("TabPanel").hide();
+//		    		removePanel.remove();
+		         });
+		    </script>
+				<?php } ?>
 	</div>
 	<?php
 	}
