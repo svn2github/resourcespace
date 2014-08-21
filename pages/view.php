@@ -1628,7 +1628,7 @@ for ($n=0;$n<count($keywords);$n++)
 </div>
 <?php } ?>
 
-
+<?php hook("afterviewfindsimilar"); ?>
 
 <?php } # end of block that requires search permissions
 
