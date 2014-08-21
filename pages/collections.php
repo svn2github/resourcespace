@@ -682,9 +682,11 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && !$lazyload && 
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $url?>"><img border=0 width=56 height=75 src="<?php echo $iconpath?>"/></a></td>
 		</tr></table>
-		<div class="CollectionPanelInfo"><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $url?>"><?php echo tidy_trim($lang["savedsearch"],(13-strlen($n+1)))?> <?php echo $n+1?></a>&nbsp;</div>
+		<?php if(!hook('replacesavedsearchtitle')){?>
+		<div class="CollectionPanelInfo"><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $url?>"><?php echo tidy_trim($lang["savedsearch"],(13-strlen($n+1)))?> <?php echo $n+1?></a>&nbsp;</div><?php } ?>
+		<?php if(!hook('replaceremovelink_savedsearch')){?>
 		<div class="CollectionPanelInfo"><a onclick="return CollectionDivLoad(this);" href="<?php echo $baseurl_short?>pages/collections.php?removesearch=<?php echo urlencode($ref) ?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?>
-		</a></div>				
+		</a></div>	<?php } ?>			
 		</div>
 		<?php		
 		}
