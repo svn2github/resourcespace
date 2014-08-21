@@ -852,6 +852,7 @@ if (!$lazyload){
 		?>
 	<div id="CollectionMinTitle"><h2><?php echo i18n_get_collection_name($tempcol)?></h2></div>
 	<div id="CollectionMinRightNav">
+		<?php if(!hook("replaceanoncollectiontools")){ ?>
 		<?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
 		<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/terms.php?k=<?php echo urlencode($k) ?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></a></li>
 		<?php } ?>
@@ -871,6 +872,7 @@ if (!$lazyload){
 	  <?php if (!$disable_collection_toggle) { ?>
 		<li><a id="toggleThumbsLink" href="#" onClick="ToggleThumbs();return false;"><?php echo $lang["showthumbnails"]?></a></li>
 	  <?php } ?>
+	  <?php } # end hook("replaceanoncollectiontools") ?>
 	</div>
 	<?php 
 	} else { 
