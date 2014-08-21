@@ -135,10 +135,10 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 .CollectionResourceAlign {width:97px;height:85px;text-align: center;vertical-align: middle;}
 
 #CollectionMinTitle{float: left;margin: 4px 10px 0px 25px;}
-#CollectionMinDropTitle{float: left;padding:0.2em 0em;margin-top: 5px;}
-#CollectionMinDrop{float: left;margin: 5px 0px 0px;padding:0.2em 0em}
+#CollectionMinDropTitle{float: left;padding:0.2em 0em;margin-top: 6px;}
+#CollectionMinDrop{float: left;margin: 6px 0px 0px;padding:0.2em 0em}
 #CollectionMinDrop form{margin:0;padding:0}
-#CollectionMinitems{float: left;margin: 5px 10px 0px;padding:0.2em 0em}
+#CollectionMinitems{float: left;margin: 5px 10px 0px;padding:0.35em 0em}
 #CollectionMinRightNav{float: right;margin: 5px 25px 0px 0px;padding:0.25em 0em}
 .CollectionTitleLinks a {margin: 5px 4px;}
 
