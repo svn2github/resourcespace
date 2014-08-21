@@ -82,6 +82,7 @@ function UserRatingSet(userref,ref,rating)
 <?php hook("beforeuserratingheader"); ?>
 <td id="UserRatingMessage"><?php echo $lang["ratethisresource"]?></td>
 <td width="33%" class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo htmlspecialchars($rating) ?>,'StarCurrent');">
+<div class="RatingStarsContainer">
 <?php if ($user_rating_remove && $user_rating_only_once) {?><a href="#" onClick="UserRatingSet(<?php echo $userref?>,<?php echo htmlspecialchars($ref) ?>,0);return false;" id="RatingStarLink0" title="<?php echo $lang["ratingremovehover"]?>" style="display:<?php echo $removeratingvis;?>">x&nbsp;&nbsp;&nbsp;</a><?php }?>
 <?php for ($n=1;$n<=5;$n++)
 	{
@@ -89,7 +90,7 @@ function UserRatingSet(userref,ref,rating)
 	#&#9733;
 	}
 ?>
-
+</div>
 <div class="RatingCount" id="RatingCount"><?php if ($user_rating_stats && $user_rating_only_once){?><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl?>/pages/user_ratings.php?ref=<?php echo $ref?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by) ?>&amp;sort=<?php echo urlencode($sort) ?>&amp;archive=<?php echo urlencode($archive) ?>"><?php } ?><?php echo urlencode($rating_count) ?> <?php echo ($rating_count==1?$lang["rating_lowercase"]:$lang["ratings"])?><?php if ($user_rating_stats && $user_rating_only_once){?></a><?php }?></div>
 </td>
 </tr>
