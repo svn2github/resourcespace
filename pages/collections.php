@@ -660,7 +660,7 @@ elseif ($k!="" && !$lazyload)
 
 <?php 
 # Loop through saved searches
-if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && !$lazyload)
+if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && !$lazyload && $k=='')
 	{ // don't include saved search item in result if this is a smart collection  
 
 	# Setting the save search icon
