@@ -484,8 +484,10 @@ elseif ($k!="" && !$lazyload)
 <div id="CollectionMenu">
   <h2><?php echo i18n_get_collection_name($tempcol)?></h2>
 	<br />
+	<div class="CollectionStatsAnon">
 	<?php echo $lang["created"] . " " . nicedate($tempcol["created"])?><br />
   	<?php echo $count_result . " " . $lang["youfoundresources"]?><br />
+  	</div>
     <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
 	<a href="<?php echo $baseurl_short?>pages/terms.php?k=<?php echo urlencode($k) ?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" onclick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
 	<?php }
