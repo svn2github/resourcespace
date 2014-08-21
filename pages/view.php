@@ -934,11 +934,12 @@ else
 	
 if (($nodownloads || $counter==0) && !checkperm("T" . $resource["resource_type"] . "_"))
 	{
+	hook("beforenodownloadresult");
 	# No file. Link to request form.
 	?>
 	<tr class="DownloadDBlend">
 	<td class="DownloadFileName"><h2><?php echo ($counter==0)?$lang["offlineresource"]:$lang["access1"]?></h2></td>
-	<td><?php echo $lang["notavailableshort"]?></td>
+	<td class="DownloadFileSize"><?php echo $lang["notavailableshort"]?></td>
 
 	<?php if (checkperm("q"))
 		{
