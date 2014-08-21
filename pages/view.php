@@ -569,13 +569,13 @@ elseif ($resource["has_image"]==1)
 		}
 	
 	?>
-	<div id="previewimagewrapper"><a class="enterLink" id="previewimagelink" href="<?php echo $baseurl_short?>pages/preview.php?ref=<?php echo urlencode($ref)?>&amp;ext=<?php echo $resource["preview_extension"]?>&amp;k=<?php echo urlencode($k)?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>&<?php echo hook("previewextraurl") ?>" title="<?php echo $lang["fullscreenpreview"]?>">
+	<div id="previewimagewrapper"><a style="position:relative;" class="enterLink" id="previewimagelink" href="<?php echo $baseurl_short?>pages/preview.php?ref=<?php echo urlencode($ref)?>&amp;ext=<?php echo $resource["preview_extension"]?>&amp;k=<?php echo urlencode($k)?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>&<?php echo hook("previewextraurl") ?>" title="<?php echo $lang["fullscreenpreview"]?>">
 	<?php
 	if (file_exists($imagepath))
 		{ 
 		?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" id="previewimage" /><?php 
 		} 
-	?></a><?php
+	?><?php hook("aftersearchimg","",array($ref))?></a><?php
 	if(isset($previewcaption))
 		{
 		echo "<div class=\"clearerleft\"> </div>";	
@@ -1322,7 +1322,8 @@ if ($view_resource_collections){ ?>
     	removePanel=jQuery("#CollectionsThemes").parents(".RecordBox");
     	jQuery("#CollectionsThemes").appendTo("#Panel3").addClass("TabPanel").hide();
     	removePanel.remove();
-    	if (jQuery("#Titles3").children().length==0) jQuery("#Panel3").parent().parent().remove();	
+    	if (jQuery("#Titles2").children().length==0) jQuery("#Panel2").parent().parent().remove();
+	if (jQuery("#Titles3").children().length==0) jQuery("#Panel3").parent().parent().remove();	
         jQuery(".ViewPanelTitles").children(".Title").click(function(){
         // function to switch tab panels
             jQuery(this).parent().parent().children(".TabPanel").hide();
