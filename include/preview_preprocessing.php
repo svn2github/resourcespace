@@ -156,6 +156,8 @@ if (($extension=="psd" || $extension=="psb") && !isset($newfile))
 			}
 		}
 	}
+
+
 	
 /* ----------------------------------------
 	Photoshop Transparency Checkerboard
@@ -547,7 +549,7 @@ else if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $
 	Try FFMPEG for audio files
    ----------------------------------------
 */
-if (($ffmpeg_fullpath!=false) && in_array($extension, $ffmpeg_audio_extensions)&& !isset($newfile))
+if (($ffmpeg_fullpath!=false) && in_array($extension, $ffmpeg_audio_extensions))
 	{
 	# Produce the MP3 preview.
 	$mp3file = get_resource_path($ref,true,"",false,"mp3"); 
