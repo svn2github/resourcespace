@@ -229,6 +229,8 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <?php } ?>
 <!-- end contactsheet -->
 
+<?php hook("collectiontoolcompactaftercontactsheet","",array("collection"=>$collection,"count_result"=>$count_result,"cinfo"=>$cinfo,"colresult"=>$colresult,"col_editable"=>$col_editable)); ?>
+
 <?php hook("collectiontoolcompact1","",array("collection"=>$collection,"count_result"=>$count_result,"cinfo"=>$cinfo,"colresult"=>$colresult,"col_editable"=>$col_editable)); ?>
 
 
@@ -245,7 +247,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 
     </select>
 </div>
-
+<?php hook("after_collections_compact_style"); ?>
 
 
 
