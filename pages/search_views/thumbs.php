@@ -18,18 +18,21 @@
 
 	<table border="0" class="ResourceAlign icon_type_<?php echo $result[$n]["resource_type"]; ?> icon_extension_<?php echo $result[$n]['file_extension']; ?><?php if(!hook("replaceresourcetypeicon")){ if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?><?php } hook('searchdecorateresourcetableclass'); ?>">
 	<?php hook("resourcetop")?>
-	<tr><td>
-	<a href="<?php echo $url?>"  onClick="return CentralSpaceLoad(this,true);" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php if ($result[$n]["thumb_width"]!="" && $result[$n]["thumb_width"]!=0 && $result[$n]["thumb_height"]!="") { ?> width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" <?php } ?> src="<?php echo $thm_url ?>" class="ImageBorder" alt="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field]))); ?>"
+	<tr><td><div id="triangle" style="border-color: transparent transparent rgb(7, 101, 145); border-width: 0px 0px 200px 200px;"></div>
+	<a style="position:relative;" href="<?php echo $url?>"  onClick="return CentralSpaceLoad(this,true);" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php if ($result[$n]["thumb_width"]!="" && $result[$n]["thumb_width"]!=0 && $result[$n]["thumb_height"]!="") { ?> width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" <?php } ?> src="<?php echo $thm_url ?>" class="ImageBorder" alt="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field]))); ?>"
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
 	 /><?php } else { ?><img border=0 src="<?php echo $baseurl_short?>gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>" 
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
-	/><?php } ?></a>
+	/><?php } ?><?php hook("aftersearchimg","",array($result[$n]))?></a>
+	
+	
 		</td>
 		</tr></table>
 <?php } ?> <!-- END HOOK Renderimagethumb-->
 
 
-<?php if ($display_user_rating_stars && $k==""){ ?>
+<?php if ($display_user_rating_stars && $k==""){ 
+		if (!hook("replacesearchstars")){?>
 		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}
 		$modified_user_rating=hook("modifyuserrating");
 		if ($modified_user_rating){$result[$n]['user_rating']=$modified_user_rating;}?>
@@ -40,7 +43,8 @@
 			}
 		?>
 		</div>
-		<?php } ?>
+		<?php } // end hook replacesearchstars
+		} ?>
 <?php if (!hook("replaceicons")) { ?>
 <?php hook("icons");?>
 <?php } //end hook replaceicons ?>

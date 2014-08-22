@@ -27,7 +27,8 @@
 				} //end replace list title
 			}
 		
-		if ($display_user_rating_stars && $k==""){ ?>
+		if ($display_user_rating_stars && $k==""){ 
+			if (!hook("replacesearchstars")){?>?>
 			<td <?php hook("listviewcolumnstyle");?>>
 			<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}
 			$modified_user_rating=hook("modifyuserrating");
@@ -39,7 +40,8 @@
 				}
 			?>
 		</div></td>
-		<?php } 
+		<?php } // end hook replacesearchstars
+		}
 		
 		if (isset($rating_field))
 			{?><td <?php hook("listviewcolumnstyle");?>><?php if (isset($result[$n][$rating])&& $result[$n][$rating]>0) { ?><?php for ($y=0;$y<$result[$n][$rating];$y++){?> <div class="IconStar"></div><?php } } else { ?>&nbsp;<?php } ?></td><?php }

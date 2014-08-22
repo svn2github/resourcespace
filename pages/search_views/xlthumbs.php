@@ -55,7 +55,7 @@
     $pre_url=get_resource_path($ref,false,"pre",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
 	if (isset($result[$n]["pre_url"])) {$pre_url=$result[$n]["pre_url"];}
     ?>
-	<a href="<?php echo $url?>"  onClick="return CentralSpaceLoad(this,true);" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php 
+	<a style="position:relative;" href="<?php echo $url?>"  onClick="return CentralSpaceLoad(this,true);" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php 
 	if ($result[$n]["thumb_width"]!="" && $result[$n]["thumb_width"]!=0 && $result[$n]["thumb_height"]!="") { 
 		$ratio=$result[$n]["thumb_width"]/$result[$n]["thumb_height"];
 		if ($result[$n]["thumb_width"]>$result[$n]['thumb_height']){
@@ -70,7 +70,7 @@
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);" onmouseout="InfoBoxSetResource(0); "<?php } ?> alt="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field]))); ?>"
 	 /><?php } else { ?><img border=0 src="<?php echo $baseurl_short?>gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>" 
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo htmlspecialchars($ref)?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
-	/><?php } ?></a>
+	/><?php } ?><?php hook("aftersearchimg","",array($result[$n]))?></a>
 
     <?php } ?>
 
@@ -85,7 +85,8 @@
 <?php } ?> <!-- END HOOK Renderimagelargethumb-->
 
 
-<?php if ($display_user_rating_stars && $k==""){ ?>
+<?php if ($display_user_rating_stars && $k==""){
+		if (!hook("replacesearchstars")){?>
 		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}
 		$modified_user_rating=hook("modifyuserrating");
 		if ($modified_user_rating){$result[$n]['user_rating']=$modified_user_rating;}?>
@@ -97,7 +98,8 @@
 			}
 		?>
 		</div>
-		<?php } ?>
+		<?php } // end hook replacesearchstars
+		} ?>
 <?php if (!hook("replaceicons")) { ?>
 <?php hook("icons");?>
 <?php } //end hook replaceicons ?>
