@@ -357,9 +357,10 @@ if($k=="")
 	}
 if ($display_user_rating_stars && $k=="")
 	{
-	?>
+	if (!hook("replace_user_rating_searchviewjs")){?>
 	<script src="<?php echo $baseurl ?>/lib/js/user_rating_searchview.js?1" type="text/javascript"></script>
 	<?php
+	}
 	}
 
 	if ($allow_reorder && $display!="list") {
