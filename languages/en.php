@@ -1814,4 +1814,4 @@ $lang["showcollectionindropdown"]="Show in collection bar";
 $lang["sharerelatedresources"]="Include related resources.<br>A new collection will be created and shared if any of these are selected";
 $lang["sharerelatedresourcesaddremove"]="If sharing related resources, allow other users to add/remove resources from the new collection";
 $lang["create_empty_resource"]="Skip upload and create a new resource with no associated file";
-
+$lang["entercollectionname"]="Enter name, then press Return";
