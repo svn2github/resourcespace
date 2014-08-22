@@ -160,7 +160,8 @@ jQuery(document).ready(function() {
 });
 </script>
 
-<?php if ($keyboard_navigation) { ?>
+<?php if ($keyboard_navigation) { 
+global $k;?>
 <script type="text/javascript">
 
 jQuery(document).ready(function() {
