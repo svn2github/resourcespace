@@ -627,6 +627,7 @@ if (true) # Always show search header now.
 	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=" . urlencode($sort) . "&amp;archive=" . $archive . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
 	?>
 	</div>
+	<?php hook("stickysearchresults"); ?> <!--the div TopInpageNavRight was added in after this hook so it may need to be adjusted -->
 	<div class="TopInpageNavRight">
 	<?php
 	    pager();
@@ -812,7 +813,7 @@ if (true) # Always show search header now.
  
             $rating = "";
             if (isset($rating_field)){$rating = "field".$rating_field;}
-
+			hook("beforesearchviewcalls");
             if ($display=="thumbs")
                 {
                 #  ---------------------------- Thumbnails view ----------------------------
@@ -874,7 +875,7 @@ if (true) # Always show search header now.
 <!--Bottom Navigation - Archive, Saved Search plus Collection-->
 <div class="BottomInpageNav">
 	<div class="BottomInpageNavLeft">
-	 <?php if(!hook("replacesearchbottomnav")){ ?>
+	<?php if(!hook("replacesearchbottomnav")){ ?>
 	<?php if (!checkperm("b") && $k=="") { ?>
 	<?php if($allow_save_search) { ?><div class="InpageNavLeftBlock"><a onClick="return CollectionDivLoad(this);" href="<?php echo $baseurl_short?>pages/collections.php?addsearch=<?php echo urlencode($search)?>&amp;restypes=<?php echo urlencode($restypes)?>&amp;archive=<?php echo urlencode($archive) ?>&amp;daylimit=<?php echo urlencode($daylimit) ?>">&gt;&nbsp;<?php echo $lang["savethissearchtocollection"]?></a></div><?php } ?>
 	<?php if($allow_smart_collections && substr($search,0,11)!="!collection") { ?><div class="InpageNavLeftBlock"><a onClick="return CollectionDivLoad(this);" href="<?php echo $baseurl_short?>pages/collections.php?addsmartcollection=<?php echo urlencode($search)?>&amp;restypes=<?php echo urlencode($restypes)?>&amp;archive=<?php echo urlencode($archive) ?>&amp;starsearch=<?php echo urlencode($starsearch) ?>">&gt;&nbsp;<?php echo $lang["savesearchassmartcollection"]?></a></div><?php } ?>
@@ -890,7 +891,7 @@ if (true) # Always show search header now.
 	<?php } ?>
 	
 	<?php hook("resultsbottomtoolbar"); ?>
-	 <?php } ?>  <!--End of hook("replacesearchbottomnav")-->
+	<?php } ?>  <!--End of hook("replacesearchbottomnav")-->	
 	<?php 
 	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".$sort."&amp;archive=" . $archive . "&amp;daylimit=" . urlencode($daylimit) . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
 	?>
