@@ -586,7 +586,7 @@ function config_gen_setup_html($page_def,$plugin_name,$upload_status,$plugin_pag
                 config_single_ftype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
                 break;
             case 'multi_ftype_select':
-                config_multi_ftype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
+                config_multi_ftype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3],$def[4]); 
                 break;
             case 'single_rtype_select':
                 config_single_rtype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
@@ -1059,14 +1059,14 @@ function config_add_single_ftype_select($config_var, $label, $width=300)
  * @param integer array $current the current value of the config variable being set
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_multi_ftype_select($name, $label, $current, $width=300)
+function config_multi_ftype_select($name, $label, $current, $width=300,$size=7) 
     {
     global $lang;
     $fields=sql_query('select * from resource_type_field order by title, name');
 ?>
   <div class="Question">
     <label for="<?php echo $name?>" title="<?php echo str_replace('%cvn', $name, $lang['plugins-configvar'])?>"><?php echo $label?></label>
-    <select name="<?php echo $name?>[]" id="<?php echo $name?>" multiple="multiple" size="7" style="width:<?php echo $width ?>px">
+    <select name="<?php echo $name?>[]" id="<?php echo $name?>" multiple="multiple" size="<?php echo $size?>" style="width:<?php echo $width ?>px">
 <?php
     foreach($fields as $field)
         {
@@ -1087,9 +1087,9 @@ function config_multi_ftype_select($name, $label, $current, $width=300)
  * @param string $label the user text displayed to label the select block. Usually a $lang string.
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_add_multi_ftype_select($config_var, $label, $width=300)
+function config_add_multi_ftype_select($config_var, $label, $width=300,$size=7) 
     {
-    return array('multi_ftype_select',$config_var, $label, $width);
+    return array('multi_ftype_select',$config_var, $label, $width,$size); 
     }
 
 /**
