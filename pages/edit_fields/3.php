@@ -3,6 +3,9 @@
 # Translate all options
 $options=trim_array(explode(",",$field["options"]));
 
+$modified_options=hook("modify_field_options","",array($field));
+if($modified_options!=""){$options=$modified_options;}
+
 $adjusted_dropdownoptions=hook("adjustdropdownoptions");
 if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
 
