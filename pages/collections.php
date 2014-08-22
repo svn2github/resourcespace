@@ -573,7 +573,7 @@ elseif ($k!="" && !$lazyload)
 		<?php } ?>
 
 		</select>
-		<input type=text id="entername" name="entername" style="display:none;" <?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?>>
+		<input type=text id="entername" name="entername" style="display:none;" placeholder="<?php echo $lang['entercollectionname']?>" <?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?>>
 		</div>			
   </form>
 
@@ -709,7 +709,7 @@ if ($count_result>0)
 		<?php $access=get_resource_access($result[$n]);
 		$use_watermark=check_use_watermark();?>
 		<table border="0" class="CollectionResourceAlign"><tr><td>
-		<a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/view.php?ref=<?php echo urlencode($ref) ?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>&curpos=<?php echo $n ?>"><?php if ($result[$n]["has_image"]==1) { 
+		<a style="position:relative;" onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/view.php?ref=<?php echo urlencode($ref) ?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>&curpos=<?php echo $n ?>"><?php if ($result[$n]["has_image"]==1) { 
 		
 		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])
 		?>
@@ -720,7 +720,7 @@ if ($count_result>0)
 		
 		} else { ?><img border=0 src="<?php echo $baseurl_short?>gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true) ?>"
 		<?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?>
-		/><?php } ?></a></td>
+		/><?php } ?><?php hook("aftersearchimg","",array($result[$n]))?></a></td>
 		</tr></table>
 		<?php } /* end hook rendercollectionthumb */?>
 		
@@ -950,7 +950,7 @@ if (!$lazyload){
 	 <form method="get" id="colselect2" onsubmit="newcolname=encodeURIComponent(jQuery('#entername2').val());CollectionDivLoad('<?php echo $baseurl_short?>pages/collections.php?thumbs=<?php echo urlencode($thumbs) ?>&collection=-1&k=<?php echo urlencode($k) ?>&entername='+newcolname);return false;">
 			<div class="MinSearchItem" id="MinColDrop">
 			
-			<input type=text id="entername2" name="entername" style="display:inline;display:none;" class="SearchWidth">
+			<input type=text id="entername2" name="entername" placeholder="<?php echo $lang['entercollectionname']?>" style="display:inline;display:none;" class="SearchWidthExp">
 			</div><script>jQuery('#collection').clone().attr('id','collection2').attr('onChange',"if(document.getElementById('collection2').value==-1){document.getElementById('entername2').style.display='inline';document.getElementById('entername2').focus();return false;}<?php if (!checkperm("b")){ ?>ChangeCollection(jQuery(this).val(),'<?php echo urlencode($k) ?>');<?php } else { ?>document.getElementById('colselect2').submit();<?php } ?>").prependTo('#MinColDrop');</script>		
 	  </form>
 	</div>
