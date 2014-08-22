@@ -6,7 +6,7 @@ include ("../../include/header.php");
 # Display the header only. This is for the admin area.
 ?>
 <style>html {
-overflow:hidden;
+
 }</style>
 
 <?php $lfsize=400;if(isset($admin_header_height)){$topsize=$admin_header_height;}Else{$topsize=120;}?>
