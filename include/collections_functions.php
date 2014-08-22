@@ -1697,9 +1697,7 @@ function draw_compact_style_selector($collection,$onhover=true){
 	if ($pagename!="collections"){$hovertag="#CentralSpace";} 
 	if ($pagename=="collections"){$hovertag=".CollectBack";} 
 	
-	if(!hook("replace_collectionscompacttools_select")){
 	?>	<select readonly="readonly" <?php if ($pagename=="collections"){if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp" style="margin:0;"<?php } else { ?> class="SearchWidth" style="margin:0;"<?php } } ?> class="ListDropdown" <?php if ($pagename=="search" && $display=="xlthumbs"){?>style="margin:-5px 0px 0px 5px"<?php } ?> <?php if ($pagename=="search" && ( $display=="thumbs" || $display=="smallthumbs")){?>style="margin:-5px 0px 0px 0px "<?php } ?> id="temp<?php echo urlencode($tag) ?>"><option id="tempoption<?php echo urlencode($tag) ?>"><?php echo $lang['select'];?></option></select>
-	<?php } ?>
 	<script>
 	<?php if (substr(getvalescaped("search",""),0,11)!="!collection" && $pagename=="search"){?>
 		jQuery('#temp<?php echo urlencode($tag) ?>').hover(function(){
