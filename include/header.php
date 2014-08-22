@@ -173,6 +173,7 @@ jQuery(document).ready(function() {
     }
     else
     { 
+        var share='<?php echo $k ?>';
         var modAlt=e.altKey;
         var modShift=e.shiftKey;
         var modCtrl=e.ctrlKey;
@@ -228,7 +229,7 @@ jQuery(document).ready(function() {
                      break;
             case <?php echo $keyboard_navigation_zoom; ?>: if (jQuery('.enterLink').length > 0) window.location=jQuery('.enterLink').attr("href");
                      break;
-            case <?php echo $keyboard_navigation_view_all; ?>: CentralSpaceLoad('<?php echo $baseurl;?>/pages/search.php?search=!collection'+document.getElementById("currentusercollection").innerHTML,true);
+            case <?php echo $keyboard_navigation_view_all; ?>: CentralSpaceLoad('<?php echo $baseurl;?>/pages/search.php?search=!collection'+document.getElementById("currentusercollection").innerHTML+'&k='+share,true);
                      break;
           
          }
