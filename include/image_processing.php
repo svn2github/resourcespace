@@ -13,7 +13,7 @@ if (!function_exists("upload_file")){
 function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	{
 	hook("beforeuploadfile","",array($ref));
-	hook("clearaltfiles", "", array($ref)); // optional: clear alternative files before uploading new resource
+    hook("clearaltfiles", "", array($ref)); // optional: clear alternative files before uploading new resource
 
 	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
 	
@@ -950,7 +950,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				if($icc_extraction && file_exists($iccpath) && !$icc_transform_complete){
 					// we have an extracted ICC profile, so use it as source
 					$targetprofile = dirname(__FILE__) . '/../iccprofiles/' . $icc_preview_profile;
-					$profile  = " +profile \"*\" -profile $iccpath $icc_preview_options -profile $targetprofile +profile \"*\" ";
+					$profile  = " -strip -profile $iccpath $icc_preview_options -profile $targetprofile -strip ";
 					$icc_transform_complete=true;
 				} else {
 					// use existing strategy for color profiles
@@ -962,7 +962,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					else
 						{
 						# By default, strip the colour profiles ('+' is remove the profile, confusingly)
-						$profile="+profile \"*\" -colorspace ".$imagemagick_colorspace;
+						$profile="-strip -colorspace ".$imagemagick_colorspace;
 						}
 				}
 
