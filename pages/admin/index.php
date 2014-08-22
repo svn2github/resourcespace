@@ -42,5 +42,5 @@ function resizeadmin(){
 		else { elem.style.width=maxwidth+'px';} } ); 
 	}		
 </script>
-<?php include ("../../include/footer.php");?>
+
 
