@@ -1015,10 +1015,15 @@ function config_add_multi_group_select($config_var, $label, $width=300)
  * @param integer $current the current value of the config variable being set
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_single_ftype_select($name, $label, $current, $width=300)
+function config_single_ftype_select($name, $label, $current, $width=300, $ftype=false)
     {
     global $lang;
-    $fields=sql_query('select * from resource_type_field  order by title, name');
+    if($ftype=='false'){
+    	$fields=sql_query('select * from resource_type_field order by title, name');
+    }
+    else{
+    	$fields=sql_query('select * from resource_type_field where resource_type="$ftype" order by title, name');
+    }
 ?>
   <div class="Question">
     <label for="<?php echo $name?>" title="<?php echo str_replace('%cvn', $name, $lang['plugins-configvar'])?>"><?php echo $label?></label>
@@ -1044,9 +1049,9 @@ function config_single_ftype_select($name, $label, $current, $width=300)
  * @param string $label the user text displayed to label the select block. Usually a $lang string.
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_add_single_ftype_select($config_var, $label, $width=300)
+function config_add_single_ftype_select($config_var, $label, $width=300, $ftype=false)
     {
-    return array('single_ftype_select', $config_var, $label, $width);
+    return array('single_ftype_select', $config_var, $label, $width, $ftype);
     }
 
 /**
@@ -1059,10 +1064,15 @@ function config_add_single_ftype_select($config_var, $label, $width=300)
  * @param integer array $current the current value of the config variable being set
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_multi_ftype_select($name, $label, $current, $width=300,$size=7) 
+function config_multi_ftype_select($name, $label, $current, $width=300,$size=7,$ftype=false) 
     {
     global $lang;
-    $fields=sql_query('select * from resource_type_field order by title, name');
+    if($ftype=='false'){
+    	$fields=sql_query('select * from resource_type_field order by title, name');
+    }
+    else{
+    	$fields=sql_query('select * from resource_type_field where resource_type="$ftype" order by title, name');
+    }
 ?>
   <div class="Question">
     <label for="<?php echo $name?>" title="<?php echo str_replace('%cvn', $name, $lang['plugins-configvar'])?>"><?php echo $label?></label>
@@ -1087,9 +1097,9 @@ function config_multi_ftype_select($name, $label, $current, $width=300,$size=7)
  * @param string $label the user text displayed to label the select block. Usually a $lang string.
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_add_multi_ftype_select($config_var, $label, $width=300,$size=7) 
+function config_add_multi_ftype_select($config_var, $label, $width=300,$size=7,$ftype=false) 
     {
-    return array('multi_ftype_select',$config_var, $label, $width,$size); 
+    return array('multi_ftype_select',$config_var, $label, $width,$size,$ftype); 
     }
 
 /**
