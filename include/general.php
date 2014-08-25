@@ -628,7 +628,6 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		{
 		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,"jpg");
 
-		$resource_type=sql_value("select resource_type value from resource where ref='$ref'","");
 		$file_exists = file_exists($path);
 		if (($file_exists || (!$onlyifexists)) && !checkperm("T" . $resource_type . "_" . $sizes[$n]["id"]))
 			{
