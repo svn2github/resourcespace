@@ -2771,48 +2771,55 @@ function get_page_count($resource,$alternative=-1)
         {
         $pagecount=sql_value("select page_count value from resource_dimensions where resource=$ref","");
         }
-    if ($pagecount!=""){return $pagecount;}
-    # or, populate this column with exiftool (for installations with many pdfs already previewed and indexed, this allows pagecount updates on the fly when needed):
+    if (!empty($pagecount)) { return $pagecount; }
+    # or, populate this column with exiftool or image magick (for installations with many pdfs already
+	# previewed and indexed, this allows pagecount updates on the fly when needed):
     # use exiftool. 
-    # locate exiftool
+	if ($resource['file_extension']=="pdf" && $alternative==-1)
+		{
+		$file=get_resource_path($ref,true,"",false,"pdf");
+		}
+	else if ($alternative==-1)
+		{
+		# some unoconv files are not pdfs but this needs to use the auto-alt file
+		$alt_ref=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
+		$file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt_ref);
+		}
+	else
+		{
+		$file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
+		}
+
+	# locate exiftool
     $exiftool_fullpath = get_utility_path("exiftool");
-    if ($exiftool_fullpath==false){}
+    if ($exiftool_fullpath==false)
+		{
+		# Try with ImageMagick instead
+		$command = get_utility_path("im-identify") . ' -format %n ' . $file;
+		$pages = trim(run_command($command));
+		}
     else
         {
         $command = $exiftool_fullpath;
-        if ($resource['file_extension']=="pdf" && $alternative==-1)
-            {
-            $file=get_resource_path($ref,true,"",false,"pdf");
-            }
-        else if ($alternative==-1)
-            {
-            # some unoconv files are not pdfs but this needs to use the auto-alt file
-            $alt_ref=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
-            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt_ref);
-            }
-        else
-            {
-            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
-            }
     	
         $command=$command." -sss -pagecount $file";
         $output=run_command($command);
         $pages=str_replace("Page Count","",$output);
         $pages=str_replace(":","",$pages);
         $pages=trim($pages);
+		}
 
-	    if (!is_numeric($pages)){ $pages = 1; } // default to 1 page if we didn't get anything back
+	if (!is_numeric($pages)){ $pages = 1; } // default to 1 page if we didn't get anything back
 
-	        if ($alternative!=-1)
-	            {
-	            sql_query("update resource_alt_files set page_count='$pages' where ref=$alternative");
-	            }
-	        else
-	            {
-	            sql_query("update resource_dimensions set page_count='$pages' where resource=$ref");
-	            }
-	        return $pages;
-	    }
+	if ($alternative!=-1)
+		{
+		sql_query("update resource_alt_files set page_count='$pages' where ref=$alternative");
+		}
+	else
+		{
+		sql_query("update resource_dimensions set page_count='$pages' where resource=$ref");
+		}
+	return $pages;
 	}
 
 
