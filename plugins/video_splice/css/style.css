@@ -7,13 +7,12 @@
 }
 #splice_reel {
     margin-top: 20px;
-	margin-left: 2%;
-	height: 91px;
+	margin-left: 10px;
+	height: 75px;
 	overflow:auto;
 }
 .splice_item {
 	margin-right: 5px;
 	display: inline !important;
-	width: 55px;
 	vertical-align: middle;
 }
