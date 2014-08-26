@@ -124,7 +124,7 @@ include "../../../include/header.php";
 <p><?php echo $lang["intro-splice"]?></p>
 <p><?php echo $lang["drag_and_drop_to_rearrange"]?></p>
 <div id="splice_scroll">
-<div id="splice_reel">
+<div id="splice_reel" style="width:<?php echo ((count($videos)+1) * 60);?>px">
 <?php
 foreach ($videos as $video)
 	{

@@ -1,0 +1,19 @@
+#splice_scroll {
+	width: 90%;
+	height: 140px;
+	overflow-x: scroll;
+	background-image: url('../gfx/FilmStrip.gif');
+	background-repeat: repeat-x;
+}
+#splice_reel {
+    margin-top: 20px;
+	margin-left: 2%;
+	height: 91px;
+	overflow:auto;
+}
+.splice_item {
+	margin-right: 5px;
+	display: inline !important;
+	width: 55px;
+	vertical-align: middle;
+}
