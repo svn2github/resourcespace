@@ -3437,9 +3437,8 @@ function sanitize_char($char)
 function format_display_field($value){
 	
 	// applies trim/wordwrap/highlights 
-	
 	global $results_title_trim,$results_title_wordwrap,$df,$x,$search;
-	if($df[$x]['type']==8){
+	if(isset($df[$x]['type']) && $df[$x]['type']==8){
 		$value=strip_tags($value);
 	}
 	$string=i18n_get_translated($value);
