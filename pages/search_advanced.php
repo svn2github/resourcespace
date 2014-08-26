@@ -377,25 +377,26 @@ for ($n=0;$n<count($types);$n++)
 </div>
 <div class="clearerleft"> </div>
 </div>
-<?php endif; ?>
+<?php endif;
+if (!hook('advsearchallfields')) { ?>
 <!-- Search across all fields -->
 <input type="hidden" id="hiddenfields" name="hiddenfields" value="">
 <div class="Question">
 <label for="allfields"><?php echo $lang["allfields"]?></label><input class="stdwidth" type=text name="allfields" id="allfields" value="<?php echo htmlspecialchars($allwords)?>" onChange="UpdateResultCount();">
 <div class="clearerleft"> </div>
 </div>
-
+<?php } ?>
 <h1 class="AdvancedSectionHead CollapsibleSectionHead" id="AdvancedSearchTypeSpecificSectionGlobalHead" <?php if (in_array("Collections",$opensections)) {?> style="display: none;" <?php } ?>><?php echo $lang["resourcetype-global_fields"]; ?></h1>
 <div class="AdvancedSection" id="AdvancedSearchTypeSpecificSectionGlobal" <?php if (in_array("Collections",$opensections)) {?> style="display: none;" <?php } ?>>
- 
+
+<?php if (!hook('advsearchresid')) { ?>
 <!-- Search for resource ID(s) -->
 <div class="Question">
 <label for="resourceids"><?php echo $lang["resourceids"]?></label><input class="stdwidth" type=text name="resourceids" id="resourceids" value="<?php echo htmlspecialchars(getval("resourceids","")) ?>" onChange="UpdateResultCount();">
 <div class="clearerleft"> </div>
 </div>
-
-
-<?php 
+<?php }
+if (!hook('advsearchdate')) {
 if (!$daterange_search)
 	{
 	?>
@@ -432,7 +433,7 @@ if (!$daterange_search)
 	</select>
 	<div class="clearerleft"> </div>
 	</div>
-	<?php } ?>
+<?php }} ?>
 <?php if ($star_search && $display_user_rating_stars){?>
 <div class="Question"><label><?php echo $lang["starsminsearch"];?></label>
 <select id="starsearch" name="starsearch" class="stdwidth" onChange="UpdateResultCount();">
