@@ -387,12 +387,7 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
         	# Check that all database tables and columns exist using the files in the 'dbstruct' folder.
         	if ($dbstruct) # should we do this?
         		{
-        		CheckDBStruct("dbstruct");
-        		global $plugins;
-        		for ($n=0;$n<count($plugins);$n++)
-        			{
-        			CheckDBStruct("plugins/" . $plugins[$n] . "/dbstruct");
-        			}
+				check_db_structs();
         		
         		# Try again (no dbstruct this time to prevent an endless loop)
         		return sql_query($sql,$cache,$fetchrows,false);
@@ -481,6 +476,16 @@ function sql_insert_id()
 	else { 
 		return mysql_insert_id();
 	}
+	}
+
+function check_db_structs()
+	{
+	CheckDBStruct("dbstruct");
+	global $plugins;
+	for ($n=0;$n<count($plugins);$n++)
+		{
+		CheckDBStruct("plugins/" . $plugins[$n] . "/dbstruct");
+		}
 	}
 
 function CheckDBStruct($path)
