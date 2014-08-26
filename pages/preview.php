@@ -146,7 +146,7 @@ include "../include/header.php";
 
 <?php if(!hook("fullpreviewresultnav")){ ?>
 <?php if (!hook("replacepreviewbacktoview")){?>
-<p style="margin:7px 0 7px 0;padding:0;"><a class="enterLink" href="<?php echo $baseurl_short?>pages/view.php?ref=<?php echo urlencode($ref) ?>&search=<?php echo urlencode($search)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&archive=<?php echo urlencode($archive)?>&k=<?php echo urlencode($k)?>&<?php echo hook("viewextraurl") ?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a>
+<p style="margin:7px 0 7px 0;padding:0;"><a class="enterLink" href="<?php echo $baseurl_short?>pages/view.php?ref=<?php echo urlencode($ref) ?>&search=<?php echo urlencode($search)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&archive=<?php echo urlencode($archive)?><?php if($saved_thumbs_state=="show"){?>&thumbs=show<?php } ?>&k=<?php echo urlencode($k)?>&<?php echo hook("viewextraurl") ?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a>
 <?php } /*end hook replacepreviewbacktoview*/ ?>
 <?php if ($k=="") { ?>
 
@@ -159,7 +159,7 @@ include "../include/header.php";
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a class="prevLink" onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/preview.php?from=<?php echo urlencode(getval("from",""))?>&ref=<?php echo urlencode($ref) ?>&k=<?php echo urlencode($k)?>&search=<?php echo urlencode($search)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&archive=<?php echo urlencode($archive)?>&go=previous&<?php echo hook("nextpreviousextraurl") ?>">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 |
-<a  class="upLink" onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?<?php if (strpos($search,"!")!==false) {?>search=<?php echo urlencode($search)?>&k=<?php echo urlencode($k)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?><?php } ?>&<?php echo hook("searchextraurl") ?>"><?php echo $lang["viewallresults"]?></a>
+<a  class="upLink" onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?<?php if (strpos($search,"!")!==false) {?>search=<?php echo urlencode($search)?>&k=<?php echo urlencode($k)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?><?php } ?><?php if($saved_thumbs_state=="show"){?>&thumbs=show<?php } ?>&<?php echo hook("searchextraurl") ?>"><?php echo $lang["viewallresults"]?></a>
 |
 <a class="nextLink" onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/preview.php?from=<?php echo urlencode(getval("from",""))?>&ref=<?php echo urlencode($ref) ?>&k=<?php echo urlencode($k)?>&search=<?php echo urlencode($search)?>&offset=<?php echo urlencode($offset)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&archive=<?php echo urlencode($archive)?>&go=next&<?php echo hook("nextpreviousextraurl") ?>"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 
@@ -237,8 +237,6 @@ if ($show_resource_title_in_titlebar){
 		echo "</script>";
 	}
 }
-if($saved_thumbs_state == "show") {
-	echo "<script type='text/javascript'>jQuery('window').unload(function(){ShowThumbs();});</script>";
-}
+
 include "../include/footer.php";
 ?>
