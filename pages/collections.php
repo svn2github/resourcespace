@@ -727,14 +727,19 @@ if ($count_result>0)
 		<?php 
 
 		$title=$result[$n]["field".$view_title_field];	
+		$title_field=$view_title_field;
 		if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
 			{
 			if ($result[$n]['resource_type']==$metadata_template_resource_type)
 				{
 				$title=$result[$n]["field".$metadata_template_title_field];
+				$title_field=$metadata_template_title_field;
 				}	
 			}	
-			
+		$field_type=sql_value("select type value from resource_type_field where ref=$title_field","");
+		if($field_type==8){
+			$title=strip_tags($title);
+		}
 		?>	
 		<?php if (!hook("replacecolresourcetitle")){?>
 		<div class="CollectionPanelInfo"><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/view.php?ref=<?php echo urlencode($ref) ?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo urlencode($k) ?>" <?php if (!$infobox) { ?>title="<?php echo htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field]))?>"<?php } ?> ><?php echo htmlspecialchars(tidy_trim(i18n_get_translated($title),14));?></a>&nbsp;</div>

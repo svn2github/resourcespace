@@ -66,6 +66,7 @@ foreach ($display_fields as $display_field)
 			{
 			$field_info=$all_field_info[$m];
 			$df[$n]['ref']=$display_field;
+			$df[$n]['type']=$field_info['type'];
 			$df[$n]['indexed']=$field_info['keywords_index'];
 			$df[$n]['partial_index']=$field_info['partial_index'];
 			$df[$n]['name']=$field_info['name'];

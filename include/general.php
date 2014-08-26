@@ -761,10 +761,15 @@ function get_data_by_field($resource,$field){
 	# Return the resource data for field $field in resource $resource
 	# $field can also be a shortname
 	if (is_numeric($field)){
-		return sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
+		$value=sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
 	} else {
-		return sql_value("select value from resource_data where resource='$resource' and resource_type_field=(select ref from resource_type_field where name='".escape_check($field)."' limit 1)","");
+		$value=sql_value("select value from resource_data where resource='$resource' and resource_type_field=(select ref from resource_type_field where name='".escape_check($field)."' limit 1)","");
 	}
+	$rt_fieldtype=sql_value("select type value from resource_type_field where ref='$field'","");
+	if($rt_fieldtype==8){
+		$value=strip_tags($value);
+	}
+	return $value;
 }
 	
 if (!function_exists("get_users")){		
@@ -3434,6 +3439,9 @@ function format_display_field($value){
 	// applies trim/wordwrap/highlights 
 	
 	global $results_title_trim,$results_title_wordwrap,$df,$x,$search;
+	if($df[$x]['type']==8){
+		$value=strip_tags($value);
+	}
 	$string=i18n_get_translated($value);
 	$string=TidyList($string);
 	$string=tidy_trim($string,$results_title_trim);
