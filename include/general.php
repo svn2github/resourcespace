@@ -1995,8 +1995,8 @@ function str_highlight($text, $needle, $options = null, $highlight = null)
 	# License on the website reads: "All code on this website resides in the Public Domain, you are free to use and modify it however you wish."
 	# http://aidanlister.com/repos/license/
 
-	$text=str_replace("_",".{us}.",$text);// underscores are considered part of words, so temporarily replace them for better \b search.
-    $text=str_replace("#zwspace;",".{zw}.",$text);
+	$text=str_replace("_","♠",$text);// underscores are considered part of words, so temporarily replace them for better \b search.
+    $text=str_replace("#zwspace;","♣",$text);
     
     // Default highlighting
     if ($highlight === null) {
@@ -2042,8 +2042,8 @@ function str_highlight($text, $needle, $options = null, $highlight = null)
 	        $text = preg_replace($regex, $highlight, $text);
 	    }
     }
-	$text=str_replace(".{us}.","_",$text);
-	$text=str_replace(".{zw}.","#zwspace;",$text);
+	$text=str_replace("♠","_",$text);
+	$text=str_replace("♣","#zwspace;",$text);
     return $text;
 	}
 
@@ -3444,35 +3444,10 @@ function format_display_field($value){
 	}
 	$string=i18n_get_translated($value);
 	$string=TidyList($string);
-	$string=tidy_trim($string,$results_title_trim);
-	$wordbreaktag="<wbr>"; // $wordbreaktag="&#8203;" I'm having slightly better luck with <wbr>, but this pends more testing.
-	// Opera doesn't renders the zero-width space with a small box.
-	$extra_word_separators=array("_"); // only underscore is necessary (regex considers underscores not to separate words, 
-	// but we want them to); I've based these transformations on an array just in case more characters act this way.
-	
-	$ews_replace=array();
-	foreach($extra_word_separators as $extra_word_separator){
-		$ews_replace[]="{".$extra_word_separator." }";
-	}
-
-	//print_r($config_separators_replace);
-	$string=str_replace($extra_word_separators,$ews_replace,$string);
-	$string=wordwrap($string,$results_title_wordwrap,"#zwspace",false);
-	$string=str_replace($ews_replace,$extra_word_separators,$string);
+	//$string=tidy_trim($string,$results_title_trim);
 	$string=htmlspecialchars($string);
 	$string=highlightkeywords($string,$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']);
 	
-	$ews_replace2=array();
-	foreach($extra_word_separators as $extra_word_separator){
-		$ews_replace2[]="{".$extra_word_separator."#zwspace}";
-	}
-	$ews_replace3=array();
-	foreach($extra_word_separators as $extra_word_separator){
-		$ews_replace3[]=$wordbreaktag.$extra_word_separator;
-	}
-	
-	$string=str_replace($ews_replace2,$ews_replace3,$string);
-	$string=str_replace("#zwspace",$wordbreaktag." ",$string);
 	return $string;
 }
 

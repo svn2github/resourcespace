@@ -209,6 +209,7 @@ if ($resolution!="")
 	
 // below is a hack to make this work with multilayer images
 // the result will always be a flattened single-layer image
+if ($orig_ext=="psd"){$command .= " -alpha Off ";}
 $command .= "-flatten ";
 
 $command .= $colorspace1;
