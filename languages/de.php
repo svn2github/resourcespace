@@ -886,6 +886,7 @@ $lang["requiredantispam"]="Der Anti-Spam Code wurde nicht korrekt eingegeben, bi
 $lang["viewduplicates"]="Doppelte Ressourcen anzeigen";
 $lang["duplicateresources"]="Doppelte Ressourcen";
 $lang["duplicateresourcesfor"]="Doppelte Ressourcen für ";
+$lang["noresourcesfound"]="Keine Ergebnisse gefunden";
 $lang["userlog"]="Benutzer-Statistik";
 $lang["ipaddressrestriction"]="IP-Adressen Beschränkung (optional)";
 $lang["wildcardpermittedeg"]="Wildcard erlaubt; z.B.";
