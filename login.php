@@ -6,6 +6,11 @@ include "include/collections_functions.php";
 include "include/login_functions.php";
 
 $url=getval("url","index.php");
+
+$modifiedurl=hook("modifyloginurl","",array($url));
+if ($modifiedurl){$url=$modifiedurl;}
+
+
 $api=getval("api","");
 
 # Allow the language to be posted here
