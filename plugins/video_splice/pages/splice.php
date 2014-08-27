@@ -113,6 +113,7 @@ if (getval("splice","")!="" && count($videos)>1)
 	$result = sql_query("update resource set file_extension = '$ffmpeg_preview_extension' where ref = '$ref' limit 1");
 
 	# Create previews.
+	include $baseurl."include/preview_preprocessing.php";
 	create_previews($ref,false,$ffmpeg_preview_extension);
 	redirect("pages/view.php?ref=" . $ref);
 	}
@@ -124,7 +125,7 @@ include "../../../include/header.php";
 <p><?php echo $lang["intro-splice"]?></p>
 <p><?php echo $lang["drag_and_drop_to_rearrange"]?></p>
 <div id="splice_scroll">
-<div id="splice_reel" style="width:<?php echo ((count($videos)+1) * 75);?>px">
+<div id="splice_reel" style="width:<?php echo ((count($videos)+1) * 80);?>px">
 <?php
 foreach ($videos as $video)
 	{
