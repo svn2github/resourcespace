@@ -583,10 +583,10 @@ function config_gen_setup_html($page_def,$plugin_name,$upload_status,$plugin_pag
                 config_multi_user_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
                 break;			
             case 'single_ftype_select':
-                config_single_ftype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
+                config_single_ftype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3], $def[4]);
                 break;
             case 'multi_ftype_select':
-                config_multi_ftype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3],$def[4]); 
+                config_multi_ftype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3],$def[4], $def[5]); 
                 break;
             case 'single_rtype_select':
                 config_single_rtype_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
@@ -1015,10 +1015,10 @@ function config_add_multi_group_select($config_var, $label, $width=300)
  * @param integer $current the current value of the config variable being set
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_single_ftype_select($name, $label, $current, $width=300, $ftype=false)
+function config_single_ftype_select($name, $label, $current, $width=300, $ftype)
     {
     global $lang;
-    if($ftype=='false'){
+    if($ftype===false){
     	$fields=sql_query('select * from resource_type_field order by title, name');
     }
     else{
@@ -1064,10 +1064,10 @@ function config_add_single_ftype_select($config_var, $label, $width=300, $ftype=
  * @param integer array $current the current value of the config variable being set
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_multi_ftype_select($name, $label, $current, $width=300,$size=7,$ftype=false) 
+function config_multi_ftype_select($name, $label, $current, $width=300,$size=7,$ftype) 
     {
     global $lang;
-    if($ftype=='false'){
+    if($ftype===false){
     	$fields=sql_query('select * from resource_type_field order by title, name');
     }
     else{
