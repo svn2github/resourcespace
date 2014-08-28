@@ -61,7 +61,7 @@ if (getval("splice","")!="" && count($videos)>1)
 			}
 		else 
 			{
-			exit(str_replace(array("%resourceid", "%filetype"), array($videos[$n]["ref"], $ffmpeg_preview_extension), $lang["error-no-ffmpegpreviewfile"]));
+			exit(str_replace(array("%resourceid", "%filetype"), array($videos[$n]["ref"], $videos[$n]["file_extension"]), $lang["error-no-ffmpegpreviewfile"]));
 			}
 		# Encode intermediary
 		$intermediary = get_temp_dir() . "/video_splice_temp_" . $videos[$n]["ref"] . ".mpg";
@@ -160,7 +160,12 @@ foreach ($videos as $video)
 			}
 		});
 		jQuery('.CollectionPanelShell').disableSelection();
+		jQuery("#CollectionDiv").on("click",".CollectionResourceRemove",function() {
+			var splice_id = "#splice_"+jQuery(this).closest(".CollectionPanelShell").attr("id").replace(/[^0-9]/gi,"");
+			jQuery(splice_id).remove();
+		});
 	});
+	
 </script>
 
 <form method="post">
