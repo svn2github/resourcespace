@@ -173,18 +173,24 @@ if ($modified_result){
 
  // this function in api_core   
 $results=refine_api_resource_results($results);
+$limit_to=getval("limit_to","");
 
 if (getval("content","")=="xml" && !$paginate){
     header('Content-type: application/xml');
     echo '<?xml version="1.0" encoding="UTF-8"?><results>';
     foreach ($results as $result){
-        echo '<resource>';
-        foreach ($result as $resultitem=>$value){
-            echo '<'.$resultitem.'>';
-            echo xml_entities($value);
-            echo '</'.$resultitem.'>';
-        }
-        echo '</resource>';
+         if ($limit_to!=""){echo "<$limit_to>";} else {echo '<resource>';}
+        if (is_array($result)){
+			foreach ($result as $resultitem=>$value){
+				echo '<'.$resultitem.'>';
+				echo xml_entities($value);
+				echo '</'.$resultitem.'>';
+			}
+		} else {
+				echo $result;
+			}
+        
+        if ($limit_to!=""){echo "</$limit_to>";} else {echo '</resource>';}
     }
     echo '</results>';
 }
@@ -208,13 +214,17 @@ else if (getval("content","")=="xml" && $paginate){
     echo '</pagination>';
     echo '<resources>';
     foreach ($resources as $result){
-        echo '<resource>';
-        foreach ($result as $resultitem=>$value){
-            echo '<'.$resultitem.'>';
-            echo xml_entities($value);
-            echo '</'.$resultitem.'>';
-        }
-        echo '</resource>';
+        if ($limit_to!=""){echo "<$limit_to>";} else {echo '<resource>';}
+        if (is_array($result)){
+			foreach ($result as $resultitem=>$value){
+				echo '<'.$resultitem.'>';
+				echo xml_entities($value);
+				echo '</'.$resultitem.'>';
+			}
+		} else {
+			echo $result;
+		}
+        if ($limit_to!=""){echo "</$limit_to>";} else {echo '</resource>';}
     }
     echo '</resources>';
 	echo '</results>';

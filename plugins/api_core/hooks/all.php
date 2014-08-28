@@ -4,24 +4,50 @@
 function refine_api_resource_results($results){
 	
 	global $api_search_exclude_fields,$lang;
+	$fields=sql_array("select ref value from resource_type_field");
+	$fields=sql_query("select ref, title,name from resource_type_field where  ref in ('" . join("','",$fields) . "') order by order_by");
+
+	$field_title=array();
+
+	foreach ($fields as $field){
+		$field_title[$field['ref']]=i18n_get_translated($field['title']);
+	}
+	foreach ($fields as $field){
+		$field_name[$field['ref']]=$field['name'];
+	}
+	
+	$limit_to=getval("limit_to","");
+    if ($limit_to!=""){
+		$newresult=array();
+		$x=0;
+		if (substr($limit_to,0,5)!="field"){
+			$name_field=array_flip($field_name);
+			if (isset($name_field[$limit_to])){$limit_to="field".$name_field[$limit_to];}
+		}
+		for ($n=0;$n<count($results);$n++){
+			foreach ($results[$n] as $key=>$value){
+				if (strtolower($key)==strtolower($limit_to)){
+					$newresult[]=$value;
+				}
+			}
+		}
+		$results=$newresult;
+	}
+
 	
 	// Prettify field titles
 	if (getval("prettyfieldnames","")!=""){
-		$fields=sql_array("select ref value from resource_type_field");
-		$fields=sql_query("select ref, title from resource_type_field where  ref in ('" . join("','",$fields) . "') order by order_by");
 
-		$field_name=array();
 
-		foreach ($fields as $field){
-			$field_name[$field['ref']]=i18n_get_translated($field['title']);
 
-		}
 		for ($n=0;$n<count($results);$n++){
 			foreach ($results[$n] as $key=>$value){
 				if (substr($key,0,5)=="field"){
 					$field=str_replace("field","",$key);
 
-					$results[$n][$field_name[$field]]=$results[$n][$key];
+					if (isset($field_title[$field])){
+						$results[$n][$field_title[$field]]=$results[$n][$key];
+					}
 					unset ($results[$n][$key]);
 					}
 			}
@@ -37,13 +63,15 @@ function refine_api_resource_results($results){
 		}
 		
 		for ($n=0;$n<count($results);$n++){
-			if ($results[$n]['created_by']>0 && isset($users_array[$results[$n]['created_by']])){
+			if (isset($results[$n]['created_by'])&& $results[$n]['created_by']>0 && isset($users_array[$results[$n]['created_by']])){
 			$results[$n][str_replace(' ', '_', $lang['contributedby'])]=$users_array[$results[$n]['created_by']];
 			}
 		}
 		
 	}
-
+   
+	
+	
 	// Exclude fields (clean up the output)
 	if ($api_search_exclude_fields!=""){
 		$newresult=array();
