@@ -30,7 +30,6 @@ $videos=do_search("!collection" . $usercollection);
 
 if (getval("splice","")!="" && count($videos)>1)
 	{
-	# Splice the videos together.
 	$ref=copy_resource($videos[0]["ref"]);	# Base new resource on first video (top copy metadata).
 
 	# Set parent resource field details.
@@ -50,15 +49,15 @@ if (getval("splice","")!="" && count($videos)>1)
 	$ffmpeg_fullpath = get_utility_path("ffmpeg");
 
 	$vidlist="";
-
 	# Create FFMpeg syntax to merge all additional videos.
 	for ($n=0;$n<count($videos);$n++)
 		{
 		# Work out source/destination
 		global $ffmpeg_preview_extension;
-		if (file_exists(get_resource_path($videos[$n]["ref"],true,"pre",false,$ffmpeg_preview_extension)))
+		
+		if (file_exists(get_resource_path($videos[$n]["ref"],true,"",false,$videos[$n]["file_extension"])))
 			{
-			$source=get_resource_path($videos[$n]["ref"],true,"pre",false,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
+			$source=get_resource_path($videos[$n]["ref"],true,"",false,$videos[$n]["file_extension"],-1,1,false,"",-1,false);
 			}
 		else 
 			{
@@ -68,20 +67,15 @@ if (getval("splice","")!="" && count($videos)>1)
 		$intermediary = get_temp_dir() . "/video_splice_temp_" . $videos[$n]["ref"] . ".mpg";
 		if ($config_windows) {$intermediary = str_replace("/", "\\", $intermediary);}
 		$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($source);
-		$shell_exec_cmd .= ($ffmpeg_use_qscale)? " -qscale 0 " : " -sampleq ";
+		$shell_exec_cmd .= ($ffmpeg_use_qscale)? " -target ntsc-vcd " : " -sampleq ";
 		$shell_exec_cmd .= escapeshellarg($intermediary);
-
-		echo $shell_exec_cmd;
-
 		$output = exec($shell_exec_cmd);
-		
 		$vidlist.= " " . escapeshellarg($intermediary);
 		}
 	$vidlist = trim($vidlist);
 	
 	# Target is the first file.
-	$target = get_resource_path($ref,true,"",true,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
-	$targetmpg = $target . ".mpg";
+	$targetmpg = get_resource_path($ref,true,"",true,"mpg",-1,1,false,"",-1,false);
 	# Combine all MPEGS to make one file (this doesn't work for FLV, we had to convert to MPEG first)
 	if ($config_windows)
 		{
@@ -93,12 +87,6 @@ if (getval("splice","")!="" && count($videos)>1)
 		}
 	$output = exec($shell_exec_cmd);
 
-	# Convert the MPEG file back to FLV.
-	$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($targetmpg);
-	$shell_exec_cmd .= ($ffmpeg_use_qscale)? " -qscale 0 " : " -sampleq ";
-	$shell_exec_cmd .= escapeshellarg($target);
-	if ($config_windows) {$shell_exec_cmd = str_replace("/", "\\", $shell_exec_cmd);}
-	$output = exec($shell_exec_cmd);
 
 	# Remove the temporary files.
 	for ($n=0;$n<count($videos);$n++)
@@ -107,14 +95,12 @@ if (getval("splice","")!="" && count($videos)>1)
 		if ($config_windows) {$intermediary = str_replace("/", "\\", $intermediary);}
 		unlink($intermediary);
 		}
-	unlink($targetmpg);
 
-	# Update the file extension.
-	$result = sql_query("update resource set file_extension = '$ffmpeg_preview_extension' where ref = '$ref' limit 1");
+	# Update the file extension & date.
+	$result = sql_query("update resource set file_extension = 'mpg', creation_date = now() where ref = '$ref' limit 1");
 
 	# Create previews.
-	include $baseurl."include/preview_preprocessing.php";
-	create_previews($ref,false,$ffmpeg_preview_extension);
+	create_previews($ref,false,"mpg");
 	redirect("pages/view.php?ref=" . $ref);
 	}
 
