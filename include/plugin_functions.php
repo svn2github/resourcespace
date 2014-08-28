@@ -600,6 +600,9 @@ function config_gen_setup_html($page_def,$plugin_name,$upload_status,$plugin_pag
             case 'db_multi_select':
                 config_db_multi_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3], $def[4], $def[5], $def[6], $def[7], $def[8]);
                 break;
+            case 'single_group_select':
+                config_single_group_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
+                break;
 	    case 'multi_group_select':
                 config_multi_group_select($def[1], $def[2], $GLOBALS[$def[1]], $def[3]);
                 break;
@@ -961,6 +964,46 @@ function config_add_multi_user_select($config_var, $label, $width=300)
     return array('multi_user_select', $config_var, $label, $width);
     }
 	
+/**
+ * Generate an html single-select block for selecting from among RS user groups.
+ *
+ * @param string $name the name of the select block. Usually the name of the config variable being set.
+ * @param string $label the user text displayed to label the select block. Usually a $lang string.
+ * @param integer array $current the current value of the config variable being set.
+ * @param integer $width the width of the input field in pixels. Default: 300.
+ */
+function config_single_group_select($name, $label, $current=array(), $width=300)
+    {
+    global $lang;
+?>
+  <div class="Question">
+    <label for="<?php echo $name?>" title="<?php echo str_replace('%cvn', $name, $lang['plugins-configvar'])?>"><?php echo $label?></label>
+    <select name="<?php echo $name?>" id="<?php echo $name?>" style="width:<?php echo $width ?>px">
+<?php
+    $usergroups=get_usergroups();
+    foreach ($usergroups as $usergroup)
+        {
+        echo '    <option value="' . $usergroup['ref'] . '"' . (($usergroup['ref']==$current)?' selected':'') . '>' . $usergroup['name'] . '</option>';
+		}
+?>
+    </select>
+  </div>
+  <div class="clearerleft"></div>
+<?php
+    }
+	
+/**
+ * Return a data structure that will instruct the configuration page generator functions to
+ * add a single RS group select configuration variable to the setup page.
+ *
+ * @param string $config_var the name of the configuration variable to be added.
+ * @param string $label the user text displayed to label the select block. Usually a $lang string.
+ * @param integer $width the width of the input field in pixels. Default: 300.
+ */
+function config_add_single_group_select($config_var, $label, $width=300)
+    {
+    return array('single_group_select', $config_var, $label, $width);
+    }
 	
 /**
  * Generate an html multi-select block for selecting from among RS user groups.
