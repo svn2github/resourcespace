@@ -188,8 +188,9 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	}
 
 	# Store original filename in field, if set
-	global $filename_field;
+	global $filename_field,$amended_filename;
 	if (isset($filename_field))
+		if(isset($amended_filename)){$filename=$amended_filename;}
 		{
 		if (!$revert){
 			update_field($ref,$filename_field,$filename);
@@ -403,13 +404,14 @@ function extract_exif_comment($ref,$extension="")
         
 		# now we lookup fields from the database to see if a corresponding value
 		# exists in the uploaded file
+		$exif_updated_fields=array();
 		for($i=0;$i< count($read_from);$i++)
 			{
 			$field=explode(",",$read_from[$i]['exiftool_field']);
 			foreach ($field as $subfield)
 				{
 				$subfield = strtoupper($subfield); // convert to upper case for easier comparision
-				
+				global $filename_field;
 				if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-" && trim($metadata[$subfield])!="")
 					{
 					$read=true;
@@ -450,7 +452,6 @@ function extract_exif_comment($ref,$extension="")
 							{				
 							$exiffieldoption=$exifoption;
 							
-							
 							if($exifoption=="custom"  || (isset($embedded_data_user_select_fields)  && in_array($read_from[$i]['ref'],$embedded_data_user_select_fields)))
 								{									
 								debug ("EXIF - custom option for field " . $read_from[$i]['ref'] . " : " . $exifoption);
@@ -462,7 +463,7 @@ function extract_exif_comment($ref,$extension="")
 							if($exiffieldoption=="no")
 								{continue;}
 							
-							if($exiffieldoption=="append")
+							elseif($exiffieldoption=="append")
 								{
 								$spacechar=($read_from[$i]["type"]==2 || $read_from[$i]["type"]==3)?", ":" ";
 								$oldval = get_data_by_field($ref,$read_from[$i]['ref']);
@@ -481,13 +482,38 @@ function extract_exif_comment($ref,$extension="")
 								$newval =  iptc_return_utf8($value);	
 								}
 							
-							update_field($ref,$read_from[$i]['ref'],$newval);					
-							
-							
-							
+							update_field($ref,$read_from[$i]['ref'],$newval);
+							$exif_updated_fields[]=$read_from[$i]['ref'];
 							}
 						}
 					}
+				}
+			}
+		if(!in_array($filename_field,$exif_updated_fields)) // We have not found an embedded value for this field so we need to modify the $filename variable which will be used to set the data later in the upload_file function
+			{						
+			$exiffilenameoption=getval("exif_option_" . $filename_field,$exifoption);			
+			debug ("EXIF - custom option for filename field " . $filename_field . " : " . $exiffilenameoption);
+			if ($exiffilenameoption!="yes") // We are not using the extracted filename as usual
+				{
+				$uploadedfilename=isset($_REQUEST['name'])?$_REQUEST['name']:$processfile['name'];
+				
+				global $userref, $amended_filename;
+				$entered_filename=get_data_by_field(-$userref,$filename_field);
+				debug("EXIF - got entered file name " . $entered_filename);
+				if($exiffilenameoption=="no") //Use the entered value
+					{
+					$amended_filename = $entered_filename;
+					if(strpos($extension,$amended_filename)==false){$amended_filename.= "." . $extension;}
+					}
+				elseif($exiffilenameoption=="append")
+					{
+					$amended_filename =  $entered_filename . $uploadedfilename;
+					}
+				elseif($exiffilenameoption=="prepend")
+					{					
+					$amended_filename =  strip_extension($uploadedfilename) . $entered_filename . "." . $extension;
+					}
+				debug("EXIF - created new file name " . $amended_filename);
 				}
 			}
 		}
