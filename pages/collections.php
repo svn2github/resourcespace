@@ -666,7 +666,7 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && !$lazyload && 
 	{ // don't include saved search item in result if this is a smart collection  
 
 	# Setting the save search icon
-	$folder = $baseurl."/gfx/images/";
+	$folder = dirname(__FILE__) ."/../gfx/images/";
 	$iconpath = $folder . "save-search" . "_" . $language . ".gif";
 	if (!file_exists($iconpath))
 		{
