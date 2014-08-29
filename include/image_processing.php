@@ -982,7 +982,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				if ($extension=="png" || $extension=="gif"){
 					global $transparency_background;
 				$transparencyreal=dirname(__FILE__) ."/../" . $transparency_background;
-					$wait=run_command(str_replace("identify","composite",$identify_fullpath)."  -compose Dst_Over -tile ".escapeshellarg($transparencyreal)." ".escapeshellarg($path)." ".escapeshellarg(str_replace($extension,"jpg",$path))." 2>&1");
+					$wait=run_command(str_replace("identify","composite",$identify_fullpath)."  -compose Dst_Over -tile ".escapeshellarg($transparencyreal)." ".escapeshellarg($path)." ".escapeshellarg(str_replace($extension,"jpg",$path)), true);
 					unlink($path);
 					$path=str_replace($extension,"jpg",$path);
 				}               
