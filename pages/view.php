@@ -662,7 +662,7 @@ function compute_dpi($width, $height, &$dpi, &$dpi_unit, &$dpi_w, &$dpi_h)
 # MP calculation
 function compute_megapixel($width, $height)
 	{
-	return round(($width * $height) / 1000000, 1);
+	return round(($width * $height) / 1000000, 2);
 	}
 
 function get_size_info($size, $originalSize = null)
