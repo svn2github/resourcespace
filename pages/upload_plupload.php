@@ -19,6 +19,24 @@ $offset=getvalescaped("offset","",true);
 $order_by=getvalescaped("order_by","");
 $archive=getvalescaped("archive","",true);
 
+$uploadparams="";
+$uploadparams.="&relateto=" . urlencode(getval("relateto",""));
+if($embedded_data_user_select || isset($embedded_data_user_select_fields))	
+		{
+		foreach($_GET as $getname=>$getval)
+			{
+			if (strpos($getname,"exif_option_")!==false)
+				{
+				$uploadparams.="&" . urlencode($getname) . "=" . urlencode($getval);	
+				}
+			}
+                if(getval("exif_override","")!="")
+			{
+			$uploadparams.="&exif_override=true";
+			}
+		}
+$redirecturl = getval("redirecturl","");
+
 $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
@@ -110,7 +128,7 @@ if ($_FILES)
 
 	// Clean the filename for security reasons
 	$plfilename = preg_replace('/[^\w\._]+/', '_', $plfilename);
-	
+
 	// Make sure the fileName is unique but only if chunking is disabled
 	if ($chunks < 2 && file_exists($targetDir . DIRECTORY_SEPARATOR . $plfilename)) {
 		$ext = strrpos($plfilename, '.');
@@ -120,6 +138,7 @@ if ($_FILES)
 		$count = 1;
 		while (file_exists($targetDir . DIRECTORY_SEPARATOR . $plfilename_a . '_' . $count . $plfilename_b))
 			$count++;
+
 		$plfilename = $plfilename_a . '_' . $count . $plfilename_b;
 	}
 
@@ -274,19 +293,18 @@ if ($_FILES)
                     if ($replace=="" && $replace_resource=="")
                             {
                             # Standard upload of a new resource
-
-							# create ref via copy_resource() or other method
-							$modified_ref=hook("modifyuploadref");
-							if ($modified_ref!=""){
-								
-								$ref=$modified_ref;
-							
-							} else {
-								
-								$ref=copy_resource(0-$userref); # Copy from user template
-                               
-							}
-							
+                            
+                            # create ref via copy_resource() or other method
+                            $modified_ref=hook("modifyuploadref");
+                            if ($modified_ref!="")
+                                {
+                                $ref=$modified_ref;
+                                }
+                            else
+                                {
+                                $ref=copy_resource(0-$userref); # Copy from user template   
+                                }
+                            
                             # Add to collection?
                             if ($collection_add!="")
                                     {
@@ -295,17 +313,15 @@ if ($_FILES)
                                     
                             # Log this			
                             daily_stat("Resource upload",$ref);
-                            $status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
-                            $wait=hook("afterpluploadfile","",array($ref)); 
+                            $status=upload_file($ref,(getval("no_exif","")=="yes" && getval("exif_override","")==""),false,(getval('autorotate','')!=''));
+                            $wait=hook("afterpluploadfile","",array($ref));
                             echo "SUCCESS: " . htmlspecialchars($ref);
                             exit();
                             }
                     elseif ($replace=="" && $replace_resource!="")
                             {
                             # Replacing an existing resource file
-                            $wait=hook("beforepluploadreplacefile","",array($replace_resource));
-                            $status=upload_file($replace_resource,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
-                            $wait=hook("afterpluploadfile","",array($replace_resource));
+                            $status=upload_file($replace_resource,(getval("no_exif","")=="yes" && getval("exif_override","")==""),false,(getval('autorotate','')!=''));
                             hook("additional_replace_existing");
                             echo "SUCCESS: " . htmlspecialchars($replace_resource);
                             exit();
@@ -322,10 +338,10 @@ if ($_FILES)
                                     $ref=trim($s[0]);
                                     if (is_numeric($ref)) # is the first part of the filename numeric?
                                             {
-                                            $status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
+                                            $status=upload_file($ref,(getval("no_exif","")=="yes" && getval("exif_override","")==""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
                                             }
                                     }
-							$wait=hook("afterpluploadfile","",array($ref)); 
+
                             echo "SUCCESS: " . htmlspecialchars($ref);
                             exit();
                             }
@@ -358,7 +374,7 @@ include "../include/header.php";
 var pluploadconfig = {
         // General settings
         runtimes : '<?php echo $plupload_runtimes ?>',
-        url: '<?php echo $baseurl_short?>pages/upload_plupload.php?replace=<?php echo urlencode($replace) ?>&alternative=<?php echo urlencode($alternative) ?>&collection_add=<?php echo urlencode($collection_add)?>&resource_type=<?php echo urlencode($resource_type)?>&no_exif=<?php echo urlencode(getval("no_exif",""))?>&autorotate=<?php echo urlencode(getval("autorotate",""))?>&replace_resource=<?php echo urlencode($replace_resource)?>&archive=<?php echo urlencode($archive) ?><?php hook('addtopluploadurl')?>',
+        url: '<?php echo $baseurl_short?>pages/upload_plupload.php?replace=<?php echo urlencode($replace) ?>&alternative=<?php echo urlencode($alternative) ?>&collection_add=<?php echo urlencode($collection_add)?>&resource_type=<?php echo urlencode($resource_type)?>&no_exif=<?php echo urlencode(getval("no_exif",""))?>&autorotate=<?php echo urlencode(getval("autorotate",""))?>&replace_resource=<?php echo urlencode($replace_resource)?>&archive=<?php echo urlencode($archive) . $uploadparams ?><?php hook('addtopluploadurl')?>',
          <?php if ($plupload_chunk_size!="")
                 {?>
                 chunk_size: '<?php echo $plupload_chunk_size; ?>',
@@ -389,14 +405,10 @@ var pluploadconfig = {
 
         // Silverlight settings
         silverlight_xap_url : '../lib/plupload_2.1.2/Moxie.xap',
-        
-dragdrop: true,
+        dragdrop: true,
         
         preinit: {
                 PostInit: function(uploader) {
-					
-					
-					
                     <?php hook('upload_uploader_defined'); ?>
         
                         //Show link to java if chunking not supported
@@ -424,18 +436,15 @@ dragdrop: true,
                                 // show any errors
                                 if (info.response.indexOf("error") > 0)
                                         {
-                                        /*uploadError = JSON.parse(info.response);
+                                        uploadError = JSON.parse(info.response);
                                         alert("<?php echo $lang["error"] ?> " + uploadError.error.code + " : " + uploadError.error.message);
-                                        file.status = plupload.FAILED;*/
+                                        file.status = plupload.FAILED;
                                         }
                                 //update collection div if uploading to active collection
                                 <?php if ($usercollection==$collection_add) { ?>
                                         CollectionDivLoad("<?php echo $baseurl . '/pages/collections.php?nowarn=true&nc=' . time() ?>");
                                         <?php } ?>
-                                
-                                
-                                <?php hook("afterfileuploaded");?>      
-                             
+                                <?php hook("afterfileuploaded");?> 
                                 });
                 
                 
@@ -515,7 +524,7 @@ dragdrop: true,
         jQuery(document).ready(function () {            
                 
                 jQuery("#pluploader").pluploadQueue(pluploadconfig);        
-	             	                   
+	             
             });
 	
 	
@@ -607,7 +616,7 @@ else
 ?>
 <?php hook("upload_page_top"); ?>
 
-<?php if (!hook("replacepluploadtitle")){?><h1><?php echo $titleh1 ?></h1><?php } ?>
+<h1><?php echo $titleh1 ?></h1>
 <h2><?php echo $titleh2 ?></h2>
 <div id="plupload_instructions"><p><?php echo $intro?></p></div>
 <?php if (isset($plupload_max_file_size))
@@ -634,19 +643,17 @@ if (!hook("replacemetadatacheckbox"))
     {
     if (getvalescaped("upload_a_file","")!="" || getvalescaped("replace_resource","")!=""  || getvalescaped("replace","")!="")
     	{ ?>
-    		<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
+    		<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")=="no"){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
     		<div class="clearerleft"> </div>
     	<?php
     	}
     } ?>
 
-<?php hook ("beforepluploadform");?>
 <br>
+
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
 
 <form class="pluploadform" action="<?php echo $baseurl_short?>pages/upload_plupload.php">
-
-	
 	<div id="pluploader">
 	</div>
 </form>

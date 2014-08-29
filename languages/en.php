@@ -1815,3 +1815,11 @@ $lang["sharerelatedresources"]="Include related resources.<br>A new collection w
 $lang["sharerelatedresourcesaddremove"]="If sharing related resources, allow other users to add/remove resources from the new collection";
 $lang["create_empty_resource"]="Skip upload and create a new resource with no associated file";
 $lang["entercollectionname"]="Enter name, then press Return";
+$lang["embedded_metadata"]="Embedded metadata";
+$lang["embedded_metadata_extract_option"]="Extract";
+$lang["embedded_metadata_donot_extract_option"]="Do not extract";
+$lang["embedded_metadata_append_option"]="Append";
+$lang["embedded_metadata_prepend_option"]="Prepend";
+$lang["embedded_metadata_custom_option"]="Custom";
+
+

@@ -2383,3 +2383,9 @@ $unnormalized_index=false;
 
 # Show tabbed panels in view. Metadata, Location, Comments are grouped in tabs, Related Collection, Related Galleries and Related Resources, Search for Similar are grouped too
 $view_panels=false;
+
+# Allow user to select to import or append embedded metadata on a field by field basis
+$embedded_data_user_select=false;
+
+# Always display the option to override the import or appending/prepending of embedded metadata for the fields specified in the array
+# $embedded_data_user_select_fields=array(1,8);

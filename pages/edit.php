@@ -21,6 +21,13 @@ if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 
 $archive=getvalescaped("archive",0,true);
+
+$uploadparams="";
+$uploadparams.="&relateto=" . urlencode(getval("relateto",""));
+$uploadparams.="&redirecturl=" . urlencode(getval("redirecturl",""));
+
+
+
 global $tabs_on_edit;
 $collapsible_sections=true;
 if($tabs_on_edit){$collapsible_sections=false;}
@@ -135,6 +142,24 @@ hook("editbeforeheader");
 # -----------------------------------
 if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfromsubmit","")==""))
 	{
+		
+	if(($embedded_data_user_select && getval("exif_option","")=="custom") || isset($embedded_data_user_select_fields))	
+		{
+		$exif_override=false;
+		foreach($_POST as $postname=>$postvar)
+			{
+			if (strpos($postname,"exif_option_")!==false)
+				{
+				$uploadparams.="&" . urlencode($postname) . "=" . urlencode($postvar);
+				$exif_override=true;
+				}
+			}
+		if($exif_override)
+			{
+			$uploadparams.="&exif_override=true";
+			}
+		}
+	
 	hook("editbeforesave");			
 
 	# save data
@@ -150,7 +175,15 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 			}		
 
 		$save_errors=save_resource_data($ref,$multiple);
-		$no_exif=getval("no_exif", "");
+		if($embedded_data_user_select)
+			{
+			$no_exif=getval("exif_option","");
+			}
+		else
+			{
+			$no_exif=getval("no_exif","");
+			}
+		
 		$autorotate = getval("autorotate","");
 
 		if ($upload_collection_name_required){
@@ -176,22 +209,22 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 				if ((getval("uploader","")!="")&&(getval("uploader","")!="local"))
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/upload_" . getval("uploader","") . ".php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public','') . " &archive=" . $archive . hook("addtouploadurl"));}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/upload_" . getval("uploader","") . ".php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public','') . " &archive=" . $archive . $uploadparams . hook("addtouploadurl"));}
 					}
 				elseif ((getval("local","")!="")||(getval("uploader","")=="local")) // Test if fetching resource from local upload folder.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch_select.php?use_local=yes&collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch_select.php?use_local=yes&collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . $uploadparams );}
 					}
                 elseif (getval("single","")!="") // Test if single upload (archived or not).
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/upload.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&archive=" . $archive);}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/upload.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&archive=" . $archive . $uploadparams );}
 					}    
 				else // Hence fetching from ftp.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname","")). "&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname","")). "&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . $uploadparams );}
 					}
 				}
 			}
@@ -234,9 +267,7 @@ if (getval("tweak","")!="")
 		sql_query("update resource set preview_attempts=0 WHERE ref='" . $ref . "'");
 		if ($enable_thumbnail_creation_on_upload)
 			{
-			if(!empty($resource['file_path'])){$ingested=false;}
-			else{$ingested=true;}
-			create_previews($ref,false,$resource["file_extension"],false,false,-1,true,$ingested);
+			create_previews($ref,false,$resource["file_extension"],false,false,-1,true);
 			refresh_collection_frame();
 			}
 		else
@@ -378,8 +409,7 @@ function HideHelp(field)
 <?php
 # Function to automatically save the form on field changes, if configured.
 if ($edit_autosave) { ?>
-	preventautosave=false;
-
+	 preventautosave=false;
 
 // Disable autosave on enter keypress as form will be submitted by this keypress anyway which can result in duplicate data
 jQuery(document).bind('keydown',function (e)
@@ -425,7 +455,7 @@ function EditNav() # Create a function so this can be repeated at the end of the
 	{
 	global $baseurl_short,$ref,$search,$offset,$order_by,$sort,$archive,$lang;
 	?>
-	<div class="TopInpageNavRight">
+	<div class="TopInpageNav">
 	<a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/edit.php?ref=<?php echo urlencode($ref) ?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset) ?>&amp;order_by=<?php echo urlencode($order_by) ?>&amp;sort=<?php echo urlencode($sort) ?>&amp;archive=<?php echo urlencode($archive) ?>&amp;go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 	|
 	<a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset) ?>&amp;order_by=<?php echo urlencode($order_by) ?>&amp;archive=<?php echo urlencode($archive) ?>&amp;sort=<?php echo urlencode($sort) ?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
@@ -476,19 +506,11 @@ if ((!$is_template && !checkperm("F*"))||$custompermshowfile)
 { ?>
 <div class="Question" id="question_file">
 <label><?php echo $lang["file"]?></label>
-<div class="Fixed" style="width:50%;">
+<div class="Fixed">
 <?php
 if ($resource["has_image"]==1)
 	{
-	?><img id="preview" align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,false)?>" class="ImageBorder" style="margin-right:10px;"/>
-	<?php // check for watermarked version and show it if it exists
-	if (checkperm("w")){
-		$wmpath=get_resource_path($ref,true,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,true);
-		if (file_exists($wmpath)){?>
-		<img style="display:none;" id="wmpreview" align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,true)?>" class="ImageBorder"/>
-		<?php }
-	}?>
-	<br />
+	?><img align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" style="margin-right:10px;"/><br />
 	<?php
 	}
 else
@@ -499,7 +521,7 @@ else
 	<br />
 	<?php
 	}
-if ($resource["file_extension"]!="") { ?><strong><?php echo str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["cell-fileoftype"]) . " (" . formatfilesize(@filesize_unlimited(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><?php if (checkperm("w") && $resource["has_image"]==1 && file_exists($wmpath)){?> &nbsp;&nbsp;<a href="#" onclick="jQuery('#wmpreview').toggle();jQuery('#preview').toggle();if (jQuery(this).text()=='<?php echo $lang['showwatermark']?>'){jQuery(this).text('<?php echo $lang['hidewatermark']?>');} else {jQuery(this).text('<?php echo $lang['showwatermark']?>');}"><?php echo $lang['showwatermark']?></a><?php } ?><br /><?php } ?>
+if ($resource["file_extension"]!="") { ?><strong><?php echo str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["cell-fileoftype"]) . " (" . formatfilesize(@filesize_unlimited(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><?php } ?>
 	
 	<?php
 	if ($top_nav_upload_type=="local") $replace_upload_type="plupload"; else $replace_upload_type=$top_nav_upload_type;
@@ -675,6 +697,62 @@ if (isset($metadata_template_resource_type) && !$multiple && !checkperm("F*"))
 	</div><!-- end of question_metadatatemplate --> 
 	<?php
 	}
+	
+	if($embedded_data_user_select && $ref<0)
+		{?>
+		<div class="Question" id="question_exif">
+		<label for="exif_option"><?php echo $lang["embedded_metadata"]?></label>
+		<table id="" cellpadding="3" cellspacing="3" style="display: block;">                    
+			<tbody>
+				<tr>		
+					<td width="10" valign="middle">
+						<input type="radio" id="exif_extract" name="exif_option" value="extract" onClick="jQuery('.ExifOptions').hide();" <?php if($metadata_read_default) echo "checked" ?>>
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="exif_extract"><?php echo $lang["embedded_metadata_extract_option"] ?></label>
+					</td>
+		
+							
+					<td width="10" valign="middle">
+						<input type="radio" id="no_exif" name="exif_option" value="no" onClick="jQuery('.ExifOptions').hide();" <?php if(!$metadata_read_default) echo "checked" ?>>
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="no_exif"><?php echo $lang["embedded_metadata_donot_extract_option"] ?></label>
+					</td>
+		
+							
+					<td width="10" valign="middle">
+						<input type="radio" id="exif_append" name="exif_option" value="append" onClick="jQuery('.ExifOptions').hide();">
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="exif_append"><?php echo $lang["embedded_metadata_append_option"] ?></label>
+					</td>
+		
+							
+					<td width="10" valign="middle">
+						<input type="radio" id="exif_prepend" name="exif_option" value="prepend" onClick="jQuery('.ExifOptions').hide();">
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="exif_prepend"><?php echo $lang["embedded_metadata_prepend_option"] ?></label>
+					</td>
+					
+					<td width="10" valign="middle">
+						<input type="radio" id="exif_custom" name="exif_option" value="custom" onClick="jQuery('.ExifOptions').show();">
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="exif_custom"><?php echo $lang["embedded_metadata_custom_option"] ?></label>
+					</td>
+		
+							</tr>
+			</tbody>
+		</table>
+
+
+		
+		<div class="clearerleft"> </div>
+		</div>
+		<?php 	
+		}
 
 	if ($edit_upload_options_at_top){include '../include/edit_upload_options.php';}
 
@@ -745,7 +823,7 @@ function is_field_displayed($field)
 		|| hook('edithidefield', '', array('field' => $field))
 		|| hook('edithidefield2', '', array('field' => $field)));
 	}
-	
+
 function check_display_condition($n, $field)
 	{
 	global $fields, $scriptconditions, $required_fields_exempt;
@@ -1014,7 +1092,7 @@ function display_multilingual_text_field($n, $field, $translations)
 
 function display_field($n, $field, $newtab=false)
 	{
-	global $use, $ref, $original_fields, $multilingual_text_fields, $multiple, $lastrt,$is_template, $language, $lang, $blank_edit_template, $edit_autosave, $errors, $tabs_on_edit,$collapsible_sections, $ctrls_to_save;
+	global $use, $ref, $original_fields, $multilingual_text_fields, $multiple, $lastrt,$is_template, $language, $lang, $blank_edit_template, $edit_autosave, $errors, $tabs_on_edit,$collapsible_sections, $ctrls_to_save, $embedded_data_user_select, $embedded_data_user_select_fields;
 	
 	$name="field_" . $field["ref"];
 	$value=$field["value"];
@@ -1113,10 +1191,8 @@ function display_field($n, $field, $newtab=false)
 			{?>
 			display:none;
 			<?php }
-			?>"<?php
-
 		}
-		?>>
+		?>">
 		<?php 
 			$labelname = $name;
 			
@@ -1130,7 +1206,7 @@ function display_field($n, $field, $newtab=false)
 				$labelname .= '-d';
 			}
 		?>
-	<label for="<?php echo htmlspecialchars($labelname)?>"><?php if (!$multiple) {?><?php echo htmlspecialchars($field["title"])?> <?php if (!$is_template && $field["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
+	<label for="<?php echo htmlspecialchars($labelname)?>" ><?php if (!$multiple) {?><?php echo htmlspecialchars($field["title"])?> <?php if (!$is_template && $field["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
 
 	<?php
 	# Autosave display
@@ -1181,10 +1257,60 @@ function display_field($n, $field, $newtab=false)
 		{
 		display_multilingual_text_field($n, $field, $translations);
 		}
-	?>
+	
+	if($embedded_data_user_select || (isset($embedded_data_user_select_fields) && in_array($field["ref"],$embedded_data_user_select_fields)))
+		{
+			?>
+		<table id="exif_<?php echo $field["ref"] ?>" class="ExifOptions" cellpadding="3" cellspacing="3" <?php if ($embedded_data_user_select){?> style="display: none;" <?php } ?>>                    
+			<tbody>
+				<tr>		
+					<td>
+					<?php echo "&nbsp;&nbsp;" . $lang["embeddedvalue"] . ": " ?>
+					</td>
+					<td width="10" valign="middle">
+						<input type="radio" id="exif_extract_<?php echo $field["ref"] ?>" name="exif_option_<?php echo $field["ref"] ?>" value="yes" checked>
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="exif_extract_<?php echo $field["ref"] ?>"><?php echo $lang["embedded_metadata_extract_option"] ?></label>
+					</td>
+		
+							
+					<td width="10" valign="middle">
+						<input type="radio" id="no_exif_<?php echo $field["ref"] ?>" name="exif_option_<?php echo $field["ref"] ?>" value="no">
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="no_exif_<?php echo $field["ref"] ?>"><?php echo $lang["embedded_metadata_donot_extract_option"] ?></label>
+					</td>
+		
+							
+					<td width="10" valign="middle">
+						<input type="radio" id="exif_append_<?php echo $field["ref"] ?>" name="exif_option_<?php echo $field["ref"] ?>" value="append">
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="exif_append_<?php echo $field["ref"] ?>"><?php echo $lang["embedded_metadata_append_option"] ?></label>
+					</td>
+		
+							
+					<td width="10" valign="middle">
+						<input type="radio" id="exif_prepend_<?php echo $field["ref"] ?>" name="exif_option_<?php echo $field["ref"] ?>" value="prepend">
+					</td>
+					<td align="left" valign="middle">
+						<label class="customFieldLabel" for="exif_prepend_<?php echo $field["ref"] ?>"><?php echo $lang["embedded_metadata_prepend_option"] ?></label>
+					</td>
+					
+							</tr>
+			</tbody>
+		</table>		
+		<?php
+		}
+		?>
 	<div class="clearerleft"> </div>
 	</div><!-- end of question_<?php echo $n?> div -->
-	<?php
+	<?php	
+	
+	
+	
+	
 	hook('afterfielddisplay', '', array($n, $field));
 	}
 
@@ -1359,11 +1485,11 @@ else # Edit Resource(s).
     }
 
 # Status / Access / Related Resources
-if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only display Status / Access / Related Resources if permissions match.
+if (!checkperm("F*")&&!hook("editstatushide")) # Only display Status / Access / Related Resources if full write access field access has been granted.
     {
     if(!hook("replacestatusandrelationshipsheader"))
         {
-        if ($ref>0 || $show_status_and_access_on_upload==true || $show_access_on_upload==true)
+        if ($ref>0 || $show_status_and_access_on_upload==true)
         	{
 	        if ($enable_related_resources && ($multiple || $ref>0)) # Showing relationships
 	        	{
@@ -1416,15 +1542,12 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
     hook("beforeaccessselector");
     if (!hook("replaceaccessselector"))
         {
-        if ($ref<0 && $show_status_and_access_on_upload==false && $show_access_on_upload==false)
+        if ($ref<0 && $show_status_and_access_on_upload==false)
             { 
             # Upload template and the status and access fields are configured to be hidden on uploads.
-            ?><input type=hidden name="access" value="<?php echo htmlspecialchars($resource["access"])?>"><?php
+            ?>
+            <input type=hidden name="access" value="<?php echo htmlspecialchars($resource["access"])?>"><?php
             }
-        else if($ref<0 && ($show_status_and_access_on_upload==true || $show_access_on_upload==true) && $show_access_on_upload_perm) 
-        	{
-        	?><input type=hidden name="access" value="<?php echo htmlspecialchars($resource["access"])?>"><?php
-        	}
         else
             {
             if ($multiple) { ?><div><input name="editthis_access" id="editthis_access" value="yes" type="checkbox" onClick="var q=document.getElementById('question_access');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["access"]?></label></div><?php } ?>
@@ -1451,7 +1574,7 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
             </select>
 
             <div class="clearerleft"> </div>
-            <div id="custom_access" style="<?php if (!$custom_access || $resource["access"]!=3) { ?>display:none;<?php } ?>"><?php
+            <table id="custom_access" cellpadding=3 cellspacing=3 style="padding-left:150px;<?php if (!$custom_access || $resource["access"]!=3) { ?>display:none;<?php } ?>"><?php
 
             $groups=get_resource_custom_access($ref);
             for ($n=0;$n<count($groups);$n++)
@@ -1462,30 +1585,29 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
 
                 if (in_array("v",$perms)) {$access=0;$editable=false;} ?>
                     
-                <div class="radiooptions">
+                <tr>
+                <td valign=middle nowrap><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</td>
 
-                <span class="radiotext customaccessgroupname"><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</span>
+                <td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked <?php }
+                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></td>
 
-                <div class="radiooption"><span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked <?php }
-                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
+                <td align=left valign=middle><?php echo $lang["access0"]?></td>
 
-                <span class="radiotext customaccesstext"><?php echo $lang["access0"]?></span></div>
+                <td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked <?php }
+                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></td>
 
-                <div class="radiooption"><span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked <?php }
-                if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
-
-                <span class="radiotext customaccesstext"><?php echo $lang["access1"]?></span></div><?php
+                <td align=left valign=middle><?php echo $lang["access1"]?></td><?php
 
                 if (checkperm("v"))
                     { ?>
-                    <div class="radiooption"><span class="radio customaccessgroupoption"><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked <?php }
-                    if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></span>
+                    <td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked <?php }
+                    if ($edit_autosave) {?> onChange="AutoSave('Access');"<?php } ?>></td>
 
-                    <span class="radiotext customaccesstext"><?php echo $lang["access2"]?></span></div><?php
+                    <td align=left valign=middle><?php echo $lang["access2"]?></td><?php
                     } ?>
-                </div><?php
+                </tr><?php
                 } ?>
-            </div>
+            </table>
             <div class="clearerleft"> </div>
             </div><?php
             }

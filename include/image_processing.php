@@ -13,7 +13,7 @@ if (!function_exists("upload_file")){
 function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	{
 	hook("beforeuploadfile","",array($ref));
-    hook("clearaltfiles", "", array($ref)); // optional: clear alternative files before uploading new resource
+	hook("clearaltfiles", "", array($ref)); // optional: clear alternative files before uploading new resource
 
 	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
 	
@@ -175,7 +175,7 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
     sql_query("delete from resource_dimensions where resource='$ref'");
 	# get file metadata 
     if (!$no_exif) {extract_exif_comment($ref,$extension);}
-
+	
 	# extract text from documents (e.g. PDF, DOC).
 	global $extracted_text_field;
 	if (isset($extracted_text_field) && !$no_exif) {
@@ -264,12 +264,15 @@ function extract_exif_comment($ref,$extension="")
 	# Extract the EXIF comment from either the ImageDescription field or the UserComment
 	# Also parse IPTC headers and insert
 	# EXIF headers
-
+	$exifoption=getval("no_exif",""); // This may have been set to a non-standard value if allowing per field selection
+	if($exifoption=="yes"){$exifoption="no";} // Sounds odd but previously was no_exif so logic reversed						
+	if($exifoption==""){$exifoption="yes";}
+	
 	$image=get_resource_path($ref,true,"",false,$extension);
 	if (!file_exists($image)) {return false;}
 	hook("pdfsearch");
 
-	global $exif_comment,$exiftool_no_process,$exiftool_resolution_calc, $disable_geocoding;
+	global $exif_comment,$exiftool_no_process,$exiftool_resolution_calc, $disable_geocoding, $embedded_data_user_select_fields;
 	$exiftool_fullpath = get_utility_path("exiftool");
 	if (($exiftool_fullpath!=false) && !in_array($extension,$exiftool_no_process))
 		{
@@ -436,16 +439,52 @@ function extract_exif_comment($ref,$extension="")
 					# Read the data.				
 					if ($read) {
 						$plugin=dirname(__FILE__)."/../plugins/exiftool_filter_" . $read_from[$i]['name'] . ".php";
-						if ($read_from[$i]['exiftool_filter']!=""){
+						if ($read_from[$i]['exiftool_filter']!="")
+							{
 							eval($read_from[$i]['exiftool_filter']);
-						}
+							}
 						if (file_exists($plugin)) {include $plugin;}
 						
 						# Field 8 is used in a special way for staticsync; don't overwrite field 8 in this case
-						if ($omit_title_for_staticsync && $read_from[$i]['ref']==8){
-							} 
-						else {
-							update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($value));
+						if (!($omit_title_for_staticsync && $read_from[$i]['ref']==8))
+							{				
+							$exiffieldoption=$exifoption;
+							
+							
+							if($exifoption=="custom"  || (isset($embedded_data_user_select_fields)  && in_array($read_from[$i]['ref'],$embedded_data_user_select_fields)))
+								{									
+								debug ("EXIF - custom option for field " . $read_from[$i]['ref'] . " : " . $exifoption);
+								$exiffieldoption=getval("exif_option_" . $read_from[$i]['ref'],$exifoption);	
+								}
+							
+							debug ("EXIF - option for field " . $read_from[$i]['ref'] . " : " . $exiffieldoption);
+							
+							if($exiffieldoption=="no")
+								{continue;}
+							
+							if($exiffieldoption=="append")
+								{
+								$spacechar=($read_from[$i]["type"]==2 || $read_from[$i]["type"]==3)?", ":" ";
+								$oldval = get_data_by_field($ref,$read_from[$i]['ref']);
+								if(strpos($oldval, $value)!==false){continue;}
+								$newval =  $oldval . $spacechar . iptc_return_utf8($value) ;									
+								}
+							elseif($exiffieldoption=="prepend")
+								{
+								$spacechar=($read_from[$i]["type"]==2 || $read_from[$i]["type"]==3)?", ":" ";
+								$oldval = get_data_by_field($ref,$read_from[$i]['ref']);
+								if(strpos($oldval, $value)!==false){continue;}
+								$newval =  iptc_return_utf8($value) . $spacechar . $oldval;
+								}							
+							else
+								{
+								$newval =  iptc_return_utf8($value);	
+								}
+							
+							update_field($ref,$read_from[$i]['ref'],$newval);					
+							
+							
+							
 							}
 						}
 					}

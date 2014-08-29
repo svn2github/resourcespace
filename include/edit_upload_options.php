@@ -14,20 +14,22 @@ if ($ref<0)
 		<div class="CollapsibleSection" id="UploadOptionsSection">
 		<?php
 		}
-	if ($metadata_read){?>
-	<div class="Question" id="question_noexif">
-	<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif",($metadata_read_default)?"":"no")!="") { ?>checked<?php } ?>>
-	<div class="clearerleft"> </div>
-	</div>
-	<?php } elseif ($no_metadata_read_default) 
-		{?>
-	<input type=hidden id="no_exif" name="no_exif" value="">
-	<?php } 
-	 else { ?>
- 	<input type=hidden id="no_exif" name="no_exif" value="no">
- 	<?php } ?>
-	
-	<?php if($camera_autorotation){ ?>
+	if(!$embedded_data_user_select)
+	    {
+	    if ($metadata_read){?>
+	    <div class="Question" id="question_noexif">
+	    <label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif",($metadata_read_default)?"":"no")!="") { ?>checked<?php } ?>>
+	    <div class="clearerleft"> </div>
+	    </div>
+	    <?php } elseif ($no_metadata_read_default) 
+		    {?>
+	    <input type=hidden id="no_exif" name="no_exif" value="">
+	    <?php } 
+	     else { ?>
+	    <input type=hidden id="no_exif" name="no_exif" value="no">
+	    <?php } 
+	    }
+	if($camera_autorotation){ ?>
 	<div class="Question" id="question_autorotate">
 	<label for="autorotate"><?php echo $lang["autorotate"]?></label><input type=checkbox id="autorotate" name="autorotate" value="yes" <?php
 	if ($camera_autorotation_checked) {echo ' checked';}?>>
