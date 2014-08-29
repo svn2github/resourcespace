@@ -147,6 +147,19 @@ if (!hook("replaceloginform")) {
   <form id="loginform" method="post" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?>>
   <input type="hidden" name="langupdate" id="langupdate" value="">  
   <input type="hidden" name="url" value="<?php echo htmlspecialchars($url)?>">
+
+<?php if ($disable_languages==false) { ?>	
+		<div class="Question">
+			<label for="language"><?php echo $lang["language"]?> </label>
+			<select id="language" class="stdwidth" name="language" onChange="document.getElementById('langupdate').value='YES';document.getElementById('loginform').submit();">
+			<?php reset ($languages); foreach ($languages as $key=>$value) { ?>
+			<option value="<?php echo $key?>" <?php if ($language==$key) { ?>selected<?php } ?>><?php echo $value?></option>
+			<?php } ?>
+			</select>
+			<div class="clearerleft"> </div>
+		</div> 
+<?php } ?>
+
 		<div class="Question">
 			<label for="username"><?php echo $lang["username"]?> </label>
 			<input type="text" name="username" id="username" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> value="<?php echo htmlspecialchars(getval("username","")) ?>" />
@@ -159,17 +172,6 @@ if (!hook("replaceloginform")) {
 			 <div id="capswarning"><?php echo $lang["caps-lock-on"]; ?></div>
 			<div class="clearerleft"> </div>
 		</div>
-<?php if ($disable_languages==false) { ?>	
-		<div class="Question">
-			<label for="language"><?php echo $lang["language"]?> </label>
-			<select id="language" class="stdwidth" name="language" onChange="document.getElementById('langupdate').value='YES';document.getElementById('loginform').submit();">
-			<?php reset ($languages); foreach ($languages as $key=>$value) { ?>
-			<option value="<?php echo $key?>" <?php if ($language==$key) { ?>selected<?php } ?>><?php echo $value?></option>
-			<?php } ?>
-			</select>
-			<div class="clearerleft"> </div>
-		</div> 
-<?php } ?>
 	
 		<?php if ($allow_keep_logged_in) { ?>
 		<div class="Question">
