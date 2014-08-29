@@ -545,57 +545,86 @@ if (true) # Always show search header now.
 			if (isset($collection)){$rel=$lang["collection_order_description"];}
 			elseif (strpos($search,"!")!==false) {$rel=$lang["asadded"];}
 			}
-		?>
-		<div class="InpageNavLeftBlock "><?php echo $lang["sortorder"]?>:<br /><?php if ($order_by=="relevance") {?><span class="Selected"><?php echo $rel?></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=relevance&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $rel?></a><?php } ?>
-		
-		<?php if ($random_sort){?>
-		&nbsp;|&nbsp;
-		<?php if ($order_by=="random") {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=random&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>&amp;sort=<?php echo urlencode($revsort) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["random"]?></a></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=random&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["random"]?></a><?php } ?>
-		<?php } ?>
 
-        <?php if ($popularity_sort){?>
-		&nbsp;|&nbsp;
-		<?php if ($order_by=="popularity") {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=popularity&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>&amp;sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["popularity"]?></a><div class="<?php echo urlencode($sort)?>">&nbsp;</div></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=popularity&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["popularity"]?></a><?php } ?>
-        <?php } ?>
-		
-		<?php if ($orderbyrating) { ?>
-		&nbsp;|&nbsp;
-		<?php if ($order_by=="rating") {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=rating&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>&amp;sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["rating"]?></a><div class="<?php echo urlencode($sort)?>">&nbsp;</div></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=rating&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["rating"]?></a><?php } ?>
-		<?php } ?>
-		
-		<?php if ($date_column){?>
-		&nbsp;|&nbsp;
-		<?php if ($order_by=="date") {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=date&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>&amp;sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["date"]?></a><div class="<?php echo urlencode($sort)?>">&nbsp;</div></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=date&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["date"]?></a><?php } ?>
-		<?php } ?>
-		
-		<?php if ($colour_sort) { ?>
-		&nbsp;|&nbsp;
-		<?php if ($order_by=="colour") {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=colour&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>&amp;sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["colour"]?></a><div class="<?php echo urlencode($sort)?>">&nbsp;</div></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=colour&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["colour"]?></a><?php } ?>
-		<?php } ?>
-		
-		<?php if ($order_by_resource_id) { ?>
-		&nbsp;|&nbsp;
-		<?php if ($order_by=="resourceid") {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=resourceid&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>&amp;sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["resourceid"]?></a><div class="<?php echo urlencode($sort)?>">&nbsp;</div></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=resourceid&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["resourceid"]?></a><?php } ?>
-		<?php } ?>
-		
-		<?php if ($order_by_resource_type){?>
-		&nbsp;|&nbsp;
-		<?php if ($order_by=="resourcetype") {?> <span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=resourcetype&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>&amp;sort=<?php echo urlencode($revsort)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["type"]?></a><div class="<?php echo urlencode($sort)?>">&nbsp;</div></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=resourcetype&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["type"]?></a><?php } ?>
-		<?php } ?>
-		
-		<?php # add thumbs_display_fields to sort order links for thumbs views
-		if (count($sf)>0){
-			for ($x=0;$x<count($sf);$x++)
+		function display_sort_order($name, $label)
+			{
+			global $order_by;
+			if (isset($GLOBALS['display_fields_added']))
+				echo '&nbsp;|&nbsp;';
+			else
+				$GLOBALS['display_fields_added'] = true;
+			$fixedOrder = $name=='relevance';
+			$selected = $order_by==$name;
+			if ($selected && $fixedOrder)
 				{
-				if (!isset($metadata_template_title_field)){$metadata_template_title_field=false;} 
-				if ($sf[$x]['ref']!=$metadata_template_title_field){?>
-				&nbsp;|&nbsp;
-				<?php if ($order_by=="field".$sf[$x]['ref']) {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;sort=<?php echo urlencode($revsort)?>&amp;order_by=field<?php echo $sf[$x]['ref']?>&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo htmlspecialchars($sf[$x]['title'])?></a><div class="<?php echo urlencode($sort)?>">&nbsp;</div></span><?php } else { ?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&amp;order_by=field<?php echo $sf[$x]['ref']?>&amp;archive=<?php echo urlencode($archive) ?>&amp;k=<?php echo urlencode($k)?>&amp;restypes=<?php echo urlencode($restypes) ?>" onClick="return CentralSpaceLoad(this);"><?php echo htmlspecialchars($sf[$x]['title'])?></a><?php } ?>
-				<?php } ?>
-				<?php } ?>
-			<?php } ?>		
-		
-		<?php hook("sortorder");?>
+				?><span class="Selected"><?php echo $label?></span><?php
+				}
+			else
+				{
+				global $baseurl_short, $revsort, $search, $archive, $restypes, $k, $sort;
+				if ($selected)
+					{
+					?><span class="Selected"><?php
+					}
+				?><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php
+					echo urlencode($search) . '&amp;order_by=' . $name . '&amp;archive='
+							. urlencode($archive) . '&amp;k=' . urlencode($k) . '&amp;restypes='
+							. urlencode($restypes);
+					if ($selected)
+						{
+						echo '&amp;sort=' . urlencode($revsort);
+						}
+					?>" onClick="return CentralSpaceLoad(this);"><?php echo $label ?></a><?php
+					if (!$fixedOrder && $selected)
+						{
+						?><div class="<?php echo urlencode($sort)?>">&nbsp;</div><?php
+						}
+					if ($selected)
+						{
+						?></span><?php
+						}
+				}
+			}
+
+		$orderFields = array('relevance' => $rel);
+		if ($random_sort)
+			$orderFields['random'] = $lang['random'];
+		if ($popularity_sort)
+			$orderFields['popularity'] = $lang['popularity'];
+		if ($orderbyrating)
+			$orderFields['rating'] = $lang['rating'];
+		if ($date_column)
+			$orderFields['date'] = $lang['date'];
+		if ($colour_sort)
+			$orderFields['colour'] = $lang['colour'];
+		if ($order_by_resource_id)
+			$orderFields['resourceid'] = $lang['resourceid'];
+		if ($order_by_resource_type)
+			$orderFields['resourcetype'] = $lang['type'];
+
+		# Add thumbs_display_fields to sort order links for thumbs views
+		for ($x=0;$x<count($sf);$x++)
+			{
+			if (!isset($metadata_template_title_field)){$metadata_template_title_field=false;}
+			if ($sf[$x]['ref']!=$metadata_template_title_field)
+				{
+				$orderFields['field' . $sf[$x]['ref']] = htmlspecialchars($sf[$x]['title']);
+				}
+			}
+
+		$modifiedFields = hook('modifyorderfields', '', array($orderFields));
+		if ($modifiedFields)
+			$orderFields = $modifiedFields;
+		?>
+		<div class="InpageNavLeftBlock ">
+		<?php
+		echo $lang["sortorder"] . ':<br />';
+
+		foreach ($orderFields as $order => $label)
+			{
+			display_sort_order($order, $label);
+			}
+		hook("sortorder");?>
 		</div>
 		<?php
 		} 
