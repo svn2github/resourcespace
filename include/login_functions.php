@@ -69,7 +69,7 @@ function perform_login()
 
 		# Log this
 		daily_stat("User session",$userref);
-		sql_query("insert into resource_log(date,user,resource,type) values (now()," . (($userref!="")?"'$userref'":"null") . ",0,'l')");
+		if (!$api){sql_query("insert into resource_log(date,user,resource,type) values (now()," . (($userref!="")?"'$userref'":"null") . ",0,'l')");}
 
 		# Blank the IP address lockout counter for this IP
 		sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
