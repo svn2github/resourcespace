@@ -81,6 +81,15 @@ if (isset($_FILES['userfile'])){
  $wait=extract_exif_comment($ref,$extension);
  $resource=get_resource_data($ref);
  //create previews
+
+ if ($camera_autorotation){
+                                AutoRotateImage($filepath);
+                }
+
+
+
+
+
  $wait=create_previews($ref,false,$extension);
  // add resource to collection
  if ($collection!=""){
