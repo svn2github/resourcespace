@@ -648,7 +648,7 @@ if (!hook("replacemetadatacheckbox"))
     	<?php
     	}
     } ?>
-
+<?php hook ("beforepluploadform");?>
 <br>
 
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
