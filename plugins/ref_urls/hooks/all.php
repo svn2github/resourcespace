@@ -3,7 +3,7 @@
 function HookRef_urlsAllGet_resource_path_override($ref, $getfilepath, $size, $generate,
 		$extension, $scramble, $page, $watermarked, $file_modified, $alternative, $includemodified)
 	{
-	global $baseurl_short;
+	global $baseurl_short, $k;
 
 	if ($getfilepath)
 		return false;
@@ -15,6 +15,8 @@ function HookRef_urlsAllGet_resource_path_override($ref, $getfilepath, $size, $g
 		$url .= "&alternative=$alternative";
 	if ($watermarked)
 		$url .= "&wm=$watermarked";
+	if (!empty($k))
+		$url .= '&k=' . urlencode($k);
 
 	return $url;
 	}
