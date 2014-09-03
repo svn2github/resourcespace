@@ -892,7 +892,7 @@ function check_display_condition($n, $field)
 
 							<?php
 							foreach ($options as $option) {
-								$element_id = 'field_' . $fields[$cf]['ref'] . '_' . $option;
+								$element_id = 'field_' . $fields[$cf]['ref'] . '_' . sha1($option);
 								$jquery = sprintf('
 										jQuery("#%s").change(function() {
 											checkDisplayCondition%s();
@@ -961,9 +961,18 @@ function check_display_condition($n, $field)
 
 				# Handle Radio Buttons type:
 				if($scriptcondition['type'] == 12) {
+
+					$scriptcondition["options"] = explode(',', $scriptcondition["options"]);
+
+					foreach ($scriptcondition["options"] as $key => $value) {
+						$scriptcondition["options"][$key] = sha1($value);
+					}
+
+					$scriptcondition["options"] = implode(',', $scriptcondition["options"]);
 				?>
 
 					var options_string = '<?php echo $scriptcondition["options"]; ?>';
+
 					var field<?php echo $scriptcondition["field"]; ?>_options = options_string.split(',');
 					
 					var checked = null;
@@ -974,6 +983,7 @@ function check_display_condition($n, $field)
 							checked = jQuery('#field_<?php echo $scriptcondition["field"]; ?>_' + field<?php echo $scriptcondition["field"]; ?>_options[i] + ':checked').val();
 							checked = checked.toUpperCase();
 						}
+
 					}
 
 					fieldokvalues<?php echo $scriptcondition["field"]; ?> = [<?php echo $scriptcondition["valid"]; ?>];
