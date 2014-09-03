@@ -169,7 +169,7 @@ foreach ($videos as $video)
 </script>
 
 <form method="post">
-<input type="submit" name="splice" value="<?php echo $lang["action-splice"]?>" style="width:150px;">
+<input type="submit" onClick="CentralSpaceShowLoading();" name="splice" value="<?php echo $lang["action-splice"]?>" style="width:150px;">
 </form>
 
 <?php

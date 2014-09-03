@@ -59,13 +59,13 @@ include "../../include/header.php";
 
 <div class="Question"><label><?php echo $lang["page"]?></label><div class="Fixed"><?php echo $page?></div><div class="clearerleft"> </div></div>
 <?php if ($page=="help"){?>
-<div class="Question"><label><?php echo $lang["name"]?></label><input type=text name="name" class="stdwidth" value="<?php echo htmlspecialchars($name)?>">
+<div class="Question"><label for="name"><?php echo $lang["name"]?></label><input type=text name="name" class="stdwidth" value="<?php echo htmlspecialchars($name)?>">
 <?php } else { ?>
 <div class="Question"><label><?php echo $lang["name"]?></label><div class="Fixed"><?php echo $name?></div><div class="clearerleft"> </div></div>
 <?php } ?>
 
 <div class="Question">
-<label for="password"><?php echo $lang["language"]?></label>
+<label for="editlanguage"><?php echo $lang["language"]?></label>
 <select class="stdwidth" name="editlanguage" onchange="document.getElementById('langswitch').value='yes';document.getElementById('mainform').submit();">
 <?php foreach ($languages as $key=>$value) { ?>
 <option value="<?php echo $key?>" <?php if ($editlanguage==$key) { ?>selected<?php } ?>><?php echo $value?></option>
@@ -76,7 +76,7 @@ include "../../include/header.php";
 
 <?php if(!hook("managecontenteditgroupselector")){ ?>
 <div class="Question">
-<label for="password"><?php echo $lang["group"]?></label>
+<label for="editgroup"><?php echo $lang["group"]?></label>
 <select class="stdwidth" name="editgroup" onchange="document.getElementById('groupswitch').value='yes';document.getElementById('mainform').submit();">
 <option value=""></option>
 <?php 
@@ -93,7 +93,7 @@ for ($n=0;$n<count($groups);$n++) { ?>
 <?php
 if ($site_text_use_ckeditor)
 	{?>
-	<p><label><?php echo $lang["text"]?></label></p><br>
+	<p><label for="text"><?php echo $lang["text"]?></label></p><br>
 	<textarea name="text" class="stdwidth" rows=15 cols=50 id="<?php echo $lang["text"]?>" ><?php echo htmlspecialchars($text)?></textarea>
 	<script type="text/javascript">
 	<?php if(!hook("ckeditorinit")){ ?>
@@ -111,7 +111,7 @@ if ($site_text_use_ckeditor)
 	<?php }
 else
 	{?>
-		<label><?php echo $lang["text"]?></label><textarea name="text" class="stdwidth" rows=15 cols=50><?php echo htmlspecialchars($text)?></textarea>
+		<label for="text"><?php echo $lang["text"]?></label><textarea name="text" class="stdwidth" rows=15 cols=50><?php echo htmlspecialchars($text)?></textarea>
 	<?php } ?>
 
 <div class="clearerleft"> </div>
@@ -127,19 +127,19 @@ else
 <?php # add special ability to create and remove help pages
 if ($page=="help") { ?>
 <?php if ($name!="introtext"){ ?>
-	<div class="Question"><label><?php echo $lang["ticktodeletehelp"]?></label><input name="deleteme" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
+	<div class="Question"><label for="deleteme"><?php echo $lang["ticktodeletehelp"]?></label><input name="deleteme" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
 <?php } ?><br><br>
-<label><?php echo $lang["createnewhelp"]?></label><input name="newhelp" type=text value=""><div class="clearerleft"> </div>
+<label for="newhelp"><?php echo $lang["createnewhelp"]?></label><input name="newhelp" type=text value=""><div class="clearerleft"> </div>
 <?php } ?>
 
 <?php # add ability to delete custom page/name entries
  if ($custom==1 && $page!="help"){ ?>
-	<div class="Question"><label><?php echo $lang["ticktodeletehelp"]?></label><input name="deletecustom" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
+	<div class="Question"><label for="deletecustom"><?php echo $lang["ticktodeletehelp"]?></label><input name="deletecustom" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
 <?php } ?>
 
 <input type=hidden id="returntolist" name="returntolist" value=''/>
 <div class="QuestionSubmit">
-<label for="buttons"> </label>			
+<label for="save"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
 <input name="save" type="submit" onclick="jQuery('#returntolist').val(true)" value="&nbsp;&nbsp;<?php echo $lang['saveandreturntolist']?>&nbsp;&nbsp;" />
 </div>
