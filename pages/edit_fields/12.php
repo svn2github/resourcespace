@@ -34,7 +34,7 @@ if ($edit_autosave) { ?>
         </script>
 <?php } ?>
 
-<table id="" cellpadding="3" cellspacing="3" style="padding-left: 150px; display: block;">                    
+<table id="" class="radioOptionTable" cellpadding="3" cellspacing="3">                    
         <tbody>
                 <tr>
                         <?php 
