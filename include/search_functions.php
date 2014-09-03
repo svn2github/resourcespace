@@ -1227,6 +1227,9 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 				if ($s[0]==$fields[$cf]["name"]) # this field needs to be checked
 					{
 					$scriptconditions[$condref]["field"] = $fields[$cf]["ref"];  # add new jQuery code to check value
+					$scriptconditions[$condref]['type'] = $fields[$cf]['type'];
+					$scriptconditions[$condref]['options'] = $fields[$cf]['options'];
+
 					$checkvalues=$s[1];
 					$validvalues=explode("|",strtoupper($checkvalues));
 					$scriptconditions[$condref]["valid"]= "\"";
@@ -1261,6 +1264,19 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 								});
 							</script><?php
 							}
+						# Handle Radio Buttons type:
+						else if($fields[$cf]['type'] == 12) { 
+						?>
+							<script type="text/javascript">
+							jQuery(document).ready(function() {
+								jQuery('input[name=field_<?php echo $fields[$cf]["ref"]; ?>]:radio').change(function() {
+									checkDisplayCondition<?php echo $field["ref"];?>();
+								});
+							});
+							</script>
+
+						<?php 
+						} 
 						else
 							{
 							?>
@@ -1306,6 +1322,43 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 					else
 					{
 					";
+
+					# Handle Radio Buttons type:
+					if($scriptcondition['type'] == 12) {
+						
+						$scriptcondition["options"] = explode(',', $scriptcondition["options"]);
+						foreach ($scriptcondition["options"] as $key => $value) {
+							$scriptcondition["options"][$key] = sha1($value);
+						}
+						$scriptcondition["options"] = implode(',', $scriptcondition["options"]);
+
+						?>
+
+						var options_string = '<?php echo $scriptcondition["options"]; ?>';
+
+						var field<?php echo $scriptcondition["field"]; ?>_options = options_string.split(',');
+						
+						var checked = null;
+
+						for(var i=0; i < field<?php echo $scriptcondition["field"]; ?>_options.length; i++){
+						
+							if(jQuery('#field_<?php echo $scriptcondition["field"]; ?>_' + field<?php echo $scriptcondition["field"]; ?>_options[i]).is(':checked')) {
+								checked = jQuery('#field_<?php echo $scriptcondition["field"]; ?>_' + field<?php echo $scriptcondition["field"]; ?>_options[i] + ':checked').val();
+								checked = checked.toUpperCase();
+							}
+
+						}
+
+						fieldokvalues<?php echo $scriptcondition["field"]; ?> = [<?php echo $scriptcondition["valid"]; ?>];
+
+						if(checked !== null && jQuery.inArray(checked, fieldokvalues<?php echo $scriptcondition["field"]; ?>) > -1) {
+							newfield<?php echo $field["ref"]; ?>provisionaltest = true;
+						}
+
+						<?php
+					}
+					# end of handling radio buttons type
+
 					echo "fieldvalues" . $scriptcondition["field"] . "=new Array();
 					";
 					echo "checkedvals" . $scriptcondition["field"] . "=jQuery('input[name^=" . $scriptcondition["field"] . "_]')
