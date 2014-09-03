@@ -51,7 +51,7 @@ include "../../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editcontent"]?></h1>
 
-<form method=post id="mainform" action="<?php echo $baseurl_short?>pages/team/team_content_edit.php">
+<form method= post id="mainform" action="<?php echo $baseurl_short?>pages/team/team_content_edit.php">
 <input type=hidden name=page value="<?php echo $page?>">
 <input type=hidden name=name value="<?php echo $name?>">
 <input type=hidden name=langswitch id=langswitch value="">
@@ -127,25 +127,54 @@ else
 <?php # add special ability to create and remove help pages
 if ($page=="help") { ?>
 <?php if ($name!="introtext"){ ?>
-	<div class="Question"><label for="deleteme"><?php echo $lang["ticktodeletehelp"]?></label><input name="deleteme" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
+	<div class="Question"><label for="deleteme"><?php echo $lang["ticktodeletehelp"]?></label><input class="deleteBox" name="deleteme" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
 <?php } ?><br><br>
 <label for="newhelp"><?php echo $lang["createnewhelp"]?></label><input name="newhelp" type=text value=""><div class="clearerleft"> </div>
 <?php } ?>
 
 <?php # add ability to delete custom page/name entries
  if ($custom==1 && $page!="help"){ ?>
-	<div class="Question"><label for="deletecustom"><?php echo $lang["ticktodeletehelp"]?></label><input name="deletecustom" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
+	<div class="Question"><label for="deletecustom"><?php echo $lang["ticktodeletehelp"]?></label><input class="deleteBox" name="deletecustom" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
 <?php } ?>
 
 <input type=hidden id="returntolist" name="returntolist" value=''/>
+<div id="submissionResponse"></div>
 <div class="QuestionSubmit">
 <label for="save"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
-<input name="save" type="submit" onclick="jQuery('#returntolist').val(true)" value="&nbsp;&nbsp;<?php echo $lang['saveandreturntolist']?>&nbsp;&nbsp;" />
+<input class="saveText" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
+<input class="saveText return" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang['saveandreturntolist']?>&nbsp;&nbsp;" />
 </div>
 </form>
 </div>
-
+<script>
+var validsubmission = false;
+jQuery(".saveText").click(function(){
+	if(jQuery(".deleteBox:checked").length > 0) {
+		jQuery('#returntolist').val(true);
+		return true;
+	}
+	if(validsubmission){return true;}
+	CentralSpaceShowLoading();
+	if(jQuery(this).hasClass("return")) {
+		jQuery('#returntolist').val(true);
+	}else {
+		jQuery('#returntolist').val("");
+	}
+	var checktext = jQuery("textarea").val();
+	jQuery.post("../tools/check_html.php",{"text":checktext},function(response, status, xhr){
+			CentralSpaceHideLoading();
+            if(response !=="<pre>OK\n</pre>"){
+				jQuery("#submissionResponse").html(response);
+				return false;
+            }else {
+            	validsubmission=true;
+            	jQuery(".saveText").click();
+            }
+    	}
+    );
+    return false;
+});
+</script>
 <?php		
 include "../../include/footer.php";
 ?>
