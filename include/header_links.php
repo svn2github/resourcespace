@@ -59,6 +59,7 @@
 		
 		
 		<?php if ($help_link){?><li><a href="<?php echo $baseurl?>/pages/help.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["helpandadvice"]?></a></li><?php } ?>
+		<?php global $nav2contact_link; if ($nav2contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["contactus"]?></a></li><?php } ?>
 		<?php if (($top_nav_upload && checkperm("c")) || ($top_nav_upload_user && checkperm("d"))) { ?><li><a href="<?php echo $baseurl?>/pages/edit.php?ref=-<?php echo @$userref?>&amp;uploader=<?php echo $top_nav_upload_type ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["upload"]?></a></li><?php } ?>
 		<?php if (checkperm("t")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_home.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["teamcentre"]?></a>
 		<?php if ($team_centre_alert_icon && (checkperm("R")||checkperm("r")) &&  (sql_value("select sum(thecount) value from (select count(*) thecount from request where status = 0 union select count(*) thecount from research_request where status = 0) as theunion",0) > 0)){

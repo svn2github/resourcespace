@@ -926,6 +926,7 @@ $show_user_contributed_resources=true;
 
 # Show the contact us link?
 $contact_link=true;
+$nav2contact_link = false;
 
 # Show the about us link?
 $about_link=true;
