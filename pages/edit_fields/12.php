@@ -18,44 +18,46 @@ $rows=ceil(count($options)/$cols);
 
 // Autoupdate is set only on search forms, otherwise it should be false
 if(!isset($autoupdate)) {
-	$autoupdate = false;
+        $autoupdate = false;
 }
 
 if ($edit_autosave) { ?>
-	<script type="text/javascript">
-		// Function to allow radio buttons to save automatically when $edit_autosave from config is set: 
-		function radio_allow_save() {
-			preventautosave=false;
-			
-			setTimeout(function () {
-		        preventautosave=true;
-		    }, 1000);
-		}
-	</script>
+        <script type="text/javascript">
+                // Function to allow radio buttons to save automatically when $edit_autosave from config is set: 
+                function radio_allow_save() {
+                        preventautosave=false;
+                        
+                        setTimeout(function () {
+                        preventautosave=true;
+                    }, 1000);
+                }
+        </script>
 <?php } ?>
 
-<div class="radioblock">                    
-		<div class="radiooptions">
-			<?php 
-			$row = 1;
-			$col = 1;
-			foreach ($options as $key => $value) {
-				if($col > $cols) {
-					$col = 1;
-					$row++; ?>
-					</tr>
-					<tr>
-				<?php }
-				$col++;
-				?>
-		
-			<div class="radiooption"><span class="radio">
-				<input type="radio" id="field_<?php echo $field["ref"] . '_' . sha1($value); ?>" name="field_<?php echo $field["ref"]; ?>" value="<?php echo $value; ?>" <?php if($value == $set) {?>checked<?php } ?> <?php if($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>/>
-			</span>
-			<span class="radiotext">
-				<label class="customFieldLabel" for="field_<?php echo $field["ref"] . '_' . sha1($value); ?>" <?php if($edit_autosave) { ?>onmousedown="radio_allow_save();" <?php } ?>><?php echo $value; ?></label>
-			</span>
-			</div>
-			<?php } ?>
-		</div>
-</div>
+<table id="" cellpadding="3" cellspacing="3" style="padding-left: 150px; display: block;">                    
+        <tbody>
+                <tr>
+                        <?php 
+                        $row = 1;
+                        $col = 1;
+                        foreach ($options as $key => $value) {
+                                if($col > $cols) {
+                                        $col = 1;
+                                        $row++; ?>
+                                        </tr>
+                                        <tr>
+                                <?php }
+                                $col++;
+                                ?>
+                
+                        <td width="10" valign="middle">
+                                <input type="radio" id="field_<?php echo $field["ref"] . '_' . sha1($value); ?>" name="field_<?php echo $field["ref"]; ?>" value="<?php echo $value; ?>" <?php if($value == $set) {?>checked<?php } ?> <?php if($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>/>
+                        </td>
+                        <td align="left" valign="middle">
+                                 <label class="customFieldLabel" for="field_<?php echo $field["ref"] . '_' . sha1($value); ?>" <?php if($edit_autosave) { ?>onmousedown="radio_allow_save();" <?php } ?>><?php echo $value; ?></label>
+                        </td>
+
+                        <?php } ?>
+                </tr>
+        </tbody>
+</table>
