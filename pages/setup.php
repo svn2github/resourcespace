@@ -966,7 +966,7 @@ else{
 					<?php if(isset($errors['ffmpeg_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'ffmpeg'.</div>
 					<?php } ?>
-					<label for="ffmpegpath"><?php echo str_replace("%bin", "FFMpeg", $lang["setup-binpath"]) . ":"; ?></label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo @$ffmpeg_path; ?>"/>
+					<label for="ffmpegpath"><?php echo str_replace("%bin", "FFMpeg/libav", $lang["setup-binpath"]) . ":"; ?></label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo @$ffmpeg_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['exiftool_path'])){?>
