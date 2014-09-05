@@ -1499,15 +1499,22 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 					}
 				$options=$newoptions;
 
-				global $checkbox_ordered_vertically;
+				global $checkbox_ordered_vertically, $checkbox_vertical_columns;
 				if ($checkbox_ordered_vertically)
 					{
-					$l=average_length($option_trans_simple);
-					$cols=10;
-					if ($l>5)  {$cols=6;}
-					if ($l>10) {$cols=4;}
-					if ($l>15) {$cols=3;}
-					if ($l>25) {$cols=2;}
+					if (isset($checkbox_vertical_columns))
+						{
+						$cols=$checkbox_vertical_columns;
+						}
+					else
+						{
+						$l=average_length($option_trans_simple);
+						$cols=10;
+						if ($l>5)  {$cols=6;}
+						if ($l>10) {$cols=4;}
+						if ($l>15) {$cols=3;}
+						if ($l>25) {$cols=2;}
+						}
 					$height=ceil(count($options)/$cols);
 					if(!hook('rendersearchchkboxes'))
 						{
