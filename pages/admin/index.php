@@ -41,6 +41,6 @@ function resizeadmin(){
 		if (maxwidth> elem.getAttribute("width").replace(/px,*\)*/g,"")){elem.style.height=elem.getAttribute("width")+'px'; }
 		else { elem.style.width=maxwidth+'px';} } ); 
 	}		
-</script>
-
+</script><?php
+include("../../include/footer.php");
 
