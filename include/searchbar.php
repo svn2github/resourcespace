@@ -76,7 +76,7 @@ $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 
 
 if ($display_user_rating_stars && $star_search){ ?>
-
+	<?php if (!hook("replacesearchbarstarjs")){?>
 	<script type="text/javascript">
 
 	function StarSearchRatingDisplay(rating,hiclass)
@@ -98,6 +98,7 @@ if ($display_user_rating_stars && $star_search){ ?>
 		}	
 
 	</script>
+	<?php } // end hook replacesearchbarstarjs ?>
 <?php } ?>
 
 <div id="SearchBox">
@@ -538,6 +539,7 @@ if (!$basic_simple_search)
 	
 	
 	    <?php if ($star_search && $display_user_rating_stars){?>
+		<?php if (!hook("replacesearchbarstars")){?>
         <div class="SearchItem StarRatings"><?php echo $lang["starsminsearch"];?><br />
         <input type="hidden" id="starsearch" name="starsearch" class="SearchWidth" value="<?php echo htmlspecialchars($starsearch);?>">
                 <?php if ($starsearch=="") {$starsearch=0;}?>           
@@ -549,6 +551,7 @@ if (!$basic_simple_search)
                 ?>
                 </div>
         </div>
+        <?php } // end hook replacesearchbarstars?>
         <?php } ?>
         
 
