@@ -75,11 +75,16 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$sql_filter.="resource_type in ('" . join("','",$restypes_x) . "')";
 		}
 	
-	if ($starsearch!="" && $starsearch!=0)
+	if ($starsearch!="" && $starsearch!=0 && $starsearch!=-1)
 		{
 		if ($sql_filter!="") {$sql_filter.=" and ";}
 		$sql_filter.="user_rating >= '$starsearch'";
 		}	
+	if ($starsearch==-1)
+		{
+		if ($sql_filter!="") {$sql_filter.=" and ";}
+		$sql_filter.="user_rating = '-1'";
+		}
 	
 	if($recent_search_daylimit!="")
 			{
