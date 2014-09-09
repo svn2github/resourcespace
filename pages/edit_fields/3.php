@@ -2,10 +2,8 @@
 
 # Translate all options
 $options=trim_array(explode(",",$field["options"]));
-
 $modified_options=hook("modify_field_options","",array($field));
 if($modified_options!=""){$options=$modified_options;}
-
 $adjusted_dropdownoptions=hook("adjustdropdownoptions");
 if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
 
@@ -19,12 +17,15 @@ if ($auto_order_checkbox) {asort($option_trans);}
 $adjusted_dropdownoptiontrans=hook("adjustdropdownoptiontrans","edit",array($field,$option_trans));
 if ($adjusted_dropdownoptiontrans){$option_trans=$adjusted_dropdownoptiontrans;}
 
-if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leading comma if it exists	
-
+if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leading comma if it exists
 ?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; hook("additionaldropdownattributes","",array($field)); ?>
 <?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } ?>
 >
-<?php if (!hook("replacedropdowndefault","",array($field))){?><option value=""></option><?php } ?>
+<?php if (!hook("replacedropdowndefault","",array($field)))
+	{ 
+	$value = $options[0]==="" ? "" : $options[0];
+	?><option value=""></option><?php
+	} ?>
 <?php
 foreach ($option_trans as $option=>$trans)
 	{
