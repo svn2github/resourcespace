@@ -74,7 +74,7 @@ input[readonly] {color: #FFFFFF;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 
-.SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Selected a, .Question, .RecordPanel .Title {color: #FFFFFF;} 
+.SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, #RelatedResourceData a, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Selected a, .Question, .RecordPanel .Title {color: #FFFFFF;} 
 
 .Question{border-top: 1px solid #555;}
 

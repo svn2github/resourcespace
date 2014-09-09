@@ -75,7 +75,7 @@ input[readonly] {color: #FFFFFF;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 
-.SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Selected a, .Question, .RecordPanel .Title {color: #FFFFFF;} 
+.SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, #RelatedResourceData a, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Selected a, .Question, .RecordPanel .Title {color: #FFFFFF;} 
 
 .Question{border-top: 1px solid #5A7599;}
 
@@ -194,4 +194,3 @@ input[readonly] {color: #FFFFFF;}
 .glyph_user {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -20px 0;}
 .glyph_menu {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') 0 0;}
 .glyph_result {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -40px 0;}
-

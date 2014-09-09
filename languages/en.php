@@ -1821,5 +1821,6 @@ $lang["embedded_metadata_donot_extract_option"]="Do not extract";
 $lang["embedded_metadata_append_option"]="Append";
 $lang["embedded_metadata_prepend_option"]="Prepend";
 $lang["embedded_metadata_custom_option"]="Custom";
+$lang["related_resource_confirm_delete"]="This will remove the relationship but will not delete the resource. ";
 
 

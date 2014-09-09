@@ -2390,3 +2390,8 @@ $embedded_data_user_select=false;
 
 # Always display the option to override the import or appending/prepending of embedded metadata for the fields specified in the array
 # $embedded_data_user_select_fields=array(1,8);
+
+# Option to show related resources of specified resource types in a table alongside resource data. Thes resource types will not then be shown in the usual related resources area.
+# $related_type_show_with_data=array(3,4);
+# Additonal option to show a link for those with edit access allowing upload of new related resources. The resource type will then be automatically selected for the upload
+$related_type_upload_link=true;

@@ -17,10 +17,7 @@ input[readonly] {color: #000000;}
 #TextDesc{color:#616161;}
 
 .TopInpageNav {border-bottom: 1px solid #BBBBBB;}
-
-.Listview tr {background: #FFFFFF url(../gfx/whitegry/interface/listblend.gif) repeat-x;}
 .OxColourPale, .ListviewTitleStyle {color:#A1A1A1;}
-
 .Listview .ListviewTitleStyle td {background: #F3F3F3 none;}
 
 .Listview td {border-bottom: 1px solid #BBBBBB;color: #737373;}

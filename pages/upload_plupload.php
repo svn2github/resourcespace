@@ -36,6 +36,7 @@ if($embedded_data_user_select || isset($embedded_data_user_select_fields))
 			}
 		}
 $redirecturl = getval("redirecturl","");
+if(strpos($redirecturl, $baseurl)!==0 && !hook("modifyredirecturl")){$redirecturl="";}
 
 $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
@@ -310,7 +311,14 @@ if ($_FILES)
                                     {
                                     add_resource_to_collection($ref,$collection_add);
                                     }
-                                    
+                            
+							$relateto= getvalescaped("relateto","",true);   
+                            if($relateto!="")
+                                {
+                                // This has been added from a related resource upload link
+                                sql_query("insert into resource_related(resource,related) values ($relateto,$ref)");
+                                }
+        
                             # Log this			
                             daily_stat("Resource upload",$ref);
                             $status=upload_file($ref,(getval("no_exif","")=="yes" && getval("exif_override","")==""),false,(getval('autorotate','')!=''));
@@ -468,22 +476,29 @@ var pluploadconfig = {
                                 }
                         });
                 
-                          <?php if ($plupload_clearqueue && checkperm("d") ){?>
+                          <?php 
+						  
+						  
+							if ($redirecturl!=""){?>
                                   //remove the completed files once complete
                                   uploader.bind('UploadComplete', function(up, files) {
-                                                          jQuery('.plupload_done').slideUp('2000', function() {
-                                                                  uploader.splice();
-                                                                  window.location.href='<?php echo $baseurl_short?>pages/search.php?search=!contributions<?php echo urlencode($userref) ?>&archive=<?php echo urlencode($archive) ?>';
-                                                                  
-                                                          });
+                                  window.location.href='<?php echo $redirecturl ?>';
                                   });
+                                
+                          <?php }                          
                           
+							elseif ($plupload_clearqueue && checkperm("d") ){?>
+                                  uploader.bind('UploadComplete', function(up, files) {
+									  jQuery('.plupload_done').slideUp('2000', function() {
+											  uploader.splice();
+											  window.location.href='<?php echo $baseurl_short?>pages/search.php?search=!contributions<?php echo urlencode($userref) ?>&archive=<?php echo urlencode($archive) ?>';
+											  
+									  });
+                                  });
                                   
-                         
-                                  
-                          <?php } ?>
-                  
-                          <?php if ($plupload_clearqueue && !checkperm("d") ){?>
+                          <?php }
+
+						  elseif ($plupload_clearqueue && !checkperm("d") ){?>
                           //remove the completed files once complete
                           uploader.bind('UploadComplete', function(up, files) {
                                                   jQuery('.plupload_done').slideUp('2000', function() {

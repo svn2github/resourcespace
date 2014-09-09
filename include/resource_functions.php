@@ -3139,5 +3139,23 @@ function delete_resources_in_collection($collection) {
 	}
 
 	return TRUE;
+	}
+function update_related_resource($ref,$related,$add=true)
+	{	
+	if (!is_int($ref) || !is_int($related)){return false;}
+	$currentlyrelated=sql_value("select count(resource) value from resource_related where (resource='$ref' and related='$related') or (resource='$related' and related='$ref')",0);  
+	if($currentlyrelated!=0 && !$add)
+		{
+		// Relationship exists and we want to remove
+		sql_query("delete from resource_related where (resource='$ref' and related='$related') or (resource='$related' and related='$ref')");  
+		}
+	elseif ($currentlyrelated==0 && $add)
+		{
+		// Relationship does not exist and we want to add
+		sql_query("insert into resource_related(resource,related) values ('$ref','$related')");
+		}
+	return true;
+	}
+	
 
-}
+

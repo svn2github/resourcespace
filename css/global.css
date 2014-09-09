@@ -203,6 +203,7 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 
 /*Resource Panel layout*/
 .Listview {	margin: 25px 10px 25px 0;}
+.ListviewTight {margin: 5px 10px 5px 0;}
 .Listview table{ width:100%;}
 .Listview td {padding: 5px 5px 5px 5px;}
 .ListTools {text-align: right;}
@@ -735,3 +736,5 @@ width: 90px;
     opacity: 1;
 }
 #submissionResponse {padding-left: 300px;}
+
+
