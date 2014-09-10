@@ -16,7 +16,7 @@ $api=getval("api","");
 # Allow the language to be posted here
 $language=getval("language","");
 
-if($disable_languages) {
+if($disable_languages || $language ==="") {
 	$language = $defaultlanguage;
 }
 
