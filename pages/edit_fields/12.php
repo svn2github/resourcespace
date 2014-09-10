@@ -51,7 +51,7 @@ if ($edit_autosave) { ?>
                                 ?>
                 
                         <td width="10" valign="middle">
-                                <input type="radio" id="field_<?php echo $field["ref"] . '_' . sha1($value); ?>" name="field_<?php echo $field["ref"]; ?>" value="<?php echo $value; ?>" <?php if($value == $set) {?>checked<?php } ?> <?php if($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>/>
+                                <input type="radio" id="field_<?php echo $field["ref"] . '_' . sha1($value); ?>" name="field_<?php echo $field["ref"]; ?>" value="<?php echo $value; ?>" <?php if($value == $set) {?>checked<?php } ?> <?php if($edit_autosave) {?>onChange="AutoSave('<?php echo $field["ref"] ?>');"<?php } if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } echo $help_js; ?>/>
                         </td>
                         <td align="left" valign="middle">
                                  <label class="customFieldLabel" for="field_<?php echo $field["ref"] . '_' . sha1($value); ?>" <?php if($edit_autosave) { ?>onmousedown="radio_allow_save();" <?php } ?>><?php echo $value; ?></label>
