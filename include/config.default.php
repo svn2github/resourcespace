@@ -2395,3 +2395,6 @@ $embedded_data_user_select=false;
 # $related_type_show_with_data=array(3,4);
 # Additonal option to show a link for those with edit access allowing upload of new related resources. The resource type will then be automatically selected for the upload
 $related_type_upload_link=true;
+
+# Array of preview sizes to always create. This is especially helpful if your preview size is small than the "thm" size.
+$always_make_previews=array();
