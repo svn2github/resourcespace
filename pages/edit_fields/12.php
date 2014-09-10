@@ -21,6 +21,10 @@ if(!isset($autoupdate)) {
         $autoupdate = false;
 }
 
+if(!isset($help_js)) {
+    $help_js = '';
+}
+
 if ($edit_autosave) { ?>
         <script type="text/javascript">
                 // Function to allow radio buttons to save automatically when $edit_autosave from config is set: 
