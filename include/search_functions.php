@@ -837,12 +837,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		# find duplicates of a given resource
 		
 		# Extract the resource ID
-		$ref=explode(" ",$search);$ref=str_replace("!duplicates","",$ref[0]);
+		$ref=explode(" ",$search);
+		$ref=str_replace("!duplicates","",$ref[0]);
 		$ref=explode(",",$ref);// just get the number
 		$ref=escape_check($ref[0]);
 
 		if ($ref!="") {
-			$results=sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and file_checksum= (select file_checksum from (select file_checksum from resource where ref=$ref and file_checksum is not null)r2) order by file_checksum",false,$fetchrows);
+			$results=sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and file_checksum= (select file_checksum from (select file_checksum from resource where archive <> 3 and ref=$ref and file_checksum is not null)r2) order by file_checksum",false,$fetchrows);
 			$count=count($results);
 			if ($count>1) {
 				return $results;
@@ -851,7 +852,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				return false;
 			}		}
 		else {
-			return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and file_checksum in (select file_checksum from (select file_checksum from resource where file_checksum <> '' and file_checksum is not null group by file_checksum having count(file_checksum)>1)r2) order by file_checksum",false,$fetchrows);
+			return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and file_checksum in (select file_checksum from (select file_checksum from resource where archive <> 3 and file_checksum <> '' and file_checksum is not null group by file_checksum having count(file_checksum)>1)r2) order by file_checksum",false,$fetchrows);
 		}
 	}
 	
@@ -1493,6 +1494,12 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 				$set=trim_array(explode(";",cleanse_string($value,true)));
 				$wrap=0;
 
+				$l=average_length($option_trans_simple);
+				$cols=10;
+				if ($l>5)  {$cols=6;}
+				if ($l>10) {$cols=4;}
+				if ($l>15) {$cols=3;}
+				if ($l>25) {$cols=2;}
 				# Filter the options array for blank values and ignored keywords.
 				$newoptions=array();
 				foreach ($options as $option)
@@ -1503,28 +1510,15 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 						}
 					}
 				$options=$newoptions;
+				$height=ceil(count($options)/$cols);
 
 				global $checkbox_ordered_vertically, $checkbox_vertical_columns;
 				if ($checkbox_ordered_vertically)
-					{
-					if (isset($checkbox_vertical_columns))
-						{
-						$cols=$checkbox_vertical_columns;
-						}
-					else
-						{
-						$l=average_length($option_trans_simple);
-						$cols=10;
-						if ($l>5)  {$cols=6;}
-						if ($l>10) {$cols=4;}
-						if ($l>15) {$cols=3;}
-						if ($l>25) {$cols=2;}
-						}
-					$height=ceil(count($options)/$cols);
+					{					
 					if(!hook('rendersearchchkboxes'))
 						{
 						# ---------------- Vertical Ordering (only if configured) -----------
-						?><div class="verticalcheckboxes"><?php
+						?><table cellpadding=2 cellspacing=0><tr><?php
 						for ($y=0;$y<$height;$y++)
 							{
 							for ($x=0;$x<$cols;$x++)
@@ -1540,35 +1534,36 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 									if ($option!="")
 										{
 										?>
-										<div class="checkoption"><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span></div>
+										<td valign=middle><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo ($name) ?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</td>
 
 										<?php
 										}
 									else
 										{
-										?><div class="checkoption"><span class="checkbox"></span><span class="checkboxtext"></span></div><?php
+										?><td></td><td></td><?php
 										}
 									}
-								}?><br /><?php
+								}?></tr><tr><?php
 							}
-						?></div><?php
+						?></tr></table><?php
 						}
 					}
 				else
 					{
 					# ---------------- Horizontal Ordering (Standard) ---------------------				
-					?><div class="checkboxes"><?php
+					?><table cellpadding=2 cellspacing=0><tr><?php
 					foreach ($option_trans as $option=>$trans)
 						{
+						$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 						$name=$field["ref"] . "_" . md5($option);
 						if ($option!="")
 							{
 							?>
-							<div class="checkoption"><span class="checkbox"><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo htmlspecialchars($name) ?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($option),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></span><span class="checkboxtext"><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</span></div>
+							<td valign=middle><input type=checkbox id="<?php echo htmlspecialchars($name) ?>" name="<?php echo htmlspecialchars($name) ?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($option),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</td>
 							<?php
 							}
 						}
-					?></div><?php
+					?></tr></table><?php
 					}
 					
 				}
