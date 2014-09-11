@@ -72,6 +72,11 @@ function DisplayTheme($themes=array())
 			}
 
 		$images=get_theme_image($themes);
+		
+		$modified_images=hook("modify_theme_images",'',array($themes));
+		if(!empty($modified_images)){
+			$images=$modified_images;
+		}
 		if (($images!==false) && ($theme_images))
 			{
 			for ($n=0;$n<count($images);$n++)
@@ -154,6 +159,7 @@ function DisplayTheme($themes=array())
 
 		<div class="clearerright"> </div>
 		</div>
+		<?php hook("beforethemelist");?>
 		<br />
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">

@@ -27,14 +27,14 @@ switch (strtolower($language))
 <script type="text/javascript">
 
 // Replace the <textarea id=$name> with an CKEditor instance.
-<?php if(!hook("ckeditorinit")): ?>
+<?php if(!hook("ckeditorinit","",array($name))): ?>
 var editor = CKEDITOR.instances['<?php echo $name?>'];
 if (editor) { editor.destroy(true); }
 CKEDITOR.replace('<?php echo $name ?>',
     {
     language: '<?php echo $ckeditor_language ?>',
     // Define the toolbar to be used.
-    toolbar : [ [ <?php global $ckeditor_toolbars;echo $ckeditor_toolbars; ?> ] ],
+    toolbar : [ <?php global $ckeditor_toolbars;echo $ckeditor_toolbars; ?> ],
     height: "150",
     });
 var editor = CKEDITOR.instances['<?php echo $name?>'];
