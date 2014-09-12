@@ -83,15 +83,15 @@ $origheight = $origsizes[1];
 // if we've been told to do something
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'docrop'){
 
-$width = $_REQUEST['width'];
-$height = $_REQUEST['height'];
-$xcoord = $_REQUEST['xcoord'];
-$ycoord = $_REQUEST['ycoord'];
-$description = @$_REQUEST['description'];
-$cropsize = $_REQUEST['cropsize'];
-$new_width = $_REQUEST['new_width'];
-$new_height = $_REQUEST['new_height'];
-$alt_type = $_REQUEST['alt_type'];
+$width = getvalescaped('width','',true);
+$height = getvalescaped('height','',true);
+$xcoord = getvalescaped('xcoord','',true);
+$ycoord = getvalescaped('ycoord','',true);
+$description = getvalescaped('description','');
+$cropsize = getvalescaped('cropsize','',true);
+$new_width = getvalescaped('new_width','',true);
+$new_height = getvalescaped('new_height','',true);
+$alt_type = getvalescaped('alt_type','');
 
 
 if (isset($_REQUEST['flip']) && $_REQUEST['flip'] == 1 && !$cropperestricted){
