@@ -739,6 +739,7 @@ if ($count_result>0)
 		$field_type=sql_value("select type value from resource_type_field where ref=$title_field","");
 		if($field_type==8){
 			$title=strip_tags($title);
+			$title=str_replace("&nbsp;"," ",$title);
 		}
 		?>	
 		<?php if (!hook("replacecolresourcetitle")){?>
