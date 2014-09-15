@@ -1676,6 +1676,9 @@ function extract_text($ref,$extension,$path="")
 	# Save the extracted text.
 	if ($text!="")
 		{
+		$modified_text=hook("modifiedextractedtext",'',array($text));
+		if(!empty($modified_text)){$text=$modified_text;}
+		
 		# Save text
 		update_field($ref,$extracted_text_field,$text);
 		
