@@ -760,13 +760,21 @@ function get_field_options($ref)
 function get_data_by_field($resource,$field){
 	# Return the resource data for field $field in resource $resource
 	# $field can also be a shortname
+	global $rt_fieldtype_cache;
 	if (is_numeric($field)){
-		$value=sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
+		$value=sql_value("select value from resource_data where resource='$resource' and resource_type_field='".escape_check($field)."'","");
+		if (!isset($rt_fieldtype_cache[$field])){
+			$rt_fieldtype_cache[$field]=sql_value("select type value from resource_type_field where ref='".escape_check($field)."'","");
+		} 
+			
 	} else {
 		$value=sql_value("select value from resource_data where resource='$resource' and resource_type_field=(select ref from resource_type_field where name='".escape_check($field)."' limit 1)","");
+		if (!isset($rt_fieldtype_cache[$field])){
+			$rt_fieldtype_cache[$field]=sql_value("select type value from resource_type_field where name='".escape_check($field)."'","");
+		}
 	}
-	$rt_fieldtype=sql_value("select type value from resource_type_field where ref='$field'","");
-	if($rt_fieldtype==8){
+
+	if($rt_fieldtype_cache[$field]==8){
 		$value=strip_tags($value);
 		$value=str_replace("&nbsp;"," ",$value);
 	}
