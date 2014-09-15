@@ -174,6 +174,9 @@ function save_resource_data($ref,$multi)
 					continue;
 					}
 				}
+			$modified_val=hook("modifiedsavedfieldvalue",'',array($fields,$n,$val));
+			if(!empty($modified_val)){$val=$modified_val;}
+			
 			$error=hook("additionalvalcheck", "all", array($fields, $fields[$n]));
 			if ($error) 
 			    {

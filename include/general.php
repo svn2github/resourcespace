@@ -768,6 +768,7 @@ function get_data_by_field($resource,$field){
 	$rt_fieldtype=sql_value("select type value from resource_type_field where ref='$field'","");
 	if($rt_fieldtype==8){
 		$value=strip_tags($value);
+		$value=str_replace("&nbsp;"," ",$value);
 	}
 	return $value;
 }
