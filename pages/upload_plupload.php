@@ -392,6 +392,7 @@ var pluploadconfig = {
         multiple_queues: true,
         max_retries: <?php echo $plupload_max_retries; ?>,
 
+
         <?php if ($replace_resource > 0){?>
         multi_selection:false,
         rename: true,
@@ -631,7 +632,7 @@ else
 ?>
 <?php hook("upload_page_top"); ?>
 
-<h1><?php echo $titleh1 ?></h1>
+<?php if (!hook("replacepluploadtitle")){?><h1><?php echo $titleh1 ?></h1><?php } ?>
 <h2><?php echo $titleh2 ?></h2>
 <div id="plupload_instructions"><p><?php echo $intro?></p></div>
 <?php if (isset($plupload_max_file_size))
