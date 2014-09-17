@@ -34,7 +34,7 @@ $use_watermark=check_use_watermark();
 <body>
 
 <div class="embedslideshow_player">
-<div class="embedslideshow_preview" id="embedslideshow_preview" style="width:<?php echo $width?>px;height:<?php echo $width+8 ?>px;">
+<div class="embedslideshow_preview" id="embedslideshow_preview" style="position: relative;width:<?php echo $width?>px;height:<?php echo $width+8 ?>px;">
 
 <script type="text/javascript">
 var embedslideshow_page=1;
@@ -82,14 +82,35 @@ foreach ($resources as $resource)
 		$height=getvalescaped("width","");
 		$width=floor($height * $ratio);
 		}
-	
+
 	?>
 	<a class="embedslideshow_preview_inner" id="embedslideshow_preview<?php echo $page ?>" style="display:none;" href="#" onClick="embedslideshow_auto=false;embedslideshow_ShowPage(<?php echo ($page + 1) ?>,false,false);return false;"><img border="0" width=<?php echo $width ?> height=<?php echo $height ?> src="<?php echo $preview_path ?>"></a>
-	<script type="text/javascript">
-	embedslideshow_x_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$width)/2)+4 ?>;
-	embedslideshow_y_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$height)/2)+4 ?>;
-	</script>
-	<?php
+	<?php 
+	global $embedslideshow_textfield,$embedslideshow_resourcedatatextfield;
+	if($embedslideshow_textfield) 
+		{ 
+		$resource_data = get_data_by_field($resource["ref"],$embedslideshow_resourcedatatextfield);
+		if($resource_data !="") 
+			{
+			?>
+			<span class="embedslideshow_text" id="embedslideshow_previewtext<?php echo $page ?>"><?php echo $resource_data;?></span>
+			<?php
+			}
+			?>
+			<script type="text/javascript">
+			embedslideshow_x_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$width)/2)+4; ?>;
+			embedslideshow_y_offsets[<?php echo $page ?>]=<?php echo 4 ?>;
+			</script>
+			<?php
+		} 
+	else 
+		{?>
+		<script type="text/javascript">
+		embedslideshow_x_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$width)/2)+4; ?>;
+		embedslideshow_y_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$height)/2)+4;?>;
+		</script>
+		<?php
+		}
 	$page++;
 	}
 $maxpages=$page-1;
@@ -151,6 +172,7 @@ function embedslideshow_ShowPage(page_set,from_auto,jump)
 	
 	// Fade out current page
 	$('#embedslideshow_preview' + embedslideshow_page).fadeOut(embedslideshow_fadetime);
+	$('#embedslideshow_previewtext' + embedslideshow_page).fadeOut(embedslideshow_fadetime);
 		
 	embedslideshow_page=page_set;
 	if (embedslideshow_page>(<?php echo $maxpages ?>)) {embedslideshow_page=1;} // back to first page
@@ -164,6 +186,7 @@ function embedslideshow_ShowPage(page_set,from_auto,jump)
 		
 	// Fade in new page
 	$('#embedslideshow_preview' + embedslideshow_page).fadeIn(embedslideshow_fadetime);
+	$('#embedslideshow_previewtext' + embedslideshow_page).fadeIn(embedslideshow_fadetime);
 	
 	
 	if (embedslideshow_auto) {timer = setTimeout("embedslideshow_ShowPage(embedslideshow_page+1,true,false);",<?php echo ($transition==0?4000:$transition * 1000) ?>);} else {clearTimeout(timer);}
