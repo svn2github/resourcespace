@@ -34,7 +34,7 @@ CKEDITOR.replace('<?php echo $name ?>',
     {
     language: '<?php echo $ckeditor_language ?>',
     // Define the toolbar to be used.
-    toolbar : [ <?php global $ckeditor_toolbars;echo $ckeditor_toolbars; ?> ],
+    toolbar : [ [ <?php global $ckeditor_toolbars;echo $ckeditor_toolbars; ?> ] ],
     height: "150",
     });
 var editor = CKEDITOR.instances['<?php echo $name?>'];
