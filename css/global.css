@@ -85,15 +85,16 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 #CentralSpaceLogin {margin: 2em auto 4em;padding:0;width: 700px;text-align:left;}
 #CentralSpace {text-align:left;}
 
-.TopInpageNav {clear: left;padding-bottom: 5px;margin-right: 15px;}
-.BottomInpageNav {clear: left;padding-top: 5px;margin: 20px 15px 0px 0px;}
+.TopInpageNav {clear: left;padding-bottom: 5px;margin-right: 15px;position:relative;}
+.BottomInpageNav {clear: left;padding-top: 5px;margin: 20px 15px 0px 0px; position:relative;}
 .BottomInpageKey {margin-right: 15px; clear: left; text-align: left;}
-.TopInpageNavLeft{float:left;}
-.TopInpageNavRight{float:right;}
+.TopInpageNavLeft{float:left;padding-right:230px;}
+.TopInpageNavRight{position:absolute;right:0;top:0;width:230px;}
 .InpageNavLeftBlock {display:inline-block; *display: inline; *zoom: 1;text-align:left;margin: 0 20px 0 0;}
 .InpageNavRightBlock {display:inline-block; *display: inline; *zoom: 1;text-align:left;margin: 0 15px 0 0;}
 .BottomInpageNavLeft {float:left;}
 .BottomInpageNavRight{float:right;margin-right:10px;}
+.BottomInpageNavRight .TopInpageNavRight {position:relative;}
 .TopInpageNav a:link, .TopInpageNav a:visited, .BottomInpageNav a:link, .BottomInpageNav a:visited , #CentralSpaceLogin a:link, #CentralSpaceLogin a:visited {text-decoration:none;}
 .TopInpageNav a:hover, .TopInpageNav a:active, .BottomInpageNav a:hover, .BottomInpageNav a:active, #CentralSpaceLogin a:hover, #CentralSpaceLogin a:active {text-decoration:underline;}
 .Selected {font-weight: bold;}
