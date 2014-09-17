@@ -2125,30 +2125,33 @@ $display_selector_dropdowns=false;
 # Option that specifically allows the per-page dropdown without needing $display_selector_dropdown=true. This is useful if you'd like to use the display selector icons with per-page dropdowns.
 $perpage_dropdown=false;
 
-#Display link to request log on view page
+# Display link to request log on view page
 $display_request_log_link=false;
 
-#Show friendly error to user instead of 403 if IP not in permitted range.
+# Show friendly error to user instead of 403 if IP not in permitted range.
 $iprestrict_friendlyerror=false;
 
-#Make search filter strict (prevents direct access to view/preview page)
-#Set to 2 in order to emulate single resource behaviour in search (EXPERIMENTAL). Prevents search results that are not accessible from showing up. Slight performance penalty on larger search results.
+# Make search filter strict (prevents direct access to view/preview page)
+# Set to 2 in order to emulate single resource behaviour in search (EXPERIMENTAL). Prevents search results that are not accessible from showing up. Slight performance penalty on larger search results.
 $search_filter_strict=true;
 
-#Plupload settings
-#Specify the supported runtimes and priority
+# Plupload settings
+# Specify the supported runtimes and priority
 $plupload_runtimes = 'html5,gears,silverlight,browserplus,flash,html4';
 
-#Start uploads as soon as files are added to the queue?
+# Start uploads as soon as files are added to the queue?
 $plupload_autostart=false;
 
-#Clear the queue after uploads have completed
+# Clear the queue after uploads have completed
 $plupload_clearqueue=true;
+
+# Keep failed uploads in the queue after uploads have completed
+$plupload_show_failed=true;
 
 # Maximum number of attempts to upload a file chunk before erroring
 $plupload_max_retries=5;
 
-#Send confirmation emails to user when request sent or assigned
+# Send confirmation emails to user when request sent or assigned
 $request_senduserupdates=true;
 
 # Allow users to create new collections. Set to false to prevent creation of new collections.
@@ -2398,3 +2401,6 @@ $related_type_upload_link=true;
 
 # Array of preview sizes to always create. This is especially helpful if your preview size is small than the "thm" size.
 $always_make_previews=array();
+
+# Option to display an upload log in the browser on the upload page (note that this is not stored or saved)
+$show_upload_log=true;

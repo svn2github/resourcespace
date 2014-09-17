@@ -1822,5 +1822,7 @@ $lang["embedded_metadata_append_option"]="Append";
 $lang["embedded_metadata_prepend_option"]="Prepend";
 $lang["embedded_metadata_custom_option"]="Custom";
 $lang["related_resource_confirm_delete"]="This will remove the relationship but will not delete the resource. ";
-
-
+$lang["batch_replace_filename_intro"]="To replace a batch of resources you can upload files with names matching the unique resource IDs. Alternatively you can select a metadata field containing the file names and the system will look for a match with the uploaded file names to identify the file that needs to be replaced";
+$lang["batch_replace_use_resourceid"]="Match filenames with resource IDs";
+$lang["batch_replace_filename_field_select"]="Please select the field containing the file name.";
+$lang["plupload_log_intro"] ="Upload summary - server time : ";

@@ -52,7 +52,7 @@ include "../../include/header.php";
 		}
 		?>
 
-		<li><a href="<?php echo $baseurl_short?>pages/upload_plupload.php?replace=true<?php echo $no_exif; ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["replaceresourcebatch"]?></a></li>    
+		<li><a href="<?php echo $baseurl_short?>pages/upload_replace_batch.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["replaceresourcebatch"]?></a></li>    
 
 		<li><a href="<?php echo $baseurl_short?>pages/team/team_copy.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["copyresource"]?></a></li>
 		

@@ -3839,3 +3839,15 @@ function validate_html($html)
         }
     }
 
+function get_resource_type_fields($restypes="")
+	{
+	// Gets all metadata fields, optionally for a specified array of resource types 
+	$conditionsql="";
+	if(is_array($restypes))
+		{
+		$conditionsql = " where resource_type in (" . explode(",",$restypes) . ")";
+		}
+	$allfields = sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field" . $conditionsql);
+	return $allfields;
+	
+	}

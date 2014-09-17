@@ -21,6 +21,8 @@ $archive=getvalescaped("archive","",true);
 
 $uploadparams="";
 $uploadparams.="&relateto=" . urlencode(getval("relateto",""));
+$uploadparams.="&filename_field=" . urlencode(getval("filename_field",""));
+
 if($embedded_data_user_select || isset($embedded_data_user_select_fields))	
 		{
 		foreach($_GET as $getname=>$getval)
@@ -128,6 +130,7 @@ if ($_FILES)
 		}
 
 	// Clean the filename for security reasons
+	if($replace){$origuploadedfilename=escape_check($plfilename);}
 	$plfilename = preg_replace('/[^\w\._]+/', '_', $plfilename);
 
 	// Make sure the fileName is unique but only if chunking is disabled
@@ -336,22 +339,58 @@ if ($_FILES)
                             }
                     else
                             {
-                            # Overwrite an existing resource using the number from the filename.
-                            
-                            # Extract the number from the filename
-                            $plfilename=strtolower(str_replace(" ","_",$plfilename));
-                            $s=explode(".",$plfilename);
-                            if (count($s)==2) # does the filename follow the format xxxxx.xxx?
-                                    {
-                                    $ref=trim($s[0]);
-                                    if (is_numeric($ref)) # is the first part of the filename numeric?
-                                            {
-                                            $status=upload_file($ref,(getval("no_exif","")=="yes" && getval("exif_override","")==""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
-                                            }
-                                    }
+							$filename_field=getvalescaped("filename_field","",true);
+							if($filename_field!="")
+								{
+								$target_resource=sql_array("select resource value from resource_data where resource_type_field='$filename_field' and value='$origuploadedfilename'","");
+								if(count($target_resource)==1)
+									{
+									// A single resource has been found with the same filename
+									$status=upload_file($target_resource[0],(getval("no_exif","")=="yes" && getval("exif_override","")==""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
+									echo "SUCCESS: " . htmlspecialchars($target_resource[0]);
+									exit();
+									}
+								elseif(count($target_resource)==0)
+									{
+									// No resource found with the same filename
+									header('Content-Type: application/json');
+									die('{"jsonrpc" : "2.0", "error" : {"code": 106, "message": "ERROR - no resource found with filename ' . $origuploadedfilename . '"}, "id" : "id"}');
+									unlink($plfilepath);
+									}
+								else
+									{
+									// Multiple resources found with the same filename
+									$resourcelist=implode(",",$target_resource);
+									header('Content-Type: application/json');
+									die('{"jsonrpc" : "2.0", "error" : {"code": 107, "message": "ERROR - multiple resources found with filename ' . $origuploadedfilename . '. Resource IDs : ' . $resourcelist . '"}, "id" : "id" }');
+									unlink($plfilepath);
+									}
+								}
+							else
+								{							
+								# Overwrite an existing resource using the number from the filename.
+								
+								# Extract the number from the filename
+								$plfilename=strtolower(str_replace(" ","_",$plfilename));
+								$s=explode(".",$plfilename);
+								if (count($s)==2) # does the filename follow the format xxxxx.xxx?
+										{
+										$ref=trim($s[0]);
+										if (is_numeric($ref)) # is the first part of the filename numeric?
+                                                                                    {
+                                                                                    $status=upload_file($ref,(getval("no_exif","")=="yes" && getval("exif_override","")==""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
+                                                                                    echo "SUCCESS: " . htmlspecialchars($ref);}
+                                                                                else
+                                                                                    {
+                                                                                    // No resource found with the same filename
+                                                                                    header('Content-Type: application/json');
+                                                                                    die('{"jsonrpc" : "2.0", "error" : {"code": 106, "message": "ERROR - no ref matching filename ' . $origuploadedfilename . '"}, "id" : "id"}');
+                                                                                    unlink($plfilepath);    
+                                                                                    }
+										}
 
-                            echo "SUCCESS: " . htmlspecialchars($ref);
-                            exit();
+								exit();
+								}
                             }
                     }		
 		}
@@ -378,6 +417,10 @@ include "../include/header.php";
 
 
 <script type="text/javascript">
+
+<?php
+echo "show_upload_log=" . (($show_upload_log)?"true":"false");
+?>
 
 var pluploadconfig = {
         // General settings
@@ -446,8 +489,16 @@ var pluploadconfig = {
                                 if (info.response.indexOf("error") > 0)
                                         {
                                         uploadError = JSON.parse(info.response);
-                                        alert("<?php echo $lang["error"] ?> " + uploadError.error.code + " : " + uploadError.error.message);
+                                        uploaderrormessage= uploadError.error.code + " " + uploadError.error.message;
                                         file.status = plupload.FAILED;
+                                        if(show_upload_log)
+                                            {
+                                            jQuery("#upload_log").append("\r\n" + file.name + " - " + uploaderrormessage);
+                                            }
+                                        }
+                                else if(show_upload_log)
+                                        {
+                                        jQuery("#upload_log").append("\r\n" + file.name + " - " + info.response );
                                         }
                                 //update collection div if uploading to active collection
                                 <?php if ($usercollection==$collection_add) { ?>
@@ -480,7 +531,7 @@ var pluploadconfig = {
                           <?php 
 						  
 						  
-							if ($redirecturl!=""){?>
+				  if ($redirecturl!=""){?>
                                   //remove the completed files once complete
                                   uploader.bind('UploadComplete', function(up, files) {
                                   window.location.href='<?php echo $redirecturl ?>';
@@ -488,22 +539,42 @@ var pluploadconfig = {
                                 
                           <?php }                          
                           
-							elseif ($plupload_clearqueue && checkperm("d") ){?>
+				elseif ($plupload_clearqueue && checkperm("d") ){?>
                                   uploader.bind('UploadComplete', function(up, files) {
-									  jQuery('.plupload_done').slideUp('2000', function() {
-											  uploader.splice();
-											  window.location.href='<?php echo $baseurl_short?>pages/search.php?search=!contributions<?php echo urlencode($userref) ?>&archive=<?php echo urlencode($archive) ?>';
-											  
-									  });
+                                        jQuery('.plupload_done').slideUp('2000', function() {
+                                                        uploader.splice();
+                                                        window.location.href='<?php echo $baseurl_short?>pages/search.php?search=!contributions<?php echo urlencode($userref) ?>&archive=<?php echo urlencode($archive) ?>';
+                                                        
+                                        });
                                   });
                                   
                           <?php }
 
-						  elseif ($plupload_clearqueue && !checkperm("d") ){?>
+			 elseif ($plupload_clearqueue && !checkperm("d") ){?>
                           //remove the completed files once complete
                           uploader.bind('UploadComplete', function(up, files) {
                                                   jQuery('.plupload_done').slideUp('2000', function() {
-                                                          uploader.splice();        
+                                                         <?php if (!$plupload_show_failed)
+                                                                {
+                                                                ?>
+                                                                uploader.splice();
+                                                                <?php
+                                                                }
+                                                            else
+                                                                {
+                                                                ?>
+                                                                
+                                                                alert ("HERE");
+                                                                for (var i in files) {
+                                                                alert (files[i].status);
+                                                                    if (files[i].status!=plupload.FAILED)
+                                                                        {
+                                                                        uploader.removeFile(files[i]);
+                                                                        }
+                                                                    }
+                                                                <?php
+                                                                }
+                                                            ?>
                                                   });
                           });
                   
@@ -520,7 +591,7 @@ var pluploadconfig = {
                             // When all files are uploaded submit form
                             uploader.bind('StateChanged', function() {
                                 if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-                                    $('form.pluploadform')[0].submit();
+                                    jQuery('form.pluploadform')[0].submit();
                                 }
                             });
                                 
@@ -690,11 +761,30 @@ if($upload_no_file)
 	<?php
 	}?>
 
+<?php if ($show_upload_log){
+    ?>
+    <div id="showlog" ><a href="" onClick="jQuery('#upload_results').show();jQuery('#showlog').hide();jQuery('#hidelog').show();return false;" >&#x25B8;&nbsp;Show upload log</a></div>
+    <div id="hidelog" style="display: none"><a href="" onClick="jQuery('#upload_results').hide();jQuery('#showlog').show();jQuery('#hidelog').hide();return false;" >&#x25BE;&nbsp;Hide upload log</a></div>
+    <div id="upload_results" class="upload_results" style="display: none">
+        <textarea id="upload_log" rows=10 cols=100 style="width: 100%; border: solid 1px;" ><?php echo  $lang["plupload_log_intro"] . date("d M y @ H:i"); ?></textarea>
+        
+    </div>
+    <?php
+    }
+    ?>    
+
+
 </div>
+
+
+	
+
 
 <?php
 
 hook("upload_page_bottom");
+
+
 
 include "../include/footer.php";
 
