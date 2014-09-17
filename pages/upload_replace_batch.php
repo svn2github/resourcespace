@@ -16,7 +16,7 @@ if(!$metadata_read_default) {
 	$no_exif = '&no_exif=yes';
 }
 
-include "../../include/header.php";
+include "../include/header.php";
 
 
 ?>
