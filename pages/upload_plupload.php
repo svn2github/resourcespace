@@ -564,9 +564,7 @@ var pluploadconfig = {
                                                                 {
                                                                 ?>
                                                                 
-                                                                alert ("HERE");
                                                                 for (var i in files) {
-                                                                alert (files[i].status);
                                                                     if (files[i].status!=plupload.FAILED)
                                                                         {
                                                                         uploader.removeFile(files[i]);
