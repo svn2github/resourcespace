@@ -23,7 +23,9 @@ if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leadi
 >
 <?php if (!hook("replacedropdowndefault","",array($field)))
 	{ 
-	$value = $options[0]==="" ? "" : $options[0];
+	if($value==="") {
+		$value = $options[0]==="" ? "" : $options[0];
+	}
 	?><option value=""></option><?php
 	} ?>
 <?php
