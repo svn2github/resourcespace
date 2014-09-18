@@ -1503,11 +1503,11 @@ else # Edit Resource(s).
     }
 
 # Status / Access / Related Resources
-if (!checkperm("F*")&&!hook("editstatushide")) # Only display Status / Access / Related Resources if full write access field access has been granted.
+if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only display Status / Access / Related Resources if permissions match.
     {
     if(!hook("replacestatusandrelationshipsheader"))
         {
-        if ($ref>0 || $show_status_and_access_on_upload==true)
+        if ($ref>0 || $show_status_and_access_on_upload===true || $show_access_on_upload===true)
         	{
 	        if ($enable_related_resources && ($multiple || $ref>0)) # Showing relationships
 	        	{
@@ -1524,7 +1524,7 @@ if (!checkperm("F*")&&!hook("editstatushide")) # Only display Status / Access / 
     hook("statreladdtopfields");
 
     # Status
-    if ($ref>0 || $show_status_and_access_on_upload==true)
+    if ($ref>0 || $show_status_and_access_on_upload===true)
         {
         if(!hook("replacestatusselector"))
             {
@@ -1560,7 +1560,7 @@ if (!checkperm("F*")&&!hook("editstatushide")) # Only display Status / Access / 
     hook("beforeaccessselector");
     if (!hook("replaceaccessselector"))
         {
-        if ($ref<0 && $show_status_and_access_on_upload==false)
+        if ($ref<0 && $show_status_and_access_on_upload=== false && ($show_access_on_upload === false || ($show_access_on_upload === true && !$show_access_on_upload_perm)))
             { 
             # Upload template and the status and access fields are configured to be hidden on uploads.
             ?>
