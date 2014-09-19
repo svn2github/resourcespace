@@ -26,6 +26,14 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 
 	$resource_types_allowed=array();
 	$resource_type_filter=getvalescaped("resource_type","",true);
+	if(getvalescaped("add_to_collection","")!="")
+		{
+		include dirname(__FILE__)."/../../../include/collections_functions.php";
+		global $usercollection;
+		$add_to_collection=true;
+		}
+	else
+		{$add_to_collection=false;}
 	
 
 	foreach (array_keys($resource_types) as $resource_type)		// check what fields are supported by comparing header fields with required fields per resource_type
@@ -122,6 +130,9 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 			// Create the new resource
 			$newref=create_resource($resource_type);
 			array_push ($messages,"Created new resource: #" . $newref . " (" . $resource_types[$resource_type] . ")");
+			
+			if($add_to_collection)
+				{add_resource_to_collection($newref,$usercollection);}
 			}
 			
 		$cell_count=-1;		

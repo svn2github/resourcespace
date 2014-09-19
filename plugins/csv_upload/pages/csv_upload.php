@@ -36,6 +36,7 @@ $override_fields=array("status","access");		// user can set if empty or override
 $process_csv=(getvalescaped("process_csv","")!="");
 $override=getvalescaped("override","");
 $selected_resource_type=getvalescaped("resource_type","");
+$add_to_collection=getvalescaped("add_to_collection","");
 
 # ----- we do not have a successfully submitted csv, so show the upload form an exit -----
 
@@ -56,7 +57,7 @@ if ((!isset($_FILES[$fd]) || $_FILES[$fd]['error']>0) && !$process_csv)
 	?>
 	<form action="<?php echo $_SERVER["SCRIPT_NAME"]; ?>" id="upload_csv_form" method="post" enctype="multipart/form-data">		
 		<div class="Question">
-			<label for="<?php echo $fd; ?>">File</label>
+			<label for="<?php echo $fd; ?>"><?php echo $lang['csv_upload_file'] ?></label>
 			<input type="file" id="<?php echo $fd; ?>" name="<?php echo $fd; ?>" onchange="if(this.value==null || this.value=='') { jQuery('.file_selected').hide(); } else { jQuery('.file_selected').show(); } ">	
 		</div>
 		<?php foreach ($override_fields as $s)
@@ -64,7 +65,7 @@ if ((!isset($_FILES[$fd]) || $_FILES[$fd]['error']>0) && !$process_csv)
 		?><div class="file_selected Question" style="display: none;">
 			<label for="<?php echo $s; ?>"><?php echo $lang[$s]?></label>				
 			<select name="<?php echo $s; ?>" id="<?php echo $s; ?>" onchange="if (this.options[this.selectedIndex].value=='default') { jQuery('#<?php echo $s; ?>_action').hide(); } else { jQuery('#<?php echo $s; ?>_action').show(); }" class="stdwidth">
-				<option value="default">Default</option><?php	// TODO localise this
+				<option value="default"><?php echo $lang['csv_upload_default'] ?></option><?php	
 	$i=0;	
 	while (isset($lang[$s . $i]))
 	{
@@ -74,8 +75,8 @@ if ((!isset($_FILES[$fd]) || $_FILES[$fd]['error']>0) && !$process_csv)
 	}
 	?>				</select>
 			<select id="<?php echo $s; ?>_action" name="<?php echo $s; ?>_action" style="display: none;" class="stdwidth" >					
-				<option value="1">When unspecified</option>		<?php // TODO localise this ?>
-				<option value="2">Override</option>				<?php // TODO localise this ?>
+				<option value="1"><?php echo $lang['csv_upload_unspecified'] ?></option>		
+				<option value="2"><?php echo $lang['csv_upload_override'] ?></option>	
 			</select>			
 			<div class="clearerleft"></div>		
 		</div>
@@ -83,9 +84,9 @@ if ((!isset($_FILES[$fd]) || $_FILES[$fd]['error']>0) && !$process_csv)
 		}
 	?>		
 		<div class="file_selected Question" style="display: none;">
-			<label for="resource_type">Resource Type</label>
+			<label for="resource_type"><?php echo $lang["property-resource_type"] ?></label>
 			<select id="resource_type" name="resource_type" class="stdwidth" onchange="if (this.options[this.selectedIndex].value=='default') { jQuery('.override').hide();jQuery('.override').attr('disabled','disabled'); } else { jQuery('.override').removeAttr('disabled');jQuery('.override').show(); }">					
-				<option value="default">Automatic</option>
+				<option value="default"><?php echo $lang['csv_upload_automatic'] ?></option>
 				<?php	
 					foreach ($resource_types as $resource_type=>$resource_name)
 						{
@@ -96,22 +97,26 @@ if ((!isset($_FILES[$fd]) || $_FILES[$fd]['error']>0) && !$process_csv)
 			</select>
 			
 			<select name="override" class="override" style="display: none;" class="stdwidth" disabled="disabled">
-				<option value="0">Filter</option>
-				<option value="1">Override</option>			
+				<option value="0"><?php echo $lang['csv_upload_filter'] ?></option>
+				<option value="1"><?php echo $lang['csv_upload_override'] ?></option>			
 			</select>
 			
 			<div class="FormHelp">
 				<div class="FormHelpInner">
-					<p>"Automatic" requires a numeric field in the CSV file called "resource_type" that indicates the resource type for each line.</p>
+					<p><?php echo $lang["csv_upload_automatic_notes"] ?></p>
 					<ul style="display: none;" class="override">
-						<li>"Filter" only processes CSV line where the "resource_type" field matches the specified value.</li>										
-						<li>"Override" will treat every CSV line as the specified resource type, regardless of "resource_type" existence or value.</li>
+						<li><?php echo $lang["csv_upload_filter_notes"] ?></li>										
+						<li><?php echo $lang["csv_upload_override_notes"] ?></li>
 					</ul>
 				</div>
 			</div>
 					
 		</div>
 		
+		<div class="file_selected Question" style="display: none;">
+			<label for="add_to_collection"><?php echo $lang['addtocollection'] ?></label>
+			<input type="checkbox" id="add_to_collection" name="add_to_collection" >	
+		</div>
 		
 	
 		<label for="submit" class="file_selected" style="display: none;"></label>
@@ -213,7 +218,9 @@ else
 			?>	
 			
 		<input type="hidden" id="override"  name="override" value="<?php echo htmlspecialchars($override) ?>" > 
-		<input type="hidden" id="resource_type"  name="resource_type" value="<?php echo htmlspecialchars($selected_resource_type) ?>" > 	
+		<input type="hidden" id="resource_type"  name="resource_type" value="<?php echo htmlspecialchars($selected_resource_type) ?>" > 
+
+		<input type="hidden" id="add_to_collection" name="add_to_collection" value="<?php echo htmlspecialchars($add_to_collection) ?>">			
 		<input type="hidden" id="process_csv"  name="process_csv" value="1" > 			
 		<input type="submit" value="Process CSV" name="process_csv" onClick="CentralSpacePost(this,true);return false;">
 		</form>
