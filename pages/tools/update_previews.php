@@ -37,7 +37,7 @@ function update_preview($ref){
     	if(!empty($resourceinfo[0]['file_path'])){$ingested=false;}
     	else{$ingested=true;}
         create_previews($ref, false,($previewbased?"jpg":$resourceinfo[0]["file_extension"]),false, $previewbased,-1,false,$ingested);
-        hook("afterupdatepreview");
+        hook("afterupdatepreview","",array($ref));
         return true;
     }
     return false;
