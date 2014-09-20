@@ -484,6 +484,9 @@ function extract_exif_comment($ref,$extension="")
 							
 							update_field($ref,$read_from[$i]['ref'],$newval);
 							$exif_updated_fields[]=$read_from[$i]['ref'];
+							
+							
+							hook("metadata_extract_addition","all",array($ref,$newval,$read_from,$i));
 							}
 						}
 					}
