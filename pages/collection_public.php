@@ -87,13 +87,36 @@ for ($n=ord("A");$n<=ord("Z");$n++)
 $atoz.="</div>";
 
 $url=$baseurl_short."pages/collection_public.php?paging=true&col_order_by=".urlencode($col_order_by)."&sort=".urlencode($sort)."&find=".urlencode($find)."&override_group_restrict=" . urlencode($override_group_restrict);
-?><div class="TopInpageNav"><?php echo $atoz?> <div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:
-	<?php 
-	for($n=0;$n<count($list_display_array);$n++){?>
-	<?php if ($per_page==$list_display_array[$n]){?><span class="Selected"><?php echo $list_display_array[$n]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=<?php echo $list_display_array[$n]?>" onClick="return CentralSpaceLoad(this);"><?php echo $list_display_array[$n]?></a><?php } ?>&nbsp;|
-	<?php } ?>
-	<?php if ($per_page==99999){?><span class="Selected"><?php echo $lang["all"]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=99999" onClick="return CentralSpaceLoad(this);"><?php echo $lang["all"]?></a><?php } ?>
-	</div> <?php pager(false); ?></div>
+?><div class="TopInpageNav">
+	<div class="TopInpageNavLeft">
+		<?php echo $atoz?> 
+		<div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:
+		<?php 
+		for($n=0;$n<count($list_display_array);$n++)
+			{
+		 	if ($per_page==$list_display_array[$n])
+		 		{
+		 		?><span class="Selected"><?php echo $list_display_array[$n]?></span><?php 
+		 		} 
+		 	else 
+		 		{ 
+		 		?><a href="<?php echo $url; ?>&per_page_list=<?php echo $list_display_array[$n]?>" onClick="return CentralSpaceLoad(this);"><?php echo $list_display_array[$n]?></a><?php 
+		 		} ?> &nbsp;| <?php 
+			} ?>
+		<?php
+		if($per_page==99999)
+			{
+			?><span class="Selected"><?php echo $lang["all"]?></span><?php 
+			} 
+		else 
+			{ 
+			?><a href="<?php echo $url; ?>&per_page_list=99999" onClick="return CentralSpaceLoad(this);"><?php echo $lang["all"]?></a><?php 
+			} ?>
+		</div> 
+	</div>
+	<?php pager(false); ?>
+	<div class="clearerleft"></div>
+</div>
 
 <form method=post id="collectionform" action="<?php echo $baseurl_short?>pages/collection_public.php">
 <input type=hidden name="add" id="collectionadd" value="">

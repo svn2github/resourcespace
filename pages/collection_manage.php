@@ -250,13 +250,13 @@ $atoz.="</div>";
 
 $url=$baseurl_short."pages/collection_manage.php?paging=true&col_order_by=".urlencode($col_order_by)."&sort=".urlencode($sort)."&find=".urlencode($find)."";
 
-	?><div class="TopInpageNav"><?php echo $atoz?> <div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:
+	?><div class="TopInpageNav"><div class="TopInpageNavLeft"><?php echo $atoz?> <div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:
   	<?php 
   	for($n=0;$n<count($list_display_array);$n++){?>
   	<?php if ($per_page==$list_display_array[$n]){?><span class="Selected"><?php echo htmlspecialchars($list_display_array[$n]) ?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=<?php echo urlencode($list_display_array[$n])?>" onClick="return CentralSpaceLoad(this);"><?php echo htmlspecialchars($list_display_array[$n]) ?></a><?php } ?>&nbsp;|
   	<?php } ?>
   	<?php if ($per_page==99999){?><span class="Selected"><?php echo $lang["all"]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=99999" onClick="return CentralSpaceLoad(this);"><?php echo $lang["all"]?></a><?php } ?>
-  	</div> <?php pager(false); ?></div><?php	
+  	</div> </div><?php pager(false); ?><div class="clearerleft"></div></div><?php	
 ?>
 
 <form method=post id="collectionform" action="<?php echo $baseurl_short?>pages/collection_manage.php">
