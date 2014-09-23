@@ -57,6 +57,8 @@ for ($n=0;$n<count($keywords);$n++)
 			}
 		}
 	}
+	
+	
 # Set the text search box to the stripped value.
 
 if ($quoted_string){
@@ -114,7 +116,8 @@ if ($display_user_rating_stars && $star_search){ ?>
 
 <?php if (!hook("searchbarreplace")) { ?>
 
-  <h2><?php echo $lang["simplesearch"]?></h2>
+  <?php if (!hook("replacesimplesearchheader")){?><h2><?php echo $lang["simplesearch"]?></h2><?php } ?>
+
 	<label for="ssearchbox"><?php echo text("searchpanel")?></label>
 	
 	<form id="form1" method="post" action="<?php echo $baseurl?>/pages/search.php" onSubmit="return CentralSpacePost(this,true);">
