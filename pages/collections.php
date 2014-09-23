@@ -10,8 +10,6 @@ include_once dirname(__FILE__)."/../include/resource_functions.php";
 include_once dirname(__FILE__)."/../include/search_functions.php";
 
 
-$lazyload=getval('lazyload',false);
-
 // copied from collection_manage to support compact style collection adds (without redirecting to collection_manage)
 $addcollection=getvalescaped("addcollection","");
 if ($addcollection!="")
@@ -114,7 +112,7 @@ if ($allow_reorder)
 
 
 # Include function for reordering
-if ($allow_reorder &&!$lazyload)
+if ($allow_reorder)
 	{
 	?>
 	<script type="text/javascript">
@@ -162,7 +160,7 @@ if ($allow_reorder &&!$lazyload)
 		
 	</script>
 <?php } 
-else if (!$lazyload) { ?>
+else { ?>
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 			jQuery('.ui-sortable').sortable('disable');
@@ -172,7 +170,7 @@ else if (!$lazyload) { ?>
 	<?php } 
 	hook("responsivethumbsloaded");
 
-if (!$lazyload){?>
+?>
 	<style>
 	#CollectionMenuExp
 		{
@@ -189,7 +187,7 @@ if (!$lazyload){?>
 <div style="display:none;" id="currentusercollection"><?php echo $usercollection?></div>
 
 <script>usercollection='<?php echo htmlspecialchars($collection) ?>';</script>
-<?php } 
+<?php 
 
 $add=getvalescaped("add","");
 if ($add!="")
@@ -344,14 +342,11 @@ hook("processusercommand");
 
 <?php 
 $searches=get_saved_searches($usercollection);
-$do_lazyload=false; // if the collection is over the configured number of resources, only load 20 first, then load the rest immediately.
+
 // Note that the full search is done initially. The time saved is due to content drawing and transfer.
 $result=do_search("!collection" . $usercollection,"","relevance",0);
 $count_result=count($result);
-$before_lazyload=$count_result;
 
-if ($count_result>20 || $thumbs=="hide"){$do_lazyload=true;$before_lazyload=min(count($result),20);?>
-<?php } // allow less than 20 too, and disable sorting if the result is going to be truncated
 
 $hook_count=hook("countresult","",array($usercollection,$count_result));if (is_numeric($hook_count)) {$count_result=$hook_count;} # Allow count display to be overridden by a plugin (e.g. that adds it's own resources from elsewhere e.g. ResourceConnect).
 $feedback=$cinfo["request_feedback"];
@@ -388,7 +383,7 @@ if (($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size)
 	}
 
 if(!hook("clearmaincheckboxesfromcollectionframe")){
-	if ($use_checkboxes_for_selection &&!$lazyload){?>
+	if ($use_checkboxes_for_selection ){?>
 	
 	<script type="text/javascript">
 	var checkboxes=jQuery('input.checkselect');
@@ -439,7 +434,7 @@ if ($count_result>$max_collection_thumbs && $k=="")
 	*/
 if (true) { // draw both
 
-if (!$lazyload){?><div id="CollectionMaxDiv" style="display:<?php if ($thumbs=="show") { ?>block<?php } else { ?>none<?php } ?>"><?php }
+?><div id="CollectionMaxDiv" style="display:<?php if ($thumbs=="show") { ?>block<?php } else { ?>none<?php } ?>"><?php 
 # ---------------------------- Maximised view -------------------------------------------------------------------------
 if (hook("replacecollectionsmax", "", array($k!="")))
 	{
@@ -476,7 +471,7 @@ else if ($basket)
 	</div>
 	<?php	
 	}
-elseif ($k!="" && !$lazyload)
+elseif ($k!="")
 	{
 	# ------------- Anonymous access, slightly different display ------------------
 	$tempcol=$cinfo;
@@ -512,13 +507,13 @@ elseif ($k!="" && !$lazyload)
 } else { 
 # -------------------------- Standard display --------------------------------------------
 ?>
-<?php if ($collection_dropdown_user_access_mode && !$lazyload){?>
+<?php if ($collection_dropdown_user_access_mode){?>
 <div id="CollectionMenuExp">
-<?php } else if (!$lazyload) { ?>
+<?php } else { ?>
 <div id="CollectionMenu">
 <?php } ?>
 
-<?php if (!hook("thumbsmenu") && !$lazyload) { ?>
+<?php if (!hook("thumbsmenu")) { ?>
   <?php if (!hook("replacecollectiontitle")) { ?><h2 id="CollectionsPanelHeader"><?php if ($collections_compact_style){?><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2><?php } ?>
   <form method="get" id="colselect" onsubmit="newcolname=encodeURIComponent(jQuery('#entername').val());CollectionDivLoad('<?php echo $baseurl_short?>pages/collections.php?collection=-1&k=<?php echo urlencode($k) ?>&entername='+newcolname);return false;">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
@@ -654,15 +649,15 @@ elseif ($k!="" && !$lazyload)
 <?php } ?>
 
 <!--Resource panels-->
-<?php if ($collection_dropdown_user_access_mode && !$lazyload){?>
+<?php if ($collection_dropdown_user_access_mode){?>
 <div id="CollectionSpace" class="CollectionSpaceExp">
-<?php } else if (!$lazyload){ ?>
+<?php } else { ?>
 <div id="CollectionSpace" class="CollectionSpace">
 <?php } ?>
 
 <?php 
 # Loop through saved searches
-if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && !$lazyload && $k=='')
+if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && $k=='')
 	{ // don't include saved search item in result if this is a smart collection  
 
 	# Setting the save search icon
@@ -698,7 +693,7 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && !$lazyload && 
 if ($count_result>0) 
 	{
 	# loop and display the results
-	for ($n=($lazyload?20:0);$n<($lazyload?min($max_collection_thumbs,count($result)):$before_lazyload);$n++)					
+	for ($n=0;$n<count($result);$n++)					
 		{
 		$ref=$result[$n]["ref"];
 		?>
@@ -773,24 +768,14 @@ if ($count_result>0)
 		} # End of ResourceView hook
 	  } # End of loop through resources
 	} # End of results condition
-if (!$lazyload && $do_lazyload ){?>
-	<div id="lazycollection"><div class="CollectionPanelShell"><table border="0" class="CollectionResourceAlign"><tr><td><img/></td>
-		</tr></table>
-		<div class="CollectionPanelInfo"><?php echo $lang['loading']?></div></div>
-	<script>
-	jQuery('#lazycollection').load('<?php echo $baseurl_short?>pages/collections.php?lazyload=true&thumbs=show&collection=<?php echo $usercollection?><?php echo (isset($k) ? "&k=".urlencode($k) : ""); ?>');
-	</script><?php 
-}
+
 	
-if ($lazyload && $count_result>$max_collection_thumbs){
+if ($count_result>$max_collection_thumbs){
 	?><div class="CollectionPanelShell"><table border="0" class="CollectionResourceAlign"><tr><td><img/></td>
 		</tr></table>
 		<div class="CollectionPanelInfo"><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $usercollection?>&k=<?php echo urlencode($k) ?>"><?php echo $lang['viewall']?>...</a></div>
 		
 		<?php
-	}
-	
-if (!$lazyload && $do_lazyload ){?></div><?php
 	}
 
 		
@@ -798,20 +783,19 @@ if (!$lazyload && $do_lazyload ){?></div><?php
 if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
 
 hook("thumblistextra");
-if (!$lazyload){?>
-</div>  <!-- end of lazycollection -->
-<?php }
+?>
+</div>  
+<?php 
 
 # Add the infobox.
-if (!$lazyload){?>
+?>
 	<div id="InfoBoxCollection"><div id="InfoBoxCollectionInner"> </div></div></div>
 	<?php
-} 
+
 
 }
 
 
-if (!$lazyload){
 	?><div id="CollectionMinDiv" style="display:<?php if ($thumbs=="hide") { ?>block<?php } else { ?>none<?php } ?>"><?php 
 	if (true)
 	{
@@ -971,4 +955,4 @@ if (!$lazyload){
 	</div>
 	</body>
 	</html>
-<?php } 
+<?php 
