@@ -688,8 +688,10 @@ if (true) # Always show search header now.
 		        $count_result=count($result);
 		        $collections_compact_style_titleview=true;
 		        hook("beforecollectiontoolscolumn");
+		        ?><div class="SearchResultsCollectionCompactTools"><?php
 		        echo $lang["tools"].": ";
 		        draw_compact_style_selector($cinfo["ref"]);
+		        ?></div><?php
 		        ?><br /><br /><div class="clearerleft"></div><?php
 		        $collection_compact_style_titleview=false;
 		        } /*end if a collection search and compact_style - action selector*/   
