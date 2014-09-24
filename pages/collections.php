@@ -415,23 +415,6 @@ if(!hook("updatemaincheckboxesfromcollectionframe")){
 
 ?><div><?php
 
-/*
-if ($count_result>$max_collection_thumbs && $k=="")
-	{ $thumbs="hide";
-	?>
-	<script type="text/javascript">
-	<?php if (getval("nowarn","")=="") { ?>
-	alert("<?php echo $lang["maxcollectionthumbsreached"]?>");
-	<?php } ?>
-	thumbs="hide";SetCookie('thumbs',thumbs,1000);
-	//window.setTimeout("ToggleThumbs();");
-	</script>
-	<?php
-	$result=array();
-	if ($do_lazyload){$before_lazyload=0;}
-	 # Empty the result set so nothing is drawn; the window will be resized shortly anyway.
-	}
-	*/
 if (true) { // draw both
 
 ?><div id="CollectionMaxDiv" style="display:<?php if ($thumbs=="show") { ?>block<?php } else { ?>none<?php } ?>"><?php 
@@ -778,7 +761,7 @@ if ($count_result>$max_collection_thumbs){
 		<?php
 	}
 
-		
+?></div><?php		
 # Plugin for additional collection listings	(deprecated)
 if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
 
