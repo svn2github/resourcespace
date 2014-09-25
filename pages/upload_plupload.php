@@ -50,7 +50,7 @@ $sort=getval("sort",$default_sort);
 $allowed_extensions="";
 if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
 
-$alternative = getvalescaped("alternative",""); # Batch upload alternative files (Java)
+$alternative = getvalescaped("alternative",""); # Batch upload alternative files
 $replace = getvalescaped("replace",""); # Replace Resource Batch
 
 $replace_resource=getvalescaped("replace_resource",""); # Option to replace existing resource file
@@ -751,9 +751,7 @@ if (!hook("replacemetadatacheckbox"))
 	<div id="silverlight" ><p><a href="http://www.microsoft.com/getsilverlight" target="_blank" > &gt; <?php echo $lang["getsilverlight"] ?></a></p></div>
 	<div id="browserplus" ><p><a href="http://browserplus.yahoo.com" target="_blank" > &gt; <?php echo $lang["getbrowserplus"] ?></a></p></div>
 </div>
-<?php if (!$hide_uploadertryother) { ?>
-	<p><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/upload_java.php?resource_type=<?php echo urlencode(getvalescaped("resource_type","")); ?>&alternative=<?php echo urlencode($alternative) ?>&collection_add=<?php echo urlencode($collection_add);?>&entercolname=<?php echo urlencode($collectionname);?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>&replace_resource=<?php echo urlencode($replace_resource)?>"> &gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
-<?php } 
+<?php 
 
 if($upload_no_file)
 	{
