@@ -655,7 +655,7 @@ if (true) # Always show search header now.
 	$totalpages=ceil($results/$per_page);
 	if ($offset>$results) {$offset=0;}
 	$curpage=floor($offset/$per_page)+1;
-	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=" . urlencode($sort) . "&amp;archive=" . $archive . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=" . urlencode($sort) . "&amp;archive=" . urlencode($archive) . "&amp;k=" . urlencode($k) . "&amp;restypes=" . urlencode($restypes);	
 	?>
 	</div>
 	<?php hook("stickysearchresults"); ?> <!--the div TopInpageNavRight was added in after this hook so it may need to be adjusted -->
@@ -840,7 +840,7 @@ if (true) # Always show search header now.
 			
             $ref = $result[$n]["ref"];
             $GLOBALS['get_resource_data_cache'][$ref] = $result[$n];
-            $url = $baseurl_short."pages/view.php?ref=" . $ref . "&amp;search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".$sort."&amp;offset=" . urlencode($offset) . "&amp;archive=" . $archive . "&amp;k=" . $k . "&amp;curpos=" . $n;
+            $url = $baseurl_short."pages/view.php?ref=" . $ref . "&amp;search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=". urlencode($sort) . "&amp;offset=" . urlencode($offset) . "&amp;archive=" . urlencode($archive) . "&amp;k=" . urlencode($k) . "&amp;curpos=" . urlencode($n);
 
             if (isset($result[$n]["url"])) {$url = $result[$n]["url"];} # Option to override URL in results, e.g. by plugin using process_Search_results hook above
  
@@ -926,7 +926,7 @@ if (true) # Always show search header now.
 	<?php hook("resultsbottomtoolbar"); ?>
 	<?php } ?>  <!--End of hook("replacesearchbottomnav")-->	
 	<?php 
-	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".$sort."&amp;archive=" . $archive . "&amp;daylimit=" . urlencode($daylimit) . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".$sort."&amp;archive=" . urlencode($archive) . "&amp;daylimit=" . urlencode($daylimit) . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
 	?>
 	</div>
 	<div class="BottomInpageNavRight">	

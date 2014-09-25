@@ -201,7 +201,7 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 				daily_stat("Resource edit",$ref);
 				if (!hook('redirectaftersave'))
 					{
-					redirect($baseurl_short."pages/view.php?ref=" . $ref . "&search=" . urlencode($search) . "&offset=" . $offset . "&order_by=" . $order_by . "&sort=".$sort."&archive=" . $archive . "&refreshcollectionframe=true");
+					redirect($baseurl_short."pages/view.php?ref=" . urlencode($ref) . "&search=" . urlencode($search) . "&offset=" . urlencode($offset) . "&order_by=" . urlencode($order_by) . "&sort=" . urlencode($sort) . "&archive=" . urlencode($archive) . "&refreshcollectionframe=true");
 					}
 				}
 			else
@@ -209,22 +209,22 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 				if ((getval("uploader","")!="")&&(getval("uploader","")!="local"))
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/upload_" . getval("uploader","") . ".php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public','') . " &archive=" . $archive . $uploadparams . hook("addtouploadurl"));}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/upload_" . getval("uploader","") . ".php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=" . urlencode($resource_type) . "&no_exif=" . urlencode($no_exif) . "&autorotate=" . urlencode($autorotate) . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . urlencode(getval('public','')) . " &archive=" . urlencode($archive) . $uploadparams . hook("addtouploadurl"));}
 					}
 				elseif ((getval("local","")!="")||(getval("uploader","")=="local")) // Test if fetching resource from local upload folder.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch_select.php?use_local=yes&collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . $uploadparams );}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch_select.php?use_local=yes&collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=". urlencode($resource_type). "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . $uploadparams );}
 					}
                 elseif (getval("single","")!="") // Test if single upload (archived or not).
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/upload.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&archive=" . $archive . $uploadparams );}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/upload.php?resource_type=". urlencode($resource_type). "&no_exif=" . $no_exif . "&autorotate=" . urlencode($autorotate) . "&archive=" . urlencode($archive) . $uploadparams );}
 					}    
 				else // Hence fetching from ftp.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname","")). "&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . $uploadparams );}
+					if (getval("save","")!="") {redirect($baseurl_short."pages/team/team_batch.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname","")). "&resource_type=". urlencode($resource_type). "&no_exif=" . $no_exif . "&autorotate=" . urlencode($autorotate) . $uploadparams );}
 					}
 				}
 			}

@@ -45,7 +45,7 @@ if (getval("save","")!="")
 		}
 	else
 		{
-		redirect("pages/done.php?text=resource_request&resource=" . $ref . "&k=" . $k);
+		redirect("pages/done.php?text=resource_request&resource=" . urlencode($ref) . "&k=" . urlencode($k));
 		}
 	}
 include "../include/header.php";

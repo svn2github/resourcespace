@@ -24,7 +24,7 @@ if (getval("submitted","")!="")
 
 # Fetch research request data
 $request=get_request($ref);
-if ($request===false) {exit("Request $ref not found.");}
+if ($request===false) {exit("Request " . htmlspecialchars($ref) . " not found.");}
 	
 include "../../include/header.php";
 ?>
@@ -43,7 +43,7 @@ else
 	?>
 	
 <form method=post action="<?php echo $baseurl_short?>pages/team/team_request_edit.php" onSubmit="return CentralSpacePost(this,true);">
-<input type=hidden name=ref value="<?php echo $ref?>" />
+<input type=hidden name=ref value="<?php echo htmlspecialchars($ref) ?>" />
 <input type=hidden name="submitted" value="yes" />
 
 <div class="Question"><label><?php echo $lang["requestedby"]?></label><div class="Fixed"><?php echo $request["fullname"]?> (<?php echo $request["username"]?> / <?php echo $request["email"]?>)</div>

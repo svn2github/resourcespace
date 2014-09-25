@@ -223,7 +223,7 @@ if ($collection!="")
 	{
 	foreach($refs as $ref)
 		{
-		?><script type="text/javascript">CollectionDivLoad('<?php echo $baseurl . "/pages/collections.php?add=" . $ref . "&nc=" . time() . "&search=" . urlencode($search)?>');</script><?php
+		?><script type="text/javascript">CollectionDivLoad('<?php echo $baseurl . "/pages/collections.php?add=" . urlencode($ref) . "&nc=" . time() . "&search=" . urlencode($search)?>');</script><?php
 		}
 	}
 }

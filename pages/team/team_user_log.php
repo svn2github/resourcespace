@@ -26,7 +26,7 @@ $results=count($log);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
 
-$url=$baseurl . "/pages/team/team_user_log.php?ref=" . $ref . "&backurl=" . urlencode($backurl);
+$url=$baseurl . "/pages/team/team_user_log.php?ref=" . urlencode($ref) . "&backurl=" . urlencode($backurl);
 $jumpcount=1;
 
 ?>
