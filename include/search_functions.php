@@ -196,7 +196,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		if(checkperm("z" . $additional_archive_state))
 			{
-			if ($filterblockstates!="") {$filterblockstates.=",";}
+			if ($filterblockstates!="") {$filterblockstates.="','";}
 			$filterblockstates .= $additional_archive_state;
 			}
 		}
