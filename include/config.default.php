@@ -1329,15 +1329,6 @@ $date_column=false; // based on creation_date which is a deprecated mapping. The
 # Set this option to 'true' to rectify this.
 $image_rotate_reverse_options=false;
 
-# JUpload Chunk Size (bytes)
-# The size in bytes that Jupload (Java Batch Upload) will break files into.
-# JUpload chunking completely bypasses PHP's file upload limits (if chunk size is set lower than the upload limit).
-$jupload_chunk_size="5000000"; # Chunk size ~5MB.
-
-# JUpload Look and Feel
-# set to "java" for java style file browser, and "system" to use look and feel of local system
-$jupload_look_and_feel = "java";
-
 # Once collections have been published as themes by default they are removed from the user's My Collections. These option leaves them in place.
 $themes_in_my_collections=false;
 
@@ -1345,7 +1336,7 @@ $themes_in_my_collections=false;
 $top_nav_upload=true;
 # Show an upload link in the top navigation in addition to 'my contributions' for standard user? (if 'd' permission for the current user)
 $top_nav_upload_user=false;
-$top_nav_upload_type="plupload"; # The upload type. Options are plupload, ftp, local or java (deprecated)
+$top_nav_upload_type="plupload"; # The upload type. Options are plupload, ftp, local
 
 # Configure the maximum upload file size; this directly translates into plupload's max_file_size if set
 # $plupload_max_file_size = '50M';
@@ -1694,13 +1685,11 @@ $multilingual_text_fields=false;
 # Controls are :
 # - single_upload            : Enable / disable "Add Single Resource"
 # - in_browser_upload        : Enable / disable "Add Resource Batch - In Browser"
-# - in_browser_upload_java   : Enable / disable "Add Resource Batch - In Browser - Java (Legacy)"
 # - fetch_from_ftp           : Enable / disable "Add Resource Batch - Fetch from FTP server"
 # - fetch_from_local_folder  : Enable / disable "Add Resource Batch - Fetch from local upload folder"
 $upload_methods = array(
 		'single_upload' => true,
 		'in_browser_upload' => true,
-		'in_browser_upload_java' => true,
 		'fetch_from_ftp' => true,
 		'fetch_from_local_folder' => true,
 	);
@@ -1911,9 +1900,6 @@ $user_rating_only_once=false;
 $user_rating_stats=false;
 # Allow user to remove their rating.
 $user_rating_remove=true;
-
-# Try to open the java uploader in a popup window for basic uploads (doesn't apply to batch or alternative uploads)
-$upload_java_popup=false;
 
 # Allow a user to CC oneself when sending resources or collections.
 $cc_me=false;

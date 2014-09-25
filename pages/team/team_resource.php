@@ -31,10 +31,6 @@ include "../../include/header.php";
                         <li><a href="<?php echo $baseurl_short?>pages/edit.php?ref=-<?php echo $userref?>&amp;uploader=plupload" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchbrowser"]?></a></li>
                 <?php endif // Test if Add Resource Batch - In Browser is allowed. ?>
 
-		<?php if($upload_methods['in_browser_upload_java']): // Test if Add Resource Batch - In Browser - Java (Legacy) is allowed. ?>
-			<li><a href="<?php echo $baseurl_short?>pages/edit.php?ref=-<?php echo $userref?>&amp;uploader=java" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchbrowserjava"]?></a></li>
-		<?php endif // Test if Add Resource Batch - In Browser - Java (Legacy) is allowed. ?>
-
 		<?php if($upload_methods['fetch_from_ftp']): // Test if Add Resource Batch - Fetch from FTP server is allowed. ?>
 			<li><a href="<?php echo $baseurl_short?>pages/edit.php?ref=-<?php echo $userref?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchftp"]?></a></li>
 		<?php endif // Test if Add Resource Batch - Fetch from FTP server is allowed. ?>

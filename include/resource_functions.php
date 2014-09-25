@@ -74,6 +74,9 @@ function save_resource_data($ref,$multi)
 	$expiry_field_edited=false;
 	$resource_data=get_resource_data($ref);
 		
+        # Load the configuration for the selected resource type. Allows for alternative notification addresses, etc.
+        resource_type_config_override($resource_data["resource_type"]);                
+                
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if (!(

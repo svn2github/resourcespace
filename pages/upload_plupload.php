@@ -19,6 +19,9 @@ $offset=getvalescaped("offset","",true);
 $order_by=getvalescaped("order_by","");
 $archive=getvalescaped("archive","",true);
 
+# Load the configuration for the selected resource type. Allows for alternative notification addresses, etc.
+resource_type_config_override($resource_type);
+
 $uploadparams="";
 $uploadparams.="&relateto=" . urlencode(getval("relateto",""));
 $uploadparams.="&filename_field=" . urlencode(getval("filename_field",""));
