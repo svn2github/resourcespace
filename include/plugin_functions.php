@@ -1058,7 +1058,7 @@ function config_add_multi_group_select($config_var, $label, $width=300)
  * @param integer $current the current value of the config variable being set
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_single_ftype_select($name, $label, $current, $width=300, $ftype)
+function config_single_ftype_select($name, $label, $current, $width=300, $ftype=false)
     {
     global $lang;
     if($ftype===false){
