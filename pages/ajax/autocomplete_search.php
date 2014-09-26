@@ -29,7 +29,7 @@ if (strlen($last)>=2) # Activate when last entered keyword >=3 chars long
 		{
 		if ($n>0) {echo ", ";}
 		?>
-		"<?php echo (($otherwords!="")?$otherwords . " ":"") . $keywords[$n]?>"
+		"<?php echo (($otherwords!="")?htmlspecialchars($otherwords) . " ":"") . htmlspecialchars($keywords[$n]) ?>"
 		<?php
 		}
 	?>
