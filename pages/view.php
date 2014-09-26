@@ -277,7 +277,7 @@ function check_view_display_condition($fields,$n)
 	
 function display_field_data($field,$valueonly=false,$fixedwidth=452)
 	{
-	global $ref, $fieldcount, $tabcount, $show_expiry_warning, $access, $tabname, $search, $extra, $lang;
+	global $ref, $fieldcount, $tabcount, $show_expiry_warning, $access, $tabname, $search, $extra, $lang, $used_tab_names, $related_type_show_with_data, $show_default_related_resources;
 	$value=$field["value"];
 	
 	$modified_field=hook("beforeviewdisplayfielddata_processing","",array($field));
@@ -315,17 +315,47 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 		if($modified_value) {		
 			$value = $modified_value['value'];
 		}
-		
+
 		# draw new tab panel?
 		if (!$valueonly && ($tabname!=$field["tab_name"]) && ($fieldcount>0))
 			{
+
+				$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
+				$resource_type_tab_names = array_filter($resource_type_tab_names);
+
+				# Display related resources on this tab, if set:
+				if(isset($related_type_show_with_data)) {
+
+					# NOTE: the resource type tab name and the current tab you are on need to be the same:
+					if(in_array($tabname, $resource_type_tab_names)) {
+
+						if(($key = array_search($tabname, $resource_type_tab_names)) !== false) {
+
+							# Fields with display template should be rendered before the related resources list:
+							echo $extra;
+							$extra = '';
+							
+							include '../include/related_resources.php';
+							unset($resource_type_tab_names[$key]);
+
+							$show_default_related_resources = FALSE;
+						
+						}
+
+					}
+
+				}
+
+
 			$tabcount++;
 			# Also display the custom formatted data $extra at the bottom of this tab panel.
-			?><div class="clearerleft"> </div><?php echo $extra?></div></div><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div><?php	
+			?><div class="clearerleft"> </div><?php echo $extra; ?></div></div><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div><?php	
 			$extra="";
 			}
 		$tabname=$field["tab_name"];
-		$fieldcount++;		
+		$used_tab_names[] = $tabname;
+		$used_tab_names = array_unique($used_tab_names);
+		$fieldcount++;
 
 		if (!$valueonly && trim($field["display_template"])!="")
 			{
@@ -766,7 +796,7 @@ function add_download_column($ref, $size_info, $downloadthissize)
 							echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $size_info["id"]
 									. "&ext=" . $size_info["extension"] . "&k=" . $k . "&search=" . urlencode($search)
 									. "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by="
-									. $order_by)?>"<?php
+									. urlencode($order_by))?>"<?php
 					}
 					?> onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"]?></a><?php
 				}
@@ -775,7 +805,7 @@ function add_download_column($ref, $size_info, $downloadthissize)
 			{
 			?><a id="downloadlink" href="#" onclick="directDownload('<?php
 					echo $baseurl_short?>pages/download_progress.php?ref=<?php echo urlencode($ref) ?>&size=<?php
-					echo urlencode($size_info['id'])?>&ext=<?php echo urlencode($size_info['extension']) ?>&k=<?php
+					echo $size_info['id']?>&ext=<?php echo $size_info['extension']?>&k=<?php
 					echo urlencode($k)?>')"><?php echo $lang["action-download"]?></a><?php
 			}
 			unset($size_info_array);
@@ -917,7 +947,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		<td class="DownloadFileSize"><?php echo formatfilesize(filesize_unlimited($path))?></td>
 		<td class="DownloadButton">
 		<?php if (!$direct_download || $save_as){ ?>
-			<a <?php if (!hook("downloadlink","",array("ref=" . urlencode($ref) . "&k=" . urlencode($k) . "&ext=" . urlencode($resource["file_extension"]) ))) { ?>href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&k=<?php echo urlencode($k)?>&search=<?php echo urlencode($search) ?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . urlencode($ref) . "&ext=" . urlencode($resource["file_extension"]) . "&k=" . urlencode($k) . "&search=" . urlencode($search) . "&offset=" . urlencode($offset) . "&archive=" . urlencode($archive) . "&sort=" . urlencode($sort) . "&order_by=" . urlencode($order_by))?>"<?php } ?> onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a>
+			<a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&ext=" . $resource["file_extension"] ))) { ?>href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&k=<?php echo urlencode($k)?>&search=<?php echo $search ?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?> onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a>
 		<?php } else { ?>
 			<a href="#" onclick="directDownload('<?php echo $baseurl_short?>pages/download_progress.php?ref=<?php echo urlencode($ref)?>&ext=<?php echo $resource['file_extension']?>&k=<?php echo urlencode($k)?>')"><?php echo $lang["action-download"]?></a>
 		<?php } // end if direct_download ?>
@@ -969,7 +999,7 @@ if (isset($flv_download) && $flv_download)
 	<td class="DownloadFileSize"><?php echo formatfilesize(filesize_unlimited($flvfile))?></td>
 	<td class="DownloadButton">
 	<?php if (!$direct_download || $save_as){?>
-		<a href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&search=<?php echo urlencode($search) ?>&k=<?php echo urlencode($k)?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . urlencode($ref) . "&ext=" . urlencode($ffmpeg_preview_extension) . "&size=pre&k=" . urlencode($k) . "&search=" . urlencode($search) . "&offset=" . urlencode($offset) . "&archive=" . urlencode($archive) . "&sort=" . urlencode($sort) . "&order_by=" . urlencode($order_by))?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a>
+		<a href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&search=<?php echo $search ?>&k=<?php echo urlencode($k)?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $ffmpeg_preview_extension . "&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a>
 	<?php } else { ?>
 		<a href="#" onclick="directDownload('<?php echo $baseurl_short?>pages/download_progress.php?ref=<?php echo urlencode($ref)?>&ext=<?php echo $ffmpeg_preview_extension?>&size=pre&k=<?php echo urlencode($k)?>')"><?php echo $lang["action-download"]?></a>
 	<?php } // end if direct_download ?></td>
@@ -1051,7 +1081,7 @@ if ($alt_access)
 			{
 			if(!hook("downloadbuttonreplace"))
 				{
-				?><a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&alternative=" . $altfiles[$n]["ref"] . "&k=" . urlencode($k) . "&ext=" . $altfiles[$n]["file_extension"]))) { ?>href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&k=<?php echo urlencode($k)?>&search=<?php echo urlencode($search) ?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . urlencode($altfiles[$n]["file_extension"]) . "&k=" . urlencode($k) . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . urlencode($offset) . "&archive=" . urlencode($archive) . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?> onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a><?php 
+				?><a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&alternative=" . $altfiles[$n]["ref"] . "&k=" . $k . "&ext=" . $altfiles[$n]["file_extension"]))) { ?>href="<?php echo $baseurl_short?>pages/terms.php?ref=<?php echo urlencode($ref)?>&k=<?php echo urlencode($k)?>&search=<?php echo urlencode($search) ?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?> onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["action-download"] ?></a><?php 
 				}
 			}
 		else { ?>
@@ -1169,6 +1199,7 @@ $extra="";
 #  -----------------------------  Draw tabs ---------------------------
 $tabname="";
 $tabcount=0;
+$used_tab_names = array();
 $tmp = hook("tweakfielddisp", "", array($ref, $fields)); if($tmp) $fields = $tmp;
 if (count($fields)>0 && $fields[0]["tab_name"]!="")
 	{ 
@@ -1178,6 +1209,8 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 	$extra="";
 	$tabname="";
 	$tabcount=0;
+	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
+	$resource_type_tab_names = array_filter($resource_type_tab_names);
 	for ($n=0;$n<count($fields);$n++)
 		{	
 		$value=$fields[$n]["value"];
@@ -1188,8 +1221,19 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 			?><div id="tabswitch<?php echo $tabcount?>" class="Tab<?php if ($tabcount==0) { ?> TabSelected<?php } ?>"><a href="#" onclick="SelectTab(<?php echo $tabcount?>);return false;"><?php echo i18n_get_translated($fields[$n]["tab_name"])?></a></div><?php
 			$tabcount++;
 			$tabname=$fields[$n]["tab_name"];
+			$used_tab_names[] = $tabname;
 			}
+
+			if(isset($related_type_show_with_data)) {
+				if(in_array($fields[$n]['tab_name'], $resource_type_tab_names)) {
+					if(($key = array_search($fields[$n]['tab_name'], $resource_type_tab_names)) !== false) {
+						unset($resource_type_tab_names[$key]);
+					}
+				}
+			}
+
 		}
+			
 	?>
 	</div>
 	<script type="text/javascript">
@@ -1239,7 +1283,8 @@ $tabname="";
 $tabcount=0;
 $fieldcount=0;
 $extra="";
-
+$used_tab_names = array();
+$show_default_related_resources = TRUE;
 for ($n=0;$n<count($fields);$n++)
 	{
 	
@@ -1255,7 +1300,7 @@ for ($n=0;$n<count($fields);$n++)
 	}
 	
 // Option to display related resources of specified types along with metadata
-if ($enable_related_resources)
+if ($enable_related_resources && $show_default_related_resources)
 	{
 	$relatedresources=do_search("!related" . $ref);
 	#build array of related resources' types
@@ -1271,6 +1316,10 @@ if ($enable_related_resources)
 	$related_resources_shown=0;
 	if(isset($related_type_show_with_data))
 		{
+		
+		# Render fields with display template before the list of related resources:
+		echo $extra;
+		
 		foreach($related_type_show_with_data as $rtype)
 			{
 			// Is this a resource type that needs to be displayed?
@@ -1339,7 +1388,7 @@ if ($enable_related_resources)
     
 ?><?php hook("extrafields2");?>
 <?php if(!$force_display_template_order_by){ ?> <div class="clearerleft"></div> <?php } ?>
-<?php echo $extra?>
+<?php if(!isset($related_type_show_with_data)) { echo $extra; } ?>
 <?php if($force_display_template_order_by){ ?> <div class="clearerleft"></div> <?php } ?>
 </div>
 </div>
