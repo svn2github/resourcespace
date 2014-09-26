@@ -2397,3 +2397,6 @@ $always_make_previews=array();
 
 # Option to display an upload log in the browser on the upload page (note that this is not stored or saved)
 $show_upload_log=true;
+
+#Display User Ref on the User Edit Page in the header? Example Output: Edit User 12
+$display_useredit_ref=false;

@@ -67,7 +67,7 @@ if (getval("loginas","")!="")
 ?>
 <div class="BasicsBox">
 <p><a href="<?php echo $backurl?>" onClick="return CentralSpaceLoad(this,true);">&lt;&nbsp;<?php echo $lang["manageusers"]?></a></p>
-<h1><?php echo $lang["edituser"]?></h1>
+<h1><?php echo $lang["edituser"]?> <?php global $display_useredit_ref; echo $display_useredit_ref ? $ref : ""; ?></h1>
 <?php if (isset($error)) { ?><div class="FormError">!! <?php echo $error?> !!</div><?php } ?>
 
 <form method=post action="<?php echo $baseurl_short?>pages/team/team_user_edit.php">
