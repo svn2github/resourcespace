@@ -136,8 +136,8 @@ if (getval("previewsize","")!=""){
 if($original) {
     for($i = 0; $i < count($results); $i++) {
         $access = get_resource_access($results[$i]);
-        $filepath = get_resource_path($results[$i]['ref'], TRUE, '', FALSE, $results[$i]['file_extension'], -1, 1, $use_watermark, '', -1);
-        $original_link = get_resource_path($results[$i]['ref'], FALSE, '', FALSE, $results[$i]['file_extension'], -1, 1, $use_watermark, '', -1);
+        $filepath = get_resource_path($results[$i]['ref'], TRUE, '', FALSE, $results[$i]['file_extension'], -1, 1, FALSE, '', -1);
+        $original_link = get_resource_path($results[$i]['ref'], FALSE, '', FALSE, $results[$i]['file_extension'], -1, 1, FALSE, '', -1);
 
         if(file_exists($filepath)) {
             $results[$i]['original_link'] = $original_link;
