@@ -19,6 +19,7 @@ $sort=getvalescaped("sort","desc");
 $archive=getvalescaped("archive",0);
 $starsearch=getvalescaped("starsearch","");
 $collection=getvalescaped("collection","",true);
+$original = filter_var(getvalescaped('original', FALSE), FILTER_VALIDATE_BOOLEAN);
 
 $help=getval("help","");
 if ($help!=""){
@@ -128,6 +129,20 @@ if (getval("previewsize","")!=""){
             $previewpath=$previewpath[0]."gfx/";
             $file=$previewpath.get_nopreview_icon($results[$n]["resource_type"],$results[$n]["file_extension"],false,true);
             $results[$n]['preview']=$file;
+        }
+    }
+}
+
+if($original) {
+    for($i = 0; $i < count($results); $i++) {
+        $access = get_resource_access($results[$i]);
+        $filepath = get_resource_path($results[$i]['ref'], TRUE, '', FALSE, $results[$i]['file_extension'], -1, 1, $use_watermark, '', -1);
+        $original_link = get_resource_path($results[$i]['ref'], FALSE, '', FALSE, $results[$i]['file_extension'], -1, 1, $use_watermark, '', -1);
+
+        if(file_exists($filepath)) {
+            $results[$i]['original_link'] = $original_link;
+        } else {
+            $results[$i]['original_link'] = 'No original link available.';
         }
     }
 }

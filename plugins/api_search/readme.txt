@@ -18,9 +18,10 @@ videosonly=[boolean]     Omit results without an flvthumb and flvpath
 page=[int]               Select page of paginated results (changes result structure to pagination style)
 results_per_page=[int]   Paginate results (changes result structure to pagination style) (default 15)
 prettyfieldnames=true    Show field names instead of 'field#' (default '')
-contributedby=[true|false]      Show Contributed By Username (default 'true')
+contributedby=[boolean]  Show Contributed By Username (default 'true')
 limit_to=[string]        Return a single field for each resource. Example: limit_to=originalfilename  OR limit_to=field51 
 collection=[integer]	 Collection to search within (same as "!collection[ref], [search]")  
+original=[boolean]       Return the link to the original file (by default it is set to FALSE)
 
 If a signature is required, you must md5([yourhashkey].[querystring]) and submit it as a final parameter called skey.
 Your hash key is a shared secret available from plugins/api_core.
