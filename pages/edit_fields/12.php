@@ -6,6 +6,11 @@
 $options = trim_array(explode(",",$field["options"]));
 $set = trim($value);
 
+// Translate the options:
+for($i = 0; $i < count($options); $i++) {
+    $options[$i] = i18n_get_translated($options[$i]);
+}
+
 $l=average_length($options);
 
 $cols=10;
