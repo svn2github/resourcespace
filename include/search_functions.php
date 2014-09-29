@@ -717,9 +717,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				$filter_not=true;
 				$filterfield=substr($filterfield,0,-1);# Strip off the exclamation mark.
 				}
-
+			
+			# Support for multiple fields on the left hand side, pipe separated - allows OR matching across multiple fields in a basic way
+			$filterfields=explode("|",escape_check($filterfield));
+				
 			# Find field(s) - multiple fields can be returned to support several fields with the same name.
-			$f=sql_array("select ref value from resource_type_field where name='" . escape_check($filterfield) . "'");
+			$f=sql_array("select ref value from resource_type_field where name in ('" . join("','",$filterfields) . "')");
 			if (count($f)==0) {exit ("Field(s) with short name '" . $filterfield . "' not found in user group search filter.");}
 			
 			# Find keyword(s)

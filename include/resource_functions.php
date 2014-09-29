@@ -2116,6 +2116,12 @@ function get_resource_access($resource)
 		{
 		# A search filter has been set. Perform filter processing to establish if the user can view this resource.		
 		# Always load metadata, because the provided metadata may be missing fields due to permissions.
+                
+                
+                /*
+                
+                # ***** OLD METHOD ***** - used filter_match() - required duplication and was very difficult to implement OR matching for the field name supporting OR across fields
+                
 		$metadata=get_resource_field_data($ref,false,false);
 		for ($n=0;$n<count($metadata);$n++)
 			{
@@ -2124,6 +2130,7 @@ function get_resource_access($resource)
 			if ($name!="")
 				{
 				$match=filter_match($usersearchfilter,$name,$value);
+                                echo "<br />$name/$value = $match";
 				if ($match==1) {return 2;} # The match for this field was incorrect, always show as confidential in this event.
 				}
 			}
@@ -2134,7 +2141,11 @@ function get_resource_access($resource)
 		$match=filter_match($usersearchfilter,"resource_type",$resource_type);
 		if ($match==1) {return 2;} # The match for this field was incorrect, always show as confidential in this event.
 		*/
-		}
+                
+                # ***** NEW METHOD ***** - search for the resource, utilising the existing filter matching in do_search to avoid duplication.
+                $results=do_search("!resource" . $ref);
+                if (count($results)==0) {return 2;} # Not found in results, so deny
+                }
 		
 	if ($access==0 && !checkperm("g"))
 		{
