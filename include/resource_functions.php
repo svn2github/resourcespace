@@ -1765,7 +1765,26 @@ function notify_user_contributed_submitted($refs)
 		
 		if ($use_phpmailer){$url="<a href=\"$url\">$url</a>";}
 		
-		$list.=$htmlbreak . $url . "\n\n";
+		// Get the user (or username) of the contributor:
+		$query = sprintf('
+				    SELECT user.username,
+				           user.fullname
+				      FROM resource
+				INNER JOIN user ON user.ref = resource.created_by
+				     WHERE resource.ref = %d;
+			',
+			$refs[$n]
+		);
+		$result = sql_query($query);
+
+		$user = '';
+		if(trim($result[0]['fullname']) != '') {
+			$user = $result[0]['fullname'];
+		} else {
+			$user = $result[0]['username'];
+		}
+
+		$list .= $htmlbreak . $user . ': ' . $url . "\n\n";
 		}
 		
 	$list.=$htmlbreak;	
