@@ -2400,3 +2400,7 @@ $show_upload_log=true;
 
 #Display User Ref on the User Edit Page in the header? Example Output: Edit User 12
 $display_useredit_ref=false;
+
+# Basic option to visually hide resource types when searching and uploading
+# Note: these resource types will still be available (subject to filtering)
+$hide_resource_types = array();

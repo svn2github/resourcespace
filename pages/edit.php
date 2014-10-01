@@ -642,7 +642,7 @@ onChange="<?php if ($ref>0) { ?>if (confirm('<?php echo $lang["editresourcetypew
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
 	{
-	if (checkperm("XU{$types[$n]["ref"]}") && $resource["resource_type"]!=$types[$n]["ref"]) continue;	// skip showing a resource type that we do not to have permission to change to (unless it is currently set to that)
+	if ((checkperm("XU{$types[$n]["ref"]}") || in_array($types[$n]['ref'], $hide_resource_types)) && $resource["resource_type"]!=$types[$n]["ref"]) continue;	// skip showing a resource type that we do not to have permission to change to (unless it is currently set to that)
 	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo htmlspecialchars($types[$n]["name"])?></option><?php
 	}
 ?></select>
@@ -660,6 +660,7 @@ for ($n=0;$n<count($types);$n++)
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
 	{
+		if(in_array($types[$n]['ref'], $hide_resource_types)) { continue; }
 	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo htmlspecialchars($types[$n]["name"])?></option><?php
 	}
 ?></select>
@@ -1437,6 +1438,7 @@ for ($n=0;$n<count($fields);$n++)
 	# Should this field be displayed?
 	if (is_field_displayed($fields[$n]))
 		{
+			if(in_array($fields[$n]['resource_type'], $hide_resource_types)) { continue; }
 		$newtab=false;	
 		if($n==0 && $tabs_on_edit){$newtab=true;}
 		# draw new tab panel?

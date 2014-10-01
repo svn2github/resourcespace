@@ -364,6 +364,7 @@ $wrap=0;
 $hiddentypes=Array();
 for ($n=0;$n<count($types);$n++)
 	{
+		if(in_array($types[$n]['ref'], $hide_resource_types)) { continue; }
 	$wrap++;if ($wrap>4) {$wrap=1;?></tr><tr><?php }
 	?><td valign=middle><input type=checkbox class="SearchTypeCheckbox SearchTypeItemCheckbox" name="resourcetype<?php echo $types[$n]["ref"]?>" value="yes" <?php if (in_array($types[$n]["ref"],$opensections) || in_array("Global",$opensections)) { ?>checked<?php } else $hiddentypes[]=$types[$n]["ref"]; ?>></td><td valign=middle><?php echo htmlspecialchars($types[$n]["name"])?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><?php	
 	}
