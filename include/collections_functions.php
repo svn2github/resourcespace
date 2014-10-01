@@ -468,6 +468,7 @@ function save_collection($ref)
 	{
 	global $theme_category_levels;
 	
+	if (!collection_writeable($ref)) {return false;}
 	
 	$allow_changes=(getval("allow_changes","")!=""?1:0);
 	
