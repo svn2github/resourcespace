@@ -121,7 +121,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 		if (array_search($resource_type,$resource_types_allowed)===false)		// continue to the next line if this type is not allowed or valid.
 			{
 			
-			if($processcsv)	{array_push($messages, "Skipping resource type " . $resource_types[$resource_type]);}
+			if($processcsv)	{array_push($messages, "Skipping resource type " . $resource_type );}
 			continue;		
 			}
 		

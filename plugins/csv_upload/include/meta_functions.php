@@ -29,7 +29,7 @@ function meta_get_map()		// returns array of [resource_type][table][attributes],
 				//echo "type " . $meta[$field['resource_type']][$field['name']]['type'] . "<br>";
 				if(isset($meta[$field['resource_type']][$field['name']]['options'][$i]))
 					{
-					echo "options: " . $meta[$field['resource_type']][$field['name']]['options'][$i] . "<br>";
+					//echo "options: " . $meta[$field['resource_type']][$field['name']]['options'][$i] . "<br>";
 					$meta[$field['resource_type']][$field['name']]['options'][$i]=trim ($meta[$field['resource_type']][$field['name']]['options'][$i]);
 					}
 				}
