@@ -1274,11 +1274,17 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 							</script><?php
 							}
 						# Handle Radio Buttons type:
-						else if($fields[$cf]['type'] == 12) { 
+						else if($fields[$cf]['type'] == 12 && $fields[$cf]['display_as_dropdown'] == 0) { 
 						?>
 							<script type="text/javascript">
 							jQuery(document).ready(function() {
+								// Check for radio buttons (default behaviour)
 								jQuery('input[name=field_<?php echo $fields[$cf]["ref"]; ?>]:radio').change(function() {
+									checkDisplayCondition<?php echo $field["ref"];?>();
+								});
+
+								// Check for checkboxes (advanced search behaviour)
+								jQuery('input[name=field_<?php echo $fields[$cf]["ref"]; ?>]:checkbox').change(function() {
 									checkDisplayCondition<?php echo $field["ref"];?>();
 								});
 							});
@@ -1762,7 +1768,16 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		// Radio buttons:
 		case 12:
 			// auto save is not needed when searching
-			$edit_autosave = false;
+			$edit_autosave = FALSE;
+			 
+			$display_as_radiobuttons = FALSE;
+			$display_as_checkbox = TRUE;
+
+			if($field['display_as_dropdown']) {
+				$display_as_dropdown = TRUE;
+				$display_as_checkbox = FALSE;
+			}
+			
 			include '../pages/edit_fields/12.php';
 		break;
 		}
