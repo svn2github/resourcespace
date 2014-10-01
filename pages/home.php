@@ -140,10 +140,11 @@ jQuery(document).ready( function ()
 	>
 	
 	<div class="HomePicturePanelIN" id='photoholder' style="
-	<?php
+	<?php if(!hook("replaceeditslideshowheight")){
 	if (isset($home_slideshow_height)){		
 		echo"height:" .  (string)$home_slideshow_height ."px; ";
 		} 
+	}
 	?>
 	background-image:url('<?php echo $baseurl . "/" . $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');">
 	
@@ -291,13 +292,13 @@ endif; # end hook homefeaturedcol
 
 	<div class="clearerleft"></div>
 
-<?php if (!$welcome_text_picturepanel && !hook('homereplacewelcome')) { ?><div class="BasicsBox">
+<?php if (!$welcome_text_picturepanel && !hook('homereplacewelcome')) { ?><div class="BasicsBox" id="HomeSiteText">
     <h1><?php echo text("welcometitle")?></h1>
     <p><?php echo text("welcometext")?></p>
 </div>
 <?php } ?>
 <?php }  else { ?>
-<div class="BasicsBox">
+<div class="BasicsBox" id="HomeSiteText">
     <h1><?php echo text("restrictedtitle")?></h1>
     <p><?php echo text("restrictedtext")?></p>
 </div>
