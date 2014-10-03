@@ -2162,7 +2162,11 @@ function get_resource_access($resource)
 		*/
                 
                 # ***** NEW METHOD ***** - search for the resource, utilising the existing filter matching in do_search to avoid duplication.
+                global $search_all_workflow_states;
+                $search_all_workflow_states_cache = $search_all_workflow_states;
+                $search_all_workflow_states = TRUE;
                 $results=do_search("!resource" . $ref);
+                $search_all_workflow_states = $search_all_workflow_states_cache;
                 if (count($results)==0) {return 2;} # Not found in results, so deny
                 }
 		
