@@ -17,7 +17,7 @@ if ($bypass_share_screen)
 $collection=get_collection($ref);
 
 #Check if sharing allowed
-if (!$allow_share) {
+if (checkperm("b") || !$allow_share) {
         $show_error=true;
         $error=$lang["error-permissiondenied"];
         }
