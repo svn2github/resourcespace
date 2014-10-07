@@ -1,5 +1,5 @@
 <?php
-include "general.php";
+include "../../include/general.php";
 
 # from
 # http://wiki.openstreetmap.org/wiki/ProxySimplePHP

@@ -18,7 +18,7 @@ var osm = new OpenLayers.Layer.OSM("<?php echo $lang["openstreetmap"]?>"
                 chmod($tilecache,0777);
         }
 	?>
-		,"<?php echo $baseurl?>/include/tiles.php?z=${z}&x=${x}&y=${y}&r=mapnik",{transitionEffect: 'resize'}
+		,"<?php echo $baseurl?>/pages/ajax/tiles.php?z=${z}&x=${x}&y=${y}&r=mapnik",{transitionEffect: 'resize'}
 	
 	<?php } else { ?>
 	
