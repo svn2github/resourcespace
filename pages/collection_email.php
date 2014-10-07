@@ -10,7 +10,8 @@ $themeshare=getvalescaped("catshare","false");
 $themecount=0;
 if(getvalescaped("subthemes","false")!="false"){$subthemes=true;}else{$subthemes=false;}
 $linksuffix="?";
-$ref=getvalescaped("ref","",true);
+$ref=getvalescaped("ref","");
+$refArray[]=$ref;
 if ($themeshare!="false")
 	{
 	$themeshare=true;
@@ -38,6 +39,7 @@ if ($themeshare!="false")
 		$ref.=$collection["ref"];
 		}		
 	$ref=explode(", ",$ref);$ref=array_unique($ref);$ref=implode(", ",$ref);
+	$refArray = explode(',',$ref);
 	}
 else
 	{
@@ -61,14 +63,18 @@ if (!$allow_share) {
         }
 	
 #Check if any resources are not approved
-if (!$collection_allow_not_approved_share && !is_collection_approved($ref))
+foreach ($refArray as $colref){
+if (!$collection_allow_not_approved_share && !is_collection_approved(trim($colref)))
 	{	
 	$show_error=true;
     $error=$lang["notapprovedsharecollection"];
 	}
+}
 	
 # Get min access to this collection
-$minaccess=collection_min_access($ref);
+foreach ($refArray as $colref){
+$minaccess=collection_min_access(trim($colref));
+}
 
 if ($minaccess>=1 && !$restricted_share) # Minimum access is restricted or lower and sharing of restricted resources is not allowed. The user cannot share this collection.
 	{
@@ -135,7 +141,8 @@ else
 
 <form name="collectionform" method=post id="collectionform" action="<?php echo $baseurl_short?>pages/collection_email.php<?php echo $linksuffix ?>&catshare=<?php if($themeshare==true){echo "true";}else{echo "false";}?>">
 <input type=hidden name=redirect id=redirect value=yes>
-<input type=hidden name=ref value="<?php echo urlencode($ref) ?>">
+<input type=hidden name=ref id="ref" value="<?php echo urlencode($ref) ?>">
+
 <?php if ($email_multi_collections && !$themeshare) { ?>
 <script type="text/javascript">
    function getSelected(opt) {
@@ -174,7 +181,7 @@ else
 			
 			?>		
 			<select name="collection" multiple="multiple" size="10" class="SearchWidthExt" style="width:365px;" 
-				onchange="document.getElementById('refDiv').innerHTML = getSelected(this); " >
+				onchange="document.getElementById('ref').value = getSelected(this); " >
 			<?php
 			
 			$list=get_user_collections($userref);
