@@ -53,10 +53,10 @@ else
 		$extratext=" for collection '" . $collectionname .  "'";
 		}
 	?>
-	<form method="post" action="reindex_field.php">
+	<form method="post" action="unindex_field.php">
 	<input type="hidden" name="field" value="<?php echo $field ?>">
 	<input type="hidden" name="col" value="<?php echo $collectionid ?>">
-	<input type="submit" name="submit" value="Reindex field '<?php echo $fieldinfo["title"] . "'" . $extratext ?>">
+	<input type="submit" name="submit" value="Un-Index field '<?php echo $fieldinfo["title"] . "'" . $extratext ?>">
 	</form>
 	<?php
 	}	
