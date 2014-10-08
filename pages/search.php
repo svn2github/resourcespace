@@ -339,7 +339,7 @@ include ("../include/search_title_processing.php");
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
 if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0) && is_array($result) && count($result)==1)
 	{
-	redirect($baseurl_short."pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".urlencode($sort)."&offset=" . urlencode($offset) . "&archive=" . urlencode($archive) . "&k=" . urlencode($k));
+	redirect($baseurl_short."pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=" . urlencode($sort) . "&offset=" . urlencode($offset) . "&archive=" . urlencode($archive) . "&k=" . urlencode($k));
 	}
 	
 
@@ -380,7 +380,7 @@ if ($display_user_rating_stars && $k=="")
 		  data: {order:JSON.stringify(newOrder)},
 		  success: function(){
 		  <?php if (isset($usercollection) && ($usercollection==$collection)) { ?>
-			 UpdateCollectionDisplay('<?php echo isset($k)?urlencode($k):"" ?>');
+			 UpdateCollectionDisplay('<?php echo isset($k)?htmlspecialchars($k):"" ?>');
 		  <?php } ?>
 			} 
 		});
@@ -926,7 +926,7 @@ if (true) # Always show search header now.
 	<?php hook("resultsbottomtoolbar"); ?>
 	<?php } ?>  <!--End of hook("replacesearchbottomnav")-->	
 	<?php 
-	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=".$sort."&amp;archive=" . urlencode($archive) . "&amp;daylimit=" . urlencode($daylimit) . "&amp;k=" . $k. "&amp;restypes=" . urlencode($restypes);	
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&amp;order_by=" . urlencode($order_by) . "&amp;sort=" . urlencode($sort) . "&amp;archive=" . urlencode($archive) . "&amp;daylimit=" . urlencode($daylimit) . "&amp;k=" . urlencode($k) . "&amp;restypes=" . urlencode($restypes);	
 	?>
 	</div>
 	<div class="BottomInpageNavRight">	
