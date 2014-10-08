@@ -279,6 +279,9 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 	{
 	global $ref, $fieldcount, $tabcount, $show_expiry_warning, $access, $tabname, $search, $extra, $lang, $used_tab_names, $related_type_show_with_data, $show_default_related_resources;
 	$value=$field["value"];
+
+	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
+	$resource_type_tab_names = array_filter($resource_type_tab_names);
 	
 	$modified_field=hook("beforeviewdisplayfielddata_processing","",array($field));
 	if($modified_field){
@@ -402,6 +405,46 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 				<h3><?php echo $title?></h3><p><?php echo $value?></p></div><?php
 				}
 			}
+		} else if(isset($related_type_show_with_data) && ($tabname!=$field['tab_name']) && in_array($field['tab_name'], $resource_type_tab_names) && !in_array($field['tab_name'], $used_tab_names)) {
+
+			# Display related resources on this tab, if set:
+			if(isset($related_type_show_with_data)) {
+
+				# NOTE: the resource type tab name and the current tab you are on need to be the same:
+				if(in_array($tabname, $resource_type_tab_names)) {
+
+					if(($key = array_search($tabname, $resource_type_tab_names)) !== false) {
+
+						# Fields with display template should be rendered before the related resources list:
+						echo $extra;
+						$extra = '';
+						
+						include '../include/related_resources.php';
+						unset($resource_type_tab_names[$key]);
+
+						$show_default_related_resources = FALSE;
+					
+					}
+					
+					$tabcount++;
+					# Also display the custom formatted data $extra at the bottom of this tab panel. ?>
+					<div class="clearerleft"></div>
+					<?php echo $extra; ?>
+					</div>
+					</div>
+					<div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div>
+					<?php	
+					$extra="";
+
+					$tabname = $field['tab_name'];
+					$used_tab_names[] = $tabname;
+					$used_tab_names = array_unique($used_tab_names);
+					$fieldcount++;
+
+				}
+
+			}
+
 		}
 	
 	}
@@ -1224,12 +1267,17 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 			$used_tab_names[] = $tabname;
 			}
 
-			if(isset($related_type_show_with_data)) {
-				if(in_array($fields[$n]['tab_name'], $resource_type_tab_names)) {
-					if(($key = array_search($fields[$n]['tab_name'], $resource_type_tab_names)) !== false) {
-						unset($resource_type_tab_names[$key]);
-					}
-				}
+			// If any of the fields (with this tab name) are empty and the tab was not rendered before, draw it now
+			if(isset($related_type_show_with_data) && ($tabname!=$fields[$n]['tab_name']) && in_array($fields[$n]['tab_name'], $resource_type_tab_names) && !in_array($fields[$n]['tab_name'], $used_tab_names)) { ?>
+
+				<div id="tabswitch<?php echo $tabcount; ?>" class="Tab<?php if($tabcount == 0) { ?> TabSelected<?php } ?>">
+					<a href="#" onclick="SelectTab(<?php echo $tabcount; ?>);return false;"><?php echo i18n_get_translated($fields[$n]["tab_name"])?></a>
+				</div>
+
+				<?php 
+				$tabcount++;
+				$tabname=$fields[$n]["tab_name"];
+				$used_tab_names[] = $tabname;
 			}
 
 		}
