@@ -209,7 +209,13 @@ if($resource_contact_link && $k=="")
 hook("pageevaluation");
 
 # Load resource field data
-$fields=get_resource_field_data($ref,false,!hook("customgetresourceperms"),-1,$k!="",$use_order_by_tab_view);
+$multi_fields = FALSE;
+# Related resources with tabs need all fields (even the ones from other resource types):
+if(isset($related_type_show_with_data)) {
+	$multi_fields = TRUE;
+}
+
+$fields=get_resource_field_data($ref,$multi_fields,!hook("customgetresourceperms"),-1,$k!="",$use_order_by_tab_view);
 
 
 //Check if we want to use a specified field as a caption below the preview
@@ -411,9 +417,9 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 			if(isset($related_type_show_with_data)) {
 
 				# NOTE: the resource type tab name and the current tab you are on need to be the same:
-				if(in_array($tabname, $resource_type_tab_names)) {
+				if(in_array($field['tab_name'], $resource_type_tab_names)) {
 
-					if(($key = array_search($tabname, $resource_type_tab_names)) !== false) {
+					if(($key = array_search($field['tab_name'], $resource_type_tab_names)) !== false) {
 
 						# Fields with display template should be rendered before the related resources list:
 						echo $extra;
