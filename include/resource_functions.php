@@ -147,7 +147,7 @@ function save_resource_data($ref,$multi)
 						}
 					}
 				}
-			elseif ($fields[$n]["type"] == 3)
+			elseif ($fields[$n]["type"] == 3 || $fields[$n]["type"] == 12)
 				{
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");				
 				// if it doesn't already start with a comma, add one

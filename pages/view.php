@@ -313,6 +313,12 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 		else 	{$i18n_split_keywords =false;}
 		$value=i18n_get_translated($value,$i18n_split_keywords );
 		if (($field["type"]==2) || ($field["type"]==3) || ($field["type"]==7) || ($field["type"]==9)) {$value=TidyList($value);}
+		
+		// Don't display the comma for radio buttons:
+		if($field['type'] == 12) {
+			$value = str_replace(',', '', $value);
+		}
+		
 		$value_unformatted=$value; # store unformatted value for replacement also
 
 		if ($field["type"]!=8 || ($field["type"]==8 && $value == strip_tags($value))) # Do not convert HTML formatted fields (that are already HTML) to HTML. Added check for extracted fields set to ckeditor that have not yet been edited.
