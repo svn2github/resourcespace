@@ -134,7 +134,7 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 
 		<div class="Question">		
 		<label><?php echo $lang["embedslideshow_directlink"] ?></label>
-		<div class="Fixed"><a href="<?php echo $baseurl ?>/plugins/embedslideshow/pages/viewer.php?ref=<?php echo $ref ?>&key=<?php echo $key ?>&size=<?php echo getval("size","") ?>&transition=<?php echo getval("transition","") ?>&width=<?php echo $width ?>&height=<?php echo $height ?>" target="_blank"><?php echo $lang["embedslideshow_directlinkopen"] ?></a></div>
+		<div class="Fixed"><a href="<?php echo $baseurl ?>/plugins/embedslideshow/pages/viewer.php?ref=<?php echo $ref ?>&key=<?php echo $key ?>&size=<?php echo getval("size","") ?>&transition=<?php echo getval("transition","") ?>&width=<?php echo $width ?>&height=<?php echo $height ?>&showtext=<?php echo getval("showtext","0");?>" target="_blank"><?php echo $lang["embedslideshow_directlinkopen"] ?></a></div>
 		<div class="clearerleft"></div>
 		</div>
 				
