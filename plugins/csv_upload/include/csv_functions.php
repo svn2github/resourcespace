@@ -187,7 +187,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 			
 			if (!isset($meta[$resource_type][$field_name])) // field name not found (and is not required for this type) so skip to the next one
 				{
-				if(isset($meta[0][$field_name])) // This maps to a gobal field, not a resource type specific one
+				if(isset($meta[0][$field_name])) // This maps to a global field, not a resource type specific one
 					{
 					$field_resource_type=0;
 					}
@@ -197,8 +197,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 					continue;
 					}
 				}
-		
-			if ($meta[$field_resource_type][$field_name]['required'])		// this field is required
+			if (isset($meta[$field_resource_type][$field_name]) && $meta[$field_resource_type][$field_name]['required'])		// this field is required
 				{
 				if (count($meta[$field_resource_type][$field_name]['options'])>0 && (array_search($cell_value,$meta[$field_resource_type][$field_name]['options'])===false))	// there are options but value does not match any of them
 					{
@@ -220,7 +219,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 					continue;
 					}
 							
-				if (count($meta[$field_resource_type][$field_name]['options'])>0 && array_search($cell_value,$meta[$field_resource_type][$field_name]['options'])===false)
+				if (isset($meta[$field_resource_type][$field_name]) && count($meta[$field_resource_type][$field_name]['options'])>0 && array_search($cell_value,$meta[$field_resource_type][$field_name]['options'])===false)
 					{
 					array_push($messages, "Error: Value \"{$cell_value}\" not found in lookup for \"{$field_name}\" field - found on line {$file_line_count}");
 					$error_count++;
@@ -228,7 +227,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 					}
 				}				
 						
-			if($processcsv)	
+			if($processcsv && isset($meta[$field_resource_type][$field_name]))	
 				{				
 				//echo "Updating field " . $field_name . "(" . $meta[$field_resource_type][$field_name]['remote_ref'] . ")<br>";
 				update_field($newref,$meta[$field_resource_type][$field_name]['remote_ref'],$cell_value);
