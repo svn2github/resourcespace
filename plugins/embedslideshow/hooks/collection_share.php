@@ -47,7 +47,18 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 		<label><?php echo $lang["embedslideshow_maximise_option"] ?></label>
 		<input type="checkbox" value="1" name="maximise" <?php if (isset($_POST["maximise"]) && $_POST["maximise"]=="1") { ?>checked<?php } ?>>
 		<div class="clearerleft"></div>
-		</div>		
+		</div>	
+
+		<?php 
+		global $embedslideshow_textfield;
+		if($embedslideshow_textfield) 
+			{?>
+			<div class="Question">		
+			<label><?php echo $lang['embedslideshow_textfield'] ?></label>
+			<input type="checkbox" name="showtext" <?php if (isset($_POST["showtext"]) && $_POST["showtext"]=="1") { ?>checked<?php } ?>>
+			<div class="clearerleft"></div>
+			</div>	<?php 
+			} ?>
 
 		<div class="QuestionSubmit" style="padding-top:0;margin-top:0;">
 		<label for="buttons"> </label>
@@ -89,7 +100,7 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 			ed.style.position='relative';
 			ed.style.top='0';
 			ed.style.left='0';
-			ed.src='" . $baseurl . "/plugins/embedslideshow/pages/viewer.php?ref=$ref&key=$key&size=" . getval("size","") . "&transition=" . getval("transition","") . "&width=" . $width . "&height=" . $height . "';
+			ed.src='" . $baseurl . "/plugins/embedslideshow/pages/viewer.php?ref=$ref&key=$key&size=" . getval("size","") . "&transition=" . getval("transition","") . "&width=" . $width . "&height=" . $height . "&showtext=".getval("showtext","0")."';
 			document.getElementById('embedslideshow_minimise_" . $ref . "').style.display='none';
 			document.getElementById('embedslideshow_maximise_" . $ref . "').style.display='block';	
 			document.getElementById('embedslideshow_back_" . $ref . "').style.display='none';
@@ -108,7 +119,7 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 			document.getElementById('embedslideshow_back_" . $ref . "').style.display='block';	
 			\">" . $lang["embedslideshow_maximise"] . "</a></div>";
 			}
-		$embed.="<iframe id=\"embedslideshow_" . $ref . "\" Style=\"background-color:#fff;cursor: pointer;\" width=\"$width_w_border\" height=\"$height\" src=\"" . $baseurl . "/plugins/embedslideshow/pages/viewer.php?ref=$ref&key=$key&size=" . getval("size","") . "&transition=" . getval("transition","") . "&width=$width&height=$height\" frameborder=0 scrolling=no>Your browser does not support frames.</iframe>";
+		$embed.="<iframe id=\"embedslideshow_" . $ref . "\" Style=\"background-color:#fff;cursor: pointer;\" width=\"$width_w_border\" height=\"$height\" src=\"" . $baseurl . "/plugins/embedslideshow/pages/viewer.php?ref=$ref&key=$key&size=" . getval("size","") . "&transition=" . getval("transition","") . "&width=$width&height=$height&showtext=".getval("showtext","0")."\" frameborder=0 scrolling=no>Your browser does not support frames.</iframe>";
 		
 		# Compress embed HTML.
 		$embed=str_replace("\n"," ",$embed);

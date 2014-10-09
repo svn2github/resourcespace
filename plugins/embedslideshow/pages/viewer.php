@@ -12,6 +12,7 @@ $ref=getvalescaped("ref","");
 $key=getvalescaped("key","");
 $size=getvalescaped("size","pre");
 $transition=(int)getvalescaped("transition",4);
+$showtext=getvalescaped("showtext","0");
 
 $width=getvalescaped("width","");
 $player_width=$width;
@@ -87,7 +88,7 @@ foreach ($resources as $resource)
 	<a class="embedslideshow_preview_inner" id="embedslideshow_preview<?php echo $page ?>" style="display:none;" href="#" onClick="embedslideshow_auto=false;embedslideshow_ShowPage(<?php echo ($page + 1) ?>,false,false);return false;"><img border="0" width=<?php echo $width ?> height=<?php echo $height ?> src="<?php echo $preview_path ?>"></a>
 	<?php 
 	global $embedslideshow_textfield,$embedslideshow_resourcedatatextfield;
-	if($embedslideshow_textfield) 
+	if($embedslideshow_textfield && $showtext) 
 		{ 
 		$resource_data = get_data_by_field($resource["ref"],$embedslideshow_resourcedatatextfield);
 		if($resource_data !="") 
@@ -96,12 +97,12 @@ foreach ($resources as $resource)
 			<span class="embedslideshow_text" id="embedslideshow_previewtext<?php echo $page ?>"><?php echo $resource_data;?></span>
 			<?php
 			}
-			?>
-			<script type="text/javascript">
-			embedslideshow_x_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$width)/2)+4; ?>;
-			embedslideshow_y_offsets[<?php echo $page ?>]=<?php echo 4 ?>;
-			</script>
-			<?php
+		?>
+		<script type="text/javascript">
+		embedslideshow_x_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$width)/2)+4; ?>;
+		embedslideshow_y_offsets[<?php echo $page ?>]=<?php echo 4 ?>;
+		</script>
+		<?php
 		} 
 	else 
 		{?>
