@@ -43,6 +43,7 @@ if (getval("submit","")!="")
 	
 	# Delete existing keywords index for this field
 	sql_query("delete resource_keyword.* from resource_keyword $joinkeyword where resource_type_field='$field' $conditionand");
+	echo "Complete";
 	}
 else
 	{
