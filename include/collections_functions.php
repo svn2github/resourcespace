@@ -202,6 +202,26 @@ function collection_writeable($collection)
 	return $userref==$collectiondata["user"] || $collectiondata["allow_changes"]==1 || checkperm("h");
 	}
 	
+function collection_readable($collection)
+	{
+	# Returns true if the current user has read access to the given collection.
+
+	# Fetch collection details.
+	if (!is_numeric($collection)) {return false;}
+	$collectiondata=get_collection($collection);
+	
+	# Load a list of attached users
+	$attached=sql_array("select user value from user_collection where collection='$collection'");
+	global $userref;
+	
+	# Access if:
+	#	- It's their collection
+	# 	- It's a public collection (or theme)
+	#	- They have the 'access and edit all collections' admin permission
+	# 	- They are attached to this collection
+	return $userref==$collectiondata["user"] || $collectiondata["public"]==1 || checkperm("h") || in_array($userref,$attached);
+	}
+	
 function set_user_collection($user,$collection)
 	{
 	global $usercollection;
@@ -410,9 +430,8 @@ function add_collection($user,$collection)
 	remove_collection($user,$collection);
 	# Insert row
 	sql_query("insert into user_collection(user,collection) values ('$user','$collection')");
-			#log this
+	#log this
 	collection_log($collection,"S",0, sql_value ("select username as value from user where ref = $user",""));
-
 	}
 
 function remove_collection($user,$collection)

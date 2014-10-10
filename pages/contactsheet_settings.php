@@ -7,12 +7,18 @@ include("../include/collections_functions.php");
 $collection=getvalescaped("ref","",true);
 $collectiondata= get_collection($collection);
 
+		
 include "../include/header.php";
 ?>
 
 <div class="BasicsBox" >
 <div class="BasicsBox" style="float:left;margin-bottom:0;" >
 <h1><?php echo $lang["contactsheetconfiguration"]?></h1>
+
+<?php
+# Check access
+if (!collection_readable($collection)) {echo($lang["no_access_to_collection"]);echo "</div></div>";include "../include/footer.php";exit();}
+?>
 
 <p><?php echo $lang["contactsheetintrotext"]?></p>
 

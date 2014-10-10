@@ -1826,3 +1826,4 @@ $lang["batch_replace_filename_intro"]="To replace a batch of resources you can u
 $lang["batch_replace_use_resourceid"]="Match filenames with resource IDs";
 $lang["batch_replace_filename_field_select"]="Please select the field containing the file name.";
 $lang["plupload_log_intro"] ="Upload summary - server time : ";
+$lang["no_access_to_collection"]="Sorry, you don't have access to this collection.";

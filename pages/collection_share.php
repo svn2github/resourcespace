@@ -16,6 +16,9 @@ if ($bypass_share_screen)
 
 $collection=get_collection($ref);
 
+# Check access
+if (!collection_readable($ref)) {exit($lang["no_access_to_collection"]);}
+
 #Check if sharing allowed
 if (checkperm("b") || !$allow_share) {
         $show_error=true;
@@ -113,7 +116,7 @@ include "../include/header.php";
 		}
 	if (getval("generateurl","")!="" || $editing)
 		{
-		if (!($hide_internal_sharing_url) && !$editing)
+		if (!($hide_internal_sharing_url) && !$editing && $collection["public"]==1)
 			{
 			?>
 			<p><?php echo $lang["generateurlinternal"]?></p>

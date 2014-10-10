@@ -873,6 +873,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$collection=explode(",",$collection);// just get the number
 		$collection=escape_check($collection[0]);
 
+		# Check access
+		if (!collection_readable($collection)) {return false;}
+		
 		# smart collections update
 		global $allow_smart_collections,$smart_collections_async;
 		if ($allow_smart_collections){

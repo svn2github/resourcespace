@@ -26,6 +26,9 @@ $sort=getvalescaped("sort","asc");
 $orientation=getvalescaped("orientation","");
 $sheetstyle=getvalescaped("sheetstyle","thumbnails");
 
+# Check access
+if (!collection_readable($collection)) {exit($lang["no_access_to_collection"]);}
+
 $logospace=0;
 $footerspace=0;
 

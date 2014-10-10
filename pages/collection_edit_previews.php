@@ -16,6 +16,9 @@ $sort=getval("sort","ASC");
 $backto=getval("backto","");$backto=str_replace("\"","",$backto);#Prevent injection
 $done=false;
 
+# Check access
+if (!collection_writeable($ref)) {exit($lang["no_access_to_collection"]);}
+
 # Fetch collection data
 $collection=get_collection($ref);if ($collection===false) {
 	$error=$lang['error-collectionnotfound'];

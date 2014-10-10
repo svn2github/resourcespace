@@ -17,6 +17,9 @@ $sort=getval("sort","ASC");
 # Does this user have edit access to collections? Variable will be found in functions below.  
 $multi_edit=allow_multi_edit($ref);
 
+# Check access
+if (!collection_writeable($ref)) {exit($lang["no_access_to_collection"]);}
+
 
 # Fetch collection data
 $collection=get_collection($ref);if ($collection===false) {

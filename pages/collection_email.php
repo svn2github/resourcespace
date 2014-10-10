@@ -5,13 +5,18 @@ include "../include/collections_functions.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
-
 $themeshare=getvalescaped("catshare","false");
 $themecount=0;
 if(getvalescaped("subthemes","false")!="false"){$subthemes=true;}else{$subthemes=false;}
 $linksuffix="?";
 $ref=getvalescaped("ref","");
 $refArray[]=$ref;
+
+
+# Check access
+if (!collection_readable($ref)) {exit($lang["no_access_to_collection"]);}
+
+
 if ($themeshare!="false")
 	{
 	$themeshare=true;

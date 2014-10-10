@@ -17,7 +17,9 @@ $done=false;
 $cinfo=get_collection($collection);if ($cinfo===false) {exit("Collection not found.");}
 
 # Check access
+if (!collection_readable($collection)) {exit($lang["no_access_to_collection"]);}
 if (!$cinfo["request_feedback"]) {exit("Access denied.");}
+
 
 # Check that comments have been added.
 $comments=get_collection_comments($collection);
