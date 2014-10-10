@@ -2073,8 +2073,11 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 			// Radio buttons:
 			case 12:
 				$value = getvalescaped('field_' . $fields[$n]['ref'], '');
-				if ($search!="") {$search.=", ";}
-				$search .= $fields[$n]['name'] . ':' . $value;
+				if($value!="")
+					{
+					if ($search!="") {$search.=", ";}
+					$search .= $fields[$n]['name'] . ':' . $value;
+					}
 			break;
 			}
 		}
