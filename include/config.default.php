@@ -166,7 +166,7 @@ $languages["ru"]="Русский язык"; # Russian
 $languages["sv"]="Svenska"; # Swedish
 
 
-# Disable language selection options
+# Disable language selection options (Includes Browser Detection for language)
 $disable_languages=false;
 
 # Show the language chooser on the bottom of each page

@@ -16,10 +16,40 @@ $api=getval("api","");
 # Allow the language to be posted here
 $language=getval("language","");
 
+if($language==="" && !$disable_languages) 
+	{
+	$language_array = explode(';',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+	$lc = 0;
+	$langflag = 0;
+	while($langflag < 1 && $lc < count($language_array))
+		{
+		if($lc == count($language_array)){$langflag=1;}
+		if(strpos($language_array[$lc],','))
+			{
+			$tmparray = explode(',',$language_array[$lc]);
+			foreach ($tmparray as $tlang) 
+				{
+				if(array_key_exists($tlang,$languages)) 
+					{
+					$language = $tlang;
+					$langflag = 1;
+					}
+				}
+			}
+		else
+			{
+			if(array_key_exists($language_array[$lc],$languages)) 
+				{
+				$language = $lang;
+				$langflag = 1;
+				}	
+			}
+		}
+	}
+
 if($disable_languages || $language ==="") {
 	$language = $defaultlanguage;
 }
-
 # Check the provided language is valid (XSS vuln. fix)
 if (!empty($language) && !array_key_exists($language,$languages))
 	{
