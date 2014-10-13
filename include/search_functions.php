@@ -1354,8 +1354,8 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 					if($scriptcondition['type'] == 12) {
 						
 						$scriptcondition["options"] = explode(',', $scriptcondition["options"]);
-						foreach ($scriptcondition["options"] as $key => $value) {
-							$scriptcondition["options"][$key] = sha1($value);
+						foreach ($scriptcondition["options"] as $key => $radio_button_value) {
+							$scriptcondition["options"][$key] = sha1($radio_button_value);
 						}
 						$scriptcondition["options"] = implode(',', $scriptcondition["options"]);
 
