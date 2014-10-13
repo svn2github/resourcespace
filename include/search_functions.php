@@ -1277,7 +1277,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 							</script><?php
 							}
 						# Handle Radio Buttons type:
-						else if($fields[$cf]['type'] == 12 && $fields[$cf]['display_as_dropdown'] == 0) { 
+						else if($fields[$cf]['type'] == 12 && $fields[$cf]['display_as_dropdown'] == 0) {
 						?>
 							<script type="text/javascript">
 							jQuery(document).ready(function() {
@@ -1286,10 +1286,19 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 									checkDisplayCondition<?php echo $field["ref"];?>();
 								});
 
-								// Check for checkboxes (advanced search behaviour)
-								jQuery('input[name=field_<?php echo $fields[$cf]["ref"]; ?>]:checkbox').change(function() {
-									checkDisplayCondition<?php echo $field["ref"];?>();
-								});
+								<?php
+								$options = trim_array(explode(',', $fields[$cf]['options']));
+								foreach ($options as $option) {
+									$name = 'field_' . $fields[$cf]['ref'] . '_' . sha1($option); ?>
+									
+									// Check for checkboxes (advanced search behaviour)
+									jQuery('input[name=<?php echo $name; ?>]:checkbox').change(function() {
+										checkDisplayCondition<?php echo $field['ref']; ?>();
+									});
+
+								<?php
+								}
+								?>
 							});
 							</script>
 
@@ -2075,12 +2084,50 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 
 			// Radio buttons:
 			case 12:
-				$value = getvalescaped('field_' . $fields[$n]['ref'], '');
-				if($value!="")
-					{
-					if ($search!="") {$search.=", ";}
-					$search .= $fields[$n]['name'] . ':' . $value;
+				if($fields[$n]['display_as_dropdown']) {
+					
+					// Process dropdown or checkboxes behaviour (with only one option ticked):
+					$value = getvalescaped('field_' . $fields[$n]['ref'], '');
+					if($value != '') {
+						if ($search != '') { 
+							$search .= ', ';
+						}
+						$search .= $fields[$n]['name'] . ':' . $value;
 					}
+				
+				} else {
+
+					//Process checkbox behaviour (multiple options selected create a logical AND condition):
+					$options = trim_array(explode(',', $fields[$n]['options']));
+					
+					$p = '';
+					$c = 0;
+					foreach ($options as $option) {
+						$name = 'field_' . $fields[$n]['ref'] . '_' . sha1($option);
+						$value = getvalescaped($name, '');
+
+						if($value == $option) {
+							$c++;
+							if($p != '') {
+								$p .= ';';
+							}
+							$p .= mb_strtolower(i18n_get_translated($option), 'UTF-8');
+						}
+					}
+
+					// All options ticked - omit from the search (unless using AND matching, or there is only one option intended as a boolean selection)
+					if(($c == count($options) && !$checkbox_and) && (count($options) > 1)) {
+						$p = '';
+					}
+
+					if($p != '') {
+						if($search != '') {
+							$search .= ', ';
+						}
+						$search .= $fields[$n]['name'] . ':' . $p;
+					}
+
+				}
 			break;
 			}
 		}

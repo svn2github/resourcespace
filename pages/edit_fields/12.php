@@ -108,7 +108,7 @@ if($display_as_checkbox) { ?>
                     }
                     $col++; ?>
                     <td valign=middle>
-                        <input type=checkbox id="field_<?php echo $field["ref"] . '_' . sha1($option); ?>" name="field_<?php echo $field["ref"]; ?>" value="<?php echo $option; ?>" <?php if($option == $set) { ?>checked<?php } ?> <?php if($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>>
+                        <input type=checkbox id="field_<?php echo $field["ref"] . '_' . sha1($option); ?>" name="field_<?php echo $field["ref"] . '_' . sha1($option); ?>" value="<?php echo $option; ?>" <?php if($option == $set) { ?>checked<?php } ?> <?php if($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>>
                     </td>
                     <td valign=middle>
                         <?php echo htmlspecialchars($option)?>&nbsp;&nbsp;
