@@ -217,6 +217,14 @@ if(isset($related_type_show_with_data)) {
 
 $fields=get_resource_field_data($ref,$multi_fields,!hook("customgetresourceperms"),-1,$k!="",$use_order_by_tab_view);
 
+// Get tab names and order from fields in order to know which one is the last tab
+if(isset($related_type_show_with_data)) {
+	foreach ($fields as $field) {
+		$fields_tab_names[] = $field['tab_name'];
+		$resources_per_tab_name[$field['tab_name']][] = $field['ref'];
+	}
+	$fields_tab_names = array_values(array_unique($fields_tab_names));
+}
 
 //Check if we want to use a specified field as a caption below the preview
 if(isset($display_field_below_preview) && is_int($display_field_below_preview))
@@ -283,7 +291,7 @@ function check_view_display_condition($fields,$n)
 	
 function display_field_data($field,$valueonly=false,$fixedwidth=452)
 	{
-	global $ref, $fieldcount, $tabcount, $show_expiry_warning, $access, $tabname, $search, $extra, $lang, $used_tab_names, $related_type_show_with_data, $show_default_related_resources;
+	global $ref, $fieldcount, $tabcount, $show_expiry_warning, $access, $tabname, $search, $extra, $lang, $used_tab_names, $related_type_show_with_data, $show_default_related_resources, $fields_tab_names, $resources_per_tab_name;
 	$value=$field["value"];
 
 	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
@@ -454,6 +462,32 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 					$fieldcount++;
 
 				}
+
+			}
+
+		} else if(isset($related_type_show_with_data) && $tabname == end($fields_tab_names) && $field['ref'] == end($resources_per_tab_name[$tabname])) {
+			
+			# NOTE: the resource type tab name and the current tab you are on need to be the same:
+			if(in_array($field['tab_name'], $resource_type_tab_names)) {
+
+				if(($key = array_search($field['tab_name'], $resource_type_tab_names)) !== FALSE) {
+
+					# Fields with display template should be rendered before the related resources list:
+					echo $extra;
+					$extra = '';
+					
+					include '../include/related_resources.php';
+					unset($resource_type_tab_names[$key]);
+
+					$show_default_related_resources = FALSE;
+				
+				}
+				
+				$tabcount++;
+				$tabname = $field['tab_name'];
+				$used_tab_names[] = $tabname;
+				$used_tab_names = array_unique($used_tab_names);
+				$fieldcount++;
 
 			}
 
@@ -1293,7 +1327,10 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 			}
 
 		}
-			
+
+		// This is being used to know which tab will be the last one
+		$fields_tab_names = array_values(array_intersect($fields_tab_names, $used_tab_names));
+								
 	?>
 	</div>
 	<script type="text/javascript">
