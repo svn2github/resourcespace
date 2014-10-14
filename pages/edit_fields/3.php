@@ -26,6 +26,11 @@ if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leadi
 	if($value==="") {
 		$value = $options[0]==="" ? "" : $options[0];
 	}
+
+	// If all fields should be blank, overwrite value to be blank:
+	if($blank_edit_template) {
+		$value = '';
+	}
 	?><option value=""></option><?php
 	} ?>
 <?php
