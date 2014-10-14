@@ -424,7 +424,7 @@ if ($cropper_enable_alternative_files && !$download && !$original && getval("sli
     sql_query("insert into resource_dimensions (resource, width, height, file_size) values ('$ref', '$newfilewidth', '$newfileheight', '$newfilesize')");
 
     # call remove annotations, since they will not apply to transformed
-    hook("removeannotations");
+    hook("removeannotations","",array($ref));
 
     // remove the cached transform preview, since it will no longer be accurate
     if (file_exists(get_temp_dir() . "/transform_plugin/pre_$ref.jpg")){
