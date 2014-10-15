@@ -6,7 +6,7 @@
  * @subpackage Pages_Team
  */
 include "../../include/db.php";
-include "../../include/authenticate.php"; if (!checkperm("o")) {exit ("Permission denied.");}
+include "../../include/authenticate.php"; if (!checkperm("k")) {exit ("Permission denied.");}
 include "../../include/general.php";
 include "../../include/resource_functions.php";
 
