@@ -172,6 +172,9 @@ $disable_languages=false;
 # Show the language chooser on the bottom of each page
 $show_language_chooser=true;
 
+# Allow Browser Language Detection to also render the page in the browser specified language (If Detected).
+$login_browser_language=true;
+
 # FTP settings for batch upload
 # Only necessary if you plan to use the FTP upload feature.
 $ftp_server="my.ftp.server";

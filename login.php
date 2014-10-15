@@ -15,7 +15,6 @@ $api=getval("api","");
 # Allow the language to be posted here
 $language=getval("language","");
 
-
 if($language==="" && !$disable_languages && isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) 
 	{
 	$language_array = explode(';',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
@@ -45,6 +44,19 @@ if($language==="" && !$disable_languages && isset($_SERVER['HTTP_ACCEPT_LANGUAGE
 			}
 		$lc++;
 		}
+		if (!empty($language)&&$login_browser_language)
+			{
+			# Refresh Language Strings Used
+			$lang = array();
+			# Always include the english pack (in case items have not yet been translated)
+			include dirname(__FILE__)."/languages/en.php";
+			if ($language!="en")
+				{
+				if (substr($language, 2, 1)=='-' && substr($language, 0, 2)!='en')
+					@include dirname(__FILE__)."/languages/" . safe_file_name(substr($language, 0, 2)) . ".php";
+				@include dirname(__FILE__)."/languages/" . safe_file_name($language) . ".php";
+				}
+			}
 	}
 
 if($disable_languages || $language ==="") {
