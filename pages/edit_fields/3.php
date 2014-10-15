@@ -28,7 +28,8 @@ if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leadi
 	}
 
 	// If all fields should be blank, overwrite value to be blank:
-	if(isset($blank_edit_template) && $blank_edit_template) {
+	//Note: this only applies to upload
+	if($ref < 0 && isset($blank_edit_template) && $blank_edit_template) {
 		$value = '';
 	}
 	?><option value=""></option><?php
