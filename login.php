@@ -10,20 +10,19 @@ $url=getval("url","index.php");
 $modifiedurl=hook("modifyloginurl","",array($url));
 if ($modifiedurl){$url=$modifiedurl;}
 
-
 $api=getval("api","");
 
 # Allow the language to be posted here
 $language=getval("language","");
 
-if($language==="" && !$disable_languages) 
+
+if($language==="" && !$disable_languages && isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) 
 	{
 	$language_array = explode(';',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
 	$lc = 0;
 	$langflag = 0;
 	while($langflag < 1 && $lc < count($language_array))
 		{
-		if($lc == count($language_array)){$langflag=1;}
 		if(strpos($language_array[$lc],','))
 			{
 			$tmparray = explode(',',$language_array[$lc]);
@@ -40,21 +39,23 @@ if($language==="" && !$disable_languages)
 			{
 			if(array_key_exists($language_array[$lc],$languages)) 
 				{
-				$language = $lang;
+				$language = $language_array[$lc];
 				$langflag = 1;
 				}	
 			}
+		$lc++;
 		}
 	}
 
 if($disable_languages || $language ==="") {
 	$language = $defaultlanguage;
 }
+
 # Check the provided language is valid (XSS vuln. fix)
 if (!empty($language) && !array_key_exists($language,$languages))
 	{
         exit("Invalid language");
-        }
+    }
         
 # process log in
 $error=getval("error","");
