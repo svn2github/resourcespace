@@ -38,17 +38,14 @@ function refine_api_resource_results($results){
 	// Prettify field titles
 	if (getval("prettyfieldnames","")!=""){
 
-
-
 		for ($n=0;$n<count($results);$n++){
 			foreach ($results[$n] as $key=>$value){
 				if (substr($key,0,5)=="field"){
-					$field=str_replace("field","",$key);
-
-					if (isset($field_title[$field])){
-						$results[$n][$field_title[$field]]=$results[$n][$key];
-					}
-					unset ($results[$n][$key]);
+						$field=str_replace("field","",$key);
+						if (isset($field_title[$field])){
+							$results[$n][str_replace(' ', '_',$field_title[$field])]=$results[$n][$key];
+						}
+						unset ($results[$n][$key]);
 					}
 			}
 		}
