@@ -166,7 +166,7 @@ if ($use_plugins_manager){
 }
 
 # Include the appropriate language file
-$pagename=str_replace(".php","",pagename());
+$pagename=safe_file_name(str_replace(".php","",pagename()));
 
 if (isset($defaultlanguage))
 	{
