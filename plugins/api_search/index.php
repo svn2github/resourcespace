@@ -144,6 +144,12 @@ if($original) {
         } else {
             $results[$i]['original_link'] = 'No original link available.';
         }
+
+        // Get the size of the original file:
+        $original_size = get_original_imagesize($results[$i]['ref'], $filepath, $results[$i]['file_extension']);
+        $original_size = formatfilesize($original_size[0]);
+        $original_size = str_replace('&nbsp;', ' ', $original_size);
+        $results[$i]['original_size'] = $original_size;
     }
 }
 
