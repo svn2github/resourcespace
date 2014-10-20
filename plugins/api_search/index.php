@@ -203,6 +203,10 @@ if($metadata) {
     global $api_search_full_field_data;
     $api_search_full_field_data = implode(',', $api_search_full_field_data);
 
+    if(trim($api_search_full_field_data) == '') {
+        exit($lang['api_search_error_no_fields_set']);
+    }
+
     // Build api_search field string in order to find the fields:
     $fields = sql_query('SELECT ref, title FROM resource_type_field WHERE ref IN (' . $api_search_full_field_data . ');');
     foreach ($fields as $field) {
