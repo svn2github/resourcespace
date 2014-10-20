@@ -1329,7 +1329,9 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 		}
 
 		// This is being used to know which tab will be the last one
-		$fields_tab_names = array_values(array_intersect($fields_tab_names, $used_tab_names));
+		if(isset($related_type_show_with_data)) {
+			$fields_tab_names = array_values(array_intersect($fields_tab_names, $used_tab_names));
+		}
 								
 	?>
 	</div>
