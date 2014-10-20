@@ -222,11 +222,11 @@ if($metadata) {
         foreach ($full_fields_options as $field_key => $field_title) {
             
             // Make sure the field has data before moving forward:
-            if(empty($results[$i][$field_key]) || ($prettyfieldnames && empty($results[$i][$field_title]))) {
+            if((!$prettyfieldnames && empty($results[$i][$field_key])) || ($prettyfieldnames && empty($results[$i][$field_title]))) {
                 continue;
             }
 
-            if(array_key_exists($field_key, $results[$i]) || ($prettyfieldnames && array_key_exists($field_title, $results[$i]))) {
+            if((!$prettyfieldnames && array_key_exists($field_key, $results[$i])) || ($prettyfieldnames && array_key_exists($field_title, $results[$i]))) {
                 $full_field_data_ids_list .= substr($field_key, 5) . ',';
             }
 
