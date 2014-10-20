@@ -221,12 +221,21 @@ if($metadata) {
         // NOTE: fields are displayed either like [field18] or [Caption]
         foreach ($full_fields_options as $field_key => $field_title) {
             
+            // Make sure the field has data before moving forward:
+            if(empty($results[$i][$field_key]) || ($prettyfieldnames && empty($results[$i][$field_title]))) {
+                continue;
+            }
+
             if(array_key_exists($field_key, $results[$i]) || ($prettyfieldnames && array_key_exists($field_title, $results[$i]))) {
                 $full_field_data_ids_list .= substr($field_key, 5) . ',';
             }
 
         }
         $full_field_data_ids_list = substr($full_field_data_ids_list, 0, -1);
+
+        if(trim($full_field_data_ids_list) == '') {
+            continue;
+        }
 
         // Get the full field value:
         $query = sprintf('
