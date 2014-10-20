@@ -26,6 +26,13 @@ $list= rtrim(trim($list),",");
 $page_def[] = config_add_text_input('api_search_exclude_fields', $lang['api_search_exclude_fields']);
 $page_def[]=config_add_html($lang['api_search_excludable_fields'].": $list");
 
+// Get all fields available:
+$full_fields_options=array();
+$fields = sql_query('SELECT ref, title FROM resource_type_field;');
+foreach ($fields as $field) {
+	$full_fields_options[$field['ref']] = $field['title'];
+}
+$page_def[] = config_add_multi_select('api_search_full_field_data',$lang['api_search_full_field_data'], $full_fields_options);
 
 // Do the page generation ritual -- don't change this section.
 $upload_status = config_gen_setup_post($page_def, $plugin_name);

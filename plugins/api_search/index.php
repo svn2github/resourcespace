@@ -20,6 +20,8 @@ $archive=getvalescaped("archive",0);
 $starsearch=getvalescaped("starsearch","");
 $collection=getvalescaped("collection","",true);
 $original = filter_var(getvalescaped('original', FALSE), FILTER_VALIDATE_BOOLEAN);
+$metadata = filter_var(getvalescaped('metadata', FALSE), FILTER_VALIDATE_BOOLEAN);
+$prettyfieldnames = filter_var(getvalescaped('prettyfieldnames', FALSE), FILTER_VALIDATE_BOOLEAN);
 
 $help=getval("help","");
 if ($help!=""){
@@ -195,6 +197,62 @@ if ($modified_result){
  // this function in api_core   
 $results=refine_api_resource_results($results);
 $limit_to=getval("limit_to","");
+
+if($metadata) {
+
+    global $api_search_full_field_data;
+    $api_search_full_field_data = implode(',', $api_search_full_field_data);
+
+    // Build api_search field string in order to find the fields:
+    $fields = sql_query('SELECT ref, title FROM resource_type_field WHERE ref IN (' . $api_search_full_field_data . ');');
+    foreach ($fields as $field) {
+        $full_fields_options['field' . $field['ref']] = $field['title'];
+    }
+    
+    for($i = 0; $i < count($results); $i++) {
+
+        $full_field_data_ids_list = '';
+
+        // Build list of IDs of field types to return full data for:
+        // NOTE: fields are displayed either like [field18] or [Caption]
+        foreach ($full_fields_options as $field_key => $field_title) {
+            
+            if(array_key_exists($field_key, $results[$i]) || ($prettyfieldnames && array_key_exists($field_title, $results[$i]))) {
+                $full_field_data_ids_list .= substr($field_key, 5) . ',';
+            }
+
+        }
+        $full_field_data_ids_list = substr($full_field_data_ids_list, 0, -1);
+
+        // Get the full field value:
+        $query = sprintf('
+                SELECT value
+                  FROM resource_data
+                 WHERE resource = %d
+                   AND resource_type_field IN (%s);
+            ',
+            $results[$i]['ref'],
+            $full_field_data_ids_list
+        );
+        $metadata_values = sql_query($query, '');
+
+        // Replace the values:
+        $full_field_data_ids_array = explode(',', $full_field_data_ids_list);
+        foreach ($full_field_data_ids_array as $key => $field_id) {
+            
+            if(!$prettyfieldnames && array_key_exists('field' . $field_id, $full_fields_options) && array_key_exists('field' . $field_id, $results[$i])) {
+                $results[$i]['field' . $field_id] = $metadata_values[$key]['value'];
+            }
+
+            if($prettyfieldnames && array_key_exists('field' . $field_id, $full_fields_options) && array_key_exists($full_fields_options['field' . $field_id], $results[$i])) {
+                $results[$i][$full_fields_options['field' . $field_id]] = $metadata_values[$key]['value'];
+            }
+
+        }
+
+    }
+
+}
 
 if (getval("content","")=="xml" && !$paginate){
     header('Content-type: application/xml');
