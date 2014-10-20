@@ -844,7 +844,7 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent,$levels)
 	}
 
 if (!function_exists("email_collection")){
-function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="",$useremail="",$from_name="",$cc="",$themeshare=false,$themename="",$themeurlsuffix="",$list_recipients=false)
+function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="",$useremail="",$from_name="",$cc="",$themeshare=false,$themename="",$themeurlsuffix="",$list_recipients=false, $add_internal_access=false)
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
@@ -875,19 +875,25 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		
 		# Insert new user_collection row(s)
 		#loop through the collections
-			for ($nx1=0;$nx1<count($reflist);$nx1++)
-			{	#loop through the users
-				for ($nx2=0;$nx2<count($urefs);$nx2++)
+		for ($nx1=0;$nx1<count($reflist);$nx1++)
+			{
+			#loop through the users
+			for ($nx2=0;$nx2<count($urefs);$nx2++)
 				{
-		sql_query("insert into user_collection(collection,user,request_feedback) values ($reflist[$nx1], $urefs[$nx2], $feedback )");
-		if ($access == 0) {
-			foreach (get_collection_resources($reflist[$nx1]) as $resource)	{
-				open_access_to_user($urefs[$nx2],$resource,$expires);
-			}
-		}
+				sql_query("insert into user_collection(collection,user,request_feedback) values ($reflist[$nx1], $urefs[$nx2], $feedback )");
+				if ($add_internal_access)
+					{		
+					foreach (get_collection_resources($reflist[$nx1]) as $resource)
+						{
+						if (get_edit_access($resource))
+							{
+							open_access_to_user($urefs[$nx2],$resource,$expires);
+							}
+						}
+					}
 				
-			#log this
-		collection_log($reflist[$nx1],"S",0, sql_value ("select username as value from user where ref = $urefs[$nx2]",""));
+				#log this
+				collection_log($reflist[$nx1],"S",0, sql_value ("select username as value from user where ref = $urefs[$nx2]",""));
 
 				}
 			}

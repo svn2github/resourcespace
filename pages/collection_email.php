@@ -102,6 +102,7 @@ if (getval("save","")!="")
 	$users=getvalescaped("users","");
 	$message=getvalescaped("message","");
 	$access=getvalescaped("access",-1);
+	$add_internal_access=(getvalescaped("grant_internal_access","")!="");
 	$expires=getvalescaped("expires","");	
 	$feedback=getvalescaped("request_feedback","");	if ($feedback=="") {$feedback=false;} else {$feedback=true;}
 	$list_recipients=getvalescaped("list_recipients",""); if ($list_recipients=="") {$list_recipients=false;} else {$list_recipients=true;}
@@ -111,7 +112,7 @@ if (getval("save","")!="")
 	if (!$use_user_email){$from_name=$applicationname;} else {$from_name=$userfullname;} // make sure from_name matches email
 	
 	if (getval("ccme",false)){ $cc=$useremail;} else {$cc="";}
-	$errors=email_collection($ref,i18n_get_collection_name($collection),$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name,$cc,$themeshare,$themename,$linksuffix,$list_recipients);
+	$errors=email_collection($ref,i18n_get_collection_name($collection),$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name,$cc,$themeshare,$themename,$linksuffix,$list_recipients,$add_internal_access);
 
 	if ($errors=="")
 		{
@@ -257,7 +258,19 @@ else
 </div>
 <?php } ?>
 
-<?php if(!hook("replaceemailaccessselector")){?>
+<?php
+
+$minaccess=collection_min_access($ref);
+if($minaccess==0)
+	{ ?>
+	<div class="Question">
+	<label for="grant_internal_access"><?php echo $lang["internal_share_grant_access"] ?></label>
+	<input type=checkbox id="grant_internal_access" name="grant_internal_access" onClick="if(this.checked){jQuery('#question_internal_access').slideDown();}else{jQuery('#question_internal_access').slideUp()};">
+	<div class="clearerleft"> </div>
+	</div>	
+	<?php } ?>
+<?php
+if(!hook("replaceemailaccessselector")){?>
 <div class="Question" id="question_access">
 <label for="archive"><?php echo $lang["externalselectresourceaccess"]?></label>
 <select class="stdwidth" name="access" id="access">

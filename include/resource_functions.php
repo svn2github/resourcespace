@@ -881,7 +881,7 @@ function update_field($resource,$field,$value)
 	}
 
 if (!function_exists("email_resource")){	
-function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="",$useremail="",$from_name="",$cc="",$list_recipients=false)
+function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="",$useremail="",$from_name="",$cc="",$list_recipients=false, $open_internal_access=false)
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 
@@ -925,6 +925,10 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 			$k=generate_resource_access_key($resource,$userref,$access,$expires,$emails[$n]);
 			$key="&k=". $k;
 			}
+                elseif ($access==0 && $open_internal_access)
+                    {
+                    open_access_to_user($userref,$resource,$expires);    
+                    }
 		
 		# make vars available to template
 		global $watermark;       

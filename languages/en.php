@@ -1827,3 +1827,5 @@ $lang["batch_replace_use_resourceid"]="Match filenames with resource IDs";
 $lang["batch_replace_filename_field_select"]="Please select the field containing the file name.";
 $lang["plupload_log_intro"] ="Upload summary - server time : ";
 $lang["no_access_to_collection"]="Sorry, you don't have access to this collection.";
+$lang["internal_share_grant_access"]="Grant open access to selected internal users?";
+$lang["internal_share_grant_access_collection"]="Grant open access to internal users (for resources that you can edit)?";

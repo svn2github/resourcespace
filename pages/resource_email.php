@@ -34,6 +34,7 @@ if (getval("save","")!="")
 	$users=getvalescaped("users","");
 	$message=getvalescaped("message","");
 	$access=getvalescaped("access","");
+	$add_internal_access=(getvalescaped("grant_internal_access","")!="");
 	if (hook("modifyresourceaccess")){$access=hook("modifyresourceaccess");}
 	$expires=getvalescaped("expires","");
 	$list_recipients=getvalescaped("list_recipients",""); if ($list_recipients=="") {$list_recipients=false;} else {$list_recipients=true;}
@@ -57,7 +58,7 @@ if (getval("save","")!="")
 			{
 			add_resource_to_collection($relatedshare,$sharedcollection);
 			}			
-		$errors=email_collection($sharedcollection,i18n_get_collection_name($sharedcollection),$userfullname,$users,$message,false,$access,$expires,$user_email,$from_name,$cc,false,"","",$list_recipients);
+		$errors=email_collection($sharedcollection,i18n_get_collection_name($sharedcollection),$userfullname,$users,$message,false,$access,$expires,$user_email,$from_name,$cc,false,"","",$list_recipients,$add_internal_access);
 		// Hide from drop down by default
 		show_hide_collection($sharedcollection, false, $userref);
 		
@@ -77,7 +78,7 @@ if (getval("save","")!="")
 	else
 		{		
 		// Email single resource
-		$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$access,$expires,$user_email,$from_name,$cc,$list_recipients);
+		$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$addaccess,$expires,$user_email,$from_name,$cc,$list_recipients,$add_internal_access);
 		if ($errors=="")
 			{
 			// Log this			
@@ -239,19 +240,36 @@ if ($share_resource_include_related && $enable_related_resources && checkperm("s
 </div>
 <?php } ?>
 
+<?php if($access==0)
+	{
+	$resourcedata=get_resource_data($ref,true);
+	if(get_edit_access($ref,$resource['archive'],false,$resource))
+		{?>
+		<div class="Question">
+		<label for="grant_internal_access"><?php echo $lang["internal_share_grant_access"] ?></label>
+		<input type=checkbox id="grant_internal_access" name="grant_internal_access" onClick="if(this.checked){jQuery('#question_internal_access').slideDown();}else{jQuery('#question_internal_access').slideUp()};">
+		<div class="clearerleft"> </div>
+		</div>
+		<?php
+		}
+	}?>
+
+
 <?php if(!hook("replaceemailaccessselector")){?>
 <div class="Question" id="question_access">
-<label for="archive"><?php echo $lang["externalselectresourceaccess"]?></label>
+<label for="access"><?php echo $lang["externalselectresourceaccess"]?></label>
 <select class="stdwidth" name="access" id="access">
 <?php
 // List available access levels. The highest level must be the minimum user access level.
-for ($n=$access;$n<=1;$n++) { ?>
+for ($n=2;$n>=$access;$n--)  { ?>
 <option value="<?php echo $n?>"><?php echo $lang["access" . $n]?></option>
 <?php } ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>
+
+
 
 <?php if(!hook("replaceemailexpiryselector")){?>
 <div class="Question">
