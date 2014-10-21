@@ -114,7 +114,7 @@ $lang["property-title"]="Title";
 $lang["property-resource_type"]="Resource type";
 $lang["property-field_type"]="Field type";
 
-$lang["property-options"]="Options";
+$lang["property-options"]="Options - (Default Option, Option2, Option3) add a starting ',' to force default to blank value (, Option 1, Option 2, Option 3).";
 $lang["property-required"]="Required";
 $lang["property-order_by"]="Order by";
 $lang["property-indexing"]="<b>Indexing</b>";

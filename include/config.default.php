@@ -939,7 +939,7 @@ $about_link=true;
 $reset_date_upload_template=true;
 $reset_date_field=12; # Which date field to reset? (if using multiple date fields)
 
-# When uploading resources (batch upload) and editing the template, should all values be reset to blank every time?
+# When uploading resources (batch upload) and editing the template, should all values be reset to blank or the default value every time?
 $blank_edit_template=false;
 
 # Show expiry warning when expiry date has been passed
