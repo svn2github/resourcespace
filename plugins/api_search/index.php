@@ -239,12 +239,14 @@ if($metadata) {
 
         // Get the full field value:
         $query = sprintf('
-                SELECT value
-                  FROM resource_data
-                 WHERE resource = %d
-                   AND resource_type_field IN (%s);
+                  SELECT resource_type_field,value
+                    FROM resource_data
+                   WHERE resource = %d
+                     AND resource_type_field IN (%s)
+                ORDER BY FIELD(resource_type_field, %s);
             ',
             $results[$i]['ref'],
+            $full_field_data_ids_list,
             $full_field_data_ids_list
         );
         $metadata_values = sql_query($query, '');
