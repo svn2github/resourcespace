@@ -235,6 +235,12 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 			if($processcsv)	
 				{				
 				//echo "Updating field " . $field_name . "(" . $meta[$field_resource_type][$field_name]['remote_ref'] . ")<br>";
+				
+				// Prefix value with comma as this is required for indexing and rendering selected options
+				if (in_array($meta[$field_resource_type][$field_name]['type'], array(2,3,7,9,12)) && substr($cell_value,0,1) <> ',')
+					{
+					$cell_value = ','.$cell_value;
+					}
 				update_field($newref,$meta[$field_resource_type][$field_name]['remote_ref'],$cell_value);
 				}
 				
