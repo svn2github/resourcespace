@@ -78,7 +78,7 @@ if (getval("save","")!="")
 	else
 		{		
 		// Email single resource
-		$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$addaccess,$expires,$user_email,$from_name,$cc,$list_recipients,$add_internal_access);
+		$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$access,$expires,$user_email,$from_name,$cc,$list_recipients,$add_internal_access);
 		if ($errors=="")
 			{
 			// Log this			
