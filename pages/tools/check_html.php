@@ -2,7 +2,7 @@
 
 # Quick script to check valid HTML
 include "../../include/db.php";
-include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
+include "../../include/authenticate.php";
 include "../../include/general.php";
 include "../../include/resource_functions.php";
 
