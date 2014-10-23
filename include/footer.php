@@ -111,7 +111,7 @@ function SwapCSS(css){
 //titlebar modifications
 
 if ($show_resource_title_in_titlebar){
-$general_title_pages=array("team_content","team_archive","team_resource","research_request","requests","edit","themes","collection_public","collection_manage","team_home","help","home","tag","upload_java_popup","upload_java","contact","geo_search","search_advanced","about","contribute","user_preferences","view_shares");
+$general_title_pages=array("team_content","team_archive","team_resource","team_user","team_request","team_research","team_plugins","team_mail","team_export","team_stats","team_report","team_user_log","research_request","requests","edit","themes","collection_public","collection_manage","team_home","help","home","tag","upload_java_popup","upload_java","contact","geo_search","search_advanced","about","contribute","user_preferences","view_shares","check","index");
 $search_title_pages=array("contactsheet_settings","search","preview_all","collection_edit","edit","collection_download","collection_share","collection_request");
 $resource_title_pages=array("view","delete","log","alternative_file","alternative_files","resource_email","edit","preview");
 
@@ -250,6 +250,47 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
 		else if($pagename=="view_shares"){
 			$pagetitle=$lang["shared_collections"];
 		}	
+		else if($pagename=="team_user"){
+			$pagetitle=$lang["manageusers"];
+		}
+		else if($pagename=="team_request"){
+			$pagetitle=$lang["managerequestsorders"];
+		}
+		else if($pagename=="team_research"){
+			$pagetitle=$lang["manageresearchrequests"];
+		}
+		else if($pagename=="team_plugins"){
+			$pagetitle=$lang["pluginmanager"];
+		}
+		else if($pagename=="team_mail"){
+			$pagetitle=$lang["sendbulkmail"];
+		}
+		else if($pagename=="team_export"){
+			$pagetitle=$lang["exportdata"];
+		}
+		else if($pagename=="team_export"){
+			$pagetitle=$lang["exportdata"];
+		}
+		else if($pagename=="team_stats"){
+			$pagetitle=$lang["viewstatistics"];
+		}
+		else if($pagename=="team_report"){
+			$pagetitle=$lang["viewreports"];
+		}
+		else if($pagename=="check"){
+			$pagetitle=$lang["installationcheck"];
+		}
+		else if($pagename=="index"){
+			$pagetitle=$lang["systemsetup"];
+		}
+		else if($pagename=="team_user_log"){
+			global $userdata;
+			$pagetitle=$lang["userlog"] . ": " . $userdata["fullname"];
+		}
+		else if($pagename=="team_user_log"){
+			global $userdata;
+			$pagetitle=$lang["userlog"] . ": " . $userdata["fullname"];
+		}
 		else {
 			$pagetitle="";
 		}
