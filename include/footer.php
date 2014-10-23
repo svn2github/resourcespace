@@ -116,7 +116,7 @@ $search_title_pages=array("contactsheet_settings","search","preview_all","collec
 $resource_title_pages=array("view","delete","log","alternative_file","alternative_files","resource_email","edit","preview");
 
     // clear resource or search title for pages that don't apply:
-    if (!in_array($pagename,array_merge($general_title_pages,$search_title_pages,$resource_title_pages))){
+    if (!in_array($pagename,array_merge($general_title_pages,$search_title_pages,$resource_title_pages,hook("additional_title_pages_array")))){
 		echo "<script language='javascript'>\n";
 		echo "document.title = \"$applicationname\";\n";
 		echo "</script>";
@@ -294,7 +294,8 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
         echo "<script language='javascript'>\n";
         echo "document.title = \"$applicationname $pagetitle\";\n";
         echo "</script>";
-    }  
+    }
+    hook("additional_title_pages");
 }
    
 ?><script src="<?php echo $baseurl?>/lib/js/Placeholders.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script><?php
