@@ -4,6 +4,7 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
 include "../include/collections_functions.php";
+include "../include/search_functions.php";
 
 # Fetch promoted collections ready for display later
 $home_collections=get_home_page_promoted_collections();
