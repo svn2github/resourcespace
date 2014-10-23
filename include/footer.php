@@ -287,10 +287,6 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
 			global $userdata;
 			$pagetitle=$lang["userlog"] . ": " . $userdata["fullname"];
 		}
-		else if($pagename=="team_user_log"){
-			global $userdata;
-			$pagetitle=$lang["userlog"] . ": " . $userdata["fullname"];
-		}
 		else {
 			$pagetitle="";
 		}
