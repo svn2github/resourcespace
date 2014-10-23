@@ -491,4 +491,28 @@ $lang["newflag"]="NUOVO!";
 
 $lang["resourcemetadata"]="Risorsa metadati";
 
+$lang["action-removefromcollection"]="Rimuovi dalla collezione";
+$lang["share"]="Condividi";
+$lang["downloadmetadata"]="Scarica i metadati";
+$lang["managealternativefiles"]="Usaa file alternativi";
+$lang["share-resource"]="Condividi risorsa";
+$lang["generateurl"]="Genera URL";
+$lang["generateurls"]="Genera URLs";
+$lang["generateurlinternal"]="L'url qui sotto è valida solo per gli utenti registrati";
+$lang["selectgenerateurlexternal"]="Per creare un' url che funzioni per gli utenti esterni (persone che non sono registrate) seleziona il livello di accesso che desideri correlare alle risorse";
+$lang["columnheader-expires"]=$lang["expires"]="Termine";
+$lang["status-never"]="Mai";
+$lang["generateexternalurl"]="Genera URL esterna";
+$lang["generateexternalurls"]="Genera URLs esterna";
+$lang["internalusersharing"]="Condivisione interna";
+$lang["externalusersharing"]="Condivisione esterna";
+$lang["property-name"]="Nome";
+$lang["relatedkeywords"]="Parole chiave collegate";
+$lang["copyfromcollection"]="Copia dalla collezione";
+$lang["donotcopycollection"]="Non copiare dalla collezione";
+$lang["collectionlog"]="log collezione";
+$lang["externalselectresourceaccess"]="Se vuoi mandare una mail a utenti esterni, seleziona il livello di accesso che desideri correlare alla risorsa.";
+$lang["externalselectresourceexpires"]="Se vuoi mandare una mail a utenti esterni, seleziona una data di scadenza dell'url.";
+$lang["requestfeedback"]="Richiedi un feedback <br />(ti verrà mandata una mail di risposta)";
+$lang["emailfromuser"]="Manda questa mail da...Se non selezioni l'opzione, la mail verrà mandata dall'indirizzo del sistema noreply@stcitaly.montala.com ";
 ?>
