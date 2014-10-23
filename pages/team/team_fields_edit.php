@@ -52,11 +52,6 @@ $options=get_field_options_with_stats($field);
   
 </div>
 
-<form method="post" action="<?php echo $baseurl_short?>pages/team/team_fields_edit.php">
-<input type="hidden" name="show_all_languages" value="<?php echo $show_all_languages?"true":"" ?>">
-<input type="hidden" name="save" value="true">
-<input type="hidden" name="field" value="<?php echo $field ?>">
-
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
@@ -83,7 +78,7 @@ for ($n=0;$n<count($options);$n++)
 	?>
 	<tr>
 	<td><?php echo $languages[$defaultlanguage]?></td>
-	<td><input type="text" name="field_<?php echo $defaultlanguage?>_<?php echo $n?>" class="medwidth" value="<?php echo $var?>" /></td>
+	<td><input type="text" name="field_<?php echo $defaultlanguage?>_<?php echo $n?>" class="medwidth" value="<?php echo $var?>" form="<?php echo 'field_' . $field . '_option_' . $n; ?>" /></td>
 	</tr>
 	<?php
 	#�Also list all other languages
@@ -99,7 +94,7 @@ for ($n=0;$n<count($options);$n++)
 				?>
 				<tr>
 				<td><?php echo $langname?></td>
-				<td width="20%"><input type="text" name="field_<?php echo $langcode?>_<?php echo $n?>" class="medwidth" value="<?php echo $var?>" /></td>
+				<td width="20%"><input type="text" name="field_<?php echo $langcode?>_<?php echo $n?>" class="medwidth" value="<?php echo $var?>" form="<?php echo 'field_' . $field . '_option_' . $n; ?>" /></td>
 				</tr>
 				<?php
 				}
@@ -107,7 +102,7 @@ for ($n=0;$n<count($options);$n++)
 				{
 				# Not showing other languages - hide this field.
 				?>
-				<input type="hidden" name="field_<?php echo $langcode?>_<?php echo $n?>" value="<?php echo $var?>" />
+				<input type="hidden" name="field_<?php echo $langcode?>_<?php echo $n?>" value="<?php echo $var?>" form="<?php echo 'field_' . $field . '_option_' . $n; ?>" />
 				<?php
 				}
 			}
@@ -118,8 +113,13 @@ for ($n=0;$n<count($options);$n++)
 	</div></td>
 	<td valign="top" style="padding-top: 15px;"><?php echo $options[$n]["count"]?></td>
 	<td align="right" valign="top"><div class="ListTools">
-	<input type="submit" name="submit_field_<?php echo $n?>" value="<?php echo $lang["save"]?>" />
-	<input type="submit" name="delete_field_<?php echo $n?>" value="<?php echo $lang["action-delete"]?>" onClick="return confirm('<?php echo $lang["confirmdeletefieldoption"]?>');" />
+		<form id="<?php echo 'field_' . $field . '_option_' . $n; ?>" method="post" action="<?php echo $baseurl_short?>pages/team/team_fields_edit.php">
+			<input type="hidden" name="show_all_languages" value="<?php echo $show_all_languages?"true":"" ?>">
+			<input type="hidden" name="save" value="true">
+			<input type="hidden" name="field" value="<?php echo $field ?>">
+			<input type="submit" name="submit_field_<?php echo $n?>" value="<?php echo $lang["save"]?>" />
+			<input type="submit" name="delete_field_<?php echo $n?>" value="<?php echo $lang["action-delete"]?>" onClick="return confirm('<?php echo $lang["confirmdeletefieldoption"]?>');" />
+		</form>
 	</div></td>
 	</tr>
 	<?php
@@ -141,7 +141,6 @@ for ($n=0;$n<count($options);$n++)
 		</div>
 	</form>
 </div>
-</form>
 
 <?php		
 include "../../include/footer.php";
