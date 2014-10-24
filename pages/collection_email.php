@@ -14,7 +14,7 @@ $refArray[]=$ref;
 
 
 # Check access
-if (!collection_readable($ref)) {exit($lang["no_access_to_collection"]);}
+if (!$themeshare && !collection_readable($ref)) {exit($lang["no_access_to_collection"]);}
 
 
 if ($themeshare!="false")
@@ -43,7 +43,7 @@ if ($themeshare!="false")
 		if ($ref!=""){$ref.=", ";}
 		$ref.=$collection["ref"];
 		}		
-	$ref=explode(", ",$ref);$ref=array_unique($ref);$ref=implode(", ",$ref);
+	$ref=explode(", ",$ref);$ref=array_unique($ref);$ref=implode(",",$ref);
 	$refArray = explode(',',$ref);
 	}
 else
@@ -147,7 +147,7 @@ else
 
 <form name="collectionform" method=post id="collectionform" action="<?php echo $baseurl_short?>pages/collection_email.php<?php echo $linksuffix ?>&catshare=<?php if($themeshare==true){echo "true";}else{echo "false";}?>">
 <input type=hidden name=redirect id=redirect value=yes>
-<input type=hidden name=ref id="ref" value="<?php echo urlencode($ref) ?>">
+<input type=hidden name=ref id="ref" value="<?php echo htmlspecialchars(trim($refArray[0])) ?>">
 
 <?php if ($email_multi_collections && !$themeshare) { ?>
 <script type="text/javascript">

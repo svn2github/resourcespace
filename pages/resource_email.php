@@ -1,6 +1,6 @@
 <?php
 include "../include/db.php";
-include "../include/authenticate.php"; if (!checkperm("g") && !checkperm("v")) {exit ("Permission denied.");} // Cannot e-mail if can't see hi-res images. To avoid loophole whereby users could email resources to an external address, and hence download hi-res versions.
+include "../include/authenticate.php"; 
 include "../include/general.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
@@ -26,6 +26,7 @@ $sort=getval("sort",$default_sort);
 // Load access level and check.
 $access=get_resource_access($ref);
 if (!($allow_share && ($access==0 || ($access==1 && $restricted_share)))) {exit("Access denied.");}
+//if (!checkperm("g") && !checkperm("v")) {exit ("Permission denied.");} // Cannot e-mail if can't see hi-res images. To avoid loophole whereby users could email resources to an external address, and hence download hi-res versions.
 
 $errors="";
 if (getval("save","")!="")
