@@ -835,7 +835,7 @@ function is_field_displayed($field)
 
 function check_display_condition($n, $field)
 	{
-	global $fields, $scriptconditions, $required_fields_exempt, $blank_edit_template, $ref;
+	global $fields, $scriptconditions, $required_fields_exempt, $blank_edit_template, $ref, $use;
 
 	$displaycondition=true;
 	$s=explode(";",$field["display_condition"]);
@@ -860,7 +860,7 @@ function check_display_condition($n, $field)
 				$v=trim_array(explode(",",strtoupper($fields[$cf]["value"])));
 
 				// If blank edit template is used, on upload form the dependent fields should be hidden
-				if($blank_edit_template && $ref < 0) {
+				if($blank_edit_template && $ref < 0 && $use === '-1') {
 					$v = array();
 				}
 				
