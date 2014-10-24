@@ -131,6 +131,8 @@ for ($n=0;$n<count($options);$n++)
 
 <div class="BasicsBox">
     <form method="post" action="<?php echo $baseurl_short?>pages/team/team_fields_edit.php">
+    	<input type="hidden" name="show_all_languages" value="<?php echo $show_all_languages ? 'true' : '' ?>" />
+    	<input type="hidden" name="field" value="<?php echo $field; ?>" />
 		<div class="Question">
 			<label for="newkeyword"><?php echo $lang["addkeyword"]?></label>
 			<div class="tickset">
