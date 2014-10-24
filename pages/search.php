@@ -550,7 +550,7 @@ if (true) # Always show search header now.
 			{
 			global $order_by;
 			if (isset($GLOBALS['display_fields_added']))
-				echo '&nbsp;|&nbsp;';
+				echo '&nbsp;&nbsp;|&nbsp;&nbsp;';
 			else
 				$GLOBALS['display_fields_added'] = true;
 			$fixedOrder = $name=='relevance';
