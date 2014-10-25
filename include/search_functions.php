@@ -155,12 +155,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}
 		
 	# append archive searching (don't do this for collections or !listall, archived resources can still appear in these searches)
-	if ( (substr($search,0,8)!="!listall" && substr($search,0,11)!="!collection") || ($collections_omit_archived && !checkperm("e2")))
+	if (!$access_override && ((substr($search,0,8)!="!listall" && substr($search,0,11)!="!collection") || ($collections_omit_archived && !checkperm("e2"))))
 		{
 		global $pending_review_visible_to_all,$search_all_workflow_states;
 		if ($search_all_workflow_states)
 			{
 			# Nothing to append, as we're searching all states.
+			hook("search_all_workflow_states_filter");
 			}
 		elseif ($archive==0 && $pending_review_visible_to_all)
 			{
@@ -184,7 +185,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	$filterblockstates="";
 	for ($n=-2;$n<=3;$n++)
 		{
-		if(checkperm("z" . $n))
+		if(checkperm("z" . $n)&&!$access_override)
 			{			
 			if ($filterblockstates!="") {$filterblockstates.="','";}
 			$filterblockstates .= $n;
@@ -201,7 +202,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			}
 		}
 	
-	if ($filterblockstates!="")
+	if ($filterblockstates!=""&&!$access_override)
 		{
 		global $uploader_view_override, $userref;
 		if ($uploader_view_override)
