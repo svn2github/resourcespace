@@ -26,7 +26,26 @@ $uploadparams="";
 $uploadparams.="&relateto=" . urlencode(getval("relateto",""));
 $uploadparams.="&redirecturl=" . urlencode(getval("redirecturl",""));
 
+global $merge_filename_with_title;
+if($merge_filename_with_title && $ref < 0) {
 
+	$merge_filename_with_title_option = urlencode(getval('merge_filename_with_title_option', ''));
+	$merge_filename_with_title_include_extensions = urlencode(getval('merge_filename_with_title_include_extensions', ''));
+	$merge_filename_with_title_spacer = urlencode(getval('merge_filename_with_title_spacer', ''));
+	
+	if($merge_filename_with_title_option != '') {
+		$uploadparams .= '&merge_filename_with_title_option=' . $merge_filename_with_title_option;
+	}
+	
+	if($merge_filename_with_title_include_extensions != '') {
+		$uploadparams .= '&merge_filename_with_title_include_extensions=' . $merge_filename_with_title_include_extensions;
+	}
+
+	if($merge_filename_with_title_spacer != '') {
+		$uploadparams .= '&merge_filename_with_title_spacer=' . $merge_filename_with_title_spacer;
+	}
+
+}
 
 global $tabs_on_edit;
 $collapsible_sections=true;

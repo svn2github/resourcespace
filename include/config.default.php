@@ -2407,3 +2407,8 @@ $display_useredit_ref=false;
 # Basic option to visually hide resource types when searching and uploading
 # Note: these resource types will still be available (subject to filtering)
 $hide_resource_types = array();
+
+# Ability (when uploading new resources) to include a user selectable option to use the embedded filename to generate the title
+# Note: you can set a default option by using one of the following values: do_not_use, replace, prefix, suffix
+$merge_filename_with_title = FALSE;
+$merge_filename_with_title_default = 'do_not_use';

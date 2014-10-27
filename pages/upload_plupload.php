@@ -26,6 +26,27 @@ $uploadparams="";
 $uploadparams.="&relateto=" . urlencode(getval("relateto",""));
 $uploadparams.="&filename_field=" . urlencode(getval("filename_field",""));
 
+global $merge_filename_with_title;
+if($merge_filename_with_title) {
+
+    $merge_filename_with_title_option = urlencode(getval('merge_filename_with_title_option', ''));
+    $merge_filename_with_title_include_extensions = urlencode(getval('merge_filename_with_title_include_extensions', ''));
+    $merge_filename_with_title_spacer = urlencode(getval('merge_filename_with_title_spacer', ''));
+    
+    if($merge_filename_with_title_option != '') {
+        $uploadparams .= '&merge_filename_with_title_option=' . $merge_filename_with_title_option;
+    }
+    
+    if($merge_filename_with_title_include_extensions != '') {
+        $uploadparams .= '&merge_filename_with_title_include_extensions=' . $merge_filename_with_title_include_extensions;
+    }
+
+    if($merge_filename_with_title_spacer != '') {
+        $uploadparams .= '&merge_filename_with_title_spacer=' . $merge_filename_with_title_spacer;
+    }
+
+}
+
 if($embedded_data_user_select || isset($embedded_data_user_select_fields))	
 		{
 		foreach($_GET as $getname=>$getval)

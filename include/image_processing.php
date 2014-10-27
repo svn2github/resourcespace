@@ -446,7 +446,7 @@ function extract_exif_comment($ref,$extension="")
 							eval($read_from[$i]['exiftool_filter']);
 							}
 						if (file_exists($plugin)) {include $plugin;}
-						
+		
 						# Field 8 is used in a special way for staticsync; don't overwrite field 8 in this case
 						if (!($omit_title_for_staticsync && $read_from[$i]['ref']==8))
 							{				
@@ -481,6 +481,60 @@ function extract_exif_comment($ref,$extension="")
 								{
 								$newval =  iptc_return_utf8($value);	
 								}
+
+							global $merge_filename_with_title, $lang;
+							if($merge_filename_with_title) {
+
+								$merge_filename_with_title_option = urlencode(getval('merge_filename_with_title_option', ''));
+								$merge_filename_with_title_include_extensions = urlencode(getval('merge_filename_with_title_include_extensions', ''));
+								$merge_filename_with_title_spacer = urlencode(getval('merge_filename_with_title_spacer', ''));
+
+								$original_filename = '';
+								if(isset($_REQUEST['name'])) {
+									$original_filename = $_REQUEST['name'];
+								} else {
+									$original_filename = $processfile['name'];
+								}
+
+								if($merge_filename_with_title_include_extensions == 'yes') {
+									$merged_filename = $original_filename;
+								} else {
+									$merged_filename = strip_extension($original_filename);
+								}
+
+								$oldval = get_data_by_field($ref, $read_from[$i]['ref']);
+								if(strpos($oldval, $value) !== FALSE) {
+									continue;
+								}
+								
+								switch ($merge_filename_with_title_option) {
+									case $lang['merge_filename_title_do_not_use']:
+										// Do nothing since the user doesn't want to use this feature
+										break;
+
+									case $lang['merge_filename_title_replace']:
+										$newval = $merged_filename;
+										break;
+
+									case $lang['merge_filename_title_prefix']:
+										$newval = $merged_filename . $merge_filename_with_title_spacer . $oldval;
+										if($oldval == '') {
+											$newval = $merged_filename;
+										}
+										break;
+									case $lang['merge_filename_title_suffix']:
+										$newval = $oldval . $merge_filename_with_title_spacer . $merged_filename;
+										if($oldval == '') {
+											$newval = $merged_filename;
+										}
+										break;
+
+									default:
+										// Do nothing
+										break;
+								}
+
+							}
 							
 							update_field($ref,$read_from[$i]['ref'],$newval);
 							$exif_updated_fields[]=$read_from[$i]['ref'];
@@ -489,11 +543,73 @@ function extract_exif_comment($ref,$extension="")
 							hook("metadata_extract_addition","all",array($ref,$newval,$read_from,$i));
 							}
 						}
+
+					} else {
+
+						// Process if no embedded title is found:
+						global $merge_filename_with_title, $lang;
+						if($merge_filename_with_title && $read_from[$i]['ref'] == 8) {
+
+							$merge_filename_with_title_option = urlencode(getval('merge_filename_with_title_option', ''));
+							$merge_filename_with_title_include_extensions = urlencode(getval('merge_filename_with_title_include_extensions', ''));
+							$merge_filename_with_title_spacer = urlencode(getval('merge_filename_with_title_spacer', ''));
+
+							$original_filename = '';
+							if(isset($_REQUEST['name'])) {
+								$original_filename = $_REQUEST['name'];
+							} else {
+								$original_filename = $processfile['name'];
+							}
+
+							if($merge_filename_with_title_include_extensions == 'yes') {
+								$merged_filename = $original_filename;
+							} else {
+								$merged_filename = strip_extension($original_filename);
+							}
+
+							$oldval = get_data_by_field($ref, $read_from[$i]['ref']);
+							if(strpos($oldval, $value) !== FALSE) {
+								continue;
+							}
+							
+							switch ($merge_filename_with_title_option) {
+								case $lang['merge_filename_title_do_not_use']:
+									// Do nothing since the user doesn't want to use this feature
+									break;
+
+								case $lang['merge_filename_title_replace']:
+									$newval = $merged_filename;
+									break;
+
+								case $lang['merge_filename_title_prefix']:
+									$newval = $merged_filename . $merge_filename_with_title_spacer . $oldval;
+									if($oldval == '') {
+										$newval = $merged_filename;
+									}
+									break;
+								case $lang['merge_filename_title_suffix']:
+									$newval = $oldval . $merge_filename_with_title_spacer . $merged_filename;
+									if($oldval == '') {
+										$newval = $merged_filename;
+									}
+									break;
+
+								default:
+									// Do nothing
+									break;
+							}
+							
+							update_field($ref,$read_from[$i]['ref'],$newval);
+							$exif_updated_fields[]=$read_from[$i]['ref'];
+
+						}
+
 					}
+
 				}
 			}
 		if(!in_array($filename_field,$exif_updated_fields)) // We have not found an embedded value for this field so we need to modify the $filename variable which will be used to set the data later in the upload_file function
-			{						
+			{
 			$exiffilenameoption=getval("exif_option_" . $filename_field,$exifoption);			
 			debug ("EXIF - custom option for filename field " . $filename_field . " : " . $exiffilenameoption);
 			if ($exiffilenameoption!="yes") // We are not using the extracted filename as usual

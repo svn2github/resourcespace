@@ -1829,3 +1829,12 @@ $lang["plupload_log_intro"] ="Upload summary - server time : ";
 $lang["no_access_to_collection"]="Sorry, you don't have access to this collection.";
 $lang["internal_share_grant_access"]="Grant open access to selected internal users?";
 $lang["internal_share_grant_access_collection"]="Grant open access to internal users (for resources that you can edit)?";
+
+# For merging filename with title functionality:
+$lang['merge_filename_title_question'] = 'Use filename in title (if no embedded title is found)?';
+$lang['merge_filename_title_do_not_use'] = 'Do not use';
+$lang['merge_filename_title_replace'] = 'Replace';
+$lang['merge_filename_title_prefix'] = 'Prefix';
+$lang['merge_filename_title_suffix'] = 'Suffix';
+$lang['merge_filename_title_include_extensions'] = 'Include extensions?';
+$lang['merge_filename_title_spacer'] = 'Spacer';

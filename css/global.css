@@ -743,3 +743,11 @@ width: 90px;
 }
 .SearchResultsCollectionCompactTools {display:inline-block;}
 
+#merge_filename_title_container {
+	float: left;
+}
+
+#merge_filename_title_spacer {
+	width: 30px;
+	text-align: center;
+}
