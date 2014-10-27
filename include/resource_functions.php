@@ -1125,12 +1125,6 @@ function copy_resource($from,$resource_type=-1)
 	sql_query("insert into resource($add resource_type,creation_date,rating,archive,access,created_by $joins_sql) select $add" . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",now(),rating,'" . $archive . "',access,created_by $joins_sql from resource where ref='$from';");
 	$to=sql_insert_id();
 	
-	# Copying a resource of the 'pending review' state? Notify, if configured.
-	if ($archive==-1)
-		{
-		notify_user_contributed_submitted(array($to));
-		}
-	
 	# Set that this resource was created by this user. 
 	# This needs to be done if either:
 	# 1) The user does not have direct 'resource create' permissions and is therefore contributing using My Contributions directly into the active state
@@ -1146,6 +1140,14 @@ function copy_resource($from,$resource_type=-1)
 		global $username,$userfullname;
 		add_keyword_mappings($to,$username . " " . $userfullname,-1);
 		}
+
+	# Copying a resource of the 'pending review' state? Notify, if configured.
+	if ($archive==-1)
+		{
+		notify_user_contributed_submitted(array($to));
+		}
+	
+	
 	
 	# Now copy all data
 	sql_query("insert into resource_data(resource,resource_type_field,value) select '$to',rd.resource_type_field,rd.value from resource_data rd join resource r on rd.resource=r.ref join resource_type_field rtf on rd.resource_type_field=rtf.ref and (rtf.resource_type=r.resource_type or rtf.resource_type=999 or rtf.resource_type=0) where rd.resource='$from'");
