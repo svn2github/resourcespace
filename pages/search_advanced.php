@@ -139,13 +139,19 @@ $allwords=str_replace(", ","",$allwords);
 if (getval("resetform","")!="") {$found_year="";$found_month="";$found_day="";$found_start_date="";$found_end_date="";$allwords="";$starsearch="";}
 
 function render_advanced_search_buttons() {
- global $lang;
+ global $lang, $swap_clear_and_search_buttons;
  ?><div class="QuestionSubmit">
  <label for="buttons"> </label>
+<?php if ($swap_clear_and_search_buttons){?>
+ <input name="dosearch" class="dosearch" type="submit" value="<?php echo $lang["action-viewmatchingresults"]?>" />
+ &nbsp;
+ <input name="resetform" class="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" /> 
+<?php } else { ?>
  <input name="resetform" class="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />
  &nbsp;
  <input name="dosearch" class="dosearch" type="submit" value="<?php echo $lang["action-viewmatchingresults"]?>" />
- </div>
+ <?php } ?>
+</div>
 
  <?php 
  }
@@ -588,12 +594,6 @@ else
 render_advanced_search_buttons();
 
 // show result count as it stands ?>
-<script type="text/javascript">UpdateResultCount();</script>	
-<?php if ($swap_clear_and_search_buttons){?>
-<script type="text/javascript">
-	jQuery(".resetform").before(jQuery(".dosearch"));
-</script>
-<?php } ?>
 </div> <!-- BasicsBox -->
 <?php
 include "../include/footer.php";
