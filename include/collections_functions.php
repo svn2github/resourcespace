@@ -567,9 +567,11 @@ function save_collection($ref)
 			for ($m=0;$m<count($rlist);$m++)
 				{
 				if ($rlist[$n]!=$rlist[$m]) # Don't relate a resource to itself
-					{
-					sql_query("delete from resource_related where resource='" . $rlist[$n] . "' and related='" . $rlist[$m] . "'");
-					sql_query("insert into resource_related (resource,related) values ('" . $rlist[$n] . "','" . $rlist[$m] . "')");
+					{ 
+						if (@mysql_num_rows(mysql_query("SELECT 1 FROM resource_related WHERE resource='".$rlist[$n]."' and related='".$rlist[$m]."' LIMIT 1"))!=1) 
+							{
+							sql_query("insert into resource_related (resource,related) values ('" . $rlist[$n] . "','" . $rlist[$m] . "')");
+							}
 					}
 				}
 			}
