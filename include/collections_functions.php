@@ -219,7 +219,7 @@ function collection_readable($collection)
 	# 	- It's a public collection (or theme)
 	#	- They have the 'access and edit all collections' admin permission
 	# 	- They are attached to this collection
-	return $userref==$collectiondata["user"] || $collectiondata["public"]==1 || checkperm("h") || in_array($userref,$attached);
+	return $userref==$collectiondata["user"] || $collectiondata["public"]==1 || checkperm("h") || in_array($userref,$attached) || getval("k","")!="";
 	}
 	
 function set_user_collection($user,$collection)
