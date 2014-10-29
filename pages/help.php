@@ -12,7 +12,6 @@ include "../include/header.php";
 
 <?php if (!hook("replacehelp")){?>
 <?php if ($section=="") { ?>
-  <h2>&nbsp;</h2>
   <h1><?php echo $lang["helpandadvice"]?></h1>
   <p><?php echo text("introtext")?></p>
   
