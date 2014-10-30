@@ -218,12 +218,23 @@ if(isset($related_type_show_with_data)) {
 $fields=get_resource_field_data($ref,$multi_fields,!hook("customgetresourceperms"),-1,$k!="",$use_order_by_tab_view);
 
 // Get tab names and order from fields in order to know which one is the last tab
+$fields_tab_names = array();
 if(isset($related_type_show_with_data)) {
+	
 	foreach ($fields as $field) {
 		$fields_tab_names[] = $field['tab_name'];
 		$resources_per_tab_name[$field['tab_name']][] = $field['ref'];
 	}
+
 	$fields_tab_names = array_values(array_unique($fields_tab_names));
+
+	// Get resource type tab names (if any set):
+	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
+	$resource_type_tab_names = array_values(array_unique($resource_type_tab_names));
+
+	// These are the tab names which will be rendered for the resource specified:
+	$fields_tab_names = array_values(array_unique((array_merge($fields_tab_names, $resource_type_tab_names))));
+
 }
 
 //Check if we want to use a specified field as a caption below the preview
@@ -291,12 +302,9 @@ function check_view_display_condition($fields,$n)
 	
 function display_field_data($field,$valueonly=false,$fixedwidth=452)
 	{
-	global $ref, $fieldcount, $tabcount, $show_expiry_warning, $access, $tabname, $search, $extra, $lang, $used_tab_names, $related_type_show_with_data, $show_default_related_resources, $fields_tab_names, $resources_per_tab_name;
+	global $ref, $show_expiry_warning, $access, $search, $extra, $lang;
 	$value=$field["value"];
 
-	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
-	$resource_type_tab_names = array_filter($resource_type_tab_names);
-	
 	$modified_field=hook("beforeviewdisplayfielddata_processing","",array($field));
 	if($modified_field){
 		$field=$modified_field;
@@ -338,47 +346,6 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 		if($modified_value) {		
 			$value = $modified_value['value'];
 		}
-
-		# draw new tab panel?
-		if (!$valueonly && ($tabname!=$field["tab_name"]) && ($fieldcount>0))
-			{
-
-				$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
-				$resource_type_tab_names = array_filter($resource_type_tab_names);
-
-				# Display related resources on this tab, if set:
-				if(isset($related_type_show_with_data)) {
-
-					# NOTE: the resource type tab name and the current tab you are on need to be the same:
-					if(in_array($tabname, $resource_type_tab_names)) {
-
-						if(($key = array_search($tabname, $resource_type_tab_names)) !== false) {
-
-							# Fields with display template should be rendered before the related resources list:
-							echo $extra;
-							$extra = '';
-							
-							include '../include/related_resources.php';
-							unset($resource_type_tab_names[$key]);
-
-							$show_default_related_resources = FALSE;
-						
-						}
-
-					}
-
-				}
-
-
-			$tabcount++;
-			# Also display the custom formatted data $extra at the bottom of this tab panel.
-			?><div class="clearerleft"> </div><?php echo $extra; ?></div></div><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div><?php	
-			$extra="";
-			}
-		$tabname=$field["tab_name"];
-		$used_tab_names[] = $tabname;
-		$used_tab_names = array_unique($used_tab_names);
-		$fieldcount++;
 
 		if (!$valueonly && trim($field["display_template"])!="")
 			{
@@ -425,74 +392,7 @@ function display_field_data($field,$valueonly=false,$fixedwidth=452)
 				<h3><?php echo $title?></h3><p><?php echo $value?></p></div><?php
 				}
 			}
-		} else if(isset($related_type_show_with_data) && ($tabname!=$field['tab_name']) && in_array($field['tab_name'], $resource_type_tab_names) && !in_array($field['tab_name'], $used_tab_names)) {
-
-			# Display related resources on this tab, if set:
-			if(isset($related_type_show_with_data)) {
-
-				# NOTE: the resource type tab name and the current tab you are on need to be the same:
-				if(in_array($field['tab_name'], $resource_type_tab_names)) {
-
-					if(($key = array_search($field['tab_name'], $resource_type_tab_names)) !== false) {
-
-						# Fields with display template should be rendered before the related resources list:
-						echo $extra;
-						$extra = '';
-						
-						include '../include/related_resources.php';
-						unset($resource_type_tab_names[$key]);
-
-						$show_default_related_resources = FALSE;
-					
-					}
-					
-					$tabcount++;
-					# Also display the custom formatted data $extra at the bottom of this tab panel. ?>
-					<div class="clearerleft"></div>
-					<?php echo $extra; ?>
-					</div>
-					</div>
-					<div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div>
-					<?php	
-					$extra="";
-
-					$tabname = $field['tab_name'];
-					$used_tab_names[] = $tabname;
-					$used_tab_names = array_unique($used_tab_names);
-					$fieldcount++;
-
-				}
-
-			}
-
-		} else if(isset($related_type_show_with_data) && $tabname == end($fields_tab_names) && $field['ref'] == end($resources_per_tab_name[$tabname])) {
-			
-			# NOTE: the resource type tab name and the current tab you are on need to be the same:
-			if(in_array($field['tab_name'], $resource_type_tab_names)) {
-
-				if(($key = array_search($field['tab_name'], $resource_type_tab_names)) !== FALSE) {
-
-					# Fields with display template should be rendered before the related resources list:
-					echo $extra;
-					$extra = '';
-					
-					include '../include/related_resources.php';
-					unset($resource_type_tab_names[$key]);
-
-					$show_default_related_resources = FALSE;
-				
-				}
-				
-				$tabcount++;
-				$tabname = $field['tab_name'];
-				$used_tab_names[] = $tabname;
-				$used_tab_names = array_unique($used_tab_names);
-				$fieldcount++;
-
-			}
-
 		}
-	
 	}
 
 // Add custom CSS for external users: 
@@ -1288,71 +1188,37 @@ $extra="";
 #  -----------------------------  Draw tabs ---------------------------
 $tabname="";
 $tabcount=0;
-$used_tab_names = array();
 $tmp = hook("tweakfielddisp", "", array($ref, $fields)); if($tmp) $fields = $tmp;
-if (count($fields)>0 && $fields[0]["tab_name"]!="")
-	{ 
-	?>
+if((isset($fields_tab_names) && !empty($fields_tab_names)) && count($fields) > 0) { ?>
+	
 	<div class="TabBar">
+	
 	<?php
-	$extra="";
-	$tabname="";
-	$tabcount=0;
-	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
-	$resource_type_tab_names = array_filter($resource_type_tab_names);
-	for ($n=0;$n<count($fields);$n++)
-		{	
-		$value=$fields[$n]["value"];
+		foreach ($fields_tab_names as $tabname) { ?>
 
-		# draw new tab?
-		if (($tabname!=$fields[$n]["tab_name"]) && ($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1))
-			{
-			?><div id="tabswitch<?php echo $tabcount?>" class="Tab<?php if ($tabcount==0) { ?> TabSelected<?php } ?>"><a href="#" onclick="SelectTab(<?php echo $tabcount?>);return false;"><?php echo i18n_get_translated($fields[$n]["tab_name"])?></a></div><?php
+			<div id="tabswitch<?php echo $tabcount; ?>" class="Tab<?php if($tabcount == 0) { ?> TabSelected<?php } ?>">
+				<a href="#" onclick="SelectTab(<?php echo $tabcount; ?>);return false;"><?php echo i18n_get_translated($tabname)?></a>
+			</div>
+		
+		<?php 
 			$tabcount++;
-			$tabname=$fields[$n]["tab_name"];
-			$used_tab_names[] = $tabname;
-			}
+		} ?>
 
-			// If any of the fields (with this tab name) are empty and the tab was not rendered before, draw it now
-			if(isset($related_type_show_with_data) && ($tabname!=$fields[$n]['tab_name']) && in_array($fields[$n]['tab_name'], $resource_type_tab_names) && !in_array($fields[$n]['tab_name'], $used_tab_names)) { ?>
-
-				<div id="tabswitch<?php echo $tabcount; ?>" class="Tab<?php if($tabcount == 0) { ?> TabSelected<?php } ?>">
-					<a href="#" onclick="SelectTab(<?php echo $tabcount; ?>);return false;"><?php echo i18n_get_translated($fields[$n]["tab_name"])?></a>
-				</div>
-
-				<?php 
-				$tabcount++;
-				$tabname=$fields[$n]["tab_name"];
-				$used_tab_names[] = $tabname;
-			}
-
-		}
-
-		// This is being used to know which tab will be the last one
-		if(isset($related_type_show_with_data)) {
-			$fields_tab_names = array_values(array_intersect($fields_tab_names, $used_tab_names));
-		}
-								
-	?>
-	</div>
+	</div> <!-- end of TabBar -->
 	<script type="text/javascript">
-	function SelectTab(tab)
-		{
+	function SelectTab(tab) {
 		// Deselect all tabs
-		<?php for ($n=0;$n<$tabcount;$n++) { ?>
-		document.getElementById("tab<?php echo $n?>").style.display="none";
-		document.getElementById("tabswitch<?php echo $n?>").className="Tab";
+		<?php for($n = 0; $n < $tabcount; $n++) { ?>
+		document.getElementById("tab<?php echo $n; ?>").style.display="none";
+		document.getElementById("tabswitch<?php echo $n; ?>").className="Tab";
 		<?php } ?>
 		document.getElementById("tab" + tab).style.display="block";
 		document.getElementById("tabswitch" + tab).className="Tab TabSelected";
-		}
-	</script>
-	<?php
 	}
-	
-	
-	
-?>
+	</script>
+
+<?php
+} ?>
 
 <div id="tab0" class="TabbedPanel<?php if ($tabcount>0) { ?> StyledTabbedPanel<?php } ?>">
 <div class="clearerleft"> </div>
@@ -1380,24 +1246,58 @@ if ($udata!==false)
 # Show field data
 $tabname="";
 $tabcount=0;
-$fieldcount=0;
 $extra="";
-$used_tab_names = array();
 $show_default_related_resources = TRUE;
-for ($n=0;$n<count($fields);$n++)
-	{
-	
-	$displaycondition=check_view_display_condition($fields,$n);	
-	
-	if ($displaycondition)
-		{
-		if (!hook("renderfield")) 
-			{
-			display_field_data($fields[$n]);
+foreach ($fields_tab_names as $tabname) {
+
+	for($i = 0; $i < count($fields); $i++) {
+
+		$displaycondition = check_view_display_condition($fields, $i);
+
+		if($displaycondition && $tabname == $fields[$i]['tab_name']) {
+			if(!hook('renderfield')) {
+				display_field_data($fields[$i]);
 			}
 		}
+
 	}
-	
+
+	// Add related resources which have the same tab name:
+	if(isset($related_type_show_with_data) && isset($fields_tab_names) && !empty($fields_tab_names)) {
+		
+		include '../include/related_resources.php';
+
+		$show_default_related_resources = FALSE;
+
+		$tabcount++;
+		if($tabcount != count($fields_tab_names)) { ?>
+			<div class="clearerleft"></div>
+			</div>
+			</div>
+			<div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div>
+		<?php
+		}
+
+		//Once we've shown the related resources unset the variable so they won't be shown as thumbnails:
+		unset($relatedresources);
+	}
+
+}
+
+if(empty($fields_tab_names)) {
+	for($i = 0; $i < count($fields); $i++) {
+
+		$displaycondition = check_view_display_condition($fields, $i);
+
+		if($displaycondition) {
+			if(!hook('renderfield')) {
+				display_field_data($fields[$i]);
+			}
+		}
+
+	}
+}
+
 // Option to display related resources of specified types along with metadata
 if ($enable_related_resources && $show_default_related_resources)
 	{
