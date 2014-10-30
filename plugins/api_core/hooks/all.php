@@ -87,3 +87,22 @@ function refine_api_resource_results($results){
 	}
 return $results;
 }
+function HookApi_coreAllAdditional_title_pages_array(){
+        return array("index");
+}
+function HookApi_coreAllAdditional_title_pages(){
+        global $pagename,$lang,$applicationname;
+        switch($pagename){
+			case "index":
+				$url=explode("/",$_SERVER['REQUEST_URI']);
+				if($url[1]=="plugins" && $url[2]=="api_core"){
+					$pagetitle=$lang["apiaccess"];
+				}
+                break;
+		}
+        if(isset($pagetitle)){
+                echo "<script language='javascript'>\n";
+                echo "document.title = \"$applicationname - $pagetitle\";\n";
+                echo "</script>";
+        }
+}
