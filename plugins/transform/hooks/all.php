@@ -17,3 +17,28 @@ function HookTransformAllCollectiontoolcompact1($collection, $count_result,$cinf
 	}
     
 }
+function HookTransformAllAdditional_title_pages_array(){
+        return array("crop","collection_transform");
+}
+function HookTransformAllAdditional_title_pages(){
+        global $pagename,$lang,$applicationname;
+        switch($pagename){
+			case "crop":
+				global $original;
+				if($original){
+					$pagetitle=$lang['transform_original'];
+				}
+				else{
+					$pagetitle=$lang['transformimage'];
+                }
+                break;
+            case "collection_transform":
+				$pagetitle=$lang['batchtransform'];
+				break;
+		}
+        if(isset($pagetitle)){
+                echo "<script language='javascript'>\n";
+                echo "document.title = \"$applicationname - $pagetitle\";\n";
+                echo "</script>";
+        }
+}
