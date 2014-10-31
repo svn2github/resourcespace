@@ -226,6 +226,7 @@ ksort ($plugins_avail);
     <td><?php echo $lang['description']; ?></td>
     <td><?php echo $lang['plugins-author']; ?></td>
     <td><?php echo $lang['plugins-instversion']; ?></td>
+    <?php hook('additional_plugin_columns'); ?>
     <td><div class="ListTools"><?php echo $lang['tools']; ?></div></td>
     </tr></thead>
     <tbody>
@@ -251,6 +252,7 @@ ksort ($plugins_avail);
             }
         echo '<tr>';
         echo "<td>{$p['name']}</td><td>{$p['descrip']}</td><td>{$p['author']}</td><td>".$formatted_inst_version."</td>";
+        hook('additional_plugin_column_data');
         echo '<td><div class="ListTools">';
         if (isset($p['legacy_inst']))
             echo '<a class="nowrap" href="#">&gt;&nbsp;'.$lang['plugins-legacyinst'].'</a> '; # TODO: Update this link to point to a help page on the wiki
