@@ -174,7 +174,80 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	# delete existing resource_dimensions
     sql_query("delete from resource_dimensions where resource='$ref'");
 	# get file metadata 
-    if (!$no_exif) {extract_exif_comment($ref,$extension);}
+    if(!$no_exif) {
+    	extract_exif_comment($ref,$extension);
+    } else {
+    	
+    	global $merge_filename_with_title, $lang;
+		if($merge_filename_with_title) {
+
+			$merge_filename_with_title_option = urlencode(getval('merge_filename_with_title_option', ''));
+			$merge_filename_with_title_include_extensions = urlencode(getval('merge_filename_with_title_include_extensions', ''));
+			$merge_filename_with_title_spacer = urlencode(getval('merge_filename_with_title_spacer', ''));
+
+			$original_filename = '';
+			if(isset($_REQUEST['name'])) {
+				$original_filename = $_REQUEST['name'];
+			} else {
+				$original_filename = $processfile['name'];
+			}
+
+			if($merge_filename_with_title_include_extensions == 'yes') {
+				$merged_filename = $original_filename;
+			} else {
+				$merged_filename = strip_extension($original_filename);
+			}
+
+			// Get title field:
+			$resource = get_resource_data($ref);
+			$read_from = get_exiftool_fields($resource['resource_type']);
+
+			for($i = 0; $i < count($read_from); $i++) {
+				
+				if($read_from[$i]['name'] == 'title') {
+					$oldval = get_data_by_field($ref, $read_from[$i]['ref']);
+
+					if(strpos($oldval, $merged_filename) !== FALSE) {
+						continue;
+					}
+					
+					switch ($merge_filename_with_title_option) {
+						case $lang['merge_filename_title_do_not_use']:
+							// Do nothing since the user doesn't want to use this feature
+							break;
+
+						case $lang['merge_filename_title_replace']:
+							$newval = $merged_filename;
+							break;
+
+						case $lang['merge_filename_title_prefix']:
+							$newval = $merged_filename . $merge_filename_with_title_spacer . $oldval;
+							if($oldval == '') {
+								$newval = $merged_filename;
+							}
+							break;
+
+						case $lang['merge_filename_title_suffix']:
+							$newval = $oldval . $merge_filename_with_title_spacer . $merged_filename;
+							if($oldval == '') {
+								$newval = $merged_filename;
+							}
+							break;
+
+						default:
+							// Do nothing
+							break;
+					}
+
+					update_field($ref, $read_from[$i]['ref'], $newval);
+				
+				}
+
+			}
+
+		}
+
+    }
 	
 	# extract text from documents (e.g. PDF, DOC).
 	global $extracted_text_field;
