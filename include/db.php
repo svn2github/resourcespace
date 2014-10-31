@@ -320,51 +320,47 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     # just fetch $fetchrows row but pad the array to the full result set size with empty values.
     # This has been added retroactively to support large result sets, yet a pager can work as if a full
     # result set has been returned as an array (as it was working previously).
-    global $db,$querycount,$querytime,$config_show_performance_footer,$querylog,$debug_log,$mysql_verbatim_queries;
-    $counter=0;
+    global $db,$config_show_performance_footer,$debug_log,$mysql_verbatim_queries,$use_mysqli;
+    
     if ($config_show_performance_footer)
     	{
     	# Stats
     	# Start measuring query time
     	$time_start = microtime(true);
-   	    $querycount++;
+   	    global $querycount;
+		$querycount++;
     	}
     	
-    if ($debug_log) {debug("SQL: " . $sql);}
+    if ($debug_log) 
+		{
+		debug("SQL: " . $sql);
+		}
     
-    # Execute query
-    global $use_mysqli;
-    if ($use_mysqli){
-		$result=mysqli_query($db,$sql);
-	}
-	else {
-		$result=mysql_query($sql);
-	}
+    # Execute query    
+	$result=$use_mysqli ? mysqli_query($db,$sql) : mysql_query($sql);
 	
     if ($config_show_performance_footer){
     	# Stats
-   		# Log performance data
-		$time_end = microtime(true);
-		$time_total=($time_end - $time_start);
-		if (isset($querylog[$sql])){
+   		# Log performance data		
+		global $querytime,$querylog;
+		
+		$time_total=(microtime(true) - $time_start);
+		if (isset($querylog[$sql]))
+			{
 			$querylog[$sql]['dupe']=$querylog[$sql]['dupe']+1;
 			$querylog[$sql]['time']=$querylog[$sql]['time']+$time_total;
-		} 
-		else {
+			}
+		else
+			{
 			$querylog[$sql]['dupe']=1;
 			$querylog[$sql]['time']=$time_total;
-		}
-
+			}	
 		$querytime += $time_total;
 	}
-		
-	if ($use_mysqli){	
-		$error=mysqli_error($db);
-	}
-	else {
-		$error=mysql_error();
-	}
-		
+	
+	$error=$use_mysqli ? mysqli_error($db) : mysql_error();	
+	
+	$return_rows=array();
     if ($error!="")
         {
         if ($error=="Server shutdown in progress")
@@ -392,48 +388,43 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
         exit;
         }
     elseif ($result===true)
-        {
-        # no result set, (query was insert, update etc.)
+        {        
+		return $return_rows;		// no result set, (query was insert, update etc.) - simply return empty array.
         }
-    else
-        {
-        $row=array();
-        if ($use_mysqli){
-        while (($rs=mysqli_fetch_assoc($result)) && (($counter<$fetchrows) || ($fetchrows==-1)))
-            {
-            while (list($name,$value)=each($rs))
-                {
-                //if (!is_integer($name)) # do not run for integer values (MSSQL returns two keys for each returned column, a numeric and a text)
-                //    {
-					$row[$counter][$name]=$mysql_verbatim_queries
-							? $value : str_replace("\\","",stripslashes($value));
-                //    }
-                }
-            $counter++;
-            }
+	
+	$return_row_count=0;	
+	while (($fetchrows==-1 || $return_row_count<$fetchrows) && (($use_mysqli && ($result_row=mysqli_fetch_assoc($result))) || (!$use_mysqli && ($result_row=mysql_fetch_assoc($result)))))
+		{
+		if ($mysql_verbatim_queries)		// no need to do clean up on every cell
+			{
+			$return_rows[$return_row_count]=$result_row;		// simply dump the entire row into the return results set
+			}
+		else
+			{
+			while (list($name,$value)=each($result_row))		// we need to clean up each cell
+				{
+				$return_rows[$return_row_count][$name]=str_replace("\\","",stripslashes($value));		// iterate through each cell cleaning up
+				}
+			}
+		$return_row_count++;
 		}
-		else {
-        while (($rs=mysql_fetch_assoc($result)) && (($counter<$fetchrows) || ($fetchrows==-1)))
-            {
-            while (list($name,$value)=each($rs))
-                {
-                //if (!is_integer($name)) # do not run for integer values (MSSQL returns two keys for each returned column, a numeric and a text)
-                //    {
-                    $row[$counter][$name]=$mysql_verbatim_queries
-							? $value : str_replace("\\","",stripslashes($value));
-                //    }
-                }
-            $counter++;
-            }		
-		}	
-
-		# If we haven't returned all the rows ($fetchrows isn't -1) then we need to fill the array so the count
-		# is still correct (even though these rows won't be shown).
-		$rows=count($row);
-		if ($use_mysqli){$totalrows=mysqli_num_rows($result);} else {$totalrows=mysql_num_rows($result);}#echo "-- $rows out of $totalrows --";
-		if (($fetchrows!=-1) && ($rows<$totalrows)) {$row=array_pad($row,$totalrows,0);}
-        return $row;
-        }
+	
+	if ($fetchrows==-1)		// we do not care about the number of rows returned so get out of here
+		{
+		return $return_rows;
+		}
+	
+	# If we haven't returned all the rows ($fetchrows isn't -1) then we need to fill the array so the count
+	# is still correct (even though these rows won't be shown).
+	
+	$query_returned_row_count=$use_mysqli ? mysqli_num_rows($result) : mysql_num_rows($result);		// get the number of rows returned from the query
+	
+	if ($return_row_count<$query_returned_row_count)
+		{
+		$return_rows=array_pad($return_rows,$query_returned_row_count,0);		// if short then pad out
+		}
+	
+	return $return_rows;        
     }
 	
 	
