@@ -219,22 +219,21 @@ $fields=get_resource_field_data($ref,$multi_fields,!hook("customgetresourceperms
 
 // Get tab names and order from fields in order to know which one is the last tab
 $fields_tab_names = array();
-if(isset($related_type_show_with_data)) {
 	
-	foreach ($fields as $field) {
-		$fields_tab_names[] = $field['tab_name'];
-		$resources_per_tab_name[$field['tab_name']][] = $field['ref'];
-	}
+foreach ($fields as $field) {
+	$fields_tab_names[] = $field['tab_name'];
+	$resources_per_tab_name[$field['tab_name']][] = $field['ref'];
+}
 
-	$fields_tab_names = array_values(array_unique($fields_tab_names));
+$fields_tab_names = array_values(array_unique($fields_tab_names));
 
+if(isset($related_type_show_with_data)) {
 	// Get resource type tab names (if any set):
 	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
 	$resource_type_tab_names = array_values(array_unique($resource_type_tab_names));
 
 	// These are the tab names which will be rendered for the resource specified:
 	$fields_tab_names = array_values(array_unique((array_merge($fields_tab_names, $resource_type_tab_names))));
-
 }
 
 //Check if we want to use a specified field as a caption below the preview
@@ -1257,6 +1256,10 @@ foreach ($fields_tab_names as $tabname) {
 		if($displaycondition && $tabname == $fields[$i]['tab_name']) {
 			if(!hook('renderfield')) {
 				display_field_data($fields[$i]);
+
+				// Show the fields with a display template now
+				echo $extra;
+				$extra = '';
 			}
 		}
 
@@ -1269,17 +1272,17 @@ foreach ($fields_tab_names as $tabname) {
 
 		$show_default_related_resources = FALSE;
 
-		$tabcount++;
-		if($tabcount != count($fields_tab_names)) { ?>
-			<div class="clearerleft"></div>
-			</div>
-			</div>
-			<div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div>
-		<?php
-		}
-
 		//Once we've shown the related resources unset the variable so they won't be shown as thumbnails:
 		unset($relatedresources);
+	}
+
+	$tabcount++;
+	if($tabcount != count($fields_tab_names)) { ?>
+		<div class="clearerleft"></div>
+		</div>
+		</div>
+		<div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div>
+	<?php
 	}
 
 }
