@@ -1633,6 +1633,8 @@ $staticsync_title_includes_path=true;
 $staticsync_ingest=false;
 # Try to rotate images automatically when not ingesting resources? If set to TRUE you must also set $imagemagick_preserve_profiles=true;
 $autorotate_no_ingest=false;
+# Try to rotate images automatically when ingesting resources? If set to TRUE you must also set $imagemagick_preserve_profiles=true;
+$autorotate_ingest=false;
 #
 # StaticSync Path to metadata mapping
 # ------------------------
