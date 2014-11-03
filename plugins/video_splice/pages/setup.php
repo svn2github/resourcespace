@@ -11,7 +11,7 @@ if (getval("submit","")!="")
 	$f=fopen("../config/config.php","w");
 	fwrite($f,"<?php \$videosplice_resourcetype='$resourcetype'; \$videosplice_parent_field=$videosplice_parent_field_set; ?>");
 	fclose($f);
-	redirect("pages/team/team_home.php");
+	redirect("pages/team/team_plugins.php");
 	}
 
 include "../../../include/header.php";
@@ -20,7 +20,6 @@ $fields=sql_query("select ref,title from resource_type_field order by resource_t
 $resource_types=get_resource_types();
 ?>
 <div class="BasicsBox"> 
-  <h2>&nbsp;</h2>
   <h1><?php echo $lang["videospliceconfiguration"]?></h1>
 
   <div class="VerticalNav">
@@ -51,3 +50,7 @@ $resource_types=get_resource_types();
 
 </form>
 </div>
+</div>
+<?php
+include "../../../include/footer.php";
+?>
