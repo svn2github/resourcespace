@@ -2,6 +2,7 @@
 include "../../../include/db.php";
 include "../../../include/general.php";
 include "../../../include/authenticate.php";
+include "../../../include/collections_functions.php";
 include "../../../include/search_functions.php";
 include "../../../include/resource_functions.php";
 include "../../../include/image_processing.php";
@@ -27,7 +28,6 @@ if (getval("data","")!="")
 # Fetch videos
 $videos=do_search("!collection" . $usercollection);
 
-
 if (getval("splice","")!="" && count($videos)>1)
 	{
 	$ref=copy_resource($videos[0]["ref"]);	# Base new resource on first video (top copy metadata).
@@ -43,7 +43,6 @@ if (getval("splice","")!="" && count($videos)>1)
 		}
 	$history = str_replace("%resources", $resources, $lang["merged_from_resources"]);
 	update_field($ref,$videosplice_parent_field,$history);
-
 
 	# Establish FFMPEG location.
 	$ffmpeg_fullpath = get_utility_path("ffmpeg");
