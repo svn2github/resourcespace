@@ -227,6 +227,21 @@ foreach ($fields as $field) {
 
 $fields_tab_names = array_values(array_unique($fields_tab_names));
 
+// Clean the tabs by removing the ones that would just be empty:
+$tabs_with_data = array();
+foreach ($fields_tab_names as $tabname) {
+	for ($i = 0; $i < count($fields); $i++) { 
+		
+		$displaycondition = check_view_display_condition($fields, $i);
+	
+		if($displaycondition && $tabname == $fields[$i]['tab_name'] && $fields[$i]['value'] != '' && $fields[$i]['value'] != ',' && $fields[$i]['display_field'] == 1 && ($access == 0 || ($access == 1 && !$field['hide_when_restricted']))) {
+			$tabs_with_data[] = $tabname;
+		}
+
+	}
+}
+$fields_tab_names = array_intersect($fields_tab_names, $tabs_with_data);
+
 if(isset($related_type_show_with_data)) {
 	// Get resource type tab names (if any set):
 	$resource_type_tab_names = sql_array('SELECT tab_name as value FROM resource_type', '');
