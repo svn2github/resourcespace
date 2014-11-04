@@ -1111,10 +1111,10 @@ function config_multi_ftype_select($name, $label, $current, $width=300,$size=7,$
     {
     global $lang;
     if($ftype===false){
-    	$fields=sql_query('select * from resource_type_field order by title, name');
+    	$fields=sql_query('select f.ref, f.title, f.name, rt.name as rt_name, rt.ref from resource_type_field f left join resource_type rt on f.resource_type=rt.ref order by rt.ref, f.title, f.name');
     }
     else{
-    	$fields=sql_query('select * from resource_type_field where resource_type="$ftype" order by title, name');
+    	$fields=sql_query('select f.ref, f.title, f.name, rt.name as rt_name, rt.ref from resource_type_field f left join resource_type rt on f.resource_type=rt.ref where f.resource_type="$ftype" order by f.title, f.name');
     }
 ?>
   <div class="Question">
@@ -1123,7 +1123,7 @@ function config_multi_ftype_select($name, $label, $current, $width=300,$size=7,$
 <?php
     foreach($fields as $field)
         {
-        echo '    <option value="'. $field['ref'] . '"' . (in_array($field['ref'],$current)?' selected':'') . '>' . lang_or_i18n_get_translated($field['title'],'fieldtitle-') . '</option>';
+        echo '    <option value="'. $field['ref'] . '"' . (in_array($field['ref'],$current)?' selected':'') . '>' . lang_or_i18n_get_translated($field['title'],'fieldtitle-') . (($field['rt_name']!='')?' (' . lang_or_i18n_get_translated($field['rt_name'],'"resourcetype-') . ')':'') . '</option>';
         }
 ?>
     </select>
