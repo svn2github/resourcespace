@@ -306,7 +306,7 @@ function save_resource_data($ref,$multi)
 				resource_log($ref,"a",0,"",$oldaccess,$access);
 				}
 			
-			// Notify the resources team ($email_notify) if moving from pending review->submission.
+			// Notify the resources team ($email_notify) if moving from pending submission -> review.
 			if ($oldarchive==-2 && $archive==-1 && $ref>0)
 					{	
 					notify_user_contributed_submitted(array($ref));
