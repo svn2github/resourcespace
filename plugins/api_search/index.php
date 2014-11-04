@@ -212,19 +212,14 @@ if($metadata) {
     foreach ($fields as $field) {
         $full_fields_options['field' . $field['ref']] = $field['title'];
     }
-    
+        
     for($i = 0; $i < count($results); $i++) {
-
+    
         $full_field_data_ids_list = '';
 
         // Build list of IDs of field types to return full data for:
         // NOTE: fields are displayed either like [field18] or [Caption]
         foreach ($full_fields_options as $field_key => $field_title) {
-            
-            // Make sure the field has data before moving forward:
-            if((!$prettyfieldnames && empty($results[$i][$field_key])) || ($prettyfieldnames && empty($results[$i][$field_title]))) {
-                continue;
-            }
 
             if((!$prettyfieldnames && array_key_exists($field_key, $results[$i])) || ($prettyfieldnames && array_key_exists($field_title, $results[$i]))) {
                 $full_field_data_ids_list .= substr($field_key, 5) . ',';
@@ -243,24 +238,23 @@ if($metadata) {
                     FROM resource_data
                    WHERE resource = %d
                      AND resource_type_field IN (%s)
-                ORDER BY FIELD(resource_type_field, %s);
+                ORDER BY FIELD(resource_type_field,%s);
             ',
             $results[$i]['ref'],
             $full_field_data_ids_list,
             $full_field_data_ids_list
         );
         $metadata_values = sql_query($query, '');
-
-        // Replace the values:
-        $full_field_data_ids_array = explode(',', $full_field_data_ids_list);
-        foreach ($full_field_data_ids_array as $key => $field_id) {
             
-            if(!$prettyfieldnames && array_key_exists('field' . $field_id, $full_fields_options) && array_key_exists('field' . $field_id, $results[$i])) {
-                $results[$i]['field' . $field_id] = $metadata_values[$key]['value'];
+        // Replace the values:
+        foreach ($metadata_values as $metadata_field) {
+            
+            if(!$prettyfieldnames && array_key_exists('field' . $metadata_field['resource_type_field'], $full_fields_options) && array_key_exists('field' . $metadata_field['resource_type_field'], $results[$i])) {
+                $results[$i]['field' . $metadata_field['resource_type_field']] = $metadata_field['value'];
             }
 
-            if($prettyfieldnames && array_key_exists('field' . $field_id, $full_fields_options) && array_key_exists($full_fields_options['field' . $field_id], $results[$i])) {
-                $results[$i][$full_fields_options['field' . $field_id]] = $metadata_values[$key]['value'];
+            if($prettyfieldnames && array_key_exists('field' . $metadata_field['resource_type_field'], $full_fields_options) && array_key_exists($full_fields_options['field' . $metadata_field['resource_type_field']], $results[$i])) {
+                $results[$i][$full_fields_options['field' . $metadata_field['resource_type_field']]] = $metadata_field['value'];
             }
 
         }
