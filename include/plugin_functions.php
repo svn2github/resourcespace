@@ -1111,10 +1111,10 @@ function config_multi_ftype_select($name, $label, $current, $width=300,$size=7,$
     {
     global $lang;
     if($ftype===false){
-    	$fields=sql_query('select f.ref, f.title, f.name, rt.name as rt_name, rt.ref from resource_type_field f left join resource_type rt on f.resource_type=rt.ref order by rt.ref, f.title, f.name');
+    	$fields=sql_query('select f.ref, f.title, f.name, rt.name as rt_name from resource_type_field f left join resource_type rt on f.resource_type=rt.ref order by rt.ref, f.title, f.name');
     }
     else{
-    	$fields=sql_query('select f.ref, f.title, f.name, rt.name as rt_name, rt.ref from resource_type_field f left join resource_type rt on f.resource_type=rt.ref where f.resource_type="$ftype" order by f.title, f.name');
+    	$fields=sql_query('select f.ref, f.title, f.name, rt.name as rt_name from resource_type_field f left join resource_type rt on f.resource_type=rt.ref where f.resource_type="$ftype" order by f.title, f.name');
     }
 ?>
   <div class="Question">
