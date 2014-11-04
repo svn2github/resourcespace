@@ -251,6 +251,13 @@ if(isset($related_type_show_with_data)) {
 	$fields_tab_names = array_values(array_unique((array_merge($fields_tab_names, $resource_type_tab_names))));
 }
 
+// Make sure the fields_tab_names is empty if there are no values:
+foreach ($fields_tab_names as $key => $value) {
+	if(empty($value)) {
+		unset($fields_tab_names[$key]);
+	}
+}
+
 //Check if we want to use a specified field as a caption below the preview
 if(isset($display_field_below_preview) && is_int($display_field_below_preview))
 	{
