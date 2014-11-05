@@ -168,15 +168,6 @@ if ($use_plugins_manager){
 # Include the appropriate language file
 $pagename=safe_file_name(str_replace(".php","",pagename()));
 
-if (isset($defaultlanguage))
-	{
-	$language=$defaultlanguage;
-	}
-else
-	{
-	$language=http_get_preferred_language();
-	}
-
 if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
 if (isset($_GET["language_set"]))
     {
@@ -202,7 +193,7 @@ if (isset($_GET["language_set"]))
 if ($disable_languages) {$language=$defaultlanguage;}
 
 # Fix due to rename of US English language file
-if ($language=="us") {$language="en-US";}
+if (isset($language) && $language=="us") {$language="en-US";}
 
 # Make sure the provided language is a valid language
 if (empty($language) || !array_key_exists($language,$languages))
@@ -226,11 +217,8 @@ if ($language!="en")
 for ($n=0;$n<count($plugins);$n++)
 	{
 	register_plugin($plugins[$n]);
+	register_plugin_language($plugins[$n]);
 	}
-for ($n=count($plugins)-1;$n>=0;$n--)
-    {
-    register_plugin_language($plugins[$n]);
-    }
     
 # Set character set.
 if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text/html; charset=UTF-8");} // Make sure we're using UTF-8.
