@@ -751,8 +751,11 @@ function get_field_options($ref)
 		$options[$m]=i18n_get_translated($options[$m]);
 		}
 
-	global $auto_order_checkbox;
-	if ($auto_order_checkbox) {sort($options);}
+	global $auto_order_checkbox,$auto_order_checkbox_case_insensitive;
+	if ($auto_order_checkbox) {
+		if($auto_order_checkbox_case_insensitive){natcasesort($options);$options=array_values($options);}
+		else{sort($options);}
+	}
 	
 	return $options;
 	}
