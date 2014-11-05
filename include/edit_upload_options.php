@@ -122,6 +122,11 @@ if ($ref<0)
 		
 		</div>
 		
+		<?php if($enable_public_collection_on_upload){echo "pass<br/>";}
+		if($enable_public_collections || checkperm('h')){echo "pass<br/>";}
+		if(!checkperm('b')){echo "pass<br/>";}?>
+		
+		
 		<?php if ($enable_public_collection_on_upload && ($enable_public_collections || checkperm('h')) && !checkperm('b')) { ?>
 		<label for="public"><?php echo $lang["access"]?></label>
 		<select id="public" name="public" class="shrtwidth"  <?php

@@ -1221,7 +1221,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 	# $name		the input name to use in the form (post name)
 	# $value	the default value to set for this field, if any
 	
-	global $auto_order_checkbox,$lang,$category_tree_open,$minyear,$daterange_search,$is_search,$values,$n;
+	global $auto_order_checkbox,$auto_order_checkbox_case_insensitive,$lang,$category_tree_open,$minyear,$daterange_search,$is_search,$values,$n;
 	$name="field_" . $field["ref"];
 	
 	#Check if field has a display condition set
@@ -1490,7 +1490,10 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 				$option_trans_simple[]=$trans;
 				}
 
-			if ($auto_order_checkbox) {asort($option_trans);}
+			if ($auto_order_checkbox) {
+				if($auto_order_checkbox_case_insensitive){natcasesort($option_trans);$option_trans=array_values($option_trans);}
+				else{asort($option_trans);}
+			}
 			$options=array_keys($option_trans); # Set the options array to the keys, so it is now effectively sorted by translated string		
 			
 			if ($field["display_as_dropdown"])

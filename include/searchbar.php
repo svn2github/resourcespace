@@ -238,7 +238,6 @@ if (!$basic_simple_search)
 	<?php
 	$searchbuttons.="</div>";
 	if (!$basic_simple_search) {
-	
 	// Include simple search items (if any)
 	$optionfields=array();
 	for ($n=0;$n<count($fields);$n++)
@@ -284,7 +283,6 @@ if (!$basic_simple_search)
 			case ($fields[$n]["type"]==9 && $simple_search_show_dynamic_as_dropdown):
 			// Dropdown and checkbox types - display a dropdown for both - also for dynamic dropdowns when configured
 			$options=get_field_options($fields[$n]["ref"]);
-			
 			$adjusted_dropdownoptions=hook("adjustdropdownoptions");
 			if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
 			

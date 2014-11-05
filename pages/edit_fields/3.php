@@ -12,7 +12,10 @@ for ($m=0;$m<count($options);$m++)
 	{
 	$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
 	}
-if ($auto_order_checkbox) {asort($option_trans);}	
+if ($auto_order_checkbox) {
+	if($auto_order_checkbox_case_insensitive){natcasesort($option_trans);$option_trans=array_values($option_trans);}
+	else{asort($option_trans);}	
+}
 
 $adjusted_dropdownoptiontrans=hook("adjustdropdownoptiontrans","edit",array($field,$option_trans));
 if ($adjusted_dropdownoptiontrans){$option_trans=$adjusted_dropdownoptiontrans;}

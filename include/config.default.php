@@ -886,6 +886,9 @@ $autocomplete_search_min_hitcount=10; # The minimum number of times a keyword ap
 # Automatically order checkbox lists (alphabetically)
 $auto_order_checkbox=true;
 
+# Use a case insensitive sort when automatically order checkbox lists (alphabetically)
+$auto_order_checkbox_case_insensitive=false;
+
 # Order checkbox lists vertically (as opposed to horizontally, as HTML tables normally work)
 $checkbox_ordered_vertically=true;
 
