@@ -1274,7 +1274,7 @@ function display_field($n, $field, $newtab=false)
 	if ($type=="") {$type=0;} # Default to text type.
 	if (!hook("replacefield","",array($field["type"],$field["ref"],$n)))
 		{
-		global $auto_order_checkbox;
+		global $auto_order_checkbox,$auto_order_checkbox_case_insensitive;
 		include "edit_fields/" . $type . ".php";
 		}
 	# ----------------------------------------------------------------------------
