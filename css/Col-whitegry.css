@@ -101,7 +101,13 @@ input[readonly] {color: #000000;}
 .BasicsBox .HorizontalNav li {border-right:1px solid #B5C3D4;border-top-style: none;border-bottom-style: none;border-left-style: none;}
 .BasicsBox .VerticalNav li, .ThemeBox li {list-style: url(../gfx/whitegry/interface/bullet.gif) none inside;}
 .ThemeBox {border-bottom: 1px solid #BBBBBB;}
+
 .HomePanel h2 {background: url(../gfx/whitegry/interface/HomeArrow.gif) no-repeat 1px 10px;}
+.HomePanelThemes h2, .HomePanelMyCollections h2, .HomePanelHelp h2 {padding-left: 43px;}
+.HomePanelThemes h2 {background: url(../gfx/whitegry/interface/themes.png) no-repeat 0 0;}
+.HomePanelMyCollections h2 {background: url(../gfx/whitegry/interface/my_collections.png) no-repeat -2px 0;padding-left:36px;}
+.HomePanelHelp h2 {background: url(../gfx/whitegry/interface/help.png) no-repeat 0 0;}
+
 
 .highlight {color: #990000;}
 

@@ -100,6 +100,10 @@ input[readonly] {color: #FFFFFF;}
 .ThemeBox {border-bottom: 1px solid #5A7599;}
 
 .HomePanel h2 {background: url(../gfx/black/interface/HomeArrow.gif) no-repeat 1px 10px;}
+.HomePanelThemes h2, .HomePanelMyCollections h2, .HomePanelHelp h2 {padding-left: 43px;}
+.HomePanelThemes h2 {background: url(../gfx/interface/themes.png) no-repeat 0 0;}
+.HomePanelMyCollections h2 {background: url(../gfx/interface/my_collections.png) no-repeat -2px 0;padding-left:36px;}
+.HomePanelHelp h2 {background: url(../gfx/interface/help.png) no-repeat 0 0;}
 
 .BasicsBox ul, .BasicsBox ol {color:#FFFFFF;}
 
