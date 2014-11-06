@@ -382,7 +382,7 @@ function save_resource_data_multi($collection)
 				$val=","; # Note: it seems wrong to start with a comma, but this ensures it is treated as a comma separated list by split_keywords(), so if just one item is selected it still does individual word adding, so 'South Asia' is split to 'South Asia','South','Asia'.
 				$options=trim_array(explode(",",$fields[$n]["options"]));
 				if ($auto_order_checkbox) {
-					if($auto_order_checkbox_case_insensitive){natcasesort($options);$options=array_values($options);}
+					if($auto_order_checkbox_case_insensitive){natcasesort($options);}
 					else{sort($options);}
 				}
 				
