@@ -351,13 +351,10 @@ foreach($active_plugins as $plugin)
 		{
 		include_plugin_config($plugin['name'],$plugin['config'],$plugin['config_json']);
 		register_plugin($plugin['name']);
+		register_plugin_language($plugin['name']);
 		$plugins[]=$plugin['name'];
 		}
 	}
-for ($n=count($plugins)-1;$n>=0;$n--)
-    {
-    register_plugin_language($plugins[$n]);
-    }
 
 if ($userpassword=="b58d18f375f68d13587ce8a520a87919" && $pagename!="user_preferences"  && $pagename!="collections"){?>
 <script>
