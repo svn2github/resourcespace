@@ -795,7 +795,7 @@ function redirect($url)
 		}
 	exit();
 	}
-
+/* Language Function Unused, Replaced by Script on the Login Page */
 function http_get_preferred_language($strict_mode=false)
 	{
 	global $languages;
