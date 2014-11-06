@@ -856,7 +856,9 @@ hook("thumblistextra");
 	<div id="CollectionMinTitle"><?php if (!hook("replacecollectiontitle")) { ?><h2><?php if ($collections_compact_style){?><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php }?></h2><?php } ?></div>
 
 	<!--Menu-->	
-	<div id="CollectionMinRightNav"><div id="MinSearchItem">
+	<div id="CollectionMinRightNav">
+	<?php hook("addcompacttoolslabelmin");?>
+	<div id="MinSearchItem">
 	  <?php if ($collections_compact_style){
 	    hook("beforetogglethumbs");
 	  	 if (/*($count_result<=$max_collection_thumbs) && */!$disable_collection_toggle) { ?>&nbsp;&nbsp;<a id="toggleThumbsLink" href="#" onClick="ToggleThumbs();return false;">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } 
