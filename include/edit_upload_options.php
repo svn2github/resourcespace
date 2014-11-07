@@ -120,12 +120,7 @@ if ($ref<0)
 		<label for="entercolname"><?php echo $lang["collectionname"]?><?php if ($upload_collection_name_required){?><sup>*</sup><?php } ?></label>
 		<input type=text id="entercolname" name="entercolname" class="stdwidth" value='<?php echo htmlentities(stripslashes(getval("entercolname","")), ENT_QUOTES);?>'> 
 		
-		</div>
-		
-		<?php if($enable_public_collection_on_upload){echo "pass<br/>";}
-		if($enable_public_collections || checkperm('h')){echo "pass<br/>";}
-		if(!checkperm('b')){echo "pass<br/>";}?>
-		
+		</div>		
 		
 		<?php if ($enable_public_collection_on_upload && ($enable_public_collections || checkperm('h')) && !checkperm('b')) { ?>
 		<label for="public"><?php echo $lang["access"]?></label>
