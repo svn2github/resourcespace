@@ -24,8 +24,8 @@ $sort=getval("sort",$default_sort);
 
 
 // Load access level and check.
-$access=get_resource_access($ref);
-if (!($allow_share && ($access==0 || ($access==1 && $restricted_share)))) {exit("Access denied.");}
+$useraccess=get_resource_access($ref);
+if (!($allow_share && ($useraccess==0 || ($useraccess==1 && $restricted_share)))) {exit("Access denied.");}
 //if (!checkperm("g") && !checkperm("v")) {exit ("Permission denied.");} // Cannot e-mail if can't see hi-res images. To avoid loophole whereby users could email resources to an external address, and hence download hi-res versions.
 
 $errors="";
@@ -79,7 +79,7 @@ if (getval("save","")!="")
 	else
 		{		
 		// Email single resource
-		$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$access,$expires,$user_email,$from_name,$cc,$list_recipients,$add_internal_access);
+		$errors=email_resource($ref,i18n_get_translated($resource["field".$view_title_field]),$userfullname,$users,$message,$access,$expires,$user_email,$from_name,$cc,$list_recipients,$add_internal_access,$useraccess);
 		if ($errors=="")
 			{
 			// Log this			
@@ -241,7 +241,7 @@ if ($share_resource_include_related && $enable_related_resources && checkperm("s
 </div>
 <?php } ?>
 
-<?php if($access==0)
+<?php if($useraccess==0)
 	{
 	$resourcedata=get_resource_data($ref,true);
 	if(get_edit_access($ref,$resource['archive'],false,$resource))
@@ -262,7 +262,7 @@ if ($share_resource_include_related && $enable_related_resources && checkperm("s
 <select class="stdwidth" name="access" id="access">
 <?php
 // List available access levels. The highest level must be the minimum user access level.
-for ($n=2;$n>=$access;$n--)  { ?>
+for ($n=2;$n>=$useraccess;$n--)  { ?>
 <option value="<?php echo $n?>"><?php echo $lang["access" . $n]?></option>
 <?php } ?>
 </select>
