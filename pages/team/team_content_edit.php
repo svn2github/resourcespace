@@ -160,7 +160,9 @@ jQuery(".saveText").click(function(){
 	}else {
 		jQuery('#returntolist').val("");
 	}
-	var checktext = jQuery("textarea").val();
+	var ckeditor = '<?php echo $site_text_use_ckeditor ?>';
+	if(ckeditor==true){var checktext = jQuery(textarea.editor).val();}
+	else{var checktext = jQuery("textarea").val();}
 	jQuery.post("../tools/check_html.php",{"text":checktext},function(response, status, xhr){
 			CentralSpaceHideLoading();
             if(response !=="<pre>OK\n</pre>"){
