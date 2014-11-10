@@ -266,7 +266,7 @@ ksort ($plugins_avail);
         $p['enabled_groups'] = array($p['enabled_groups']);
         if ($p['config_url']!='')        
 			{
-            if(($p['enabled_groups'][0]=='' ||  in_array($userdata[0]['usergroup'],$p['enabled_groups'])))
+            if(($p['enabled_groups'][0]=='' ||  in_array($userdata[0]['usergroup'],explode(",",$p['enabled_groups'][0]))))
                 {
         	    echo '<a onClick="return CentralSpaceLoad(this,true);" class="nowrap" href="'.$baseurl.$p['config_url'].'">&gt;&nbsp;'.$lang['options'].'</a> ';        
 			    if (sql_value("SELECT config_json as value from plugins where name='".$p['name']."'",'')!='' && function_exists('json_decode'))
