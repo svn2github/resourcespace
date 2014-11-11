@@ -2438,7 +2438,14 @@ function check_access_key($resource,$key)
 		if (isset($anonymous_login))
 			{
 			global $username;
-			$username=$anonymous_login;			
+			if(is_array($anonymous_login))
+			{
+			foreach($anonymous_login as $key => $val)
+				{
+				if($baseurl==$key){$anonymous_login=$val;}
+				}
+			}
+			$username=$anonymous_login;		
 			}
 		
 		# Set the 'last used' date for this key

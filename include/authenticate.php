@@ -119,6 +119,13 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 	  	}
 	elseif (isset($anonymous_login))
 		{
+		if(is_array($anonymous_login))
+			{
+			foreach($anonymous_login as $key => $val)
+				{
+				if($baseurl==$key){$anonymous_login=$val;}
+				}
+			}
 		$username=$anonymous_login;
 		$session_hash="";
 		}

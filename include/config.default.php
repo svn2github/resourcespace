@@ -626,10 +626,19 @@ $available_themes_by_default = array("multi", "whitegry","greyblu","black");
 # $plugins=array("loader","rss","messaging","googledisplay"); 
 $plugins=array();
 
-# Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
-# to the account with the username specified.
+# Uncomment and set the next line to allow anonymous access. 
+# You must set this to the USERNAME of the USER who will represent all your anonymous users
 # Note that collections will be shared among all anonymous users - it's therefore usually best to turn off all collections functionality for the anonymous user.
-# $anonymous_login="guest";
+#$anonymous_login="guest";
+
+# Domain Linked Anonymous Access
+# Uncomment and set to allow different anonymous access USERS for different domains. 
+# The usernames are the same rules for just a single anonymous account but you must match them against the full domain $Baseurl that they will be using.
+# Note that collections will be shared among all anonymous users for each domain - it's therefore usually best to turn off all collections functionality for the anonymous user.
+/* $anonymous_login = array(
+		"http://example.com" => "guest",
+		"http://test.com" => "guest2"
+		); */ 
 
 # Enable AJAX popup info box on search results.
 $infobox=true;
