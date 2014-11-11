@@ -1598,7 +1598,7 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
             if ($multiple) { ?><div><input name="editthis_access" id="editthis_access" value="yes" type="checkbox" onClick="var q=document.getElementById('question_access');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["access"]?></label></div><?php } ?>
 
             <div class="Question" id="question_access" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
-            <label for="archive"><?php echo $lang["access"]?></label><?php
+            <label for="access"><?php echo $lang["access"]?></label><?php
 
             # Autosave display
             if ($edit_autosave || $ctrls_to_save) { ?><div class="AutoSaveStatus" id="AutoSaveStatusAccess" style="display:none;"></div><?php } ?>
