@@ -69,6 +69,8 @@ if (getval("submit","")!="")
 	    # function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false)		
 		add_keyword_mappings($ref,i18n_get_indexable($value),$field,$fieldinfo["partial_index"],$is_date,'','',$is_html);		
 	
+		hook("reindexfieldtooladditional","",array($ref,$value,$fieldinfo));
+		
 		echo "Done $ref - " . htmlspecialchars(substr($value,0,50)) . "... ($n/$total)\n";
 		
 		if (($n / 20 == floor($n/20)) || $n==$total) # Scroll down every now and again, and at the end.
