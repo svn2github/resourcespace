@@ -362,7 +362,9 @@ if ($search_titles)
 		if ($display!="list"){$search_title_links.= '<br /><br />';}
 	}
 
-    if (!is_array($result) && empty($collections) && getvalescaped("addsmartcollection","") == '') {
-        $search_title = '<h1 class="searchcrumbs"><a href="' . $baseurl_short . 'pages/search.php">'.$lang["noresourcesfound"].'</a></h1>';
-    }
+	if (!hook("replacenoresourcesfoundsearchtitle")){
+		if (!is_array($result) && empty($collections) && getvalescaped("addsmartcollection","") == '') {
+			$search_title = '<h1 class="searchcrumbs"><a href="' . $baseurl_short . 'pages/search.php">'.$lang["noresourcesfound"].'</a></h1>';
+		}
+	}
 }  
