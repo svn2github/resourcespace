@@ -919,8 +919,10 @@ hook("thumblistextra");
 	  <?php } ?>
 	</div>
 	</div>
-	<!--Collection Dropdown-->	
-	<div id="CollectionMinDropTitle"><?php echo $lang["currentcollection"]?>:&nbsp;</div>				
+	<!--Collection Dropdown-->
+	<?php if(!hook("replace_collectionmindroptitle")){?>
+	<div id="CollectionMinDropTitle"><?php echo $lang["currentcollection"]?>:&nbsp;</div>
+    <?php } # end hook replace_collectionmindroptitle ?>				
 	<div id="CollectionMinDrop">
 	 <form method="get" id="colselect2" onsubmit="newcolname=encodeURIComponent(jQuery('#entername2').val());CollectionDivLoad('<?php echo $baseurl_short?>pages/collections.php?thumbs=<?php echo urlencode($thumbs) ?>&collection=-1&k=<?php echo urlencode($k) ?>&entername='+newcolname);return false;">
 			<div class="MinSearchItem" id="MinColDrop">
@@ -932,7 +934,10 @@ hook("thumblistextra");
 	<?php } ?>
 	<?php } ?>
 	<!--Collection Count-->	
-	<div id="CollectionMinitems"><strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?></div></div>
+	<?php if(!hook("replace_collectionminitems")){?>
+	<div id="CollectionMinitems"><strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?></div>
+	<?php } # end hook replace_collectionminitems ?>
+	</div>
 	<?php } ?>
 
 <?php draw_performance_footer();?>
