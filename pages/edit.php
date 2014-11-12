@@ -21,6 +21,9 @@ if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 
 $archive=getvalescaped("archive",0,true);
+if($show_status_and_access_on_upload) {
+	$archive = getvalescaped('status', 0, TRUE);
+}
 
 $uploadparams="";
 $uploadparams.="&relateto=" . urlencode(getval("relateto",""));

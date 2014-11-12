@@ -1838,3 +1838,11 @@ $lang['merge_filename_title_prefix'] = 'Prefix';
 $lang['merge_filename_title_suffix'] = 'Suffix';
 $lang['merge_filename_title_include_extensions'] = 'Include extensions?';
 $lang['merge_filename_title_spacer'] = 'Spacer';
+
+# For sending a collection with all the resources uploaded at one time:
+$lang['send_collection_to_admin_emailedcollectionname'] = 'E-mailed collection';
+$lang['send_collection_to_admin_emailsubject'] = 'Collection uploaded by ';
+$lang['send_collection_to_admin_usercontributedcollection'] = ' uploaded these resources as a whole collection';
+$lang['send_collection_to_admin_additionalinformation'] = 'Additional information';
+$lang['send_collection_to_admin_collectionname'] = 'Collection name: ';
+$lang['send_collection_to_admin_numberofresources'] = 'Number of resources: ';

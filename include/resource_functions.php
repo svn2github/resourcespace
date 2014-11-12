@@ -1146,7 +1146,8 @@ function copy_resource($from,$resource_type=-1)
 		}
 
 	# Copying a resource of the 'pending review' state? Notify, if configured.
-	if ($archive==-1)
+	global $send_collection_to_admin;
+	if ($archive==-1 && !$send_collection_to_admin)
 		{
 		notify_user_contributed_submitted(array($to));
 		}

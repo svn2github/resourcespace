@@ -101,6 +101,45 @@ if ($collection_add!="")
  	refresh_collection_frame($collection_add);
  	}	
 
+if($send_collection_to_admin && $archive == -1 && getvalescaped('ajax' , 'false') == true && getvalescaped('ajax_action' , '') == 'send_collection_to_admin') {
+
+    $collection_id = getvalescaped('collection' , '');
+
+    if($collection_id == '') {
+        exit();
+    }
+
+    // Create a copy of the collection for admin:
+    $admin_copy = create_collection(-1, $lang['send_collection_to_admin_emailedcollectionname']);
+    copy_collection($collection_id, $admin_copy);
+    $collection_id = $admin_copy;
+
+    // Get the user (or username) of the contributor:
+    $user = get_user($userref);
+    if(isset($user) && trim($user['fullname']) != '') {
+        $user = $user['fullname'];
+    } else {
+        $user = $user['username'];
+    }
+
+    // Get details about the collection:
+    $collection = get_collection($collection_id);
+    $collection_name = $collection['name'];
+    $resources_in_collection = count(get_collection_resources($collection_id));
+
+    // Build mail and send it:
+    $subject = $applicationname . ': ' . $lang['send_collection_to_admin_emailsubject'] . $user;
+
+    $message = $user . $lang['send_collection_to_admin_usercontributedcollection'] . "\n\n";
+    $message .= $baseurl . '/pages/search.php?search=!collection' . $collection_id . "\n\n";
+    $message .= $lang['send_collection_to_admin_additionalinformation'] . "\n\n";
+    $message .= $lang['send_collection_to_admin_collectionname'] . $collection_name . "\n\n";
+    $message .= $lang['send_collection_to_admin_numberofresources'] . $resources_in_collection . "\n\n";
+
+    send_mail($email_notify, $subject, $message, '', '');
+    exit();
+}
+
 #handle posts
 if ($_FILES)
 	{
@@ -554,6 +593,25 @@ var pluploadconfig = {
                 
                           <?php 
 						  
+                            if($send_collection_to_admin) { ?>
+                                uploader.bind('UploadComplete', function(up, files) {
+
+                                    jQuery.ajax({
+                                        type: 'POST',
+                                        url: '<?php echo $baseurl_short; ?>pages/upload_plupload.php',
+                                        data: {
+                                            ajax: 'true',
+                                            ajax_action: 'send_collection_to_admin',
+                                            collection: '<?php echo $collection_add; ?>',
+                                            archive: '<?php echo $archive; ?>'
+                                        }
+                                    });
+
+                                    console.log('A copy of the collection ID <?php echo $collection_add; ?> has been sent via e-mail to admin.');
+
+                                });
+                            <?php
+                            }
 						  
 				  if ($redirecturl!=""){?>
                                   //remove the completed files once complete
