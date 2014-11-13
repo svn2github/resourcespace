@@ -2433,3 +2433,6 @@ $merge_filename_with_title_default = 'do_not_use';
 # Add collection link to email when user submits a collection of resources for review (upload stage only)
 # Note: this will send a collection containing only the newly uploaded resources
 $send_collection_to_admin = FALSE;
+
+# Set to true if you want to share internally a collection which is not private
+$ignore_collection_access = FALSE;

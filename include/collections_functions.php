@@ -204,6 +204,7 @@ function collection_writeable($collection)
 	
 function collection_readable($collection)
 	{
+		global $ignore_collection_access;
 	# Returns true if the current user has read access to the given collection.
 
 	# Fetch collection details.
@@ -219,7 +220,8 @@ function collection_readable($collection)
 	# 	- It's a public collection (or theme)
 	#	- They have the 'access and edit all collections' admin permission
 	# 	- They are attached to this collection
-	return $userref==$collectiondata["user"] || $collectiondata["public"]==1 || checkperm("h") || in_array($userref,$attached) || getval("k","")!="";
+	#   - Option to ignore collection access is enabled and k is empty
+	return $userref==$collectiondata["user"] || $collectiondata["public"]==1 || checkperm("h") || in_array($userref,$attached) || getval("k","")!="" || (getval("k","")=="" && $ignore_collection_access);
 	}
 	
 function set_user_collection($user,$collection)

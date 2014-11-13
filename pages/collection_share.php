@@ -116,7 +116,8 @@ include "../include/header.php";
 		}
 	if (getval("generateurl","")!="" || $editing)
 		{
-		if (!($hide_internal_sharing_url) && !$editing && $collection["public"]==1)
+			global $ignore_collection_access;
+		if (!($hide_internal_sharing_url) && !$editing && $collection["public"]==1 || $ignore_collection_access)
 			{
 			?>
 			<p><?php echo $lang["generateurlinternal"]?></p>
