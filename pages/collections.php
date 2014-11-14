@@ -644,14 +644,11 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && $k=='')
 	{ // don't include saved search item in result if this is a smart collection  
 
 	# Setting the save search icon
-	$folder = dirname(__FILE__) ."/../gfx/images/";
 	$folderurl=$baseurl."/gfx/images/";
-	$iconpath = $folder . "save-search" . "_" . $language . ".gif";
 	$iconurl=$folderurl."save-search"."_".$language.".gif";
-	if (!file_exists($iconpath))
+	if (!file_exists($iconurl))
 		{
 		# A language specific icon is not found, use the default icon
-		$iconpath = $folder . "save-search.gif";
 		$iconurl = $folderurl . "save-search.gif";
 		}
 
