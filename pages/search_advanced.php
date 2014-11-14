@@ -505,12 +505,12 @@ for ($n=0;$n<count($fields);$n++)
 function resetTickAllColl(){
 	var checkcount=0;
 	// set tickall to false, then check if it should be set to true.
-	jQuery('#rttickallcoll').attr('checked',false);
+	jQuery('.rttickallcoll').attr('checked',false);
 	var tickboxes=jQuery('#advancedform .tickboxcoll');
 		jQuery(tickboxes).each(function (elem) {
             if( tickboxes[elem].checked){checkcount=checkcount+1;}
         });
-	if (checkcount==tickboxes.length){jQuery('#rttickallcoll').attr('checked',true);}	
+	if (checkcount==tickboxes.length){jQuery('.rttickallcoll').attr('checked',true);}	
 }
 </script>
 <div class="Question">
@@ -520,7 +520,7 @@ $types=get_resource_types();
 $wrap=0;
 ?>
 <table><tr>
-<td align="middle"><input type='checkbox' id='rttickallcoll' name='rttickallcoll' checked onclick='jQuery("#advancedform .tickboxcoll").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#rttickallcoll").attr("checked")=="checked"));}); UpdateResultCount(); ' /><?php echo $lang['allcollectionssearchbar']?></td>
+<td align="middle"><input type='checkbox' class="rttickallcoll" id='rttickallcoll' name='rttickallcoll' checked onclick='jQuery("#advancedform .tickboxcoll").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery(".rttickallcoll").attr("checked")=="checked"));}); UpdateResultCount(); ' /><?php echo $lang['allcollectionssearchbar']?></td>
 
 <?php
 
