@@ -645,11 +645,14 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && $k=='')
 
 	# Setting the save search icon
 	$folder = dirname(__FILE__) ."/../gfx/images/";
+	$folderurl=$baseurl."/gfx/images/";
 	$iconpath = $folder . "save-search" . "_" . $language . ".gif";
+	$iconurl=$folderurl."save-search"."_".$language.".gif";
 	if (!file_exists($iconpath))
 		{
 		# A language specific icon is not found, use the default icon
 		$iconpath = $folder . "save-search.gif";
+		$iconurl = $folderurl . "save-search.gif";
 		}
 
 	for ($n=0;$n<count($searches);$n++)			
@@ -660,7 +663,7 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && $k=='')
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
-		<a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $url?>"><img border=0 width=56 height=75 src="<?php echo $iconpath?>"/></a></td>
+		<a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $url?>"><img border=0 width=56 height=75 src="<?php echo $iconurl?>"/></a></td>
 		</tr></table>
 		<?php if(!hook('replacesavedsearchtitle')){?>
 		<div class="CollectionPanelInfo"><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $url?>"><?php echo tidy_trim($lang["savedsearch"],(13-strlen($n+1)))?> <?php echo $n+1?></a>&nbsp;</div><?php } ?>
@@ -825,8 +828,8 @@ hook("thumblistextra");
 		# Anonymous access, slightly different display
 		$tempcol=$cinfo;
 		?>
-	<div id="CollectionMinTitle"><h2><?php echo i18n_get_collection_name($tempcol)?></h2></div>
-	<div id="CollectionMinRightNav">
+	<div id="CollectionMinTitle" class="ExternalShare"><h2><?php echo i18n_get_collection_name($tempcol)?></h2></div>
+	<div id="CollectionMinRightNav" class="ExternalShare">
 		<?php if(!hook("replaceanoncollectiontools")){ ?>
 		<?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
 		<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/terms.php?k=<?php echo urlencode($k) ?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></a></li>
@@ -853,7 +856,7 @@ hook("thumblistextra");
 	} else { 
 	?>
 
-	<div id="CollectionMinTitle"><?php if (!hook("replacecollectiontitle") && !hook("replacecollectiontitlemin")) { ?><h2><?php if ($collections_compact_style){?><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php }?></h2><?php } ?></div>
+	<div id="CollectionMinTitle" class="ExternalShare"><?php if (!hook("replacecollectiontitle") && !hook("replacecollectiontitlemin")) { ?><h2><?php if ($collections_compact_style){?><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php }?></h2><?php } ?></div>
 
 	<!--Menu-->	
 	<div id="CollectionMinRightNav">
