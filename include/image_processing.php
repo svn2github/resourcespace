@@ -417,6 +417,7 @@ function extract_exif_comment($ref,$extension="")
 					$value=trim(substr($metaline,$pos+2));
 
 					# Replace '..' with line feed - either Exiftool itself or Adobe Bridge replaces line feeds with '..'
+					$value = str_replace('....', '\n\n', $value); // Two new line feeds in ExifPro are replaced with 4 dots '....'
 					$value=str_replace('...','.\n',$value); # Three dots together is interpreted as a full stop then line feed, not the other way round
 					$value=str_replace('..','\n',$value);
 					
