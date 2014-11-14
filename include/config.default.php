@@ -853,6 +853,15 @@ $default_group=2;
 # You may wish to disable this if you are using metadata based access control (search filter on the user group)
 $custom_access=true;
 
+# Set the Default Level for Custom Access. 
+# This will only work for resources that haven't been set to custom previously, otherwise they will show their previously set values.
+/*
+	0 - Open
+	1 - Restricted
+	2 - Confidential
+*/
+$default_customaccess=2;
+
 # How are numeric searches handled?
 #
 # If true:

@@ -1623,16 +1623,15 @@ if ($show_status_and_access_on_upload_perm &&!hook("editstatushide")) # Only dis
 
             <div class="clearerleft"> </div>
             <table id="custom_access" cellpadding=3 cellspacing=3 style="padding-left:150px;<?php if (!$custom_access || $resource["access"]!=3) { ?>display:none;<?php } ?>"><?php
-
+            global $default_customaccess;
             $groups=get_resource_custom_access($ref);
             for ($n=0;$n<count($groups);$n++)
                 {
-                $access=2;$editable=true;
+                $access=$default_customaccess;
+                $editable=true;
                 if ($groups[$n]["access"]!="") {$access=$groups[$n]["access"];}
                 $perms=explode(",",$groups[$n]["permissions"]);
-
                 if (in_array("v",$perms)) {$access=0;$editable=false;} ?>
-                    
                 <tr>
                 <td valign=middle nowrap><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</td>
 
