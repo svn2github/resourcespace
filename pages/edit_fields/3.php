@@ -4,7 +4,7 @@
 $options=trim_array(explode(",",$field["options"]));
 $modified_options=hook("modify_field_options","",array($field));
 if($modified_options!=""){$options=$modified_options;}
-$adjusted_dropdownoptions=hook("adjustdropdownoptions");
+$adjusted_dropdownoptions=hook("adjustdropdownoptions","",array($field,$options));
 if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
 
 $option_trans=array();
