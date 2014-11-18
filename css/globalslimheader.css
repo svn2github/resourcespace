@@ -1,4 +1,5 @@
 /* Slimheader Global */
+.ui-layout-container{min-width:1100px;overflow:scroll;}
 #CentralSpaceContainer {margin: 20px 25px 20px;padding: 0 282px 0 0;text-align: left;}
 #Header {margin: 0;padding: 5px 25px 5px 25px;height: 40px;background-image:none;}
 #HeaderNav1, #HeaderNav2 {margin:0;padding:0;line-height: 35px;}
@@ -7,7 +8,6 @@
 #HeaderNav1 ul, #Headernav2 ul {padding: 0.2em 0.5em;}
 .HeaderImgLink{float:left;height:100%;}
 #HeaderImg{height:40px;margin:0;}
-
 .HorizontalNav li, .HorizontalNav li {display: inline-block;zoom: 1;*display: inline;}
 .HorizontalNav li a, .HorizontalNav li a{display: inline-block;zoom: 1;*display: inline;}
 #SearchBarContainer {margin-top: 20px;}
