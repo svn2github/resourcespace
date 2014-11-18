@@ -33,7 +33,6 @@ if ($display_user_rating_stars && $star_search){
 	    }
 	}
 	
-
 ?><!DOCTYPE html>
 <html>	<?php if ($include_rs_header_info){?>
 <!--<?php hook("copyrightinsert");?>
@@ -491,7 +490,6 @@ if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("themes"
     <?php
     }
 	
-
 
 if (getval("k","")!="") { ?>
 <style>
