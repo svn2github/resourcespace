@@ -1069,6 +1069,9 @@ $lang["setup-storage_url"]="Storage URL";
 $lang["setup-if_storageurl"]="Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. NOTE: No trailing slash.";
 $lang["setup-ftp_settings"]="FTP settings";
 $lang["setup-if_ftpserver"]="Only necessary if you plan to use the FTP upload feature.";
+$lang["design-options"]="Design Options";
+$lang["use-slim-theme"]="Use the SlimHeader Design?";
+$lang["setup-if_slimtheme"]="Use the SlimHeader design rather than the original design to display a thinner header bar with a linked logo by default.";
 $lang["setup-login_to"]="Login to";
 $lang["setup-configuration_file_output"]="Configuration file output";
 

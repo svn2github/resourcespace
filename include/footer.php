@@ -44,7 +44,24 @@ function SwapCSS(css){
 				jQuery('head').append(response); // add new css
 				jQuery('.plugincss0').remove(); // then remove old
 				jQuery('.plugincss').attr('class', 'plugincss0'); // set up new css for later removal
-				}
+				<?php
+				hook("footerthemechangescript");
+				if($slimheader)
+	            	{
+		            if($linkedheaderimgsrc=="")
+		                {
+		                $currenttheme = (isset($userfixedtheme)&&$userfixedtheme!='') ? $userfixedtheme : $defaulttheme;
+		                $colourcss = getval('colourcss',''); 
+		                $currenttheme = $colourcss!='' ? $colourcss : $currenttheme;
+		                $header_img_src = $baseurl.'/gfx/'.$currenttheme.'/titles/title.gif';
+		                echo "jQuery('#HeaderImg').attr(\"src\",'".$baseurl."/gfx/' + css + '/titles/title.gif?css_reload_key=".$css_reload_key."');";
+		                }
+		            else
+		                {
+		                echo "jQuery('#HeaderImg').attr(\"src\",'".$baseurl.$linkedheaderimgsrc."');";
+		                } 
+		            } ?>
+		        }
 			});
 }
 
@@ -80,7 +97,7 @@ function SwapCSS(css){
 <?php if (!hook("replacefooterlinks")){?>
 		<?php if (!$use_theme_as_home && !$use_recent_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/<?php echo $default_home_page?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["home"]?></a></li><?php } ?>
 		<?php if ($about_link) { ?><li><a href="<?php echo $baseurl?>/pages/about.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["aboutus"]?></a></li><?php } ?>
-		<?php if ($contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["contactus"]?></a></li><?php } ?>
+		<?php if ($contact_link || $nav2contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["contactus"]?></a></li><?php } ?>
 <?php } /* end hook replacefooterlinks */ ?>
 		</ul>
 </div>

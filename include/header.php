@@ -259,10 +259,30 @@ echo get_plugin_css($theme)
 // after loading these tags we change the class on them so a new set can be added before they are removed (preventing flickering of overridden theme)
 ?>
 <script>jQuery('.plugincss').attr('class','plugincss0');</script>
-
-<?php hook("headblock"); ?>
-
-<?php 
+<?php
+if($grouplogos)
+    {
+    //Get group logo value
+    $curr_group = get_usergroup($usergroup);
+    if($curr_group["group_specific_logo"])
+        {
+        $linkedheaderimgsrc="/gfx/groupheaderimg/group".$usergroup.".".$curr_group["group_specific_logo"];
+        ?>
+        <style>#Header{background-image: url(<?php echo $baseurl.$linkedheaderimgsrc; ?>);}</style>
+        <?php
+        }
+    
+    }
+#SlimHeader global structure changes
+if($slimheader)
+    {?>
+    <style>
+    <?php include dirname(__FILE__)."/../css/globalslimheader.css"; ?>
+    </style>
+    <?php
+    }
+hook("headblock");
+ 
 if ($collections_compact_style && $pagename!="login"){ include dirname(__FILE__)."/../lib/js/colactions.js";}
 
 # Infobox JS include
@@ -299,29 +319,65 @@ $homepage_url=$baseurl."/pages/".$default_home_page;
 if ($use_theme_as_home){$homepage_url=$baseurl."/pages/themes.php";}
 if ($use_recent_as_home){$homepage_url=$baseurl."/pages/search.php?search=".urlencode('!last'.$recent_search_quantity);}
 if ($pagename=="login" || $pagename=="user_request" || $pagename=="user_password"){$homepage_url=$baseurl."/index.php";}
-?>
 
-<?php hook("beforeheader"); ?>
-<div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
-<?php hook("responsiveheader"); ?>
 
-<?php if ($header_link && !$header_text_title && getval("k","")=="") {
-	$linkUrl=isset($header_link_url) ? $header_link_url : $homepage_url;
-	if (substr($linkUrl, 0, strlen($baseurl)) === $baseurl
-			|| substr($linkUrl, 0, strlen($baseurl_short)) === $baseurl_short)
-		$onclick=' onclick="return CentralSpaceLoad(this,true);"';
-	else
-		$onclick='';
-	?><a class="headerlink" href="<?php echo $linkUrl ?>"<?php echo $onclick?>></a><?php
-}
-?>
-<?php if ($header_text_title){?>
-    <div id="TextHeader"><?php if (getval("k","")==""){?><a href="<?php echo $homepage_url?>"  onClick="return CentralSpaceLoad(this,true);"><?php } ?><?php echo $applicationname;?><?php if (getval("k","")==""){?></a><?php } ?></div>
-    <?php if ($applicationdesc!=""){?>
-        <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
-    <?php } ?>
-<?php }
+hook("beforeheader");
 
+if(!$slimheader)
+    {
+    ?>
+    <div id="Header" <?php if ($header_text_title){?>style="background-image:none;"<?php } ?>>
+    <?php hook("responsiveheader");
+
+    if ($header_link && !$header_text_title && getval("k","")=="") 
+        {
+       $linkUrl=isset($header_link_url) ? $header_link_url : $homepage_url;
+       $onclick = (substr($linkUrl, 0, strlen($baseurl)) === $baseurl || substr($linkUrl, 0, strlen($baseurl_short)) === $baseurl_short) ? "" : ' onclick="return CentralSpaceLoad(this,true);"';
+        ?><a class="headerlink" href="<?php echo $linkUrl ?>"<?php echo $onclick?>></a><?php
+        }
+    if ($header_text_title)
+        {?>
+        <div id="TextHeader"><?php if (getval("k","")==""){?><a href="<?php echo $homepage_url?>"  onClick="return CentralSpaceLoad(this,true);"><?php } ?><?php echo $applicationname;?><?php if (getval("k","")==""){?></a><?php } ?></div>
+        <?php if ($applicationdesc!="")
+            {?>
+            <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
+            <?php 
+            }
+        }
+    }
+else
+    {
+    ?>
+    <div id="Header">
+    <?php hook("responsiveheader");
+    if($header_text_title) 
+        {?>
+        <div id="TextHeader"><?php if (getval("k","")==""){?><a href="<?php echo $homepage_url?>"  onClick="return CentralSpaceLoad(this,true);"><?php } ?><?php echo $applicationname;?><?php if (getval("k","")==""){?></a><?php } ?></div>
+        <?php if ($applicationdesc!="")
+            {?>
+            <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
+            <?php 
+            }
+        }
+    else
+        {
+        $linkUrl=isset($header_link_url) ? $header_link_url : $homepage_url;
+        if($linkedheaderimgsrc !="") 
+            {
+            $header_img_src = $baseurl.$linkedheaderimgsrc;
+            }
+        else 
+            {
+            $currenttheme = (isset($userfixedtheme)&&$userfixedtheme!='') ? $userfixedtheme : $defaulttheme;
+            $colourcss = getval('colourcss',''); 
+            $currenttheme = $colourcss!='' ? $colourcss : $currenttheme;
+            $header_img_src = $baseurl.'/gfx/'.$currenttheme.'/titles/title.gif';
+            }
+        ?>
+        <a href="<?php echo $linkUrl; ?>" onClick="return CentralSpaceLoad(this,true);" class="HeaderImgLink"><img src="<?php echo $header_img_src; ?>" id="HeaderImg"></img></a>
+        <?php
+        }
+    }
 
 hook("headertop");
 

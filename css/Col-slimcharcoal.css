@@ -1,0 +1,240 @@
+/* START REBUILD */
+
+
+/* Colour Theme Changes */
+body,html {color:#383838;background: #F0F0F0;}
+h1 {color: #383838;}
+h2 {color: #383838;}
+
+a:link {color:#383838;}
+a:visited {color:#383838;}
+a:hover {color:#878787}
+a:active {color:#383838;}
+
+/* Header */
+#Header {
+	background-color: #383838;
+	background: linear-gradient(#424242 , #1B1B1B) !important;
+	border: none;
+	color: #e0e0e0;
+}
+#Header a:link, #Header a:visited,#Header a:active {color:#E0E0E0;}
+#Header a:hover{color:#FFF; text-decoration: none;}
+.HeaderImgLink{margin-top: -2px;}
+
+/* Footer */
+#Footer {border-top: 1px solid #383838;}
+
+/* Collection Bar */
+.ui-layout-resizer {background-color: #383838;background: linear-gradient(#A5A5A5,#000000); }
+.ui-layout-toggler-open-hover{border-radius:2px;background-color:#E0E0E0;background: linear-gradient(#E0E0E0,#383838);}
+.CollectBack {color:#E0E0E0;background: linear-gradient(#2E2E2E , #1B1B1B);}
+#CollectionMenu {border-right: 1px solid #E0E0E0;}
+#CollectionMinRightNav li {border-left:1px solid #E0E0E0;}
+.CollectBack a:link, .CollectBack a:visited, .CollectBack a:active,.CollectBack h2 {color:#E0E0E0;}
+.CollectBack a:hover{color:#FFF;}
+.CollectBack h2 a:link, .CollectBack h2 a:visited, .CollectBack h2 a:active, .CollectBack h2 a:hover {color:white;}
+
+/* TextHeader */
+#TextHeader, #TextHeader a {color:#616161;}
+#TextDesc{color:#616161;}
+
+/* Panels */
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN,  .RecordPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
+	{
+	border: 1px solid #d0d0d0;
+	background: #383838;
+	color:#E0E0E0;
+	}
+.IconVideo {background: url(../gfx/slimcharcoal/interface/IcVideo.gif) no-repeat 140px 5px;}
+.IconVideoLarge {background: url(../gfx/slimcharcoal/interface/IcVideo.gif) no-repeat 340px 5px;}
+.ImageBorder, .RecordPanel, .Picture, .VideoBorder {border: 1px solid #5E5E5E;}	
+.CollectImageBorder {border: 1px solid #5E5E5E;}
+.HomePanel h1, #SearchBoxPanel h1,#ResearchBoxPanel h1,.RecordPanel h1,.ResourcePanel h1,.ResourcePanelSmall h1,.ResourcePanelLarge h1 {color:#E0E0E0;}
+.HomePanel h2, #SearchBoxPanel h2,#ResearchBoxPanel h2,.ResourcePanel h2,.ResourcePanelSmall h2,.ResourcePanelLarge h2 {color:#E0E0E0;}
+.HomePanelThemes h2, .HomePanelMyCollections h2, .HomePanelHelp h2 {padding-left: 43px;}
+.HomePanelThemes h2 {background: url(../gfx/interface/themes.png) no-repeat 0 0;}
+.HomePanelMyCollections h2 {background: url(../gfx/interface/my_collections.png) no-repeat -2px 0;padding-left:36px;}
+.HomePanelHelp h2 {background: url(../gfx/interface/help.png) no-repeat 0 0;}
+.HomePanel a:visited, .HomePanel a:active, .HomePanel a:link {color:#E0E0E0;}
+.HomePanelIN {background: #F45D18;color: #fff;}
+.HomePanelIN h2 {color:#fff;}
+#SearchBoxPanel a:visited, #SearchBoxPanel a:active, #SearchBoxPanel a:link {color:#E0E0E0;}
+#ResearchBoxPanel a:visited, #ResearchBoxPanel a:active, #ResearchBoxPanel a:link {color:#E0E0E0;}
+.RecordPanel a:visited, .RecordPanel a:active, .RecordPanel a:link {color:#E0E0E0;}
+.ResourcePanel a:visited, .ResourcePanel a:active, .ResourcePanel a:link {color:#E0E0E0;}
+a.ResourcePanel:visited, a.ResourcePanel:active, a.ResourcePanel:link {color:#E0E0E0;}
+.ResourcePanelSmall a:visited, .ResourcePanelSmall a:active, .ResourcePanelSmall a:link {color:#E0E0E0;}
+.ResourcePanelLarge a:visited, .ResourcePanelLarge a:active, .ResourcePanelLarge a:link {color:#E0E0E0;}
+
+.SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .OxColourWhite, .Selected, .Selected a,{color: #E0E0E0}
+
+/* Resource Download Panel */
+.RecordPanel .RecordDownload {background-color: #F0F0F0;border: 1px solid #5E5E5E;color:#383838;}
+.RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #F0F0F0;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend {background:#D5D5D5;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: linear-gradient(#2E2E2E , #1B1B1B);}
+.RecordPanel .RecordDownloadSpace .DownloadButton a:visited, .RecordPanel .RecordDownloadSpace .DownloadButton a:active, .RecordPanel .RecordDownloadSpace .DownloadButton a:link {color:#E0E0E0;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend p {text-align: left;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a {text-align: left;}
+.RecordPanel .RecordDownloadSpace a:visited, .RecordPanel .RecordDownloadSpace a:active, .RecordPanel .RecordDownloadSpace a:link {color:#383838;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend h2 {color:#383838;}
+
+/* List View */
+.RecordBox .Listview .ListviewTitleStyle td {background: #F3F3F3;}
+.RecordBox .ListviewBoxedTitleStyle{background: #E0E0E0;color: #383838;}
+.RecordBox .Listview  tr:nth-child(odd) {background: #FFF}
+.Listview .ListviewTitleStyle td {background: #383838; color:#E0E0E0;}
+.Listview  tr:nth-child(odd) {background: #FFF}
+.ListviewTitleStyle td a:active, .ListviewTitleStyle td a:link, .ListviewTitleStyle td a:visited{background: #383838; color:#E0E0E0;}
+
+/* Icons */
+.IconCollect, .KeyCollect	{background: url(../gfx/slimcharcoal/interface/IcCol.gif) no-repeat;}
+.IconCollectOut, .KeyCollectOut	{background: url(../gfx/slimcharcoal/interface/IcColOut.gif) no-repeat;}
+.IconEmail, .KeyEmail	{background: url(../gfx/slimcharcoal/interface/IcEml.gif) no-repeat;}
+.IconPreview, .KeyPreview	{background: url(../gfx/slimcharcoal/interface/IcPre.gif) no-repeat;}
+.IconStar, .KeyStar	{	background: url(../gfx/slimcharcoal/interface/IcStar.gif) no-repeat;}
+.IconComment, .KeyComment	{	background: url(../gfx/slimcharcoal/interface/IcComment.gif) no-repeat;}
+.ASC	{	background: url(../gfx/slimcharcoal/interface/ASC.gif) no-repeat;background-position:center;}
+.DESC	{	background: url(../gfx/slimcharcoal/interface/DESC.gif) no-repeat;background-position:center;}
+.IconUserRatingStar	{	background: url(../gfx/interface/RatingStarRed.gif) no-repeat;}
+.IconUserRatingSpace	{	background: url(../gfx/interface/RatingStarBlank.gif) no-repeat;}
+.StarSelect {background: transparent url(../gfx/interface/RatingStarRed.gif) no-repeat;}
+.StarEmpty {background: transparent url(../gfx/interface/RatingStarMedGrey.gif) no-repeat;}
+.StarCurrent {background: transparent url(../gfx/interface/RatingStarGrey.gif) no-repeat;}
+
+/* Infotables */
+.InfoTable {border-collapse:collapse;}
+.InfoTable tr {background-color: #383838;}
+.InfoTable td {border:1px solid #E0E0E0;padding:10px;color:#E0E0E0;}
+
+/* RS SpriteSheet */
+.glyph_user {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -20px 0;}
+.glyph_menu {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') 0 0;}
+.glyph_result {background:url('/plugins/rse_responsive/gfx/responsive_spritesheet_white.png') -40px 0;}
+
+/* START EXTRAS */
+
+.OxColourPale, .ListviewTitleStyle {color:#A1A1A1;}
+.FormError {color: #FF0000;}
+.FormIncorrect {color: #FF0000;border: 1px solid #BBBBBB;background: #FFFFFF;}
+.PageInformal {color: #FF0000;border: 1px solid #BBBBBB;background: #FFFFFF;}
+.NavUnderline {border-bottom: 1px solid #5A7599;}
+.Question{border-top: 1px solid #BBBBBB;}
+.NoFind {border: 1px solid #BBBBBB;background: #FFFFFF;}
+.NoFind .highlight {color:#000000;font-weight: bold;}
+.NoFind a:link, .NoFind a:visited, .NoFind a:hover, .NoFind a:active {color:#000000;text-decoration:underline;}
+.ViewPanelTitles  {	border-bottom: 1px solid #BBBBBB;}
+.ViewPanelTitles .Title { border-bottom: 0; }
+.ArchiveResourceTitle, .ResourcePendingSubmissionTitle, .ResourcePendingReviewTitle {color: #C2E066;}
+.DeletedResourceTitle {color: #FF0000;}
+.RecordStory{color: #000000;background: #FFFFFF; border: 1px solid #BBBBBB;}
+.RecordStory h1{color: #000000;}
+.RecordStory a:hover{color: #000000;}
+.BasicsBox .HorizontalNav li {border-right:1px solid #B5C3D4;border-top-style: none;border-bottom-style: none;border-left-style: none;}
+.BasicsBox .VerticalNav li, .ThemeBox li {list-style: url(../gfx/slimcharcoal/interface/bullet.gif) none inside;}
+.ThemeBox {border-bottom: 1px solid #BBBBBB;}
+.highlight {color: #990000;}
+.Tab a {border: 1px solid #BBBBBB;border-bottom-style: none;color: #aaaaaa;  }
+.StyledTabbedPanel 
+    {
+    background: #fefefe; /* Old browsers */
+    background: -moz-linear-gradient(top, #fff 0%, #eee 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff), color-stop(100%,#eee)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fff 0%,#eee 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fff 0%,#eee 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fff 0%,#eee 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #fff 0%,#eee 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+	border: 1px solid #BBBBBB;
+    }
+.TabSelected  
+    { 
+    background: #ffffff;  
+    border-bottom: 1px solid #ffffff; 
+    border-top: 1px solid #ffffff;
+    border-left: #bbbbbb;
+    margin-right: 5px; 
+    }
+.TabSelected a { margin: 0; color: #666666; }
+
+
+.NewFlag {background-color:#737373;color:#fff;}
+
+
+/* single file upload progress bar */
+.meter-value {background-color: #BBBBBB;}
+.meter-wrap{position: relative;width:290px;border:1px solid #BBBBBB;}
+
+/* System Setup */
+.treetext {color: #000000;}
+.treetext a:link {color: #000000; background: none;}
+.treetext a:visited {color: #000000; background: none;}
+.treetext a:hover {color: #000000; background: none;}
+.treetext a:active {color: #000000; background: none;}
+
+.proptitle
+	{
+	color: #FFFFFF;
+	background: rgb(119,119,119);
+	}	
+.propbox
+	{
+	color: #000000;
+	background: #FFFFFF;
+	}
+.propbox a:link {color: rgb(115,115,115); background: none;}
+.propbox a:visited {color: rgb(115,115,115); background: none;}
+.propbox a:hover {color: #000000; background: none;}
+.propbox a:active {color: #000000; background: none;}
+
+.permissionstable tr td.permheader
+	{
+	color: #000000;
+	background: rgb(221,221,221)
+	}
+.permissionstable tbody
+	{
+	color: #000000;
+	}
+
+.CodeMirror-wrapping
+	{
+	color: #000000;
+	background: #FFFFFF;
+	}
+	
+/* Additional CSS effects from WhiteSpace */
+
+.collapsed
+    {
+    background: url(../gfx/slimcharcoal/interface/HomeArrow.gif) no-repeat top left;
+    background-position:3px 8px;  
+    }
+.expanded
+    {
+    background: url(../gfx/slimcharcoal/interface/HomeArrowDown.gif) no-repeat top left;    
+     background-position:0px 12px; 
+    }
+	
+.CommentFlag { background-image: url('../gfx/slimcharcoal/interface/FlagOff.png'); }
+
+.CommentEntryInfoCommenterName { color: #737373; }
+.CommentBody { color: #000000}
+
+.smalllisticon{background: url(../gfx/interface/listicon.png) no-repeat 0px;}
+.smalllisticonactive {background: url(../gfx/interface/listiconactive.png) no-repeat 0px;}
+.xlthumbsicon{background: url(../gfx/interface/xlicon.png) no-repeat 0px;}
+.xlthumbsiconactive {background: url(../gfx/interface/xliconactive.png) no-repeat 0px;}
+.smallthumbsiconactive{background: url(../gfx/interface/smalliconactive.png) no-repeat 0px;}
+.smallthumbsicon{background: url(../gfx/interface/smallicon.png) no-repeat 0px;}
+.largethumbsicon{background: url(../gfx/interface/largeicon.png) no-repeat 0px;}
+.largethumbsiconactive{background: url(../gfx/interface/largeiconactive.png) no-repeat 0px;}
+
+.BasicsBox .greyText {
+	color: #737373;
+}
+
+.BasicsBox .noPadding {
+	padding: 0;
+}

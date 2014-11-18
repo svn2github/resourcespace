@@ -662,8 +662,17 @@ h2#dbaseconfig{  min-height: 32px;}
 		$config_output .= "\$list_display_fields = array(8,3,12);\r\n";
 		$config_output .= "\$sort_fields = array(12);\r\n";
 
-                // Set imagemagick default for new installs to expect the newer version with the sRGB bug fixed.
-                $config_output .= "\$imagemagick_colorspace = \"sRGB\";\r\n";
+        // Set imagemagick default for new installs to expect the newer version with the sRGB bug fixed.
+        $config_output .= "\$imagemagick_colorspace = \"sRGB\";\r\n";
+
+        //Design Configuration
+        $slimtheme=get_post_bool('slim-theme');
+        if($slimtheme)
+        	{ 
+        	$config_output.= "\r\n#Design Changes\r\n\$slimheader=true;\r\n";
+        	$config_output.= "\$available_themes=array('multi', 'whitegry','greyblu','black','slimcharcoal');\r\n\$defaulttheme='slimcharcoal';\r\n";
+        	}
+
                 
 	}
 ?>
@@ -1046,6 +1055,14 @@ else{
 				</div>
 				<div class="configitem">
 					<label for="ftp_defaultfolder"><?php echo $lang["ftpfolder"] . ":"; ?></label><input id="ftp_defaultfolder" name="ftp_defaultfolder" type="text" value="<?php echo $ftp_defaultfolder;?>"/>
+				</div>
+			</div>
+
+			<h2><?php echo $lang["design-options"];?></h2>
+			<div class="advsection" id="designsettings">
+				<div class="configitem">
+					<label for="slim-theme"><?php echo $lang["use-slim-theme"] . ":"; ?></label><input id="slim-theme" name="slim-theme" type="checkbox" checked/><a class="iflink" href="#if-slimtheme">?</a>
+					<p class="iteminfo" id="if-slimtheme"><?php echo $lang["setup-if_slimtheme"];?></p>
 				</div>
 			</div>
 		</div>

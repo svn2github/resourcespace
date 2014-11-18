@@ -130,11 +130,35 @@ include "version.php";
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
 $applicationdesc=""; # Subtitle (i18n translated) if $header_text_title=true;
 $header_favicon="gfx/interface/favicon.png";
-$header_text_title=false; //replace header logo with text, application name and description above
-// alternatively, for custom header gfx:
-$header_link=false; // turn on to create a clickable area over a logo graphic (to go to home page).
-# Uncomment the line below to set a header link different from the default home
+
+#replace header logo with text, application name and description
+$header_text_title=false;
+
+#If using the old background method, create a clickable area of the resourcespace logo graphic. Defaults to Homepage
+$header_link=false;
+
+###### SLIM HEADER DESIGN ######
+#In order to maintain backwards compatibility you must do the following to turn on the Slim Header Design
+#1. Set #slimheader=true;
+#2. (If you want a custom Logo) Set a source image location for the header logo with $linkedheaderimgsrc="/your/location.png";
+#3. (If you want to see the optional slim themes) Enable slim themes (See Below)
+
+## Slim Themes ##
+# The Slim Charcoal theme can be added to the available themes like so: 
+# $available_themes=array("multi", "whitegry","greyblu","black","slimcharcoal");
+
+## Defaults ##
+#This uses an img tag to display the header and will automatically include a link to the homepage. 
+$slimheader=false;
+# Custom source location for the header image (includes baseurl). Will default to the resourcespace logo if left blank. Recommended image size: 350px(X) x 80px(Y)
+$linkedheaderimgsrc="";
+###### END SLIM HEADER #######
+
+# Change the Header Logo link to another address by uncommenting and setting the variable below
 # $header_link_url=http://my-alternative-header-link
+
+# Option to allow each group to have it's own logo displayed in the header.
+$grouplogos = false;
 
 # Include ResourceSpace version header in View Source
 $include_rs_header_info=true;
@@ -616,7 +640,7 @@ $available_themes=array("multi", "whitegry","greyblu","black");
 
 # NOTE: Do not add custom themes to $available_themes_by_default.
 # This is being used to know which themes are custom
-$available_themes_by_default = array("multi", "whitegry","greyblu","black");
+$available_themes_by_default = array("multi", "whitegry","greyblu","black","slimcharcoal");
 
 # Uncomment and set the next line to lock to one specific colour scheme (e.g. greyblu/whitegry).
 # $userfixedtheme="whitegry";
@@ -2281,7 +2305,7 @@ $regex_email = "[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}";	# currently exc
 $do_not_add_to_new_collection_default=false;  # will set "do not add to a collection" as the default option for upload option
 $no_metadata_read_default=false; // If set to true and $metadata_read is false then metadata will be imported by default
 $metadata_read=true; // Hides the "Do not import embedded EXIF/IPTC/XMP metadata for this upload" option from upload options. 
-$removenever=false; # Remove 'never' option for resource access expiration and sets default expiry date to 7 days
+$removenever=false; # Remove 'never' option for resource request access expiration and sets default expiry date to 7 days
 $hide_resource_share_link=false; // Configurable option to hide the "Share" link on the resource view page.
 
 # Option to email the contributor when their resources have been approved (moved from pending submission to active)

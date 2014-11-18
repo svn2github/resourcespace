@@ -670,6 +670,9 @@ $lang["setup-err_spiderpassword"]="Le mot de passe requis pour spider.php. IMPOR
 $lang["setup-err_scramblekey"]="S'il s'agit d'une installation publique, il est recommandé de fournir une clef de brouillage.";
 $lang["setup-err_path"]="Impossible de vérifier l'emplacement de";
 $lang["setup-emailerr"]="Adresse électronique invalide.";
+$lang["design-options"]="Options de Conception";
+$lang["use-slim-theme"]="Utilisez conception SlimHeader?";
+$lang["setup-if_slimtheme"]="Utilisez la conception SlimHeader plutôt que la conception originale pour afficher une barre d'en-tête plus mince avec un logo lié par défaut .";
 
 # Collection log - actions
 $lang["collectionlog"]="Journal de la collection";
