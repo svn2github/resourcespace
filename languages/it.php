@@ -494,7 +494,7 @@ $lang["resourcemetadata"]="Risorsa metadati";
 $lang["action-removefromcollection"]="Rimuovi dalla collezione";
 $lang["share"]="Condividi";
 $lang["downloadmetadata"]="Scarica i metadati";
-$lang["managealternativefiles"]="Usaa file alternativi";
+$lang["managealternativefiles"]="usa file alternativi";
 $lang["share-resource"]="Condividi risorsa";
 $lang["generateurl"]="Genera URL";
 $lang["generateurls"]="Genera URLs";
@@ -515,4 +515,8 @@ $lang["externalselectresourceaccess"]="Se vuoi mandare una mail a utenti esterni
 $lang["externalselectresourceexpires"]="Se vuoi mandare una mail a utenti esterni, seleziona una data di scadenza dell'url.";
 $lang["requestfeedback"]="Richiedi un feedback <br />(ti verrà mandata una mail di risposta)";
 $lang["emailfromuser"]="Manda questa mail da...Se non selezioni l'opzione, la mail verrà mandata dall'indirizzo del sistema noreply@stcitaly.montala.com ";
+
+$lang["never"]="Mai";
+$lang["noattachedusers"]="nessun utente allegato";
+$lang["emailfromsystem"]="Se non selezioni l'opzione, la mail verrÃ  mandata dall'indirizzo di sistema: ";
 ?>
