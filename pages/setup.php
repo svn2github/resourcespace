@@ -194,7 +194,7 @@ function set_language($defaultlanguage)
 
 
 //Development Mode:  Set to true to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
-$develmode = false;
+$develmode = true;
 if ($develmode)
 	$outputfile = '../include/devel.config.php';
 else
@@ -1061,7 +1061,7 @@ else{
 			<h2><?php echo $lang["design-options"];?></h2>
 			<div class="advsection" id="designsettings">
 				<div class="configitem">
-					<label for="slim-theme"><?php echo $lang["use-slim-theme"] . ":"; ?></label><input id="slim-theme" name="slim-theme" type="checkbox" checked/><a class="iflink" href="#if-slimtheme">?</a>
+					<label for="slim-theme"><?php echo $lang["use-slim-theme"] . ":"; ?></label><input id="slim-theme" name="slim-theme" type="checkbox" /><a class="iflink" href="#if-slimtheme">?</a>
 					<p class="iteminfo" id="if-slimtheme"><?php echo $lang["setup-if_slimtheme"];?></p>
 				</div>
 			</div>
