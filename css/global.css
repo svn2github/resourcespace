@@ -321,7 +321,7 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 .HomePanelIN {padding: 15px;min-height: 150px;}
 .HomePanel h2 {font-size: 1.8em;padding-left: 14px;display:block;margin: 5px 0px;}
 .HomePanel p {margin: 0; padding: 5px 0 4px 0;}
-.HomePicturePanel {    margin:0px 15px 10px 0px;float: left;width: 519px;}
+.HomePicturePanel {    margin:0px 15px 10px 0px;float: left;width: 517px;}
 .HomePicturePanelIN img {width:517px; height:350px;}
 .HomePicturePanelIN {height: 350px;}
 .HomePanelPromoted {min-height: 205px;}

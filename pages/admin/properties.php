@@ -123,10 +123,18 @@ if (array_key_exists("submit",$_POST))
     #Handle File Upload
     if (array_key_exists("userfile",$_FILES) && array_key_exists("group_specific_logo",$_POST))
         {
+        #Check/Set Directory
+        $logostorage=$storagedir."/admin/groupheaderimg/";
+        echo $logostorage;
+        if(!(file_exists($logostorage) && is_dir($logostorage)))
+            {
+            mkdir($logostorage,0777,true);
+            }
+        #Create only if png or gif uploaded
         if (strpos($_POST["group_specific_logo"],'png') !== false) 
             {
             $extension= "png";
-            $filename="../../gfx/groupheaderimg/group".$ref . "." . $extension;
+            $filename=$logostorage."group".$ref . "." . $extension;
             $result=move_uploaded_file($_FILES['userfile']['tmp_name'], "$filename");
             if ($result==false)
                 {
@@ -136,7 +144,7 @@ if (array_key_exists("submit",$_POST))
         else if(strpos($_POST["group_specific_logo"],'gif') !== false) 
             {
             $extension= "gif";
-            $filename="../../gfx/groupheaderimg/group".$ref . "." . $extension;
+            $filename=$logostorage."group".$ref . "." . $extension;
             $result=move_uploaded_file($_FILES['userfile']['tmp_name'], "$filename");
             if ($result==false)
                 {
@@ -148,14 +156,11 @@ if (array_key_exists("submit",$_POST))
     # Clear The Group Specific Logo if Value is blank
     if(array_key_exists("group_specific_logo",$_POST) && $_POST["group_specific_logo"]==="")
     {   
-        $filename="../../gfx/groupheaderimg/group".$ref . ".png";
-        if (file_exists($filename)) 
-            {
-            unlink($filename);
-            }
+        $filename=$logostorage."group".$ref . ".png";
+        if (file_exists($filename)) {unlink($filename);}
         else
             {
-            $filename="../../gfx/groupheaderimg/group".$ref . ".gif";
+            $filename=$logostorage."group".$ref . ".gif";
             if (file_exists($filename)) {unlink($filename);}
             }
     }

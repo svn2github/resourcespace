@@ -265,11 +265,11 @@ if($grouplogos && isset($usergroup))
     $curr_group = get_usergroup($usergroup);
     if ($curr_group["group_specific_logo"]!=="")
         {
-        $linkedheaderimgsrc="/gfx/groupheaderimg/group".$usergroup.".".$curr_group["group_specific_logo"];
+        $linkedheaderimgsrc="/filestore/admin/groupheaderimg/group".$usergroup.".".$curr_group["group_specific_logo"];
         if(!$slimheader)
             {
             ?>
-            <style>#Header{background-image: url(<?php echo $baseurl.$linkedheaderimgsrc; ?>);}</style>
+            <style>#Header{background-image: url(<?php echo $linkedheaderimgsrc; ?>);}</style>
             <?php
             }
         }
