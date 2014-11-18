@@ -264,14 +264,16 @@ if($grouplogos)
     {
     //Get group logo value
     $curr_group = get_usergroup($usergroup);
-    if($curr_group["group_specific_logo"])
+    if ($curr_group["group_specific_logo"]!=="")
         {
         $linkedheaderimgsrc="/gfx/groupheaderimg/group".$usergroup.".".$curr_group["group_specific_logo"];
-        ?>
-        <style>#Header{background-image: url(<?php echo $baseurl.$linkedheaderimgsrc; ?>);}</style>
-        <?php
+        if(!$slimheader)
+            {
+            ?>
+            <style>#Header{background-image: url(<?php echo $baseurl.$linkedheaderimgsrc; ?>);}</style>
+            <?php
+            }
         }
-    
     }
 #SlimHeader global structure changes
 if($slimheader)
