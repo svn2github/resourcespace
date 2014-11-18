@@ -194,7 +194,7 @@ function set_language($defaultlanguage)
 
 
 //Development Mode:  Set to true to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
-$develmode = true;
+$develmode = false;
 if ($develmode)
 	$outputfile = '../include/devel.config.php';
 else
