@@ -96,8 +96,10 @@ hook("resource_share_afterheader");
 			<div class="Question">
 			<label><?php echo $lang["expires"]?></label>
 			<select name="expires" class="stdwidth">
-			<option value=""><?php echo $lang["never"]?></option>
-			<?php for ($n=1;$n<=150;$n++)
+			<?php 
+			global $resource_share_expire_days, $resource_share_expire_never;
+			if($resource_share_expire_never){?><option value=""><?php echo $lang["never"]?></option><?php }?>
+			<?php for ($n=1;$n<=$resource_share_expire_days;$n++)
 				{
 				$date=time()+(60*60*24*$n);
 				?><option <?php $d=date("D",$date);if (($d=="Sun") || ($d=="Sat")) { ?>style="background-color:#cccccc"<?php } ?> value="<?php echo date("Y-m-d",$date)?>" <?php if(substr(getvalescaped("editexpiration",""),0,10)==date("Y-m-d",$date)){echo "selected";}?>><?php echo nicedate(date("Y-m-d",$date),false,true)?></option>

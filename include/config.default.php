@@ -2409,6 +2409,14 @@ $hide_collection_share_generate_url=false;
 # Hide "Generate URL" from the resource_share.php page?
 $hide_resource_share_generate_url=false;
 
+#Resource Share Expiry Controls
+$resource_share_expire_days=150; #Maximum number of days allowed for the share 
+$resource_share_expire_never=true; #Allow the 'Never' option.
+
+#Collections Share Expiry Controls
+$collection_share_expire_days=150; #Maximum number of days allowed for the share 
+$collection_share_expire_never=true; #Allow the 'Never' option.
+
 # Pop-out Collection Bar Upon Collection Interaction such as "Select Collection"
 $collection_bar_popout=false;
 
