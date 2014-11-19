@@ -31,7 +31,6 @@ if (getval("submit","")=="")
 	# ------------------- Show the size selection screen -----------------------
 	?>
 	<div class="BasicsBox"> 
-	  <h2>&nbsp;</h2>
 	  <h1><?php echo $lang["buynow"]?></h1>
 	  <p><?php echo $lang["buynowintro"]?></p>
 	   

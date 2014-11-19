@@ -36,7 +36,6 @@ if ($add!="")
 include "../include/header.php";
 ?>
   <div class="BasicsBox">
-    <h2>&nbsp;</h2>
     <h1><?php echo $lang["findpubliccollection"]?></h1>
     <p class="tight"><?php echo text("introtext")?></p>
 <div class="BasicsBox">

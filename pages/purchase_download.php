@@ -16,7 +16,6 @@ include "../include/header.php";
 
 ?>
 <div class="BasicsBox"> 
-<h2>&nbsp;</h2>
 <h1><?php echo $lang["downloadpurchaseitems"]?></h1>
 <?php
 

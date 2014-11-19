@@ -7,8 +7,7 @@ if (!hook("authenticate")){include "../include/authenticate.php";}
 include "../include/header.php";
 ?>
 
-<div class="BasicsBox"> 
-  <h2>&nbsp;</h2>
+<div class="BasicsBox">
   <h1><?php echo $lang["aboutus"]?></h1>
   <p><?php echo text("about")?></p>
 </div>

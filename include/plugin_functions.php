@@ -541,7 +541,6 @@ function config_gen_setup_html($page_def,$plugin_name,$upload_status,$plugin_pag
     global $lang,$baseurl_short;
 ?>
     <div class="BasicsBox">
-      <h2>&nbsp;</h2>
       <h1><?php echo $plugin_page_heading ?></h1>
 <?php
     if ($plugin_page_frontm!='')
