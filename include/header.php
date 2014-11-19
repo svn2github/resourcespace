@@ -259,7 +259,7 @@ echo get_plugin_css($theme)
 ?>
 <script>jQuery('.plugincss').attr('class','plugincss0');</script>
 <?php
-if($grouplogos && isset($usergroup))
+if(isset($usergroup))
     {
     //Get group logo value
     $curr_group = get_usergroup($usergroup);

@@ -157,9 +157,6 @@ $linkedheaderimgsrc="";
 # Change the Header Logo link to another address by uncommenting and setting the variable below
 # $header_link_url=http://my-alternative-header-link
 
-# Option to allow each group to have it's own logo displayed in the header.
-$grouplogos = false;
-
 # Include ResourceSpace version header in View Source
 $include_rs_header_info=true;
 
