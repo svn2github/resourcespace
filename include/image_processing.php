@@ -715,10 +715,17 @@ function extract_exif_comment($ref,$extension="")
 		#
 		# Exiftool is not installed. As a fallback we grab some predefined basic fields using the PHP function
 		# exif_read_data()
-		#
+		#		
 		
-		$data=@exif_read_data($image);
-
+		if (function_exists("exif_read_data"))
+			{
+			$data=@exif_read_data($image);
+			}
+		else
+			{
+			$data = false;
+			}
+		
 		if ($data!==false)
 			{
 			$comment="";
