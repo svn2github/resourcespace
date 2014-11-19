@@ -1492,6 +1492,8 @@ $lang["viewing_version_created_by"]="Viewing version created by";
 $lang["on_date"]="on";
 $lang["launchpermissionsmanager"]="Launch permissions manager";
 $lang["confirm-deletion"]="Are you sure you want to delete?";
+$lang["accept_png_gif_only"]="Only .png or .gif extensions accepted";
+$lang["ensure_file_extension_match"]="Ensure file and extension match";
 
 # Permissions Manager
 $lang["permissionsmanager"]="Permissions manager";

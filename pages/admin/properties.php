@@ -130,7 +130,7 @@ if (array_key_exists("submit",$_POST))
             mkdir($logostorage,0777,true);
             }
         #Create only if png or gif uploaded
-        if (strpos($_POST["group_specific_logo"],'png') !== false) 
+        if (preg_match("/(.png|png)$/", $_POST["group_specific_logo"]) && preg_match("/(.png|png)$/",$_FILES['userfile']['name'])) 
             {
             $extension= "png";
             $filename=$logostorage."group".$ref . "." . $extension;
@@ -140,7 +140,7 @@ if (array_key_exists("submit",$_POST))
                 if (file_exists($filename)) {unlink($filename);} else {echo "<div class=propbox>" . $lang["file_too_large"] . "." . "</div><br><br>";}
                 }
             }
-        else if(strpos($_POST["group_specific_logo"],'gif') !== false) 
+        else if(preg_match("/(.gif|gif)$/", $_POST["group_specific_logo"]) && preg_match("/(.gif|gif)$/",$_FILES['userfile']['name'])) 
             {
             $extension= "gif";
             $filename=$logostorage."group".$ref . "." . $extension;
@@ -149,6 +149,11 @@ if (array_key_exists("submit",$_POST))
                 {
                 if (file_exists($filename)) {unlink($filename);} else {echo "<div class=propbox>" . $lang["file_too_large"] . "." . "</div><br><br>";}
                 }   
+            }
+        else
+            {
+            $_POST["group_specific_logo"]="";
+            echo "<div class=propbox>" . $lang["accept_png_gif_only"] . ". " . $lang["ensure_file_extension_match"]."."."</div><br><br>";
             }
         
         }
