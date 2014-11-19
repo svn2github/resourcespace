@@ -48,13 +48,17 @@ function SwapCSS(css){
 				hook("footerthemechangescript");
 				if($slimheader)
 	            	{
+			    	?>
+			    	if(css==="whitegry" || css==="multi") {
+			    		jQuery("#Header").addClass("slimheader_darken");
+			    	}else{
+			    		jQuery("#Header").removeClass("slimheader_darken");
+			    	}
+			    	<?php
 		            if($linkedheaderimgsrc=="")
 		                {
-		                $currenttheme = (isset($userfixedtheme)&&$userfixedtheme!='') ? $userfixedtheme : $defaulttheme;
-		                $colourcss = getval('colourcss',''); 
-		                $currenttheme = $colourcss!='' ? $colourcss : $currenttheme;
-		                $header_img_src = $baseurl.'/gfx/'.$currenttheme.'/titles/title.gif';
-		                echo "jQuery('#HeaderImg').attr(\"src\",'".$baseurl."/gfx/' + css + '/titles/title.gif?css_reload_key=".$css_reload_key."');";
+		                $header_img_src = $baseurl.'/gfx/titles/title.png';
+		                echo "jQuery('#HeaderImg').attr(\"src\",'".$header_img_src."?css_reload_key=".$css_reload_key."');";
 		                }
 		            else
 		                {

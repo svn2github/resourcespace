@@ -276,9 +276,11 @@ if($grouplogos && isset($usergroup))
     }
 #SlimHeader global structure changes
 if($slimheader)
-    {?>
+    {
+    ?>
     <style>
-    <?php include dirname(__FILE__)."/../css/globalslimheader.css"; ?>
+    <?php
+    include dirname(__FILE__)."/../css/globalslimheader.css"; ?>
     </style>
     <?php
     }
@@ -348,8 +350,11 @@ if(!$slimheader)
     }
 else
     {
+    $currenttheme = (isset($userfixedtheme)&&$userfixedtheme!='') ? $userfixedtheme : $defaulttheme;
+    $colourcss = getval('colourcss',''); 
+    $currenttheme = $colourcss!='' ? $colourcss : $currenttheme;
     ?>
-    <div id="Header">
+    <div id="Header" <?php echo ($currenttheme=="whitegry"||$currenttheme==="multi") ? "class='slimheader_darken'":"";?>>
     <?php hook("responsiveheader");
     if($header_text_title) 
         {?>
@@ -369,10 +374,7 @@ else
             }
         else 
             {
-            $currenttheme = (isset($userfixedtheme)&&$userfixedtheme!='') ? $userfixedtheme : $defaulttheme;
-            $colourcss = getval('colourcss',''); 
-            $currenttheme = $colourcss!='' ? $colourcss : $currenttheme;
-            $header_img_src = $baseurl.'/gfx/'.$currenttheme.'/titles/title.gif';
+            $header_img_src = $baseurl.'/gfx/titles/title.png';
             }
         ?>
         <a href="<?php echo $linkUrl; ?>" onClick="return CentralSpaceLoad(this,true);" class="HeaderImgLink"><img src="<?php echo $header_img_src; ?>" id="HeaderImg"></img></a>

@@ -13,3 +13,5 @@
 #SearchBarContainer {margin-top: 20px;}
 .RecordBox {margin: 10px 20px 10px 0;}
 .CollectBack h2 {display:none;}
+#Header.slimheader_darken{color: #FFFFFF;background: #293340 url(../gfx/whitegry/interface/CollectBack.gif) repeat-x;}
+#Header.slimheader_darken a:link, #Header.slimheader_darken a:visited, #Header.slimheader_darken a:active {color: #E1E8F0;}

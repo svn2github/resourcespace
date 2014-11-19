@@ -125,7 +125,6 @@ if (array_key_exists("submit",$_POST))
         {
         #Check/Set Directory
         $logostorage=$storagedir."/admin/groupheaderimg/";
-        echo $logostorage;
         if(!(file_exists($logostorage) && is_dir($logostorage)))
             {
             mkdir($logostorage,0777,true);
