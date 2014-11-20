@@ -1817,6 +1817,7 @@ $use_phpmailer=false;
 # Allow to disable thumbnail generation during batch resource upload from FTP or local folder.
 # In addition to this option, a multi-thread thumbnail generation script is available in the batch
 # folder (create_previews.php). You can use it as a cron job, or manually.
+# Note: this also works for normal uploads (through web browser)
 $enable_thumbnail_creation_on_upload = true;
 
 # Create XML metadata dump files in the resource folder?
