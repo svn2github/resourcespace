@@ -15,7 +15,7 @@ $api=getval("api","");
 # Allow the language to be posted here
 $language=getval("language","");
 
-if($language==="" && !$disable_languages && isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) 
+if($language==="" && !$disable_languages && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $login_browser_language) 
 	{
 	$language_array = explode(';',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
 	$lc = 0;

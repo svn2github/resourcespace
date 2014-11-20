@@ -1073,12 +1073,10 @@ function register_plugin_language($plugin)
     			@include $langpath . safe_file_name(substr($language, 0, 2)) . ".php";
     		@include $langpath . safe_file_name($language) . ".php";
     		}
-    
     }
 function register_plugin($plugin)
 	{
 	global $plugins,$language,$pagename,$lang,$applicationname;
-
 
 	# Also include plugin hook file for this page.
 	if ($pagename=="collections_frameless_loader"){$pagename="collections";}
