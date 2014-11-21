@@ -2437,7 +2437,7 @@ function check_access_key($resource,$key)
 		global $anonymous_login;
 		if (isset($anonymous_login))
 			{
-			global $username;
+			global $username,$baseurl;
 			if(is_array($anonymous_login))
 			{
 			foreach($anonymous_login as $key => $val)
