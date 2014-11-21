@@ -155,7 +155,8 @@ var global_cookies = "<?php echo $global_cookies?>";
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
- top.history.replaceState(jQuery('#CentralSpace').html(), applicationname);
+ try{top.history.replaceState(jQuery('#CentralSpace').html(), applicationname);}
+ catch(e){console.log(e);}
 });
 </script>
 
