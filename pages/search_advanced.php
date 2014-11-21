@@ -174,98 +174,78 @@ for ($n=0;$n<count($types);$n++)
 	
 jQuery(document).ready(function()
     {
-    selectedtypes=["<?php echo implode("\",\"",$opensections) ?>"];
+    selectedtypes=['<?php echo implode("','",$opensections) ?>'];
+    if(selectedtypes[0]===""){selectedtypes.shift();}
 
     jQuery('.SearchTypeCheckbox').change(function() 
         {
         id=(this.name).substr(12);
-       
-        if (jQuery(this).is(":checked")) 
-            {
-			jQuery('.AdvancedSectionHead').hide();
-            jQuery('.AdvancedSection').hide();
+       	//Hide All Fields
+       	jQuery('.AdvancedSectionHead').hide();
+       	jQuery('.AdvancedSection').hide();
+
+       	//if has been checked
+        if (jQuery(this).is(":checked")) {
             if (id=="Global") {
 				selectedtypes=["Global"];
 				// Global has been checked, check all other checkboxes
 				jQuery('.SearchTypeCheckbox').attr('checked','checked');
-				jQuery('#SearchCollectionsCheckbox').removeAttr('checked');				
-				// Show global search sections	
-				jQuery("#AdvancedSearchTypeSpecificSectionGlobalHead").show();
-                if (getCookie('AdvancedSearchTypeSpecificSectionGlobal')!="collapsed") jQuery("#AdvancedSearchTypeSpecificSectionGlobal").show()				
-				}
-			else if (id=="Collections") 
-                {
-				selectedtypes=["Collections"];
+				//Uncheck Collections
+				jQuery('#SearchCollectionsCheckbox').removeAttr('checked');	
+
+				jQuery('#AdvancedSearchTypeSpecificSectionGlobalHead').show();
+				if (getCookie('AdvancedSearchTypeSpecificSectionGlobal')!="collapsed"){jQuery("#AdvancedSearchTypeSpecificSectionGlobal").show();}
+			}
+			else if (id=="Collections") {
+				//Uncheck All checkboxes
                 jQuery('.SearchTypeCheckbox').removeAttr('checked');
-				// Hide standard search fields
-				jQuery("#AdvancedSearchTypeSpecificSectionGlobalHead").hide();
-                jQuery("#AdvancedSearchTypeSpecificSectionGlobal").hide();			
+
+                //Check Collections
+				selectedtypes=["Collections"];
+				jQuery('#SearchCollectionsCheckbox').attr('checked','checked');
+
 				// Show collection search sections	
-				if (getCookie('AdvancedSearchTypeSpecificSection'+id)!="collapsed") jQuery('#AdvancedSearchTypeSpecificSection'+id).show();
-				jQuery('#AdvancedSearchTypeSpecificSection'+id+'Head').show();
-                }
-            else 
-				{	
-				selectedtypes = jQuery.grep(selectedtypes, function(value) {
-					return value != "Collections";
-					});				
+				jQuery('#AdvancedSearchTypeSpecificSectionCollectionsHead').show();
+				if (getCookie('advancedsearchsection')!="collapsed"){jQuery("#AdvancedSearchTypeSpecificSectionCollections").show();}
+            }
+            else {	
+				selectedtypes = jQuery.grep(selectedtypes, function(value) {return value != "Collections";});				
 				selectedtypes.push(id);		   
                 jQuery('#SearchGlobal').removeAttr('checked');
 				jQuery('#SearchCollectionsCheckbox').removeAttr('checked');				
 				// Show global search sections	
                 jQuery("#AdvancedSearchTypeSpecificSectionGlobalHead").show();
-                if (getCookie('AdvancedSearchTypeSpecificSectionGlobal')!="collapsed") 
-					{jQuery("#AdvancedSearchTypeSpecificSectionGlobal").show();}
+                if (getCookie('AdvancedSearchTypeSpecificSectionGlobal')!="collapsed"){jQuery("#AdvancedSearchTypeSpecificSectionGlobal").show();}
 				// Show resource type specific search sections	if only one checked
 				if(selectedtypes.length==1){
-					if (getCookie('AdvancedSearchTypeSpecificSection'+id)!="collapsed") jQuery('#AdvancedSearchTypeSpecificSection'+id).show();
+					if (getCookie('AdvancedSearchTypeSpecificSection'+id)!="collapsed"){jQuery('#AdvancedSearchTypeSpecificSection'+id).show();}
 					jQuery('#AdvancedSearchTypeSpecificSection'+id+'Head').show();				
-					}
 				}
-            jQuery(this).attr('checked','checked');
-			
-			SetCookie("advancedsearchsection", selectedtypes);
-            }
-        else 
-           {
-			// Box has been unchecked
+			}
+        }
+        else {// Box has been unchecked
 			if (id=="Global") {		
 				selectedtypes=[];			
 	     		jQuery('.SearchTypeItemCheckbox').removeAttr('checked');
-				}
+			}
 			else if (id=="Collections") {
-				jQuery("#AdvancedSearchTypeSpecificSectionGlobalHead").hide();
-                jQuery("#AdvancedSearchTypeSpecificSectionGlobal").hide();	
-				selectedtypes=["Collections"];
-                }
+				selectedtypes=[];
+            }
 			else {								
                 jQuery('#SearchGlobal').removeAttr('checked');
-				//If global was previously checked, make sure all other types are now checked
-				if(jQuery.inArray("Global", selectedtypes )>-1){
-					selectedtypes=[];
-					jQuery(resTypes).each(function( index, value ) {
-						if(value!=id)
-							{
-							selectedtypes.push(value);
-							}
-						});
-					}
-				else
-					{
-					//remove this from the array of selected types
-					selectedtypes = jQuery.grep(selectedtypes, function(value) {
-						return !(value == id || value == 'Global');
-						});
-					}
+				// If global was previously checked, make sure all other types are now checked
+				selectedtypes = jQuery.grep(selectedtypes, function(value) {return value != id;});
 				if(selectedtypes.length==1){
 					if (getCookie('AdvancedSearchTypeSpecificSection'+selectedtypes[0])!="collapsed") jQuery('#AdvancedSearchTypeSpecificSection'+selectedtypes[0]).show();
 					jQuery('#AdvancedSearchTypeSpecificSection'+selectedtypes[0]+'Head').show();				
-					}
 				}
-			SetCookie("advancedsearchsection", selectedtypes);
 			}
-        
-        
+			//Always Show Global
+			jQuery("#AdvancedSearchTypeSpecificSectionGlobalHead").show();
+            if (getCookie('AdvancedSearchTypeSpecificSectionGlobal')!="collapsed"){jQuery("#AdvancedSearchTypeSpecificSectionGlobal").show();}	
+		}
+
+        SetCookie("advancedsearchsection", selectedtypes);
         UpdateResultCount();
         });
     jQuery('.CollapsibleSectionHead').click(function() 
