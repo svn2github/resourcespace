@@ -128,10 +128,10 @@ $current_whitelists=sql_query("select u.username,u.fullname,ug.name groupname,w.
 			
 		</div>
 	</form>
+</div>
 
 
-
-
+<?php include "../../../include/footer.php";
 
 
 
