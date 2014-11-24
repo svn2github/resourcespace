@@ -33,7 +33,7 @@ if(empty($field_log_records)) {
             <tr class="ListviewTitleStyle">
                 <td width="10%"><?php echo $lang['date']; ?></td>
                 <td width="10%"><?php echo $lang['user']; ?></td>
-                <td><?php echo $lang['track_field_history_value']; ?></td>
+                <td><?php echo $lang['track_field_history_change']; ?></td>
             </tr>
             <?php
             if($no_records) { ?>
@@ -45,7 +45,7 @@ if(empty($field_log_records)) {
                 <tr>
                     <td nowrap><?php echo nicedate($field_log_record['date'], true, true); ?></td>
                     <td><?php echo $field_log_record['user'] ?></td>
-                    <td><?php echo htmlspecialchars(strip_tags($field_log_record['value'])); ?></td>
+                    <td><?php echo nl2br(htmlspecialchars(strip_tags($field_log_record['diff']))); ?></td>
                 </tr>
                 <?php
             }
