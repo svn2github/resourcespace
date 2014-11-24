@@ -150,6 +150,7 @@
 			<?php hook("processthumbsfields"); ?>
 			<?php
 			}
+			hook("afterxlthumbfields");
 			$df=$df_normal;
 		?>
 		
