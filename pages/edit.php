@@ -1474,7 +1474,7 @@ for ($n=0;$n<count($fields);$n++)
 			{
 			$tabcount++;
 			# Also display the custom formatted data $extra at the bottom of this tab panel.
-			?><div class="clearerleft"> </div><?php echo $extra?></div><!-- end of TabPanelInner --></div><!-- end of TabbedPanel --><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div class="TabPanelInner"><?php	
+			?><div class="clearerleft"> </div><?php if(isset($extra)){echo $extra;} ?></div><!-- end of TabPanelInner --></div><!-- end of TabbedPanel --><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div class="TabPanelInner"><?php	
 			$extra="";
 			$newtab=true;
 			}
