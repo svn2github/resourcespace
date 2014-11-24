@@ -1,0 +1,258 @@
+body,html {color:#000;background: #FFF; font-size: 18px;}
+h2 {color: #000000;}
+h1 {color: #000000;}
+.ui-layout-resizer {background: #000;}
+.CollectBack {color:#000; font-size: 18px;}
+
+a:link {color:#000;}
+a:visited {color:#000;}
+a:hover {color:#000000;}
+a:active {color:#000;}
+
+input[readonly] {color: #000000;}
+
+#Header {border-bottom: 1px solid #000;background: url(../gfx/titles/title.gif) no-repeat;}
+#Footer {border-top: 1px solid #000;}
+#TextHeader, #TextHeader a {color:#616161;}
+#TextDesc{color:#616161;}
+
+.TopInpageNav {border-bottom: 1px solid #000;}
+
+.Listview tr {background: #FFF none;}
+.OxColourPale, .ListviewTitleStyle {color:#000;}
+
+.Listview .ListviewTitleStyle td {background: #FFF none;}
+
+.Listview td {border-bottom: 1px solid #000;color: #000;}
+
+.FormError {color: #FF0000;}
+.FormIncorrect {color: #FF0000;border: 1px solid #BBBBBB;background: #FFFFFF;}
+.PageInformal {color: #FF0000;border: 1px solid #BBBBBB;background: #FFFFFF;}
+
+.HorizontalWhiteNav a:link, .HorizontalWhiteNav a:visited, .HorizontalWhiteNav a:active, .BasicsBox .VerticalNav a:link, .BasicsBox .VerticalNav a:visited, .BasicsBox .VerticalNav a:active,  .ListTitle a:link, .ListTitle a:visited, .ListTitle a:active, .HomePanel a:link, .HomePanel a:visited, .HomePanel a:active, .HomePanel a:hover {color:#000;}
+
+.HorizontalWhiteNav a:hover, .BasicsBox .VerticalNav a:hover, .ListTitle a:hover {color:#000000;}
+
+.HorizontalWhiteNav li, .HorizontalNav li {border-left:1px solid #000;}
+
+#CollectionMinRightNav li {border-left:1px solid #B6BBC1;}
+
+.CollectBack a:link, .CollectBack a:visited, .CollectBack a:active {color:#000;}
+.CollectBack a:hover, .CollectBack h2  {color:#000;}
+.CollectBack h2 a:link, .CollectBack h2 a:visited, .CollectBack h2 a:active, .CollectBack h2 a:hover {color:white;}
+
+#CollectionMenu {border-right: 1px solid #79899C;}
+#CollectionMenuExp {border-right: 1px solid #79899C;}
+
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge, .HomePanelIN, .HomePicturePanelIN {border: 1px solid #BBBBBB;}
+
+#ThemeBoxPanel, #SearchBoxPanel {background: #DBDBDB;}
+#ResearchBoxPanel, .HomePanelIN {background: #DCDCDC;}
+.ResourcePanel {background: #FFFFFF;}
+.ResourcePanelSmall {background: #FFFFFF  repeat-x;}
+.ResourcePanelLarge {background: #FFFFFF  repeat-x;}
+.IconVideo {background: url(../gfx/interface/IcVideo.gif) no-repeat 140px 5px;}
+.IconVideoLarge {background: url(../gfx/interface/IcVideo.gif) no-repeat 340px 5px;}
+
+.ImageBorder, .RecordPanel, .Picture, .VideoBorder {border: 1px solid #000000;}	
+.CollectImageBorder {border: 1px solid #000000;}	
+
+.PanelShadow {background: none;}
+.IconCollect, .KeyCollect	{background: url(../../../gfx/whitegry/interface/IcCol.gif) no-repeat;}
+.IconCollectOut, .KeyCollectOut	{background: url(../../../gfx/whitegry/interface/IcColOut.gif) no-repeat;}
+.IconEmail, .KeyEmail	{background: url(../../../gfx/whitegry/interface/IcEml.gif) no-repeat;}
+.IconPreview, .KeyPreview	{background: url(../../../gfx/whitegry/interface/IcPre.gif) no-repeat;}
+.IconStar, .KeyStar	{	background: url(../../../gfx/whitegry/interface/IcStar.gif) no-repeat;}
+.IconComment, .KeyComment	{	background: url(../../../gfx/whitegry/interface/IcComment.gif) no-repeat;}
+.ASC	{	background: url(../../../gfx/whitegry/interface/ASC.gif) no-repeat;background-position:center;}
+.DESC	{	background: url(../../../gfx/whitegry/interface/DESC.gif) no-repeat;background-position:center;}
+.IconUserRatingStar	{	background: url(../../../gfx/interface/RatingStarRed.gif) no-repeat;}
+.IconUserRatingSpace	{	background: url(../../../gfx/interface/RatingStarBlank.gif) no-repeat;}
+.StarSelect {background: transparent url(../../../gfx/interface/RatingStarRed.gif) no-repeat;}
+.StarEmpty {background: transparent url('../gfx/interface/RatingStarMedGrey.gif') no-repeat;}
+.StarCurrent {background: transparent url('../gfx/interface/RatingStarGrey.gif') no-repeat;}
+
+.NavUnderline {border-bottom: 1px solid #000;}
+.SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Selected a, .Question, .RecordPanel .Title {color: #000}
+
+.Question{border-top: 1px solid #000;}
+.RecordPanel {background: #F0F0F0 url(../../../gfx/whitegry/interface/recordpanel.gif) repeat-x;	border: 1px solid #BBBBBB;}
+.RecordPanel .RecordDownloadSpace h2 {color: #000;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend h2 {color: #000;}
+.RecordDownloadSpace .HorizontalWhiteNav a:active, .RecordPanel .RecordDownloadSpace .HorizontalWhiteNav a:hover {color:#FFFFFF;} 
+.NoFind {border: 1px solid #BBBBBB;background: #FFFFFF;}
+.NoFind .highlight {color:#000000;font-weight: bold;}
+.NoFind a:link, .NoFind a:visited, .NoFind a:hover, .NoFind a:active {color:#000000;text-decoration:underline;}
+.RecordPanel .Title,  {	border-bottom: 1px solid #BBBBBB;}
+.RecordPanel .RecordDownload {background-color: #eee;	border: 5px solid #000;}
+.RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #000;color: #FFFFFF;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #FFF;background-position: 0 -8px;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend p {color: #000;text-align: left;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a {color: #000;text-align: left;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #FFF; border-color: #000;}
+.ArchiveResourceTitle, .ResourcePendingSubmissionTitle, .ResourcePendingReviewTitle {color: #C2E066;}
+.DeletedResourceTitle {color: #FF0000;}
+.RecordStory{color: #000000;background: #FFFFFF; border: 1px solid #BBBBBB;}
+.RecordStory h1{color: #000000;}
+.RecordStory a:hover{color: #000000;}
+
+.BasicsBox .HorizontalNav li {border-right:1px solid #B5C3D4;border-top-style: none;border-bottom-style: none;border-left-style: none;}
+.BasicsBox .VerticalNav li, .ThemeBox li {list-style: url(../../../gfx/whitegry/interface/bullet.gif) none inside;}
+.ThemeBox {border-bottom: 1px solid #BBBBBB;}
+.HomePanel h2 {/*background: url(../../../gfx/whitegry/interface/HomeArrow.gif) no-repeat 1px 10px;*/ padding-left: 0px;}
+
+.highlight {color: #990000;}
+
+.Tab a {border: 1px solid #BBBBBB;border-bottom-style: none;color: #aaaaaa;  }
+.StyledTabbedPanel 
+    {
+    background: #fefefe; /* Old browsers */
+    background: -moz-linear-gradient(top, #fff 0%, #eee 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff), color-stop(100%,#eee)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fff 0%,#eee 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fff 0%,#eee 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fff 0%,#eee 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #fff 0%,#eee 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+	border: 1px solid #BBBBBB;
+	
+
+    }
+.TabSelected  
+    { 
+    background: #ffffff;  
+    border-bottom: 1px solid #ffffff; 
+    border-top: 1px solid #ffffff;
+    border-left: #bbbbbb;
+    margin-right: 5px; 
+    }
+.TabSelected a { margin: 0; color: #666666; }
+
+.InfoTable {border-collapse:collapse;}
+.InfoTable tr {background-image: url(../../../gfx/whitegry/interface/SearchBox.gif);background-repeat: repeat-x;background-color: #597499;}
+.InfoTable td {border:1px solid #BBBBBB;border-top:1px solid #BBBBBB;padding:10px;}
+
+.ListviewBoxedTitleStyle td {background-color:#fff;}
+
+.NewFlag {background-color:#000;color:#fff;}
+
+/* Mouseover effect on list views */
+.ListviewStyle tr:hover td {background-color: #FFF;} 
+.ListviewStyle tr.ListviewTitleStyle:hover td {background:none;background-color:#FFF;} 
+.ListviewStyle tr.ListviewBoxedTitleStyle:hover td {background:none;background-color:#FFF;} 
+
+/* single file upload progress bar */
+.meter-value {background-color: #BBBBBB;}
+.meter-wrap{position: relative;width:290px;border:1px solid #BBBBBB;}
+
+/* System Setup */
+.treetext {color: #000000;}
+.treetext a:link {color: #000000; background: none;}
+.treetext a:visited {color: #000000; background: none;}
+.treetext a:hover {color: #000000; background: none;}
+.treetext a:active {color: #000000; background: none;}
+
+.proptitle{color: #000; background: #FFF;}
+
+.propbox{color: #000000; background: #FFFFFF;}
+.propbox a:link {color: #000; background: none;}
+.propbox a:visited {color: #000; background: none;}
+.propbox a:hover {color: #000000; background: none;}
+.propbox a:active {color: #000000; background: none;}
+
+.permissionstable tr td.permheader
+	{
+	color: #000000;
+	background: rgb(221,221,221)
+	}
+.permissionstable tbody
+	{
+	color: #000000;
+	}
+
+.CodeMirror-wrapping
+	{
+	color: #000000;
+	background: #FFFFFF;
+	}
+	
+/* Additional CSS effects from WhiteSpace */
+
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN,  .RecordPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
+	{
+	border: 5px solid #000;
+	background: #FFF;
+	}
+	
+.collapsed
+    {
+    background: url(../gfx/interface/HomeArrow.gif) no-repeat top left;
+    background-position:3px 13px;  
+    }
+.expanded
+    {
+    background: url(../gfx/interface/HomeArrowDown.gif) no-repeat top left;    
+     background-position:0px 16px; 
+    }
+	
+.CommentFlag { background-image: url('../gfx/whitegry/interface/FlagOff.png'); }
+
+.CommentEntryInfoCommenterName { color: #3070bf; }
+.CommentBody { color: #000000}
+
+.smalllisticon{background: url(../gfx/interface/listicon.png) no-repeat 0px;}
+.smalllisticonactive {background: url(../gfx/interface/listiconactive.png) no-repeat 0px;}
+.xlthumbsicon{background: url(../gfx/interface/xlicon.png) no-repeat 0px;}
+.xlthumbsiconactive {background: url(../gfx/interface/xliconactive.png) no-repeat 0px;}
+.smallthumbsiconactive{background: url(../gfx/interface/smalliconactive.png) no-repeat 0px;}
+.smallthumbsicon{background: url(../gfx/interface/smallicon.png) no-repeat 0px;}
+.largethumbsicon{background: url(../gfx/interface/largeicon.png) no-repeat 0px;}
+.largethumbsiconactive{background: url(../gfx/interface/largeiconactive.png) no-repeat 0px;}
+
+.BasicsBox .greyText {
+	color: #000;
+}
+
+.BasicsBox .noPadding {
+	padding: 0;
+}
+
+#Header,
+li.plupload_droptext {font-size: 20px; font-weight: bold; color: #000;}
+
+.plupload_filelist_header,
+.plupload_filelist_footer {border-top: 1px solid #000; border-bottom: 1px solid #000;}
+.plupload_button {font-size: 16px; line-height: 16px; border: 1px solid #000;}
+a.plupload_disabled:hover {color: #000; border-color: #000;}
+.plupload_filelist_header, .plupload_filelist_footer,
+.plupload_scroll .plupload_filelist {background: #FFF;}
+
+.InfoTable tr {background: #FFF;}
+.InfoTable td {border: 3px solid #000; border-top: 3px solid #000;}
+
+.Listview thead tr {font-weight: bold;}
+
+/* Text color change for all elements which do not inherit from body: */
+.plupload_filelist_header, .plupload_filelist_footer,
+.plupload_file_status span {color: #000; font-weight: bold;}
+
+/* Font-size change for most important elements: */
+.treetext {font-size: 16px !important;}
+input, select, td,
+#CollectionMinDrop .SearchWidth,
+.CollectBack .SearchWidth,
+.SearchSpace .SearchWidthHalf,
+.SearchSpace .SearchWidth,
+.Question .stdwidth, .stdwidth,
+.Question .shrtwidth, .shrtwidth,
+.plupload_wrapper,
+#CentralSpace .SearchWidth { font-size: 16px;}
+/*.SearchSpace {font-size: 18px;}*/
+
+@media (max-width: 850px)
+{
+	div.HomePicturePanel
+	{    
+		display: none;
+	}
+}
