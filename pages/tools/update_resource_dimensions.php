@@ -33,30 +33,33 @@ else{
 					$delete=sql_query("delete from resource_dimensions where resource=".$resource['ref']);
 					# break down the width and height
 					$wh=explode("x",$dimensions_resolution_unit[0]);
-					$width=$wh[0];
-					$height=$wh[1];
-					$filesize=filesize_unlimited($resource_path);
-					$sql_insert="insert into resource_dimensions (resource,width,height,file_size";
-					$sql_values=" values('".$resource['ref']."','$width','$height','$filesize'";
+					if(count($wh)>1){
+						$width=$wh[0];
+						$height=$wh[1];
+						$filesize=filesize_unlimited($resource_path);
+						$sql_insert="insert into resource_dimensions (resource,width,height,file_size";
+						$sql_values=" values('".$resource['ref']."','$width','$height','$filesize'";
 					
-					if(count($dimensions_resolution_unit)>=2){
-						$resolution=$dimensions_resolution_unit[1];
-						$sql_insert.=",resolution";
-						$sql_values.=",'$resolution'";
-						
-						if(count($dimensions_resolution_unit)>=3){
-							$unit=$dimensions_resolution_unit[2];
-							$sql_insert.=",unit";
-							$sql_values.=",'$unit'";
+					
+						if(count($dimensions_resolution_unit)>=2){
+							$resolution=$dimensions_resolution_unit[1];
+							$sql_insert.=",resolution";
+							$sql_values.=",'$resolution'";
+							
+							if(count($dimensions_resolution_unit)>=3){
+								$unit=$dimensions_resolution_unit[2];
+								$sql_insert.=",unit";
+								$sql_values.=",'$unit'";
+							}
 						}
+						
+						$sql_insert.=")";
+						$sql_values.=")";
+						$sql=$sql_insert.$sql_values;
+						$wait=sql_query($sql);
+						
+						echo "Ref: ".$resource['ref']." - ".$resource['field'.$view_title_field]." - updating resource_dimensions record.<br/>";
 					}
-					
-					$sql_insert.=")";
-					$sql_values.=")";
-					$sql=$sql_insert.$sql_values;
-					$wait=sql_query($sql);
-					
-					echo "Ref: ".$resource['ref']." - ".$resource['field'.$view_title_field]." - updating resource_dimensions record.<br/>"; 
 				}
 			}
 		}
