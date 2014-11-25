@@ -28,7 +28,7 @@ include "../include/header.php";
     <h1><?php echo $lang["complete"]?></h1>
     <p><?php echo text(htmlspecialchars(getvalescaped("text",""))) ?></p>
    
-    <?php if (getval("user","")!="" || getval("k","")!="" || isset($anonymous_login)) { # User logged in? ?>
+    <?php if (getval("user","")!="" || getval("k","")!="" || isset($anonymous_login) || hook('checkuserloggedin')) { # User logged in? ?>
  
  	<?php
 	if(!hook("donebacktoresource")):
