@@ -81,10 +81,10 @@ a.ResourcePanel:visited, a.ResourcePanel:active, a.ResourcePanel:link {color:#E0
 
 /* List View */
 .RecordBox .Listview .ListviewTitleStyle td {background: #F3F3F3;}
-.RecordBox .ListviewBoxedTitleStyle{background: #E0E0E0;color: #383838;}
-.RecordBox .Listview  tr:nth-child(odd) {background: #FFF}
+.RecordBox .ListviewBoxedTitleStyle{background: #E0E0E0;color: #383838;text-decoration:underline;}
+.Listview  tr:nth-child(odd) {background: #F0F0F0;color:#383838;}
+.Listview  tr:nth-child(odd) .ListTools a:link,.Listview  tr:nth-child(odd) .ListTools a:visited,.Listview  tr:nth-child(odd) .ListTitle a:link,.Listview  tr:nth-child(odd) .ListTitle a:visited {color:#383838;}
 .Listview .ListviewTitleStyle td {background: #383838; color:#E0E0E0;}
-.Listview  tr:nth-child(odd) {background: #FFF}
 .ListviewTitleStyle td a:active, .ListviewTitleStyle td a:link, .ListviewTitleStyle td a:visited{background: #383838; color:#E0E0E0;}
 
 /* Icons */

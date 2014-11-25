@@ -492,9 +492,9 @@ function save_resource_data_multi($collection)
 					$val=str_replace($origval,"",$existing);
 					}
 					
-                                # Possibility to hook in and alter the value - additional mode support
-                                $hookval=hook("save_resource_data_multi_extra_modes","",array($ref,$fields[$n]));
-                                if ($hookval!==false) {$val=$hookval;}
+                # Possibility to hook in and alter the value - additional mode support
+                $hookval=hook("save_resource_data_multi_extra_modes","",array($ref,$fields[$n]));
+                if ($hookval!==false) {$val=$hookval;}
 
 				$val=strip_leading_comma($val);		
 				#echo "<li>existing=$existing, new=$val";
