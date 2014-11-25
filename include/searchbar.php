@@ -232,8 +232,8 @@ if (!$basic_simple_search)
 	if ($resourceid_simple_search) {$searchbuttons.=" document.getElementById('searchresourceid').value='';"; }
 	$searchbuttons.="ResetTicks();\"/>"; }
 	$searchbuttons.="<input name=\"Submit\" id=\"searchbutton\" class=\"searchbutton\" type=\"submit\" value=\"&nbsp;&nbsp;". $lang['searchbutton']."&nbsp;&nbsp;\" />";
-	$searchbuttons.="</div>";
 	hook("responsivesimplesearch");
+	$searchbuttons.="</div>";
 	if (!$searchbar_buttons_at_bottom){ echo $searchbuttons."<br/>"; }
 	if (!$basic_simple_search) {
 	// Include simple search items (if any)
