@@ -272,7 +272,7 @@ function hook($name,$pagename="",$params=array())
 	# this will hold all of the functions to call when hitting this hook name and page combination
 	$function_list = array();
 	
-	for ($n=0;$n<count($plugins);$n++)
+	for ($n=count($plugins)-1; $n >= 0; $n--)
 		{	
 		# "All" hooks
 		$function="Hook" . ucfirst($plugins[$n]) . "All" . ucfirst($name);		
