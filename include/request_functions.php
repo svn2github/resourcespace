@@ -239,6 +239,9 @@ function managed_collection_request($ref,$details,$ref_is_resource=false)
 		
 		$resourcedata=get_resource_data($ref);
 		$templatevars['thumbnail']=get_resource_path($ref,true,"thm",false,"jpg",$scramble=-1,$page=1,($watermark)?(($access==1)?true:false):false);
+
+		# Allow alternative configuration settings for this resource type
+		resource_type_config_override($resourcedata['resource_type']);
 		
 		if (!file_exists($templatevars['thumbnail'])){
 		$templatevars['thumbnail']="../gfx/".get_nopreview_icon($resourcedata["resource_type"],$resourcedata["file_extension"],false);

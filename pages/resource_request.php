@@ -3,6 +3,7 @@ include "../include/db.php";
 $k=getvalescaped("k","");if ($k=="") {include "../include/authenticate.php";}
 include "../include/general.php";
 include "../include/request_functions.php";
+include "../include/resource_functions.php";
 include "../include/collections_functions.php";
 
 $ref=getvalescaped("ref","",true);
