@@ -675,8 +675,10 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null  && $k=='')
 # Loop through thumbnails
 if ($count_result>0) 
 	{
+	if($count_result>$max_collection_thumbs){$results_count=$max_collection_thumbs;}
+	else{$results_count=count($result);}
 	# loop and display the results
-	for ($n=0;$n<count($result);$n++)					
+	for ($n=0;$n<$results_count;$n++)					
 		{
 		$ref=$result[$n]["ref"];
 		?>
