@@ -1432,7 +1432,9 @@ if ($enable_related_resources && $show_default_related_resources)
     </div>
     <div class="PanelShadow"></div>
 </div>
-
+<?php if ($view_resource_collections){
+	# only render this box when needed
+?>
 <div class="RecordBox">
     <div class="RecordPanel">  
         <div id="Panel3" class="ViewPanel">
@@ -1441,6 +1443,7 @@ if ($enable_related_resources && $show_default_related_resources)
     </div>
     <div class="PanelShadow"></div>
 </div>
+<?php } ?>
 <?php } ?>
 <?php hook("custompanels"); //For custom panels immediately below resource display area ?>
 
