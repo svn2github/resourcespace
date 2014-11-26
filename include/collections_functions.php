@@ -194,7 +194,7 @@ function collection_writeable($collection)
 	$collectiondata=get_collection($collection);
 	global $userref;
 	global $allow_smart_collections;
-	if ($allow_smart_collections){ 
+	if ($allow_smart_collections && !isset($userref)){ 
 		if (isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']!=null){
 			return false; // so "you cannot modify this collection"
 			}
