@@ -727,7 +727,15 @@ if (true) # Always show search header now.
 		
 	if (!is_array($result) && empty($collections))
 		{
-		// No matches found
+			// No matches found? Log this in
+			$key_id = resolve_keyword($search);
+
+			if($key_id === FALSE) {
+				$key_id = resolve_keyword($search, TRUE);
+				daily_stat('Keyword usage', $key_id);
+			}
+
+			daily_stat("Keyword usage - no results found", $key_id);
 		?>
 		<div class="BasicsBox"> 
 		  <div class="NoFind">
