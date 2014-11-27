@@ -249,6 +249,7 @@ $smart_theme=getvalescaped("smart_theme","");
 
 # When changing higher levels, deselect the lower levels.
 $lastlevelchange=getvalescaped("lastlevelchange",1);
+if(!is_numeric($lastlevelchange)) {$lastlevelchange = 1;}
 
 for ($n=$lastlevelchange;$n<=$themecount;$n++){
 	if ($n>$lastlevelchange && !$themes_category_split_pages){

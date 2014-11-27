@@ -34,6 +34,7 @@ if (strpos($search,"!")!==false) {$restypes="";}
 $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
+if($sort != 'ASC' || $sort != 'DESC') {$sort = $default_sort;}
 
 # next / previous resource browsing
 $go=getval("go","");

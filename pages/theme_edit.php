@@ -28,6 +28,7 @@ reset($_POST);reset($_GET);foreach (array_merge($_GET, $_POST) as $key=>$value) 
 # Work out theme name and level, also construct back link
 $link="themes.php?";
 $lastlevelchange=getvalescaped("lastlevelchange",1,true);
+if(!is_numeric($lastlevelchange)) {$lastlevelchange = 1;}
 $link.="lastlevelchange=" . $lastlevelchange . "&";
 for ($x=0;$x<$themecount;$x++)
 	{
