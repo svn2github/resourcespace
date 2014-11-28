@@ -1,4 +1,4 @@
-name,varchar(20),YES,PRI,,
+name,varchar(50),YES,PRI,,
 descrip,text,NO,,,
 author,varchar(100),NO,,,
 update_url,varchar(100),YES,,,
