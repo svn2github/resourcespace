@@ -161,7 +161,7 @@ if ($use_plugins_manager){
 			}
 	}
 } else {
-	for ($n=0;$n<count($plugins);$n++)
+	for ($n=count($plugins)-1;$n>=0;$n--)
 		include_plugin_config($plugins[$n]);
 }
 
