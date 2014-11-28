@@ -3792,20 +3792,10 @@ function rs_setcookie($name, $value, $daysexpire = 0, $path = "", $domain = "", 
     if ($daysexpire==0) {$expire = 0;}
     else {$expire = time() + (3600*24*$daysexpire);}
 
-    if (filter_has_var(INPUT_SERVER, "HTTPS")) {
-        $is_secure_conn = filter_input(INPUT_SERVER, "HTTPS",
-               FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE);
-    } else {
-        if (isset($_SERVER["HTTPS"]))
-            $is_secure_conn = filter_var($_SERVER["HTTPS"],
-                    FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE);
-        else
-            $is_secure_conn = null;
-    }
-
-    if ($is_secure_conn != null || $is_secure_conn != 'off') {
-        $secure = true;
-     	}
+    if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] === getservbyname("https", "tcp"))
+    	{
+    		$secure=true;
+    	}
      	
     if ($global_cookies)
         {
