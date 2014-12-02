@@ -670,7 +670,7 @@ h2#dbaseconfig{  min-height: 32px;}
         if($slimtheme)
         	{ 
         	$config_output.= "\r\n#Design Changes\r\n\$slimheader=true;\r\n";
-        	$config_output.= "\$available_themes=array('multi', 'whitegry','greyblu','black','slimcharcoal');\r\n\$defaulttheme='slimcharcoal';\r\n";
+        	$config_output.= "\$available_themes=array('slimcharcoal', 'multi', 'whitegry','greyblu','black');\r\n\$defaulttheme='slimcharcoal';\r\n";
         	}
 
                 
