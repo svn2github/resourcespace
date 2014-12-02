@@ -694,10 +694,18 @@ function extract_exif_comment($ref,$extension="")
 				$entered_filename=get_data_by_field(-$userref,$filename_field);
 				debug("EXIF - got entered file name " . $entered_filename);
 				if($exiffilenameoption=="no") //Use the entered value
-					{
+				{
 					$amended_filename = $entered_filename;
-					if(strpos($extension,$amended_filename)==false){$amended_filename.= "." . $extension;}
+
+					if(trim($amended_filename) == '') {
+						$amended_filename = $uploadedfilename;
 					}
+
+					if(strpos($amended_filename, $extension) === FALSE) {
+						$amended_filename .= '.' . $extension;
+					}
+
+				}
 				elseif($exiffilenameoption=="append")
 					{
 					$amended_filename =  $entered_filename . $uploadedfilename;
