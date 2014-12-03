@@ -1350,11 +1350,18 @@ function write_metadata($path, $ref, $uniqid="")
     # Check if an attempt to write the metadata shall be performed.
 	if (($exiftool_fullpath!=false) && ($exiftool_write) && !in_array($extension,$exiftool_no_process))
 		{
+		# Trust Exiftool's list of writable formats	
+		$command=$exiftool_fullpath . " -listwf";
+		$writable_formats=run_command($command);
+		$writable_formats=str_replace("\n","",$writable_formats);
+		$writable_formats_array=explode(" ",$writable_formats);
+		if (!in_array(strtoupper($extension),$writable_formats_array)){return false;}
+				
 		$filename = pathinfo($path);
 		$filename = $filename['basename'];	
 		$tmpfile=get_temp_dir(false,$uniqid) . "/" . $filename;
 		copy($path,$tmpfile);
-
+		
         # Add the call to exiftool and some generic arguments to the command string.
         # Argument -overwrite_original: Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile.
         # Argument -E: Escape values for HTML. Used for handling foreign characters in shells not using UTF-8.
