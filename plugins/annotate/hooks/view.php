@@ -48,7 +48,7 @@ if ($resource["has_image"]==1)
 	$h = $sizes[1];	
 
 	if (file_exists($imagepath))
-		{ 
+		{ 	
 		?>	
 
 

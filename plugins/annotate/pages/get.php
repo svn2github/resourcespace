@@ -9,8 +9,16 @@ $ref=getval("ref","");
 if ($ref==""){die("no");}
 $preview_width=getval("pw",0);
 $preview_height=getval("ph",0);
+$page = getval('page', 1);
 
-$notes=sql_query("select * from annotate_notes where ref='$ref'");
+// Get notes based on page:
+$sql_and = '';
+
+if($page >= 1) {
+	$sql_and = ' AND page = ' . $page;
+}
+
+$notes=sql_query("select * from annotate_notes where ref='$ref'" . $sql_and);
 sql_query("update resource set annotation_count=".count($notes)." where ref=$ref");
 // check if display size is different from original preview size, and if so, modify coordinates
 
