@@ -70,6 +70,7 @@ foreach ($resources as $resource)
 
 	
 	# sets height and width to display 
+	if((isset($resource["thumb_width"])&&$resource["thumb_width"]<1) || (isset($resource["thumb_height"])&&$resource["thumb_height"] <1)) {continue;/*No Preview Available*/}
 	$ratio=$resource["thumb_width"]/$resource["thumb_height"];
 
 	if ($ratio>=1)
