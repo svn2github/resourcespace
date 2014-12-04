@@ -22,12 +22,14 @@ for ($n=0;$n<count($rlist);$n++)
 	{ 
 	for ($m=0;$m<count($rlist);$m++)
 		{
-		if ($rlist[$n]!=$rlist[$m]) # Don't relate a resource to itself
+		if ($rlist[$n]!==$rlist[$m]) # Don't relate a resource to itself
 			{ 
-			if(sql_value("SELECT count(ref) as value FROM resource WHERE ref='".$v."'",0)!=1)
+			if (@mysql_num_rows(mysql_query("SELECT count(1) FROM resource_related WHERE resource='".$rlist[$n]."' and related='".$rlist[$m]."' LIMIT 1"))!=1) 
 				{
 				sql_query("INSERT INTO resource_related (resource,related) VALUES ('" . $rlist[$n] . "','" . $rlist[$m] . "')");
 				}
 			}
 		}
 	}
+
+echo "Completed Relating Resources";
