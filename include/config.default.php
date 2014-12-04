@@ -959,6 +959,9 @@ $always_record_resource_creator = true;
 # Enable the 'related resources' field when editing resources.
 $enable_related_resources=true;
 
+#Resources Uploaded together can be related requires $enable_related_resources=true (enables option on upload)
+$relate_on_upload=false;
+
 # Enable the 'keep me logged in at this workstation' option at the login form
 # If the user then selects this, a 100 day expiry time is set on the cookie.
 $allow_keep_logged_in=true;

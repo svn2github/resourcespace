@@ -29,6 +29,15 @@ if ($ref<0)
 	    <input type=hidden id="no_exif" name="no_exif" value="no">
 	    <?php } 
 	    }
+	if($enable_related_resources && $relate_on_upload && $ref<0 && !$multiple) # When uploading
+        {
+        ?>
+        <div class="Question" id="question_related">
+        <label for="relateonupload"><?php echo $lang["relatedresources_onupload"]?></label>
+        <input name="relateonupload" id="relateonupload" type="checkbox" value="1" style="margin-top:7px;"/> 
+        <div class="clearerleft"> </div>
+        </div><?php
+        }
 	if($camera_autorotation){ ?>
 	<div class="Question" id="question_autorotate">
 	<label for="autorotate"><?php echo $lang["autorotate"]?></label><input type=checkbox id="autorotate" name="autorotate" value="yes" <?php

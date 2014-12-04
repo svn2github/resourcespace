@@ -139,6 +139,25 @@ if($send_collection_to_admin && $archive == -1 && getvalescaped('ajax' , 'false'
     send_mail($email_notify, $subject, $message, '', '');
     exit();
 }
+global $php_path,$relate_on_upload,$enable_related_resources;
+if($relate_on_upload && $enable_related_resources && getval("uploaded_refs","")!=""){
+    $resource_refs=getval("uploaded_refs","");
+    $stringlist="";
+    foreach ($resource_refs as $k => $v) {
+        if (!is_numeric($v)) {
+            exit("NUMERIC values ONLY");
+        }
+        else {
+            $stringlist.= $v.",";
+        }
+    }
+    if($stringlist!=="") 
+        {
+        echo $php_path . "/php " . dirname(__FILE__)."/tools/relate_resources.php \"" . $stringlist. "\" > /dev/null 2>&1 &";
+        exec($php_path . "/php " . dirname(__FILE__)."/tools/relate_resources.php \"" . $stringlist. "\" > /dev/null 2>&1 &");
+        exit;
+        }
+}
 
 #handle posts
 if ($_FILES)
@@ -482,7 +501,13 @@ include "../include/header.php";
 <script type="text/javascript">
 
 <?php
-echo "show_upload_log=" . (($show_upload_log)?"true":"false");
+echo "show_upload_log=" . (($show_upload_log)?"true;":"false;");
+
+if($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes"){
+?>
+    var resource_keys=[];
+<?php 
+}
 ?>
 
 var pluploadconfig = {
@@ -520,7 +545,7 @@ var pluploadconfig = {
 
         // Silverlight settings
         silverlight_xap_url : '../lib/plupload_2.1.2/Moxie.xap',
-        dragdrop: true,
+        dragdrop: true,        
         
         preinit: {
                 PostInit: function(uploader) {
@@ -545,8 +570,8 @@ var pluploadconfig = {
                         else { ?>
                                 //Show diff instructions if supports drag and drop
                                 if(!uploader.files.length && uploader.features.dragdrop && uploader.settings.dragdrop)	{jQuery('#plupload_instructions').html('<?php echo escape_check($lang["intro-plupload_dragdrop"] )?>');}
-                        <?php } ?>
-                
+                        <?php }?>
+                        
                         uploader.bind('FileUploaded', function(up, file, info) {
                                 // show any errors
                                 if (info.response.indexOf("error") > 0)
@@ -563,6 +588,14 @@ var pluploadconfig = {
                                         {
                                         jQuery("#upload_log").append("\r\n" + file.name + " - " + info.response );
                                         }
+
+                                <?php //Relate uploaded files?
+                                if($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes"){
+                                ?>
+                                resource_keys.push(info.response.replace( /^\D+/g, ''));
+                                <?php 
+                                }
+                                ?>
                                 //update collection div if uploading to active collection
                                 <?php if ($usercollection==$collection_add) { ?>
                                         CollectionDivLoad("<?php echo $baseurl . '/pages/collections.php?nowarn=true&nc=' . time() ?>");
@@ -574,9 +607,9 @@ var pluploadconfig = {
                         //add flag so that upload_plupload.php can tell if this is the last file.
                         uploader.bind('BeforeUpload', function(up, files) {
                                 if( (uploader.total.uploaded) == uploader.files.length-1)
-                                                        {
-                                                        uploader.settings.url = uploader.settings.url + '&lastqueued=true';
-                                                        }
+                                    {
+                                    uploader.settings.url = uploader.settings.url + '&lastqueued=true';
+                                    }
                 
                         });
                     
@@ -606,12 +639,15 @@ var pluploadconfig = {
                                             archive: '<?php echo $archive; ?>'
                                         }
                                     });
-
                                     console.log('A copy of the collection ID <?php echo $collection_add; ?> has been sent via e-mail to admin.');
-
                                 });
                             <?php
                             }
+                        if($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes"){?>
+                            uploader.bind('UploadComplete', function(up, files) {
+                                jQuery.post("<?php echo $baseurl_short; ?>pages/upload_plupload.php",{uploaded_refs:resource_keys});
+                            });                           
+                        <?php }
 						  
 				  if ($redirecturl!=""){?>
                                   //remove the completed files once complete

@@ -205,6 +205,10 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 			{
 			$no_exif=getval("no_exif","");
 			}
+
+		if($relate_on_upload && $enable_related_resources && getval("relateonupload","")!="") {
+			$uploadparams.="&relateonupload=yes";
+		}
 		
 		$autorotate = getval("autorotate","");
 
@@ -1725,7 +1729,6 @@ if ($multiple && !$disable_geocoding)
 	?>
 	
 	<?php
-	
 	
 	if (!$edit_upload_options_at_top){include '../include/edit_upload_options.php';}
 	?>
