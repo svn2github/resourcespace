@@ -666,31 +666,32 @@ if(!$cropperestricted)
 	<input type='hidden' name='lastHeightSetting' id='lastHeightSetting' value='' />
 	<input type='hidden' name='origwidth' id='origwidth'  value='<?php echo $origwidth ?>' />
 	<input type='hidden' name='origheight' id='origheight'  value='<?php echo $origheight ?>' />
-	<?php if ($original && !$cropperestricted){ ?> <input type='hidden' name='mode' id='mode'  value='original' /> <?php } ?>
-	    <?php if ($cropper_enable_replace_slideshow && checkperm('t')
-			    && substr(sprintf('%o', fileperms(dirname(__FILE__)."/../../../".$homeanim_folder)), -4)=="0777" && !$cropperestricted) {
+	<?php 
+	if(substr(sprintf('%o', fileperms(dirname(__FILE__)."/../../../".$homeanim_folder)), -4)!="0777"){echo "<!-- File Permissions Error-->";} //Notify of file permissions error
+	if ($original && !$cropperestricted){ ?> <input type='hidden' name='mode' id='mode'  value='original' /> <?php }
+	if ($cropper_enable_replace_slideshow && !$cropperestricted && checkperm('t')  
+			    && substr(sprintf('%o', fileperms(dirname(__FILE__)."/../../../".$homeanim_folder)), -4)=="0777") 
+			{
 		    echo $lang['replaceslideshowimage']; ?>
-	    <input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='<?php
-	    if (isset($home_slideshow_width)){echo $home_slideshow_width;}else{echo "517";}
+	    	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='<?php
+	    	if (isset($home_slideshow_width)){echo $home_slideshow_width;}else{echo "517";}
 		    ?>';document.getElementById('new_height').value='<?php
-		    if (isset($home_slideshow_height)){echo $home_slideshow_height;	} else {echo"350";}?>';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/><?php } ?>
-    
+		    if (isset($home_slideshow_height)){echo $home_slideshow_height;	} 
+		    else {echo"350";}?>';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/>
+	<?php 	}?>
 	<table id="transform_slideshow_options" style="display:none;">
-	<tr><td colspan="4"><p><?php echo $lang['transformcrophelp'] ?></p></td></tr>
-	    
+		<tr><td colspan="4"><p><?php echo $lang['transformcrophelp'] ?></p></td></tr>
 	    <tr>
 		    <td style='text-align:right'><?php echo $lang["slideshowmakelink"]; ?>: </td>
 		    <td><input type="checkbox" name='linkslideshow' id='linkslideshow' value="1" checked></td>
 	    </tr>
-	    
-	  <tr>
-	    <td style='text-align:right'><?php echo $lang["slideshowsequencenumber"]; ?>: </td>
-	    <td><input type='text' name='sequence' id='sequence' value='' size='4' /></td>
-		    </tr>
+	    <tr>
+	    	<td style='text-align:right'><?php echo $lang["slideshowsequencenumber"]; ?>: </td>
+	    	<td><input type='text' name='sequence' id='sequence' value='' size='4' /></td>
+		</tr>
 	    <tr><td colspan="4"><input type="submit" name="submit" value="<?php echo $lang['replaceslideshowimage'] ?>"></td></tr>
-	    </table>
+	</table>
     <table id="transform_options">
-    
       <tr>
         <td style='text-align:right'><?php echo $lang["width"]; ?>: </td>
         <td><input type='text' name='new_width' id='new_width' value='' size='4' <?php ($cropperestricted)?"onblur='evaluate_values()'":"" ?> />
