@@ -960,7 +960,9 @@ $always_record_resource_creator = true;
 $enable_related_resources=true;
 
 #Resources Uploaded together can be related requires $enable_related_resources=true (enables option on upload)
+/* $php_path MUST BE SET */
 $relate_on_upload=false;
+
 
 # Enable the 'keep me logged in at this workstation' option at the login form
 # If the user then selects this, a 100 day expiry time is set on the cookie.
