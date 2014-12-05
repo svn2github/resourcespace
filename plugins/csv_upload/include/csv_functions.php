@@ -227,7 +227,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 							
 				if (count($meta[$field_resource_type][$field_name]['options'])>0 && array_search($cell_value,$meta[$field_resource_type][$field_name]['options'])===false)
 					{
-					array_push($messages, "Error: Value \"{$cell_value}\" not found in lookup for \"{$field_name}\" field - found on line {$file_line_count}");
+					array_push($messages, "Error: Value \"{$cell_value}\" not found in lookup for \"{$field_name}\" field - found on line {$line_count}");
 					$error_count++;
 					continue;
 					}
