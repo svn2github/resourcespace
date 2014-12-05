@@ -168,6 +168,11 @@ if ($use_plugins_manager){
 # Include the appropriate language file
 $pagename=safe_file_name(str_replace(".php","",pagename()));
 
+if (isset($defaultlanguage))
+	$language=$defaultlanguage;
+else
+	$language=http_get_preferred_language();
+
 if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
 if (isset($_GET["language_set"]))
     {
