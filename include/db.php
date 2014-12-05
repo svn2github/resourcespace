@@ -126,44 +126,49 @@ $querylog=array();
 # -----------LANGUAGES AND PLUGINS-------------------------------
 
 # Setup plugin configurations
-if ($use_plugins_manager){
+if ($use_plugins_manager)
+	{
 	include "plugin_functions.php";
 	$legacy_plugins = $plugins; # Make a copy of plugins activated via config.php
-	#Check that manually (via config.php) activated plugins are included in the plugins table.
-	foreach($plugins as $plugin_name){
-		if ($plugin_name!=''){
-			if(sql_value("SELECT inst_version AS value FROM plugins WHERE name='$plugin_name'",'')==''){
-				#Installed plugin isn't marked as installed in the DB.  Update it now.
-				#Check if there's a plugin.yaml file to get version and author info.
+	# Check that manually (via config.php) activated plugins are included in the plugins table.
+	foreach($plugins as $plugin_name)
+		{
+		if ($plugin_name!='')
+			{
+			if (sql_value("SELECT inst_version AS value FROM plugins WHERE name='$plugin_name'",'')=='')
+				{
+				# Installed plugin isn't marked as installed in the DB.  Update it now.
+				# Check if there's a plugin.yaml file to get version and author info.
 				$plugin_yaml_path = dirname(__FILE__)."/../plugins/{$plugin_name}/{$plugin_name}.yaml";
 				$p_y = get_plugin_yaml($plugin_yaml_path, false);
-				#Write what information we have to the plugin DB.
+				# Write what information we have to the plugin DB.
 				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url, config_url) ".
 						  "VALUES ('{$p_y['version']}','{$p_y['author']}','{$p_y['desc']}','{$plugin_name}'," .
 						  "'{$p_y['info_url']}','{$p_y['update_url']}','{$p_y['config_url']}')");
+				}
 			}
 		}
-	}
     # Need verbatum queries for this query
     $mysql_vq = $mysql_verbatim_queries;
     $mysql_verbatim_queries = true;
-	$active_plugins = (sql_query("SELECT name,enabled_groups,config,config_json FROM plugins WHERE inst_version>=0 order by priority"));
+	$active_plugins = sql_query("SELECT name,enabled_groups,config,config_json FROM plugins WHERE inst_version>=0 order by priority");
     $mysql_verbatim_queries = $mysql_vq;
-	foreach($active_plugins as $plugin){
 
+	$plugins = array();
+	foreach($active_plugins as $plugin)
+		{
 		# Check group access, only enable for global access at this point
 		if ($plugin['enabled_groups']=='')
 			{
 			# Add to the plugins array if not already present which is what we are working with
 			# later on.
-			if (!in_array($plugin['name'],$plugins)) {$plugins[]=$plugin['name'];}
-			include_plugin_config($plugin['name'], $plugin['config'], $plugin['config_json']);
+			$plugins[]=$plugin['name'];
 			}
+		}
 	}
-} else {
-	for ($n=count($plugins)-1;$n>=0;$n--)
-		include_plugin_config($plugins[$n]);
-}
+
+for ($n=count($plugins)-1;$n>=0;$n--)
+	include_plugin_config($plugins[$n]);
 
 # Include the appropriate language file
 $pagename=safe_file_name(str_replace(".php","",pagename()));
@@ -220,10 +225,10 @@ if ($language!="en")
 
 # Register all plugins
 for ($n=0;$n<count($plugins);$n++)
-	{
 	register_plugin($plugins[$n]);
+# Register their languages in reverse order
+for ($n=count($plugins)-1;$n>=0;$n--)
 	register_plugin_language($plugins[$n]);
-	}
     
 # Set character set.
 if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text/html; charset=UTF-8");} // Make sure we're using UTF-8.
