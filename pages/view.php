@@ -216,7 +216,7 @@ if(isset($related_type_show_with_data)) {
 }
 
 $fields=get_resource_field_data($ref,$multi_fields,!hook("customgetresourceperms"),-1,$k!="",$use_order_by_tab_view);
-
+$modified_view_fields=hook("modified_view_fields","",array($ref,$fields));if($modified_view_fields){$fields=$modified_view_fields;}
 // Get tab names and order from fields in order to know which one is the last tab
 $fields_tab_names = array();
 	
