@@ -217,7 +217,8 @@ ksort ($plugins_avail);
   <h1><?php echo $lang["pluginmanager"]; ?></h1>
   <p><?php echo $lang["plugins-headertext"]; ?></p>
     <h2><?php echo $lang['plugins-installedheader']; ?></h2>
-    <?php if (count($inst_plugins)>0){ ?>
+    <?php hook("before_active_plugin_list");
+    if (count($inst_plugins)>0){ ?>
     <div class="Listview">
     <table class= "ListviewStyle" cellspacing="0" cellpadding="0" border="0">
     <thead>
