@@ -552,7 +552,6 @@ $download_multisize=true;
 <?php if (!hook("renderinnerresourcepreview")) { ?>
 <?php
 
-
 # Try to find a preview file.
 $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
 if (!file_exists($flvfile) && $ffmpeg_preview_extension!="flv") {$flvfile=get_resource_path($ref,true,"pre",false,"flv");} # Try FLV, for legacy systems.
@@ -562,7 +561,7 @@ if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
 	{
 	include "../players/type" . $resource["resource_type"] . ".php";
 	}
-elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
+elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($flvfile))
 	{
 	# Include the player if a video preview file exists for this resource.
 	$download_multisize=false;
