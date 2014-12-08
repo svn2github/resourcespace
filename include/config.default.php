@@ -337,6 +337,8 @@ $pdf_pages=30;
 # When uploading PDF files, split each page to a separate resource file?
 $pdf_split_pages_to_resources=false;
 
+# Use VideoJS for video playback (as opposed to FlashPlayer, which we are deprecating)
+$videojs=false;
 
 # Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
 $ffmpeg_preview=true; 
