@@ -165,10 +165,17 @@ if ($use_plugins_manager)
 			$plugins[]=$plugin['name'];
 			}
 		}
+	for ($n=count($active_plugins)-1;$n>=0;$n--)
+		{
+		$plugin=$active_plugins[$n];
+		include_plugin_config($plugin['name'], $plugin['config'], $plugin['config_json']);
+		}
 	}
-
-for ($n=count($plugins)-1;$n>=0;$n--)
-	include_plugin_config($plugins[$n]);
+else
+	{
+	for ($n=count($plugins)-1;$n>=0;$n--)
+		include_plugin_config($plugins[$n]);
+	}
 
 # Include the appropriate language file
 $pagename=safe_file_name(str_replace(".php","",pagename()));
