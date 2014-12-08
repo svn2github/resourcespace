@@ -12,8 +12,8 @@ if (file_exists($flashfile))
 elseif ($ffmpeg_preview_extension!="flv")
 	{
 	# Still no file. For legacy systems that are not using MP4 previews, next we look for an FLV preview.
-	$flashfile=get_resource_path($ref,true,"",false,"flv",-1,1,false,"",$alternative);
-	$flashpath=get_resource_path($ref,false,"",false,"flv",-1,1,false,"",$alternative,false);
+	$flashfile=get_resource_path($ref,true,"pre",false,"flv",-1,1,false,"",$alternative);
+	$flashpath=get_resource_path($ref,false,"pre",false,"flv",-1,1,false,"",$alternative,false);
 	}
 if (!file_exists($flashfile))
         {
