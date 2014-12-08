@@ -224,7 +224,7 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
 	$download_multisize=false;
     if(!hook("customflvplay"))
         {
-        include "flv_play.php";?><br /><br /><?php
+        include "video_player.php";?><br /><br /><?php
         }
     } 
 	elseif ($use_mp3_player && file_exists($mp3realpath) && hook("custommp3player")){

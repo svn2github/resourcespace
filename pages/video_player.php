@@ -1,18 +1,27 @@
 <?php
-# FLV player - plays the FLV file created to preview video resources.
+# Video player - plays the preview file created to preview video resources.
 
 global $alternative;
 
+# First we look for a preview video with the expected extension.
 $flashfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension,-1,1,false,"",$alternative);
 if (file_exists($flashfile))
 	{
 	$flashpath=get_resource_path($ref,false,"pre",false,$ffmpeg_preview_extension,-1,1,false,"",$alternative,false);
 	}
-else 
+elseif ($ffmpeg_preview_extension!="flv")
 	{
+	# Still no file. For legacy systems that are not using MP4 previews, next we look for an FLV preview.
+	$flashfile=get_resource_path($ref,true,"",false,"flv",-1,1,false,"",$alternative);
+	$flashpath=get_resource_path($ref,false,"",false,"flv",-1,1,false,"",$alternative,false);
+	}
+if (!file_exists($flashfile))
+        {
+	# Back out to playing the source file direct (not a preview). For direct FLV upload support - the file itself is an FLV. Or, with the preview functionality disabled, we simply allow playback of uploaded video files.
 	$flashfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension,-1,1,false,"",$alternative);
 	$flashpath=get_resource_path($ref,false,"",false,$ffmpeg_preview_extension,-1,1,false,"",$alternative,false);
 	}
+
 $flashpath_raw=$flashpath;     
 $flashpath=urlencode($flashpath);
 
