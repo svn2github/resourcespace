@@ -555,7 +555,7 @@ $download_multisize=true;
 
 # Try to find a preview file.
 $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
-if (!file_exists($flvfile) && $ffmpeg_preview_extension!="flv") {$flvfile=get_resource_path($ref,true,"",false,"flv");} # Try FLV, for legacy systems.
+if (!file_exists($flvfile) && $ffmpeg_preview_extension!="flv") {$flvfile=get_resource_path($ref,true,"pre",false,"flv");} # Try FLV, for legacy systems.
 if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
 
 if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
