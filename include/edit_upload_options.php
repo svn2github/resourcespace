@@ -169,6 +169,7 @@ if ($ref<0)
 	
 		<?php
 		}
+	hook("extrauploadoptions");
 	}
 ?>
 
