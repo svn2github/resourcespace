@@ -1138,18 +1138,13 @@ hook ("resourceactions") ?>
 	 if ($resource_contact_link)	{ ?>
 	<li><a href="<?php echo $baseurl_short?>pages/ajax/contactadmin.php?ref=<?php echo urlencode($ref)?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>" onClick="showContactBox();return false;" >&gt; <?php echo $lang["contactadmin"]?></a></li>
 	<?php }
-	
-	if ((!checkperm("b"))
-	&&
-	
-	(!(($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size))
-	
-	) { ?>
+
+	if (!hook("replaceaddtocollection") && !checkperm("b")
+			&& !(($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size)) { ?>
 	<li><?php echo add_to_collection_link($ref,$search)?>&gt; <?php echo $lang["action-addtocollection"]?></a></li>
 	<?php if ($search=="!collection" . $usercollection) { ?><li><?php echo remove_from_collection_link($ref,$search)?>&gt; <?php echo $lang["action-removefromcollection"]?></a></li><?php } ?>
 	<?php } ?>
-	
-	
+
 	<?php if ($allow_share && ($access==0 || ($access==1 && $restricted_share)) && !$hide_resource_share_link) { ?>
 		<li><a href="<?php echo $baseurl_short?>pages/resource_share.php?ref=<?php echo urlencode($ref) ?>&amp;search=<?php echo urlencode($search)?>&amp;offset=<?php echo urlencode($offset)?>&amp;order_by=<?php echo urlencode($order_by)?>&amp;sort=<?php echo urlencode($sort)?>&amp;archive=<?php echo urlencode($archive)?>" onClick="return CentralSpaceLoad(this,true);" >&gt; <?php echo $lang["share"]?></a></li>
 	<?php 
