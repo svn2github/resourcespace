@@ -502,9 +502,10 @@ include "../include/header.php";
 <?php
 echo "show_upload_log=" . (($show_upload_log)?"true;":"false;");
 
-if($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes"){
+if($store_uploadedrefs ||($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes")){
 ?>
     var resource_keys=[];
+    var processed_resource_keys=[];
 <?php 
 }
 ?>
@@ -589,8 +590,10 @@ var pluploadconfig = {
                                         }
 
                                 <?php //Relate uploaded files?
-                                if($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes"){
+                                global $store_uploadedrefs;
+                                if($store_uploadedrefs||($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes")){
                                 ?>
+                                if(resource_keys===processed_resource_keys){resource_keys=[];}
                                 resource_keys.push(info.response.replace( /^\D+/g, ''));
                                 <?php 
                                 }
@@ -645,6 +648,7 @@ var pluploadconfig = {
                         if($relate_on_upload && $enable_related_resources && getval("relateonupload","")==="yes"){?>
                             uploader.bind('UploadComplete', function(up, files) {
                                 jQuery.post("<?php echo $baseurl_short; ?>pages/upload_plupload.php",{uploaded_refs:resource_keys});
+                                processed_resource_keys=resource_keys;
                             });                           
                         <?php }
 						  

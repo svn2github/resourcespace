@@ -956,6 +956,9 @@ $upload_force_mycollection=false;
 # When batch uploading, enable the 'copy resource data from existing resource' feature
 $enable_copy_data_from=true;
 
+# Store Resource Refs when uploading, this is useful for other developer tools to hook into the upload.
+$store_uploadedrefs=false;
+
 # Always record the name of the resource creator for new records.
 # If false, will only record when a resource is submitted into a provisional status.
 $always_record_resource_creator = true;
