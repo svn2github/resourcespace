@@ -610,7 +610,7 @@ function config_gen_setup_html($page_def,$plugin_name,$upload_status,$plugin_pag
                  config_html($def[1]);
                  break;     
             case 'text_input':
-                config_text_input($def[1], $def[2], $GLOBALS[$def[1]], $def[3], $def[4]);
+                config_text_input($def[1], $def[2], $GLOBALS[$def[1]], $def[3], $def[4], $def[5]);
                 break;
             case 'text_list':
             if (!empty($array_offset)) 
@@ -742,13 +742,25 @@ function config_add_html($content)
  *          field. Defaulted to false.
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_text_input($name, $label, $current, $password=false, $width=300)
+function config_text_input($name, $label, $current, $password=false, $width=300, $textarea=false)
     {
     global $lang;
 ?>
   <div class="Question">
     <label for="<?php echo $name?>" title="<?php echo str_replace('%cvn', $name, $lang['plugins-configvar'])?>"><?php echo $label?></label>
-    <input name="<?php echo $name?>" id="<?php echo $name?>" type="<?php echo $password?'password':'text' ?>" value="<?php echo htmlspecialchars($current,ENT_QUOTES);?>" style="width:<?php echo $width; ?>px" />
+    <?php
+    if($textarea==false)
+        {
+        ?>
+        <input name="<?php echo $name?>" id="<?php echo $name?>" type="<?php echo $password?'password':'text' ?>" value="<?php echo htmlspecialchars($current,ENT_QUOTES);?>" style="width:<?php echo $width; ?>px" />
+        <?php
+        }
+    else
+        {
+        ?>
+        <textarea name="<?php echo $name?>" id="<?php echo $name?>" style="width:<?php echo $width; ?>px"><?php echo htmlspecialchars($current,ENT_QUOTES);?></textarea>
+        <?php
+        }?>
   </div>
   <div class="clearerleft"></div>
 <?php
@@ -764,9 +776,9 @@ function config_text_input($name, $label, $current, $password=false, $width=300)
  *          field. Defaulted to false.
  * @param integer $width the width of the input field in pixels. Default: 300.
  */
-function config_add_text_input($config_var, $label, $password=false, $width=300)
+function config_add_text_input($config_var, $label, $password=false, $width=300, $textarea=false)
     {
-    return array('text_input', $config_var, $label, $password, $width);
+    return array('text_input', $config_var, $label, $password, $width, $textarea);
     }
 /**
  * Return a data structure that will instruct the configuration page generator functions to
