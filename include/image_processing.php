@@ -1224,7 +1224,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					// we have an extracted ICC profile, so use it as source
 					$targetprofile = dirname(__FILE__) . '/../iccprofiles/' . $icc_preview_profile;
 					$profile  = " -strip -profile $iccpath $icc_preview_options -profile $targetprofile -strip ";
-					$icc_transform_complete=true;
+					// consider ICC transformation complete, if one of the sizes has been rendered that will be used for the smaller sizes
+                    if ($id == 'hpr' || $id == 'lpr' || $id == 'scr') $icc_transform_complete=true;
 				} else {
 					// use existing strategy for color profiles
 					# Preserve colour profiles? (omit for smaller sizes)
