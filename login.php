@@ -12,62 +12,6 @@ if ($modifiedurl){$url=$modifiedurl;}
 
 $api=getval("api","");
 
-# Allow the language to be posted here
-$language=getval("language","");
-
-if($language==="" && !$disable_languages && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $login_browser_language) 
-	{
-	$language_array = explode(';',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
-	$lc = 0;
-	$langflag = 0;
-	while($langflag < 1 && $lc < count($language_array))
-		{
-		if(strpos($language_array[$lc],','))
-			{
-			$tmparray = explode(',',$language_array[$lc]);
-			foreach ($tmparray as $tlang) 
-				{
-				if(array_key_exists($tlang,$languages)) 
-					{
-					$language = $tlang;
-					$langflag = 1;
-					}
-				}
-			}
-		else
-			{
-			if(array_key_exists($language_array[$lc],$languages)) 
-				{
-				$language = $language_array[$lc];
-				$langflag = 1;
-				}	
-			}
-		$lc++;
-		}
-		if (!empty($language)&&$login_browser_language)
-			{
-			# Refresh Language Strings Used
-			$lang = array();
-			# Always include the english pack (in case items have not yet been translated)
-			include dirname(__FILE__)."/languages/en.php";
-			if ($language!="en")
-				{
-				if (substr($language, 2, 1)=='-' && substr($language, 0, 2)!='en')
-					@include dirname(__FILE__)."/languages/" . safe_file_name(substr($language, 0, 2)) . ".php";
-				@include dirname(__FILE__)."/languages/" . safe_file_name($language) . ".php";
-				}
-			}
-	}
-
-if($disable_languages || $language ==="") {
-	$language = $defaultlanguage;
-}
-
-# Check the provided language is valid (XSS vuln. fix)
-if (!empty($language) && !array_key_exists($language,$languages))
-	{
-        exit("Invalid language");
-    }
         
 # process log in
 $error=getval("error","");

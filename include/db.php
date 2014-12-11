@@ -180,46 +180,10 @@ else
 # Include the appropriate language file
 $pagename=safe_file_name(str_replace(".php","",pagename()));
 
-if (isset($defaultlanguage))
-	$language=$defaultlanguage;
-else
-	$language=http_get_preferred_language();
-
-if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
-if (isset($_GET["language_set"]))
-    {
-    $language=$_GET["language_set"];
-    # Cannot use the general.php: rs_setcookie() here since general may not have been included.
-    if ($global_cookies)
-        {
-        # Remove previously set cookies to avoid clashes
-        setcookie("language", "", time() - 3600, $baseurl_short . "pages/", '', false, true);
-        setcookie("language", "", time() - 3600, $baseurl_short, '', false, true);
-        # Set new cookie
-        setcookie("language", $language, time() + (3600*24*1000), "/", '', false, true);
-        }
-    else
-        {
-        # Set new cookie
-        setcookie("language", $language, time() + (3600*24*1000));
-        setcookie("language", $language, time() + (3600*24*1000), $baseurl_short . "pages/", '', false, true);
-        }
-    }
-
-# Languages disabled - always use the default.
-if ($disable_languages) {$language=$defaultlanguage;}
+$language=setLanguage();
 
 # Fix due to rename of US English language file
 if (isset($language) && $language=="us") {$language="en-US";}
-
-# Make sure the provided language is a valid language
-if (empty($language) || !array_key_exists($language,$languages))
-	{
-		if (isset($defaultlanguage))
-			$language=$defaultlanguage;
-		else
-			$language='en';
-	}
 
 # Always include the english pack (in case items have not yet been translated)
 include dirname(__FILE__)."/../languages/en.php";
@@ -813,61 +777,83 @@ function redirect($url)
 		}
 	exit();
 	}
-/* Language Function Unused, Replaced by Script on the Login Page */
+
 function http_get_preferred_language($strict_mode=false)
 	{
 	global $languages;
-
-	if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-		return null;
-	$lang_variable=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	if (empty($lang_variable))
-		return null;
-
-	$accepted_languages=preg_split('/,\s*/',$lang_variable);
-	$current_lang=false;
-	$current_quality=0;
-
-	foreach ($accepted_languages as $accepted_language)
+	if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])){return "";}
+	$language_array = explode(';',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+	$lc = 0;
+	$langflag = 0;
+	$language="";
+	while($langflag < 1 && $lc < count($language_array))
 		{
-		$res=preg_match('/^([a-z]{1,8}(?:-[a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i',$accepted_language,$matches);
-		if (!$res)
-			continue;
-
-		$lang_code=explode('-',$matches[1]);
-
-		// Use specified quality, if any
-		if (isset($matches[2]))
-			$lang_quality=(float)$matches[2];
-		else
-			$lang_quality=1.0;
-
-		while (count($lang_code))
+		if(strpos($language_array[$lc],','))
 			{
-			$found=false;
-			foreach ($languages as $short => $name)
+			$tmparray = explode(',',$language_array[$lc]);
+			foreach ($tmparray as $tlang) 
 				{
-				if (strtolower($short)==strtolower(join('-', $lang_code)))
+				if(array_key_exists($tlang,$languages)) 
 					{
-					if ($lang_quality > $current_quality)
-						{
-						$current_lang=$short;
-						$current_quality=$lang_quality;
-						$found=true;
-						break;
-						}
+					$language = $tlang;
+					$langflag = 1;
 					}
 				}
-
-				if ($strict_mode || $found)
-					break;
-
-				array_pop($lang_code);
 			}
+		else
+			{
+			if(array_key_exists($language_array[$lc],$languages)) 
+				{
+				$language = $language_array[$lc];
+				$langflag = 1;
+				}	
+			}
+		$lc++;
 		}
-
-        return $current_lang;
+	return $language;
 	}
+
+function setLanguage()
+	{
+	global $browser_language,$disable_languages,$defaultlanguage,$languages;
+	$language="";
+	if (isset($_GET["language_set"]))
+	    {
+	    $language=$_GET["language_set"];
+	    if(array_key_exists($language,$languages)) 
+			{
+		    # Cannot use the general.php: rs_setcookie() here since general may not have been included.
+		    if ($global_cookies)
+		        {
+		        # Remove previously set cookies to avoid clashes
+		        setcookie("language", "", time() - 3600, $baseurl_short . "pages/", '', false, true);
+		        setcookie("language", "", time() - 3600, $baseurl_short, '', false, true);
+		        # Set new cookie
+		        setcookie("language", $language, time() + (3600*24*1000), "/", '', false, true);
+		        }
+		    else
+		        {
+		        # Set new cookie
+		        setcookie("language", $language, time() + (3600*24*1000));
+		        setcookie("language", $language, time() + (3600*24*1000), $baseurl_short . "pages/", '', false, true);
+		        }
+		    return $language;
+		    }
+		    else{$language="";}
+	    }
+	if (isset($_COOKIE["language"]) && array_key_exists($_COOKIE["language"],$languages)) {return $_COOKIE["language"];}
+	if (isset($_GET["language"]) && array_key_exists($_GET["language"],$languages)) {return $_GET["language"];}	
+	if (isset($_POST["language"]) && array_key_exists($_POST["language"],$languages)) {return $_POST["language"];}
+
+	if(!$disable_languages && $browser_language && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+		{
+		$language = http_get_preferred_language();
+		if($language!==""){return $language;}
+		} 
+	if(($disable_languages || $language ==="") && isset($defaultlanguage)) {return $defaultlanguage;}
+	if($language===""){return 'en';}else{return $language;}
+	}
+
 
 function checkperm($perm)
     {
