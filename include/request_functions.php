@@ -359,8 +359,8 @@ function email_resource_request($ref,$details)
 	$templatevars["filename"]=$lang["fieldtitle-original_filename"] . ": " . get_data_by_field($ref,$filename_field);}
 	if (isset($resourcedata["field" . $view_title_field])){
 	$templatevars["title"]=$resourcedata["field" . $view_title_field];}
-	
 	$templatevars['username']=$username . " (" . $useremail . ")";
+	$templatevars['formemail']=getval("email","");
 	$templatevars['url']=$baseurl."/?r=".$ref;
 	$templatevars["requesturl"]=$templatevars['url'];
 	
@@ -411,9 +411,11 @@ function email_resource_request($ref,$details)
 		}
 	$templatevars["requestreason"]=$lang["requestreason"] . ": " . $templatevars['details']. $c ."";
 	
-	$message=$lang["user_made_request"] . "<br /><br />" . $lang["username"] . ": " . $username . " (" . $useremail . ")<br />".$adddetails. $c . "<br /><br />" . $lang["clicktoviewresource"] . "<br />". $templatevars['url'];
+	$message=$lang["user_made_request"] . "<br /><br />";
+	$message.= isset($username)? $lang["username"] . ": " . $username . " (" . $useremail . ")<br />":"";
+	$message.= (!empty($templatevars["formemail"]))? $lang["email"].":".$templatevars["formemail"]."<br />":"";
+	$message.= $adddetails. $c . "<br /><br />" . $lang["clicktoviewresource"] . "<br />". $templatevars['url'];
 
-	$userconfirmmessage = $lang["requestsenttext"] . "<br /><br />" . $lang["requestreason"] . ": " . $templatevars['details'] . $c . "<br /><br />" . $lang["clicktoviewresource"] . "\n$baseurl/?r=$ref";
 	
 	# Check if alternative request email notification address is set
 	$admin_notify_email=$email_notify;
@@ -423,12 +425,16 @@ function email_resource_request($ref,$details)
 			{
 			$admin_notify_email=$resource_type_request_emails[$resourcedata["resource_type"]];
 			}
-		}
-	
-	
+		}	
 	send_mail($admin_notify_email,$applicationname . ": " . $lang["requestresource"] . " - $ref",$message,$useremail,$useremail,"emailresourcerequest",$templatevars);
-	if ($request_senduserupdates){send_mail($useremail,$applicationname . ": " . $lang["requestsent"] . " - $ref",$userconfirmmessage,$email_from,$email_notify,"emailuserresourcerequest",$templatevars);}	
 	
+	if ($request_senduserupdates)
+		{
+		$sender =  (!empty($useremail))? $useremail : (!empty($templatevars["formemail"]))? $templatevars["formemail"] :"";
+		$k=(getval("k","")!="")? "&k=".getval("k",""):"";
+		$userconfirmmessage = $lang["requestsenttext"] . "<br /><br />" . $lang["requestreason"] . ": " . $templatevars['details'] . $c . "<br /><br />" . $lang["clicktoviewresource"] . "\n$baseurl/?r=$ref".$k;
+		if($sender!=""){send_mail($sender,$applicationname . ": " . $lang["requestsent"] . " - $ref",$userconfirmmessage,$email_from,$email_notify,"emailuserresourcerequest",$templatevars);}	
+		}
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
 	}
