@@ -16,7 +16,6 @@ if ($auto_order_checkbox) {
 	if($auto_order_checkbox_case_insensitive){natcasesort($option_trans);}
 	else{asort($option_trans);}	
 }
-
 $adjusted_dropdownoptiontrans=hook("adjustdropdownoptiontrans","edit",array($field,$option_trans));
 if ($adjusted_dropdownoptiontrans){$option_trans=$adjusted_dropdownoptiontrans;}
 
@@ -26,8 +25,8 @@ if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leadi
 >
 <?php if (!hook("replacedropdowndefault","",array($field)))
 	{ 
-	if($value==="") {
-		$value = $options[0]==="" ? "" : $options[0];
+	if(empty($value)) {
+		$value = (empty($options[0])) ? "" : $options[0];
 	}
 	?><option value=""></option><?php
 	} ?>
