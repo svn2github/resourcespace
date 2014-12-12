@@ -23,6 +23,7 @@ $collection=getvalescaped("collection","",true);
 $original = filter_var(getvalescaped('original', FALSE), FILTER_VALIDATE_BOOLEAN);
 $metadata = filter_var(getvalescaped('metadata', FALSE), FILTER_VALIDATE_BOOLEAN);
 $prettyfieldnames = filter_var(getvalescaped('prettyfieldnames', FALSE), FILTER_VALIDATE_BOOLEAN);
+$access_filter = getvalescaped('access', -999, TRUE);
 
 $help=getval("help","");
 if ($help!=""){
@@ -60,8 +61,26 @@ $test_query=rtrim($test_query,"&");
 if ($collection!=""){$searchadd="!collection".$collection.", ";} else {$searchadd="";}
 
 $results=do_search($searchadd.$search,$restypes,$order_by,$archive,-1,$sort,false,$starsearch);
+if(!is_array($results)) {
+    $results=array();
+}
 
-if (!is_array($results)){$results=array();}
+// Handle results in one go as much as possible
+// Note: do it outside of this loop for exceptional cases only
+// TODO: add other cases here as well
+foreach ($results as $key => $result) {
+
+    // Filter results by access:
+    if($access_filter != -999 && $access_filter >= 0) {
+
+        if($result['access'] != $access_filter) {
+            unset($results[$key]);
+        }
+
+    }
+
+}
+$results = array_values($results);
 
 $paginate=false;
 if (getval("results_per_page","")!="" || getval("page","")!=""){

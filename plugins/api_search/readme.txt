@@ -23,6 +23,7 @@ limit_to=[string]        Return a single field for each resource. Example: limit
 collection=[integer]	 Collection to search within (same as "!collection[ref], [search]")  
 original=[boolean]       Return the link to the original file (by default it is set to FALSE)
 metadata=[boolean]       Returns full data (ie. not truncated) for the fields specified in the api_search setup (by default it is set to FALSE)
+access=[integer]         Filters results based on access (eg. 0 - Open, 1 - Restricted etc.). By default it is set to -999
 
 If a signature is required, you must md5([yourhashkey].[querystring]) and submit it as a final parameter called skey.
 Your hash key is a shared secret available from plugins/api_core.
