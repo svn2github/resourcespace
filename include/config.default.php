@@ -1598,6 +1598,15 @@ $request_adds_to_collection=false;
 # $image_alternatives[0]["filename"]="alternative_png";
 # $image_alternatives[0]["target_extension"]="png";
 # $image_alternatives[0]["params"]="-density 300"; # 300 dpi
+# $image_alternatives[0]["icc"]=false;
+
+# $image_alternatives[1]["name"]="CMYK JPEG";
+# $image_alternatives[1]["source_extensions"]="jpg,tif";
+# $image_alternatives[1]["filename"]="cmyk";
+# $image_alternatives[1]["target_extension"]="jpg";
+# $image_alternatives[1]["params"]="-quality 100 -flatten $icc_preview_options -profile ".dirname(__FILE__) . "/../iccprofiles/name_of_cmyk_profile.icc"; # Quality 100 JPEG with specific CMYK ICC Profile
+# $image_alternatives[1]["icc"]=true; # use source ICC profile in command
+
 
 
 # For reports, the list of default reporting periods

@@ -929,17 +929,34 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				$aref=add_alternative_file($ref,$image_alternatives[$n]["name"]);
 				$apath=get_resource_path($ref,true,"",true,$image_alternatives[$n]["target_extension"],-1,1,false,"",$aref);
 				
+				$source_profile = '';
+				if ($image_alternatives[$n]["icc"] === true && )
+					{
+					$iccpath = get_resource_path($ref,true,'',false,$extension).'.icc';
+					global $icc_extraction;
+	                global $ffmpeg_supported_extensions;
+					if (!file_exists($iccpath) && $extension!="pdf" && !in_array($extension,$ffmpeg_supported_extensions))
+						{
+						// extracted profile doesn't exist. Try extracting.
+						extract_icc_profile($ref,$extension);
+						}
+					if (file_exists($iccpath))
+						{
+						$source_profile = ' +profile "*" -profile ' . $iccpath;
+						}
+					}
+
 				# Process the image
 				$version=get_imagemagick_version();
 				if($version[0]>5 || ($version[0]==5 && $version[1]>5) || ($version[0]==5 && $version[1]==5 && $version[2]>7 ))
 					{
 					// Use the new imagemagick command syntax (file then parameters)
-					$command = $convert_fullpath . " " . escapeshellarg($file) . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($apath);
+					$command = $convert_fullpath . " " . escapeshellarg($file) . $source_profile . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($apath);
 					}
 				else
 					{
 					// Use the old imagemagick command syntax (parameters then file)
-					$command = $convert_fullpath . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($file) . " " . escapeshellarg($apath);
+					$command = $convert_fullpath . $source_profile . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($file) . " " . escapeshellarg($apath);
 					}
 			
                 
@@ -2024,7 +2041,7 @@ function extract_icc($infile) {
       unlink($outfile);
    }
 
-   $cmdout = run_command("$convert_fullpath $infile $outfile $stderrclause");
+   $cmdout = run_command("$convert_fullpath $infile" . '[0]' . " $outfile $stderrclause");
    
    if ( preg_match("/no color profile is available/",$cmdout) || !file_exists($outfile) ||filesize_unlimited($outfile) == 0){
    // the icc profile extraction failed. So delete file.
