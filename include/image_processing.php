@@ -930,7 +930,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				$apath=get_resource_path($ref,true,"",true,$image_alternatives[$n]["target_extension"],-1,1,false,"",$aref);
 				
 				$source_profile = '';
-				if ($image_alternatives[$n]["icc"] === true && )
+				if ($image_alternatives[$n]["icc"] === true)
 					{
 					$iccpath = get_resource_path($ref,true,'',false,$extension).'.icc';
 					global $icc_extraction;
