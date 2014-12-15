@@ -571,7 +571,7 @@ elseif ($k!="")
     else { ?><ul>
   	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     <?php if (checkperm("s")) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php">&gt; <?php echo $lang["managemycollections"];?></a></li>
-	<?php if ($contact_sheet==true) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/contactsheet_settings.php?ref=<?php echo urlencode($usercollection) ?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
+	<?php if ($contact_sheet==true && $contact_sheet_link_on_collection_bar) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/contactsheet_settings.php?ref=<?php echo urlencode($usercollection) ?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
     <?php if ($allow_share) { ?>
     	<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_share.php?ref=<?php echo urlencode($usercollection) ?>">&gt; <?php echo $lang["share"]?></a></li><?php 
     	hook('aftershareinbottomtoolbar', '', array($usercollection));

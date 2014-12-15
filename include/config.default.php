@@ -751,6 +751,9 @@ $contact_sheet_add_link_option=false;
 
 $contact_sheet_single_select_size=false;
 
+# Set this to FALSE in order to remove the link from the collection bar
+$contact_sheet_link_on_collection_bar = true;
+
 ##  Contact Print settings - paper size options
 $papersize_select = '
 <option value="a4">A4 - 210mm x 297mm</option>
