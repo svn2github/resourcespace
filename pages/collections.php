@@ -569,7 +569,10 @@ elseif ($k!="")
      <a id="toggleThumbsLink" onClick="ToggleThumbs();return false;" href="#">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php 
     }
     else { ?><ul>
-  	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
+  	<?php
+  	if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { 
+  		hook('beforecollectionlinks');
+  	?>
     <?php if (checkperm("s")) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php">&gt; <?php echo $lang["managemycollections"];?></a></li>
 	<?php if ($contact_sheet==true && $contact_sheet_link_on_collection_bar) { ?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/contactsheet_settings.php?ref=<?php echo urlencode($usercollection) ?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
     <?php if ($allow_share) { ?>
