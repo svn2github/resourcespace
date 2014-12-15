@@ -942,7 +942,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 						}
 					if (file_exists($iccpath))
 						{
-						$source_profile = ' +profile "*" -profile ' . $iccpath;
+						$source_profile = ' -strip -profile ' . $iccpath;
 						}
 					}
 
