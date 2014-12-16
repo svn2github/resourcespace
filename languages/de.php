@@ -15,6 +15,7 @@
 # Updated by Stefan Wild 20130124 for version 4220, translated the missing $lang keys from the en.php.
 # Updated by Stefan Wild 20140220 for version 5313, translated the missing $lang keys from the en.php.
 # Updated by Stefan Wild 20140619 for version 5550, translated the missing $lang keys from the en.php.
+# Updated by Stefan Wild 20141215 for version 6127, translated the missing $lang keys from the en.php.
 
 # User group names (for the default user groups)
 $lang["usergroup-administrators"]="Administratoren";
@@ -422,6 +423,8 @@ $lang["action-upload"]="Upload";
 $lang["action-upload-to-collection"]="Hochladen in diese Kollektion";
 $lang["uploadafile"]="Datei hochladen";
 $lang["replacefile"]="Datei ersetzen";
+$lang["showwatermark"]="Wasserzeichen zeigen";
+$lang["hidewatermark"]="Wasserzeichen nicht zeigen";
 $lang["imagecorrection"]="Bild-Korrekturen";
 $lang["previewthumbonly"]="(nur Vorschaubild anzeigen)";
 $lang["rotateclockwise"]="im Uhrzeigersinn drehen"; # Verkehrte Zuordnung in der Funktion, daher hier vertauscht
@@ -437,6 +440,7 @@ $lang["relatedresources"]="Verwandte Ressourcen";
 $lang["relatedresources-filename_extension"]="Verwandte Ressourcen &ndash; %EXTENSION"; # Use %EXTENSION, %extension or %Extension as a placeholder. The placeholder will be replaced with the filename extension, using the same case. E.g. "Related Resources - %EXTENSION" -> "Related Resources - JPG"
 $lang["relatedresources-id"]="Verwandte Ressourcen - ID%id%"; # %id% will be replaced, e.g. Related Resources - ID57
 $lang["relatedresources-restype"]="Verwandte Ressourcen - %Restype%"; # Use %RESTYPE%, %restype% or %Restype% as a placeholder. The placeholder will be replaced with the resource type in plural, using the same case. E.g. "Related resources - %restype%" -> "Related resources - photos"
+$lang["relatedresources_onupload"]="Ressourcen beim Upload verknüpfen";
 $lang["indexedsearchable"]="Indexierte, durchsuchbare Felder";
 $lang["clearform"]="Formular zurücksetzen";
 $lang["similarresources"]="ähnliche Ressourcen"; # e.g. 17 similar resources
@@ -1079,6 +1083,9 @@ $lang["setup-storage_url"]="Storage URL";
 $lang["setup-if_storageurl"]="Wie kann per HTTP auf das Storage Verzeichnis zugegriffen werden? Kann absolut sein (http://files.example.com) oder relativ zur RS Installation. HINWEIS: Kein / am Ende.";
 $lang["setup-ftp_settings"]="FTP Einstellungen";
 $lang["setup-if_ftpserver"]="Nur notwendig, wenn Sie planen, die FTP Upload Funktion zu nutzen.";
+$lang["design-options"]="Design Optionen";
+$lang["use-slim-theme"]="SlimHeader Design verwenden";
+$lang["setup-if_slimtheme"]="SlimHeader Design verwenden für einen schmaleren Header mit verlinktem Logo.";
 $lang["setup-login_to"]="Login zu";
 $lang["setup-configuration_file_output"]="Ausgabe der Konfigurationsdatei";
 
@@ -1499,6 +1506,8 @@ $lang["columnheader-last_seen"]="Zuletzt gesehen";
  $lang["on_date"]="am";
  $lang["launchpermissionsmanager"]="Berechtigungs-Manager öffnen";
  $lang["confirm-deletion"]="Sind Sie sicher?";
+$lang["accept_png_gif_only"]="Nur .png oder .gif Erweiterung akzeptiert";
+$lang["ensure_file_extension_match"]="Sicherstellen, dass Datei und Erweiterung übereinstimmen";
 
 # Permissions Manager
 $lang["permissionsmanager"]="Berechtigungsmanager";
@@ -1556,6 +1565,7 @@ $lang["done"]="Fertig.";
 
 $lang["latlong"]="Breite / Länge";
 $lang["geographicsearch"]="Geographische Suche";
+$lang["geographicsearchresults"]="Ergebnisse der geographischen Suche";
 
 $lang["geographicsearch_help"]="Ziehen, um einen Suchbereich zu erstellen.";
 
@@ -1572,6 +1582,7 @@ $lang["editresourcetypewarning"]="Warnung: Durch das Ändern des Ressourcen-Typs
 
 $lang["geodragmode"]="Zieh-Modus";
 $lang["geodragmodearea"]="Auswahl";
+$lang["geodragmodeareaselect"]="Suchbereich auswählen";
 $lang["geodragmodepan"]="schwenken";
 
 $lang["substituted_original"] = "ersetztes Original";
@@ -1761,7 +1772,7 @@ $lang["textfile"]="Textdatei";
 # Comments field titles, prompts and default placeholders
 $lang['comments_box-title']="Kommentare";
 $lang['comments_box-policy']="Kommentar Regelung";
-$lang['comments_box-policy-placeholder']="Bitte ergänzen Sie Ihren Text unter comments_policy bei den Seitenhinhalten";		# only shown if Admin User and no policy set
+"$lang['comments_box-policy-placeholder']=""Bitte ergänzen Sie Ihren Text unter comments_policy bei den Seitenhinhalten"";		# only shown if Admin User and no policy set"
 $lang['comments_in-response-to']="Antwort auf";
 $lang['comments_respond-to-this-comment']="Antwort";
 $lang['comments_in-response-to-on']="auf";
@@ -1819,3 +1830,38 @@ $lang["shared_collections"]="Weitergegebene Kollektionen";
 $lang["internal"]="Intern";
 $lang["managecollectionslink"]="Kollektionen verwalten";
 $lang["showcollectionindropdown"]="Kollektionen in Dropdown Menü anzeigen";
+$lang["sharerelatedresources"]="Verwandte Ressourcen einschließen.<br>Eine neue Kollektion wird erstellt und weitergegeben, wenn eine dieser Ressourcen ausgewählt wird.";
+$lang["sharerelatedresourcesaddremove"]="Wenn verwandte Ressourcen weitergegeben werden, anderen Benutzern erlauben, Ressourcen aus der neuen Kollektion zu entfernen bzw. hinzuzufügen.";
+$lang["create_empty_resource"]="Upload überspringen und eine neue Ressource ohne zugeordneter Datei erstellen";
+$lang["entercollectionname"]="Namen eingeben, dann Return drücken";
+$lang["embedded_metadata"]="Eingebettete Metadaten";
+$lang["embedded_metadata_extract_option"]="Extrahieren";
+$lang["embedded_metadata_donot_extract_option"]="Nicht extrahieren";
+$lang["embedded_metadata_append_option"]="Am Ende einfügen";
+$lang["embedded_metadata_prepend_option"]="Am Anfang einfügen";
+$lang["embedded_metadata_custom_option"]="Benutzerdefiniert";
+$lang["related_resource_confirm_delete"]="This will remove the relationship but will not delete the resource. ";
+$lang["batch_replace_filename_intro"]="Um eine Reihe von Ressourcen zu ersetzen, können Sie Dateien hochladen, deren Namen den eindeutigen Ressourcen-IDs entspricht. Alternativ können Sie ein Metadatenfeld auswählen, welches den Dateinamen enthält und das System vergleicht die Dateinamen mit denen der hochgeladenen Dateien zum Ersetzen";
+$lang["batch_replace_use_resourceid"]="Dateinamen mit Ressourcen-IDs vergleichen";
+$lang["batch_replace_filename_field_select"]="Bitte wählen Sie das Feld aus, welches den Dateinamen enthält.";
+$lang["plupload_log_intro"] ="Upload Zusammenfassung - Serverzeit: ";
+$lang["no_access_to_collection"]="Sie haben leider keinen Zugriff auf diese Kollektion.";
+$lang["internal_share_grant_access"]="Offenen Zugriff für ausgewählte Benutzer gewähren?";
+$lang["internal_share_grant_access_collection"]="Offenen Zugriff für ausgewählte Benutzer gewähren (für Ressourcen, auf die Sie Bearbeitungszugriff haben)?";
+
+# For merging filename with title functionality:
+$lang['merge_filename_title_question'] = 'Dateinamen im Titel verwenden (wenn kein eingebetteter Titel gefunden wird)?';
+$lang['merge_filename_title_do_not_use'] = 'Nicht verwenden';
+$lang['merge_filename_title_replace'] = 'Ersetzen';
+$lang['merge_filename_title_prefix'] = 'Voranstellen';
+$lang['merge_filename_title_suffix'] = 'Anhängen';
+$lang['merge_filename_title_include_extensions'] = 'Dateierweiterungen verwenden?';
+$lang['merge_filename_title_spacer'] = 'Abstand';
+
+# For sending a collection with all the resources uploaded at one time:
+$lang['send_collection_to_admin_emailedcollectionname'] = 'Kollektion per E-Mail gesendet';
+$lang['send_collection_to_admin_emailsubject'] = 'Kollektion hochgeladen durch ';
+$lang['send_collection_to_admin_usercontributedcollection'] = ' hat diese Ressourcen in einer Kollektion hochgeladen';
+$lang['send_collection_to_admin_additionalinformation'] = 'Zusätzliche Informationen';
+$lang['send_collection_to_admin_collectionname'] = 'Name der Kollektion: ';
+$lang['send_collection_to_admin_numberofresources'] = 'Anzahl der Ressourcen: ';
