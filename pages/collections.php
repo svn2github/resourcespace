@@ -870,7 +870,10 @@ hook("thumblistextra");
 		}
 		else { ?>
 		<ul>
-		<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
+		<?php
+		if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) {
+			hook('beforecollectionminlinks');
+		?>
 		<?php if (checkperm("s")) { ?><?php if (!$collections_compact_style){?><li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/collection_manage.php"><?php echo $lang["managemycollections"]?></a></li><?php } ?>
 		<?php if ($contact_sheet==true) { ?>
 		<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/contactsheet_settings.php?ref=<?php echo urlencode($usercollection) ?>">&nbsp;<?php echo $lang["contactsheet"]?></a></li>
