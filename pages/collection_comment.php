@@ -17,7 +17,7 @@ $comment=$commentdata["comment"];
 $rating=$commentdata["rating"];
 
 # Check access
-if (!$cinfo["request_feedback"] || !collection_readable($collection)) {exit("Access denied.");}
+if (!collection_readable($collection)) {exit("Access denied.");}
 
 if (getval("submitted","")!="")
 	{

@@ -204,7 +204,7 @@ function collection_writeable($collection)
 	
 function collection_readable($collection)
 	{
-		global $ignore_collection_access;
+		global $ignore_collection_access, $collection_commenting;
 	# Returns true if the current user has read access to the given collection.
 
 	# Fetch collection details.
@@ -214,6 +214,10 @@ function collection_readable($collection)
 	# Load a list of attached users
 	$attached=sql_array("select user value from user_collection where collection='$collection'");
 	global $userref;
+
+	if($collection_commenting && $collectiondata['request_feedback'] == 1) {
+		return true;
+	}
 	
 	# Access if:
 	#	- It's their collection
