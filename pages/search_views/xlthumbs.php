@@ -39,7 +39,7 @@
         # Include the Flash player if an FLV file exists for this resource.
         if(!hook("customflvplay"))
             {
-            include "flv_play.php";
+            include "video_player.php";
             }
         }
     elseif ($use_mp3_player && file_exists($mp3realpath) && hook("custommp3player")){
