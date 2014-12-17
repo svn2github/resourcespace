@@ -338,17 +338,17 @@ $pdf_pages=30;
 $pdf_split_pages_to_resources=false;
 
 # Use VideoJS for video playback (as opposed to FlashPlayer, which we are deprecating)
-$videojs=true;
+$videojs=false;
 
 # Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
 $ffmpeg_preview=true; 
 $ffmpeg_preview_seconds=120; # how many seconds to preview
-$ffmpeg_preview_extension="mp4";
+$ffmpeg_preview_extension="flv";
 $ffmpeg_preview_min_width=32;
 $ffmpeg_preview_min_height=18;
 $ffmpeg_preview_max_width=480;
 $ffmpeg_preview_max_height=270;
-$ffmpeg_preview_options=" -strict experimental -ar 22050 -b 650k -ab 32k -ac 1";
+$ffmpeg_preview_options="-f flv -ar 22050 -b 650k -ab 32k -ac 1";
 # ffmpeg_global_options: options to be applied to every ffmpeg command. 
 #$ffmpeg_global_options = "-loglevel panic"; # can be used for recent versions of ffmpeg when verbose output prevents run_command completing
 #$ffmpeg_global_options = "-v panic"; # use for older versions of ffmpeg  as above
@@ -363,7 +363,7 @@ $ffmpeg_global_options = "";
 # If uploaded file is in the preview format already, should we transcode it anyway?
 # Note this is now ON by default as of switching to MP4 previews, because it's likely that uploaded MP4 files will need a lower bitrate preview and
 # were not intended to be the actual preview themselves.
-$ffmpeg_preview_force=true;
+$ffmpeg_preview_force=false;
 
 # Encode preview asynchronous?
 $ffmpeg_preview_async=false;
