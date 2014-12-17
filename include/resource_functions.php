@@ -451,6 +451,8 @@ function save_resource_data_multi($collection)
 				# Find and replace mode? Perform the find and replace.
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="FR")
 					{
+					echo "FIND:".getvalescaped("find_" . $fields[$n]["ref"],"");
+					echo "REPLACE".getvalescaped("replace_" . $fields[$n]["ref"],"");
 					$val=str_replace
 						(
 						getvalescaped("find_" . $fields[$n]["ref"],""),
@@ -458,6 +460,7 @@ function save_resource_data_multi($collection)
 						$existing
 						);
 					}
+					echo "VAL:".$val;
 				
 				# Append text/option(s) mode?
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="AP")
@@ -547,7 +550,7 @@ function save_resource_data_multi($collection)
                                             eval($fields[$n]["onchange_macro"]);    
                                             }
 					}
-				}
+				}exit();
 			}
 		}
 		
@@ -3055,7 +3058,7 @@ function get_original_imagesize($ref="",$path="", $extension="jpg")
 			    # Different versions of ffprobe store the dimensions in different parts of the json output. Test both.
 			    if (!empty($ffprobe_array['width'] )) { $sw = intval($ffprobe_array['width']);  }
 			    if (!empty($ffprobe_array['height'])) { $sh = intval($ffprobe_array['height']); }
-			    if (is_array($ffprobe_array['streams']))
+			    if (isset($ffprobe_array['streams']) && is_array($ffprobe_array['streams']))
 				{
 				foreach( $ffprobe_array['streams'] as $stream )
 				    {
