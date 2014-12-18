@@ -823,13 +823,13 @@ function iptc_return_utf8($text)
 	{
 	# For the given $text, return the utf-8 equiv.
 	# Used for iptc headers to auto-detect the character encoding.
-	global $iptc_expectedchars;
+	global $iptc_expectedchars,$mysql_charset;
 	
 	# No inconv library? Return text as-is
 	if (!function_exists("iconv")) {return $text;}
 	
 	# No expected chars set? Return as is
-	if ($iptc_expectedchars=="") {return $text;}
+	if ($iptc_expectedchars=="" || $mysql_charset=="utf8") {return $text;}
 	
 	$try=array("UTF-8","ISO-8859-1","Macintosh","Windows-1252");
 	for ($n=0;$n<count($try);$n++)
