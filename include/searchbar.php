@@ -479,7 +479,7 @@ if (!$basic_simple_search)
 					document.getElementById('field_<?php echo htmlspecialchars($fields[$n]["name"]) ?>').value='';
 					}
 				else
-					{document.getElementById('simplesearch_<?php echo $fields[$n]["ref"] ?>').style.display='block';}
+					{document.getElementById('simplesearch_<?php echo $fields[$n]["ref"] ?>').style.display='';}
 				<?php
 				}
 			}
