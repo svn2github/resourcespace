@@ -54,6 +54,7 @@ else
 
     # Create a temporary file (simulate download) and create a report for it.
     $tmpfile = write_metadata($image, $ref);
+    if ($tmpfile===false || !file_exists($tmpfile)){$tmpfile=$image;}
     $command = $exiftool_fullpath . " -s -t -G --filename --exiftoolversion --filepermissions --NativeDigest --History --Directory " . escapeshellarg($tmpfile)." 2>&1";
     $report_simulated = run_command($command);
 
