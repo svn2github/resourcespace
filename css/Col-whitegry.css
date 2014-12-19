@@ -109,7 +109,7 @@ input[readonly] {color: #000000;}
 .HomePanelHelp h2 {background: url(../gfx/whitegry/interface/help.png) no-repeat 0 0;}
 
 
-.highlight {color: #990000;}
+.highlight {color: #000;background-color: #ff0;}
 
 .Tab a {border: 1px solid #BBBBBB;border-bottom-style: none;color: #aaaaaa;  }
 .StyledTabbedPanel 

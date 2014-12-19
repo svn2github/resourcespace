@@ -96,7 +96,7 @@ input[readonly] {color: #000000;}
 .ThemeBox {border-bottom: 1px solid #BBBBBB;}
 .HomePanel h2 {background: url(../gfx/multi/interface/HomeArrow.gif) no-repeat 1px 10px;}
 
-.highlight {color: #990000;}
+.highlight {color: #000;background-color: #ff0;}
 
 .Tab a {border: 1px solid #BBBBBB;border-bottom-style: none;color: #aaaaaa;  }
 .StyledTabbedPanel 
