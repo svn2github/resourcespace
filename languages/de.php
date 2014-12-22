@@ -1772,7 +1772,7 @@ $lang["textfile"]="Textdatei";
 # Comments field titles, prompts and default placeholders
 $lang['comments_box-title']="Kommentare";
 $lang['comments_box-policy']="Kommentar Regelung";
-"$lang['comments_box-policy-placeholder']=""Bitte ergänzen Sie Ihren Text unter comments_policy bei den Seitenhinhalten"";		# only shown if Admin User and no policy set"
+$lang['comments_box-policy-placeholder']="Bitte ergänzen Sie Ihren Text unter comments_policy bei den Seitenhinhalten";		# only shown if Admin User and no policy set"
 $lang['comments_in-response-to']="Antwort auf";
 $lang['comments_respond-to-this-comment']="Antwort";
 $lang['comments_in-response-to-on']="auf";
