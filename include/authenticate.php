@@ -225,7 +225,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 					
 					# Remove session
 					sql_query("update user set logged_in=0,session='' where ref='$userref'");
-			
+					hook("removeuseridcookie");
 					# Blank cookie / var
 					rs_setcookie("user", "", time() - 3600, "", "", substr($baseurl,0,5)=="https", true);
 					unset($username);
@@ -260,9 +260,10 @@ else
     # Set a cookie that we'll check for again on the login page after the redirection.
     # If this cookie is missing, it's assumed that cookies are switched off or blocked and a warning message is displayed.
     setcookie("cookiecheck","true",0,'/', '', false, true);
+    hook("removeuseridcookie");
     }
 
-if (!$valid && !$api)
+if (!$valid && !$api && !isset($system_login))
     {
 	$_SERVER['REQUEST_URI'] = ( isset($_SERVER['REQUEST_URI']) ?
 	$_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . (( isset($_SERVER
@@ -293,9 +294,10 @@ if (!$valid && $api){echo "invalid login";exit();}
 
 # Handle IP address restrictions
 $ip=get_ip();
-$ip_restrict=$ip_restrict_group;
-if ($ip_restrict_user!="") {$ip_restrict=$ip_restrict_user;} # User IP restriction overrides the group-wide setting.
-if ($ip_restrict!="")
+if (isset($ip_restrict_group)){
+	$ip_restrict=$ip_restrict_group;
+	if ($ip_restrict_user!="") {$ip_restrict=$ip_restrict_user;} # User IP restriction overrides the group-wide setting.
+	if ($ip_restrict!="")
 	{
 	$allow=false;
 
@@ -314,7 +316,7 @@ if ($ip_restrict!="")
 		exit("Access denied.");
 		}
 	}
-
+}
 #update activity table
 global $pagename;
 $terms="";if (($pagename!="login") && ($pagename!="terms")) {$terms=",accepted_terms=1";} # Accepted terms
@@ -354,7 +356,7 @@ foreach($active_plugins as $plugin)
 	{ 
 	# Check group access, only enable for global access at this point
 	$s=explode(",",$plugin['enabled_groups']);
-	if (in_array($usergroup,$s))
+	if (isset($usergroup) && in_array($usergroup,$s))
 		{
 		include_plugin_config($plugin['name'],$plugin['config'],$plugin['config_json']);
 		register_plugin($plugin['name']);
@@ -362,9 +364,12 @@ foreach($active_plugins as $plugin)
 		$plugins[]=$plugin['name'];
 		}
 	}
-
+hook('handleuserref','',array($userref));
 if ($userpassword=="b58d18f375f68d13587ce8a520a87919" && $pagename!="user_preferences"  && $pagename!="collections"){?>
 <script>
 	top.location.href="<?php echo $baseurl_short?>pages/user_preferences.php";
 </script>
-<?php } 
+<?php }
+
+
+
