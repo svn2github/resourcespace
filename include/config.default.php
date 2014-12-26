@@ -1233,6 +1233,8 @@ $simple_search_dropdown_filtering=false;
 $search_includes_themes=false;
 $search_includes_public_collections=false;
 $search_includes_user_collections=false;
+# Should the Clear button leave collection searches off by default?
+$clear_button_unchecks_collections=true;
 
 # include keywords from collection titles when indexing collections
 $index_collection_titles = true;
@@ -1406,6 +1408,10 @@ $top_nav_upload_type="plupload"; # The upload type. Options are plupload, ftp, l
 
 # You can set the following line to ''  to disable chunking. May resolve issues with flash uploader.
 $plupload_chunk_size='5mb';
+
+# Use the JQuery UI Widget instead of the Queue interface (includes a stop button and optional thumbnail mode
+$plupload_widget=false;
+$plupload_widget_thumbnails=true;
 
 # Allow users to delete resources?
 # (Can also be controlled on a more granular level with the "D" restrictive permission.)
@@ -2499,3 +2505,5 @@ $send_collection_to_admin = FALSE;
 
 # Set to true if you want to share internally a collection which is not private
 $ignore_collection_access = FALSE;
+
+

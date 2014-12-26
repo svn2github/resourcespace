@@ -190,23 +190,23 @@ if (!$basic_simple_search)
 		<?php if ($searchbar_selectall && ($search_includes_user_collections || $search_includes_public_collections || $search_includes_themes)) { ?>
 		<div class="tick"><input type='checkbox' id='rttickallcoll' name='rttickallcoll' checked onclick='jQuery("#form1 .tickboxcoll").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#rttickallcoll").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['allcollectionssearchbar']?></div>
 		<?php }?>
-		<?php
+		<?php if ($clear_button_unchecks_collections){$colcheck="false";}else {$colcheck="true";}
 		if ($search_includes_user_collections) 
 		    { ?>
 		    <div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxMyCol" type="checkbox" name="resourcemycol" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("mycol",$rt))) {?>checked="checked"<?php } ?> onClick="HideInapplicableSimpleSearchFields(true);<?php if ($searchbar_selectall){?>resetTickAllColl();<?php } ?>"/><label for="TickBoxMyCol">&nbsp;<?php echo $lang["mycollections"]?></label></div><?php	
-		    $clear_function.="document.getElementById('TickBoxMyCol').checked=true;";
+		    $clear_function.="document.getElementById('TickBoxMyCol').checked=".$colcheck.";";
 		    if ($searchbar_selectall) {$clear_function.="resetTickAllColl();";}
 		    }
 	    if ($search_includes_public_collections) 
 	        { ?>
 	        <div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxPubCol" type="checkbox" name="resourcepubcol" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("pubcol",$rt))) {?>checked="checked"<?php } ?> onClick="HideInapplicableSimpleSearchFields(true);<?php if ($searchbar_selectall){?>resetTickAllColl();<?php } ?>"/><label for="TickBoxPubCol">&nbsp;<?php echo $lang["findpubliccollection"]?></label></div><?php	
-	        $clear_function.="document.getElementById('TickBoxPubCol').checked=true;";
+	        $clear_function.="document.getElementById('TickBoxPubCol').checked=".$colcheck.";";
 	        if ($searchbar_selectall) {$clear_function.="resetTickAllColl();";}
 	        }
 	    if ($search_includes_themes) 
 	        { ?>
 	        <div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickboxcoll" id="TickBoxThemes" type="checkbox" name="resourcethemes" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array("themes",$rt))) {?>checked="checked"<?php } ?> onClick="HideInapplicableSimpleSearchFields(true);<?php if ($searchbar_selectall){?>resetTickAllColl();<?php } ?>"/><label for="TickBoxThemes">&nbsp;<?php echo $lang["findcollectionthemes"]?></label></div><?php	
-	        $clear_function.="document.getElementById('TickBoxThemes').checked=true;";
+	        $clear_function.="document.getElementById('TickBoxThemes').checked=".$colcheck.";";
 	        if ($searchbar_selectall) {$clear_function.="resetTickAllColl();";}
 	        }
 	   

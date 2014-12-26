@@ -493,6 +493,10 @@ elseif ($upload_no_file && getval("createblank","")!="")
     redirect($baseurl_short."pages/edit.php?refreshcollectionframe=true&ref=" . $ref."&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
 	}
 
+$headerinsert.="
+<link type='text/css' href='$baseurl/css/smoothness/jquery-ui.min.css?css_reload_key=$css_reload_key' rel='stylesheet' />
+<link type='text/css' href='$baseurl/css/smoothness/theme.css?css_reload_key=$css_reload_key' rel='stylesheet' />";
+
 include "../include/header.php";
 ?>
 
@@ -522,8 +526,14 @@ var pluploadconfig = {
         if (isset($plupload_max_file_size)) echo "max_file_size: '$plupload_max_file_size',"; ?>
         multiple_queues: true,
         max_retries: <?php echo $plupload_max_retries; ?>,
-
-
+		<?php if ($plupload_widget){?>
+		views: {
+            list: true,
+            thumbs: <?php if ($plupload_widget_thumbnails){?>true<?php } else {?>false<?php }?>, // Show thumbs
+            active: <?php if ($plupload_widget_thumbnails){?>'thumbs'<?php } else { ?>'list'<?php } ?>
+        },
+        rename:true,
+		<?php } ?>
         <?php if ($replace_resource > 0){?>
         multi_selection:false,
         rename: true,
@@ -695,6 +705,7 @@ var pluploadconfig = {
                                                                 }
                                                             ?>
                                                   });
+                                                  alert('Upload Complete');
                           });
                   
                                 
@@ -729,7 +740,7 @@ var pluploadconfig = {
         
         jQuery(document).ready(function () {            
                 
-                jQuery("#pluploader").pluploadQueue(pluploadconfig);        
+                jQuery("#pluploader").plupload<?php if (!$plupload_widget){?>Queue<?php } ?>(pluploadconfig);        
 	             
             });
 	
@@ -893,8 +904,6 @@ if($upload_no_file)
 
 </div>
 
-
-	
 
 
 <?php
