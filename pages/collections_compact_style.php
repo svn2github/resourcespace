@@ -90,7 +90,7 @@ if (count($colresult)>0 && checkperm("e" . $colresult[0]["archive"]) && allow_mu
 
 <!-- viewall *-->
 <?php if ($pagename!="search" && $count_result>0){
-    ?><option value="<?php echo urlencode($collection) ?>|0|0|<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $collection)?>|main|false">&gt;&nbsp;<?php echo $lang["viewall"]?></option>
+    ?><option value="<?php echo urlencode($collection) ?>|0|0|<?php echo $baseurl_short?>pages/search.php?search=<?php echo "!collection" . urlencode($collection)?>|main|false">&gt;&nbsp;<?php echo $lang["viewall"]?></option>
 <?php } ?>
 <!-- end viewall -->
 
@@ -178,7 +178,7 @@ hook("collectiontoolcompact2","",array("collection"=>$collection,"count_result"=
 <!-- end edit collection -->
 
 <!-- delete -->
-<?php if (!checkperm("b") && (($userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="<?php echo htmlspecialchars($collection) ?>|<?php echo $lang["collectiondeleteconfirm"]?>|<?php echo $baseurl_short?>pages/collection_manage.php?delete=<?php echo urlencode($collection) ?>|<?php if (in_array($pagename,$back_home)){echo 'search.php';} elseif(in_array($pagename,$main_pages)){echo $pagename.'.php?offset='.$offset.'&col_order_by='.$col_order_by.'&sort='.$sort.'&find='.urlencode($find);} else { echo $baseurl_short.'pages/collections.php';}?>|<?php if (in_array($pagename,$back_home) || in_array($pagename,$main_pages)){echo 'main';} else {echo 'collections';}?>|<?php if (in_array($pagename,$back_home)){echo 'collections';} else {echo 'both';}?>">&gt;&nbsp;<?php echo $lang["action-deletecollection"];?>...</option>
+<?php if (!checkperm("b") && (($userref==$cinfo["user"]) || checkperm("h")) /*&& ($cinfo["cant_delete"]==0)*/) {?>&nbsp;<option id="delete" value="<?php echo htmlspecialchars($collection) ?>|<?php echo $lang["collectiondeleteconfirm"]?>|<?php echo $baseurl_short?>pages/collection_manage.php?delete=<?php echo urlencode($collection) ?>|<?php if (in_array($pagename,$back_home)){echo 'search.php';} elseif(in_array($pagename,$main_pages)){echo $pagename.'.php?offset='.$offset.'&col_order_by='.$col_order_by.'&sort='.$sort.'&find='.urlencode($find);} else { echo $baseurl_short.'pages/collections.php';}?>|<?php if (in_array($pagename,$back_home) || in_array($pagename,$main_pages)){echo 'main';} else {echo 'collections';}?>|<?php if (in_array($pagename,$back_home)){echo 'collections';} else {echo 'both';}?>">&gt;&nbsp;<?php echo $lang["action-deletecollection"];?>...</option>
 <?php } ?>
 <!-- end delete and remove-->
 
