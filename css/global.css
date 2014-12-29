@@ -547,7 +547,6 @@ div.autocomplete ul li {
 	vertical-align: middle;
 	}
 
-div#pluploader { height: 275px; }
 li.plupload_droptext 
 	{
 	color:#999;
@@ -571,6 +570,8 @@ li.plupload_droptext
 #pluploader .plupload_view_list .plupload_file_action {padding-top:6px;padding-bottom:6px;}
 .plupload_view_list .plupload_filelist_footer {padding-right:15px;}
 .plupload_view_list .plupload_filelist_footer .plupload_file_action {padding-right:21px;padding-left:6px;}
+
+#showlog {margin-top:10px;}
 
 .ui-layout-toggler-open-hover
 	{
