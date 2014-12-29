@@ -555,6 +555,23 @@ li.plupload_droptext
 	}
 .plupload_file_size{color:#777;}	
 
+ /* Smoothness changes - general */
+#pluploader .plupload_header, #pluploader .plupload_add, #pluploader .plupload_start, #pluploader .plupload_file {opacity:1;} 
+#pluploader .ui-button-disabled {opacity:.3;}
+#pluploader .plupload_header {border-top:0px;border-right:0px;border-left:0px;border-bottom-color:#AAA;background: #e6e6e6 url("smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png") 0% 58% repeat-x;}
+#pluploader .plupload_header_content {padding-left:10px;}
+#pluploader .plupload_filelist_footer {border-bottom:0px;border-left:0px;border-right:0px;}
+#pluploader .plupload_view_switch{bottom:16px;}
+#pluploader .plupload_view_switch .ui-button-icon-only {margin-right:0px;}
+ /* Smoothness changes - list view */
+.plupload_view_list .plupload_filelist_header {border-top:1px;border-right:0px;border-left:0px;padding-right:15px;}
+.plupload_view_list .plupload_filelist_header .plupload_file_action {padding-right:21px;}
+.plupload_view_list .plupload_content {top:86px;bottom:41px;overflow-x: hidden;overflow-y: scroll;}
+.plupload_view_list .plupload_file {height:28px;padding-bottom:0px;border-top:0px;border-right:0px;border-left:0px;background: #e6e6e6 url("smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png") 0% 54% repeat-x;}
+#pluploader .plupload_view_list .plupload_file_action {padding-top:6px;padding-bottom:6px;}
+.plupload_view_list .plupload_filelist_footer {padding-right:15px;}
+.plupload_view_list .plupload_filelist_footer .plupload_file_action {padding-right:21px;padding-left:6px;}
+
 .ui-layout-toggler-open-hover
 	{
 	background-color:rgb(160,175,195);

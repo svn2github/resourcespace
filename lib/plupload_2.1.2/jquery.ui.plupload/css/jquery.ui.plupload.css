@@ -40,14 +40,14 @@
 	position: relative;
 }
 
-.plupload_logo {
+/*.plupload_logo {
 	width: 40px;
 	height: 40px;
 	background: url('../img/plupload.png') no-repeat 0 0;
 	position: absolute;
 	top: 8px;
 	left: 8px;
-}
+}*/
 
 .plupload_header_content_bw .plupload_logo {
 	background-position: -40px 0;
