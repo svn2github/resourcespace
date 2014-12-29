@@ -558,7 +558,8 @@ li.plupload_droptext
 #pluploader .plupload_header, #pluploader .plupload_add, #pluploader .plupload_start, #pluploader .plupload_file {opacity:1;} 
 #pluploader .ui-button-disabled {opacity:.3;}
 #pluploader .plupload_header {border-top:0px;border-right:0px;border-left:0px;border-bottom-color:#AAA;background: #e6e6e6 url("smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png") 0% 58% repeat-x;}
-#pluploader .plupload_header_content {padding-left:10px;}
+#pluploader .plupload_header_content {padding-left:10px}
+.plupload_message.ui-state-error p {color:#555;}
 #pluploader .plupload_filelist_footer {border-bottom:0px;border-left:0px;border-right:0px;}
 #pluploader .plupload_view_switch{bottom:16px;}
 #pluploader .plupload_view_switch .ui-button-icon-only {margin-right:0px;}
