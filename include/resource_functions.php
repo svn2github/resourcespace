@@ -451,8 +451,6 @@ function save_resource_data_multi($collection)
 				# Find and replace mode? Perform the find and replace.
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="FR")
 					{
-					echo "FIND:".getvalescaped("find_" . $fields[$n]["ref"],"");
-					echo "REPLACE".getvalescaped("replace_" . $fields[$n]["ref"],"");
 					$val=str_replace
 						(
 						getvalescaped("find_" . $fields[$n]["ref"],""),
@@ -460,7 +458,6 @@ function save_resource_data_multi($collection)
 						$existing
 						);
 					}
-					echo "VAL:".$val;
 				
 				# Append text/option(s) mode?
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="AP")
@@ -542,15 +539,14 @@ function save_resource_data_multi($collection)
 
 						remove_keyword_mappings($ref,i18n_get_indexable($oldval),$fields[$n]["ref"],$fields[$n]["partial_index"],$is_date,'','',$is_html);
 						add_keyword_mappings($ref,i18n_get_indexable($newval),$fields[$n]["ref"],$fields[$n]["partial_index"],$is_date,'','',$is_html);
-						}
-                                                
-                                        # Add any onchange code
-                                        if($fields[$n]["onchange_macro"]!="")
-                                            {
-                                            eval($fields[$n]["onchange_macro"]);    
-                                            }
+						}           
+                            # Add any onchange code
+                            if($fields[$n]["onchange_macro"]!="")
+                                {
+                                eval($fields[$n]["onchange_macro"]);    
+                                }
 					}
-				}exit();
+				}
 			}
 		}
 		
