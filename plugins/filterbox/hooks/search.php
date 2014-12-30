@@ -13,7 +13,7 @@ function HookFilterboxSearchSearchaftersearchcookie()
 
 function HookFilterboxSearchDosearchmodifykeywords($keywords)
 	{
-	global $perform_filter, $filter_keywords;
+	global $perform_filter, $filter_keywords, $filterbox_wildcard;
 	if (!empty($perform_filter) && !empty($filter_keywords))
 		{
 		$perform_filter=false;
@@ -21,7 +21,7 @@ function HookFilterboxSearchDosearchmodifykeywords($keywords)
 		foreach ($filterArray as $filterKeyword)
 			{
 			$filterKeyword=  strtolower(trim($filterKeyword));
-			if (!strpos($filterKeyword, '*'))
+			if ($filterbox_wildcard && !strpos($filterKeyword, '*'))
 				$filterKeyword='*'.$filterKeyword.'*';
 			$keywords[]=$filterKeyword;
 			}
