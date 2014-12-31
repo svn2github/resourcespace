@@ -539,7 +539,7 @@ if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get
 </div>
 
 <?php if (!hook("replaceresourceistranscoding")){
-	if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1) { ?><div class="PageInformal"><?php echo $lang['resourceistranscoding']?></div><?php }
+	if (isset($resource['is_transcoding']) && $resource['is_transcoding']!=0) { ?><div class="PageInformal"><?php echo $lang['resourceistranscoding']?></div><?php }
 	} //end hook replaceresourceistrancoding ?>
 
 <?php hook("renderbeforeresourceview"); 
@@ -561,7 +561,7 @@ if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
 	{
 	include "../players/type" . $resource["resource_type"] . ".php";
 	}
-elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($flvfile))
+elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']!=0) && file_exists($flvfile))
 	{
 	# Include the player if a video preview file exists for this resource.
 	$download_multisize=false;
