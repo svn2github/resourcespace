@@ -1143,7 +1143,9 @@ function display_multilingual_text_field($n, $field, $translations)
 
 function display_field($n, $field, $newtab=false)
 	{
-	global $use, $ref, $original_fields, $multilingual_text_fields, $multiple, $lastrt,$is_template, $language, $lang, $blank_edit_template, $edit_autosave, $errors, $tabs_on_edit,$collapsible_sections, $ctrls_to_save, $embedded_data_user_select, $embedded_data_user_select_fields;
+	global $use, $ref, $original_fields, $multilingual_text_fields, $multiple, $lastrt,$is_template, $language, $lang,
+		   $blank_edit_template, $edit_autosave, $errors, $tabs_on_edit, $collapsible_sections, $ctrls_to_save,
+		   $embedded_data_user_select, $embedded_data_user_select_fields, $show_error, $save_errors;
 	
 	$name="field_" . $field["ref"];
 	$value=$field["value"];
@@ -1233,9 +1235,18 @@ function display_field($n, $field, $newtab=false)
 		<?php hook ("edit_all_after_findreplace","",array($field,$n)); ?>
 		<?php
 		}
+
+	/****************************** Errors on saving ***************************************/
+	$field_save_error = FALSE;
+	if (isset($show_error) && isset($save_errors)) {
+		if(array_key_exists($field['ref'], $save_errors)) {
+			$field_save_error = TRUE;
+		}
+	}
+	/***************************************************************************************/
 	?>
 
-	<div class="Question" id="question_<?php echo $n?>" <?php
+	<div class="Question <?php if($field_save_error) { echo 'FieldSaveError'; } ?>" id="question_<?php echo $n?>" <?php
 	if ($multiple || !$displaycondition || $newtab)
 		{?>style="border-top:none;<?php 
 		if ($multiple || !$displaycondition) # Hide this
@@ -1761,8 +1772,19 @@ if($collapsible_sections)
 <?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>
 
 <?php if (isset($show_error) && isset($save_errors) && !hook('replacesaveerror')) {
+	?>
+	<script type="text/javascript">
+
+		// Find the first field that triggered the error:
+		var error_fields;
+
+		error_fields = document.getElementsByClassName('FieldSaveError');
+		window.location.hash = error_fields[0].id;
+
+	</script>
+	<?php
 	foreach ($save_errors as $save_error_field=>$save_error_message)
-		{	
+		{
 		?>
 	    <script type="text/javascript">
 	    alert('<?php echo htmlspecialchars($save_error_message) ?>');
