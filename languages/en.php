@@ -796,6 +796,7 @@ $lang["lastused"]="Last used";
 $lang["noattachedusers"]="No attached users.";
 $lang["confirmdeleteaccess"]="Are you sure you wish to delete this access key? Users that have been given access using this key will no longer be able to access this collection.";
 $lang["confirmdeleteaccessresource"]="Are you sure you wish to delete this access key? Users that have been given access using this key will no longer be able to access this resource.";
+$lang["editingexternalshare"]="Editing external share";
 $lang["noexternalsharing"]="No external sharing.";
 $lang["sharedcollectionaddwarning"]="Warning: This collection has been shared with external users. The resource you have added has now been made available to these users. Click 'share' to manage the external access for this collection.";
 $lang["sharedcollectionaddwarningupload"]="Warning: The selected collection has been shared with external users. The resources you upload will be made available to these users. Click 'share' in the bottom bar to manage the external access for this collection.";

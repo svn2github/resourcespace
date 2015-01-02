@@ -92,7 +92,7 @@ include "../include/header.php";
 	<input type="hidden" name="editaccesslevel" id="editaccesslevel" value="">
 	<input type="hidden" name="generateurl" id="generateurl" value="">
 
-	<h1><?php echo $lang["sharecollection"];?></h1>
+	<h1><?php echo $lang["sharecollection"]; if($editing){echo " - ".$lang["editingexternalshare"]." ".$editaccess;}?></h1>
 	<?php
 	if(isset($warningtext))
 		{
