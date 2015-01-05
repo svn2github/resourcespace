@@ -2308,8 +2308,8 @@ $download_chunk_size=(2 << 20);
 #what to search for in advanced search by default - "Global", "Collections" or resource type id (e.g. 1 for photo in default installation, can be comma separated to enable multiple selections
 $default_advanced_search_mode="Global";
 
-#Option to turn off metadata download in view.php
-$metadata_download=true;
+#Option to turn on metadata download in view.php.
+$metadata_download=false;
 
 # settings for commenting on resources - currently not enabled by default
 
