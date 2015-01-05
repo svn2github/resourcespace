@@ -389,7 +389,8 @@ if ($display_user_rating_stars && $k=="")
 			jQuery('#CentralSpace').sortable({
 				helper:"clone",
 				items: ".ResourcePanelShell, .ResourcePanelShellLarge, .ResourcePanelShellSmall",
-
+				cancel: ".DisableSort",
+				
 				start: function (event, ui)
 					{
 					InfoBoxEnabled=false;
