@@ -202,20 +202,45 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 				{
 				$field_resource_type=$resource_type;
 				}
-				
+
+			// Check for multiple options
+			if(strpos($cell_value,",")>0 && count($meta[$field_resource_type][$field_name]['options'])>0 && !in_array($meta[$field_resource_type][$field_name]['type'],array(3,12))) // cell value may be a series of values, but not for radio or drop down types
+					{
+					$cell_values=explode(",",$cell_value);
+					}
+				else
+					{
+					// Make single value into a dummy array
+					$cell_values=array($cell_value);
+					}
+			$update_dynamic_field=false;
+			
+			
 			if ($meta[$field_resource_type][$field_name]['required'])		// this field is required
 				{
-				if (count($meta[$field_resource_type][$field_name]['options'])>0 && (array_search($cell_value,$meta[$field_resource_type][$field_name]['options'])===false))	// there are options but value does not match any of them
-					{
-					array_push($messages, "Error: Value \"{$cell_value}\" not found in lookup for \"{$field_name}\" required field - found on line {$line_count}");					
-					$error_count++;
-					continue;
-					}			
 				if ($cell_value==null or $cell_value=="")		// this field is empty
+						{
+						array_push($messages, "Error: Empty value for \"{$field_name}\" required field not allowed - found on line {$line_count}");
+						$error_count++;
+						continue;
+						}
+				foreach($cell_values as $cell_actual_value)
 					{
-					array_push($messages, "Error: Empty value for \"{$field_name}\" required field not allowed - found on line {$line_count}");
-					$error_count++;
-					continue;
+					if (count($meta[$field_resource_type][$field_name]['options'])>0 && (array_search($cell_actual_value,$meta[$field_resource_type][$field_name]['options'])===false))	// there are options but value does not match any of them
+						{
+						if($meta[$field_resource_type][$field_name]['type']==9)
+							{
+							// Need to add to options table
+							$meta[$field_resource_type][$field_name]['options'][]=trim($cell_actual_value);
+							$update_dynamic_field=true;
+							}
+						else
+							{
+							array_push($messages, "Error: Value \"{$cell_actual_value}\" not found in lookup for \"{$field_name}\" required field - found on line {$line_count}");					
+							$error_count++;
+							continue;
+							}
+						}							
 					}
 				}
 			else	// field is not required
@@ -223,26 +248,42 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$overrid
 				if ($cell_value==null or $cell_value=="")		// a value wasn't specified for non-required field so move on
 					{
 					continue;
-					}
-							
-				if (count($meta[$field_resource_type][$field_name]['options'])>0 && array_search($cell_value,$meta[$field_resource_type][$field_name]['options'])===false)
-					{
-					array_push($messages, "Error: Value \"{$cell_value}\" not found in lookup for \"{$field_name}\" field - found on line {$line_count}");
-					$error_count++;
-					continue;
+					}		
+				foreach($cell_values as $cell_actual_value)
+					{		
+					if (count($meta[$field_resource_type][$field_name]['options'])>0 && array_search(trim($cell_actual_value),$meta[$field_resource_type][$field_name]['options'])===false) // there are options but value does not match any of them
+						{
+						if($meta[$field_resource_type][$field_name]['type']==9)
+							{
+							// Need to add to options table
+							$meta[$field_resource_type][$field_name]['options'][]=trim($cell_actual_value);						
+							$update_dynamic_field=true;
+							array_push($messages,"Adding option for field " . $meta[$field_resource_type][$field_name]['remote_ref'] . ": " . $cell_actual_value);
+							}
+						else
+							{
+							array_push($messages, "Error: Value \"{$cell_actual_value}\" not found in lookup for \"{$field_name}\" field - found on line {$line_count}");
+							$error_count++;
+							continue;
+							}		
+						}
 					}
 				}				
 						
 			if($processcsv)	
-				{				
-				//echo "Updating field " . $field_name . "(" . $meta[$field_resource_type][$field_name]['remote_ref'] . ")<br>";
-				
+				{								
 				// Prefix value with comma as this is required for indexing and rendering selected options
 				if (in_array($meta[$field_resource_type][$field_name]['type'], array(2,3,7,9,12)) && substr($cell_value,0,1) <> ',')
 					{
 					$cell_value = ','.$cell_value;
 					}
 				update_field($newref,$meta[$field_resource_type][$field_name]['remote_ref'],$cell_value);
+				
+				if($meta[$field_resource_type][$field_name]['type']==9 && $update_dynamic_field) 
+					{
+					debug("updating dynamic field options for field " . $field_name);
+					sql_query("update resource_type_field set options='," . escape_check(implode(",",$meta[$field_resource_type][$field_name]['options'])) . "' where ref='" . $meta[$field_resource_type][$field_name]['remote_ref'] .  "'");
+					}
 				}
 				
 		ob_flush();	
