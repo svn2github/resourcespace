@@ -40,6 +40,9 @@ $baseurl="http://my.site/resourcespace"; # The 'base' web address for this insta
 $email_from="resourcespace@my.site"; # Where system e-mails appear to come from
 $email_notify="resourcespace@my.site"; # Where resource/research/user requests are sent
 
+# Indicates which users can update very low level configuration options for example debug_log.
+$system_architect_user_names = array('admin');		// Warning: this is for experienced technical users, typically ResourceSpace providers.
+
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
 $spider_usergroup=2; # The user group that will be used to access the resource list for the spider index.
 $spider_access=array(0,1); # Which access level(s) are required when producing the index (0=Open, 1=Restricted, 2=Confidential/Hidden).
@@ -2505,6 +2508,3 @@ $send_collection_to_admin = FALSE;
 
 # Set to true if you want to share internally a collection which is not private
 $ignore_collection_access = FALSE;
-
-# Indicates which users can update very low level configuration options for example debug_log.
-$system_architect_user_names = array('Montala Support');		// Warning: this is for experienced technical users, typically ResourceSpace providers.
