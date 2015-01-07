@@ -43,8 +43,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# Recognise a quoted search, which is a search for an exact string
 	global $quoted_string;
 	$quoted_string=false;
-	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {debug("BANG: YES");$quoted_string=true;$search=substr($search,1,-1);}
-
+	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {$quoted_string=true;$search=substr($search,1,-1);}
 
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
@@ -1039,7 +1038,16 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}
 	
 		return sql_query($sql_prefix . "SELECT distinct r.hit_count score, $select FROM resource r $sql_join $resources and $sql_filter order by $order_by" . $sql_suffix,false,$fetchrows);
-		}		
+		}	
+
+	# View resources that have data in the specified field reference - useful if deleting unused fields
+	if (substr($search,0,8)=="!hasdata") 
+		{		
+		$fieldref=intval(trim(substr($search,8)));
+		$sql_join.=" join resource_data on r.ref=resource_data.resource and resource_data.resource_type_field=$fieldref and resource_data.value<>'' ";
+		//exit($sql_prefix . "select distinct r.hit_count score, $select from resource r $sql_join and r.ref > 0 and $sql_filter group by r.ref order by $order_by" . $sql_suffix);
+		return sql_query($sql_prefix . "select distinct r.hit_count score, $select from resource r $sql_join and r.ref > 0 and $sql_filter group by r.ref order by $order_by" . $sql_suffix,false,$fetchrows);
+		}
 
 	# Within this hook implementation, set the value of the global $sql variable:
 	# Since there will only be one special search executed at a time, only one of the

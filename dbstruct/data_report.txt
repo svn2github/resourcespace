@@ -289,3 +289,12 @@ INNER JOIN daily_stat AS d
            AND (d.year < [to-y] OR (d.year = [to-y] AND d.month < [to-m]) OR (d.year = [to-y] AND d.month = [to-m] AND d.day <= [to-d]))
    GROUP BY k.ref
    ORDER BY Searches DESC;"
+16,"Database statistics","
+select 
+(select count(*) from resource) as 'Total resources',
+(select count(*) from keyword) 'Total keywords',
+(select count(*) from resource_keyword) as 'Resource keyword relationships',
+(select count(*) from collection) as 'Total collections',
+(select count(*) from collection_resource) as 'Collection resource relationships',
+(select count(*) from user) as 'Total users';
+"

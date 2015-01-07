@@ -97,10 +97,13 @@ else
 <div class="Question">
 <label for="report"><?php echo $lang["viewreport"]?></label><select id="report" name="report" class="stdwidth">
 <?php
-$reports=get_reports(); 
+$reports=get_reports();
+
+$ref=getval("ref","");
+
 for ($n=0;$n<count($reports);$n++)
 	{
-	?><option value="<?php echo $reports[$n]["ref"]?>" <?php if ($report==$reports[$n]["ref"]) { ?>selected<?php } ?>><?php echo $reports[$n]["name"]?></option><?php
+	?><option value="<?php echo $reports[$n]["ref"]; ?>"<?php if($reports[$n]["ref"]==$ref) { ?> selected="selected"<?php } ?>"><?php echo $reports[$n]["name"]?></option><?php
 	}
 ?>
 </select>

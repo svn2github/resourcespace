@@ -37,10 +37,17 @@ if (getval("newuser","")!="")
 	
 include "../../include/header.php";
 ?>
-
-
 <div class="BasicsBox"> 
-  <h1><?php echo $lang["manageusers"]?></h1>
+	<?php 
+	$backlink=getvalescaped("backlink","");
+	if($backlink!="")
+		{
+?>	<p>
+		<a href='<?php echo urldecode($backlink); ?>'>&lt;&nbsp;<?php echo $lang['back']; ?></a>
+	</p>
+<?php
+		}
+?><h1><?php echo $lang["manageusers"]?></h1>
   <p><?php echo text("introtext")?></p>
 
 <?php if (isset($error)) { ?><div class="FormError">!! <?php echo $error?> !!</div><?php } ?>

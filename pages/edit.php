@@ -324,81 +324,50 @@ if (getval("refreshcollectionframe","")!="")
 
 include "../include/header.php";
 ?>
+
+
 <script type="text/javascript">
 
+	registerCollapsibleSections();
 
 jQuery(document).ready(function()
     {
+<?php
+if($ctrls_to_save)
+	{?>
+	jQuery(document).bind('keydown',function (e)
+		{
+		if (!(e.which == 115 && (e.ctrlKey || e.metaKey)) && !(e.which == 83 && (e.ctrlKey || e.metaKey)) && !(e.which == 19) )
+			{
+			return true;
+			}
+		else
+			{
+			e.preventDefault();
+			if(jQuery('#mainform'))
+			{
+			jQuery('.AutoSaveStatus').html('<?php echo $lang["saving"] ?>');
+			jQuery('.AutoSaveStatus').show();
+			jQuery.post(jQuery('#mainform').attr('action') + '&autosave=true',jQuery('#mainform').serialize(),
 
-    jQuery('.CollapsibleSectionHead').click(function() 
-        {
-        cur=jQuery(this).next();
-        cur_id=cur.attr("id");
-        if (cur.is(':visible'))
-            {
-            SetCookie(cur_id, "collapsed");
-            jQuery(this).removeClass('expanded');
-            jQuery(this).addClass('collapsed');
-            }
-        else
-            {
-            SetCookie(cur_id, "expanded")
-            jQuery(this).addClass('expanded');
-            jQuery(this).removeClass('collapsed');
-            }
-
-        cur.slideToggle();
-       
-        
-        return false;
-        }).each(function() 
-            {
-                cur_id=jQuery(this).next().attr("id"); 
-                if (getCookie(cur_id)=="collapsed")
-                    {
-                    jQuery(this).next().hide();
-                    jQuery(this).addClass('collapsed');
-                    }
-                else jQuery(this).addClass('expanded');
-
-            });
-			
-            <?php 			
-		if($ctrls_to_save)
-			{?>
-			jQuery(document).bind('keydown',function (e)
-				{				
-				if (!(e.which == 115 && (e.ctrlKey || e.metaKey)) && !(e.which == 83 && (e.ctrlKey || e.metaKey)) && !(e.which == 19) )
+			function(data)
+				{
+				if (data.trim()=="SAVED")
 					{
-					return true;
+						jQuery('.AutoSaveStatus').html('<?php echo $lang["saved"] ?>');
+						jQuery('.AutoSaveStatus').fadeOut('slow');
 					}
 				else
 					{
-					e.preventDefault();
-					if(jQuery('#mainform'))
-					{
-					jQuery('.AutoSaveStatus').html('<?php echo $lang["saving"] ?>');
-					jQuery('.AutoSaveStatus').show();
-					jQuery.post(jQuery('#mainform').attr('action') + '&autosave=true',jQuery('#mainform').serialize(),
-				
-					function(data)
-						{
-						if (data.trim()=="SAVED")
-							{
-								jQuery('.AutoSaveStatus').html('<?php echo $lang["saved"] ?>');
-								jQuery('.AutoSaveStatus').fadeOut('slow');
-							}
-						else
-							{
-								jQuery('.AutoSaveStatus').html('<?php echo $lang["save-error"] ?>' + data);				
-							}
-						});
-					}	
-					return false;
-					}						
-			   });
-		   <?php
-		   }?>  
+						jQuery('.AutoSaveStatus').html('<?php echo $lang["save-error"] ?>' + data);
+					}
+				});
+			}
+			return false;
+			}
+	   });
+   <?php
+   }?>
 	   
     });
  <?php hook("editadditionaljs") ?>

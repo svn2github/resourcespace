@@ -2506,4 +2506,5 @@ $send_collection_to_admin = FALSE;
 # Set to true if you want to share internally a collection which is not private
 $ignore_collection_access = FALSE;
 
-
+# Indicates which users can update very low level configuration options for example debug_log.
+$system_architect_user_names = array('Montala Support');		// Warning: this is for experienced technical users, typically ResourceSpace providers.

@@ -254,10 +254,17 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 .Question .ExifOptions {margin: 0 0 0 290px;padding:0;}
 .Question.FieldSaveError {background-color: #E26A6A;}
 
+.FormWide .Question label{width: 20%}
+.FormWide .Question .stdwidth, .FormWide .Question .tickset{width: 80%}
+.FormWide .Question .tickset .stdwidth{width: 99%}
+.FormWide .Question .FormHelp {margin: 0px 10px 10px 20%;}
+.FormWide .Question .FormHelp .FormHelpInner {width: 99%}
+
+
 .Question .Fixed {    width: 300px;float: left;margin-top: 0.4em;font-weight: bold;} 
 .FormError{font-weight: bold;font-size: 1.1em;margin: 0px 0px 10px 190px;padding: 10px 0px 0px;}
 .FormIncorrect {font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
-.PageInformal {font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
+.PageInformal, .PageInfoMessage{font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
 .AutoSaveStatus {font-weight: bold;float:right;padding:6px 0 0;}
 .PurgeUsersMonths {width:4em;}
 /*Record Panel layout*/
@@ -774,4 +781,8 @@ width: 90px;
 #merge_filename_title_spacer {
 	width: 30px;
 	text-align: center;
+}
+
+.ui-sortable-helper{
+    border: 2px solid;
 }

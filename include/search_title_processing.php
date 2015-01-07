@@ -271,6 +271,14 @@ if ($search_titles)
             $search_title = '<h1 class="searchcrumbs"><a href="'.$baseurl_short.'pages/search.php?search=!contributions'.$cuser.$parameters_string.'" onClick="return CentralSpaceLoad(this,true);">'.$lang["contributedby"]." ".$displayname." - ".$lang["status".intval($archive)].'</a>'.$searchcrumbs.'</h1> ';
             }
         }
+	 elseif (substr($search,0,8)=="!hasdata")
+        {		
+		$fieldref=intval(trim(substr($search,8)));        
+		$fieldinfo=get_resource_type_field($fieldref);
+		$displayname=i18n_get_translated($fieldinfo["title"]);
+		if (trim($displayname)=="") $displayname=$fieldinfo["ref"];
+		$search_title = '<h1 class="searchcrumbs"><a href="'.$baseurl_short.'pages/search.php?search=!hasdata'.$fieldref.$parameters_string.'" onClick="return CentralSpaceLoad(this,true);">'.$lang["search_title_hasdata"]." ".$displayname." - ".$lang["status".intval($archive)].'</a>'.$searchcrumbs.'</h1> ';            
+        }
     else if ($archive!=0)
         {
         switch ($archive)

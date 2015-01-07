@@ -3870,15 +3870,51 @@ function validate_html($html)
         }
     }
 
-function get_resource_type_fields($restypes="")
+function get_resource_type_fields($restypes="", $field_order_by="ref", $field_sort="asc", $find="")
 	{
 	// Gets all metadata fields, optionally for a specified array of resource types 
 	$conditionsql="";
 	if(is_array($restypes))
 		{
-		$conditionsql = " where resource_type in (" . explode(",",$restypes) . ")";
+		$conditionsql = " where resource_type in (" . implode(",",$restypes) . ")";
 		}
-	$allfields = sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field" . $conditionsql);
+	if($find!="")
+		{
+		$find=escape_check($find);
+		if($conditionsql!="")
+			{
+			$conditionsql.=" and ";
+			}
+		else
+			{
+			$conditionsql.=" where ";
+			}
+		$conditionsql.=" name like '%" . $find . "%' or options like '%" . $find . "%'or title like '%" . $find . "%'or tab_name like '%" . $find . "%'or exiftool_field like '%" . $find . "%'or help_text like '%" . $find . "%'or ref like '%" . $find . "%'or tooltip_text like '%" .$find . "%' or display_template like '%" .$find . "%'";
+		}
+	// Allow for sorting, enabled for use by System Setup pages
+	//if(!in_array($field_order_by,array("ref","name","tab_name","type","order_by","keywords_index","resource_type","display_field","required"))){$field_order_by="ref";}		
+		
+	$allfields = sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown, tooltip_text from resource_type_field" . $conditionsql . " order by " . $field_order_by . " " . $field_sort);
 	return $allfields;
 	
 	}
+
+
+function generateURL($url,$parameters=array(),$setparams=array())
+    {
+    foreach($setparams as $setparam=>$setvalue)
+        {
+        if($setparam!="" && $setvalue!="")
+            {$parameters[$setparam]=$setvalue;}
+        }
+    $querystringparams=array();
+    foreach($parameters as $parameter=>$parametervalue)
+        {
+        $querystringparams[]= $parameter . "=" . urlencode($parametervalue);
+        }
+    $querystring="?" . implode ("&", $querystringparams);
+    
+    $returnurl= $url . $querystring;
+    return $returnurl;
+     
+    }

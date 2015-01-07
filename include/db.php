@@ -771,7 +771,15 @@ function redirect($url)
 		header ("Location: " . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? "https://" : "http://") . $_SERVER["HTTP_HOST"] . $url);
 		}
 	else
-		{
+		{	
+		if(strpos($url,$baseurl)!==false)
+			{
+			// exit($url);	
+			// Base url has already been added
+			header ("Location: " . $url);	
+			exit();
+			}
+
 		# redirect to a relative URL
 		header ("Location: " . $baseurl . "/" . $url);
 		}

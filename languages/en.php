@@ -85,6 +85,7 @@ $lang["fieldtype-expiry_date"]="Expiry date";
 $lang["fieldtype-category_tree"]="Category tree";
 $lang["fieldtype-dynamic_keywords_list"]="Dynamic keywords list";
 $lang["fieldtype-dynamic_tree_in_development"]="Dynamic tree (in development)";
+$lang["fieldtype-radio_buttons"]="Radio buttons";
 
 # Property labels (for the default properties)
 $lang["documentation-permissions"]="See <a href=../../documentation/permissions.txt target=_blank>the permissions help text file</a> for further information on permissions.";
@@ -122,7 +123,7 @@ $lang["information-if_you_enable_indexing_below_and_the_field_already_contains_d
 $lang["property-index_this_field"]="Index this field";
 $lang["information-enable_partial_indexing"]="Partial keyword indexing (prefix+infix indexing) should be used sparingly as it will significantly increase the index size. See the wiki for details.";
 $lang["property-enable_partial_indexing"]="Enable partial indexing";
-$lang["information-shorthand_name"]="Important: Shorthand name must be set for the field to appear on Advanced Search. It must contain only lowercase alphabetical characters - no spaces, numbers or symbols.";
+$lang["information-shorthand_name"]="Important: Shorthand name must be set for the field to be appear on the search bar, in Advanced search or to be used in search/edit filters. It must contain only lowercase alphabetical characters - no spaces, numbers or symbols.";
 $lang["property-shorthand_name"]="Shorthand name";
 $lang["property-display_field"]="Display field";
 $lang["property-enable_advanced_search"]="Enable advanced search";
@@ -1464,7 +1465,7 @@ $lang["treenode-root"]="Root";
 $lang["treenode-group_management"]="Group management";
 $lang["treenode-new_group"]="New group";
 $lang["treenode-new_subgroup"]="New subgroup";
-$lang["treenode-resource_types_and_fields"]="Resource types / fields";
+$lang["treenode-resource_types_and_fields"]="Manage resource types";
 $lang["treenode-new_resource_type"]="New resource type";
 $lang["treenode-new_field"]="New field";
 $lang["treenode-reports"]="Reports";
@@ -1853,3 +1854,93 @@ $lang['send_collection_to_admin_usercontributedcollection'] = ' uploaded these r
 $lang['send_collection_to_admin_additionalinformation'] = 'Additional information';
 $lang['send_collection_to_admin_collectionname'] = 'Collection name: ';
 $lang['send_collection_to_admin_numberofresources'] = 'Number of resources: ';
+
+# User group management
+$lang['page-title_user_group_management'] = "Manage user groups";
+$lang['page-subtitle_user_group_management'] = "Use this section to add, remove and modify user groups.";
+$lang['action-title_create_user_group_called'] = "Create user group called...";
+$lang['action-title_filter_by_parent_group'] = "Parent user group filter";
+$lang['action-title_filter_by_permissions'] = "Permissions filter";
+$lang["fieldhelp-permissions_filter"]="You may enter a single permission or comma separated permissions.  Partial permission names and wildcards are not allowed.  Permissions are case sensitive.";
+
+# User group management edit
+$lang['page-title_user_group_management_edit'] = "Edit user group";
+$lang['page-subtitle_user_group_management_edit'] = "Use this section to modify user group properties.";
+$lang["action-title_remove_user_group_logo"]="Tick to remove user group logo";
+$lang["action-title_see_wiki_for_advanced_options"]="Please refer to the <a href='http://wiki.resourcespace.org/index.php?title=Main_Page#System_Administrator.27s_Guide'>WIKI</a> for further help with Advanced options.";
+
+# admin web edit
+$lang['page-title_web_edit'] = "Edit file";
+$lang['page-subtitle_web_edit'] = "Use this section to directly edit files - use with caution.";
+
+# User group permissions
+$lang['page-title_user_group_permissions_edit'] = "Edit user group permissions";
+$lang['page-subtitle_user_group_permissions_edit'] = "Use this section to modify user group permissions.";
+
+# Report management
+$lang['page-title_report_management'] = "Manage reports";
+$lang['page-subtitle_report_management'] = "Use this section to modify system reports.";
+$lang['action-title_create_report_called'] = "Create report called...";
+
+# Report management edit
+$lang['page-title_report_management_edit'] = "Edit report";
+$lang['page-subtitle_report_management_edit'] = "Use this section to modify report contents.";
+$lang["fieldtitle-tick_to_delete_report"] = "Tick to delete this report";
+
+# size management
+$lang['page-title_size_management'] = "Manage sizes";
+$lang['page-subtitle_size_management'] = "Use this section to modify sizes for downloads and previews.";
+$lang['action-title_create_size_with_id'] = "Create size with " . $lang['property-id'] . "...";
+
+# size management edit
+$lang['page-title_size_management_edit'] = "Edit size";
+$lang['page-subtitle_size_management_edit'] = "Use this section to modify size details.";
+$lang["fieldtitle-tick_to_delete_size"] = "Tick to delete this size";
+
+##########################################################################################
+# Non page-specific items that need to be merged above when system admin project completed
+##########################################################################################
+
+$lang["admin_advanced_field_properties"]="Advanced field properties";
+$lang["admin_delete_field_confirm"]="There are %%AFFECTEDRESOURCES%% resource(s) with data in this field. Some of the affected resource IDs are listed below. This data will be lost if you continue. Are you sure you want to proceed with deletion?";
+$lang["admin_resource_type_create"]="Create resource type called...";
+$lang["admin_resource_type_field"]="Manage metadata field";
+$lang["admin_resource_type_field_count"]="Metadata fields";
+$lang["admin_resource_type_field_create"]="Create metadata field called...";
+$lang["admin_resource_type_field_reorder_information_normal_order"]="Reordering is only available when viewing in display order and is set per resource type.<br> If using tabs, set the configuration option \$use_order_by_tab_view to order fields across multiple tabs";
+$lang["admin_resource_type_field_reorder_information_tab_order"]="Reordering is only available when viewing all fields in display order.";
+$lang["admin_resource_type_field_reorder_mode"]="Enable draggable fields and links to enable reordering ";
+$lang["admin_resource_type_field_reorder_mode"]="Show in display order to enable draggable resource types and links to enable reordering ";
+$lang["admin_resource_type_fields"]="Manage metadata fields";
+$lang["admin_resource_type_reorder_information_tab_order"]="Reordering is only available when viewing resource types in display order.";
+$lang["admin_resource_type_reorder_mode"]="Show in display order to enable draggable resource types and links to enable reordering ";
+$lang["admin_resource_type_tab_info"]="Setting a tab name means that related resources of this type will be displayed in that tab along with the metadata. The resource type will effectively be part of the \$related_type_show_with_data array). This setting requires that tabs are correctly set for all fields.";
+$lang["admin_report_create"]= "Create report called...";
+$lang["action_copy_report"]= "Copy report";
+$lang["copy_of"]="Copy of";
+$lang["fieldhelp-add_to_config_override"]="Select config override to view help";
+$lang["fieldhelp-no_config_override_help"]="There is no help for this config item";
+$lang["fieldhelp-tick_to_delete_group"]="You are not allowed to delete user groups that contains active users or are the parent of other groups";
+$lang["fieldtitle-add_to_config_override"]="Add to config override";
+$lang["fieldtitle-advanced_options"]="Advanced options";
+$lang["fieldtitle-derestrict_filter"]="Derestrict filter";
+$lang["fieldtitle-group_logo"]="Group specific logo";
+$lang["fieldtitle-tick_to_delete_group"]="Tick to delete this group";
+$lang["property-contains"]="Contains";
+$lang["property-groups"]="Groups";
+$lang["property-user_group"]="User group";
+$lang["property-user_group_parent"]="Parent user group";
+$lang["property-user_group_remove_parent"]="(remove parent)";
+$lang["resource_type_delete_confirmation"]="There are %%RESOURCECOUNT%% resource(s) of this type.";
+$lang["resource_type_delete_select_new"]="Please select the resource type that these will be converted to.";
+$lang["resourcetype-global_field"]="Global";
+$lang["resourcetype-global_field"]="Global";
+$lang["search_title_hasdata"]="Resources with data in field";
+$lang["show_resources"]="Show resources";
+$lang["team_user_contributions"]="Contributions";
+$lang["team_user_view_contributions"]="View contributions";
+$lang['action-title_apply'] = "Apply";
+$lang['property-allow_preview'] = "Allow preview";
+$lang['property-allow_restricted_download'] = "Allow restricted download";
+$lang['property-orphaned'] = "Orphaned";
+$lang['property-pad_to_size'] = "Pad to size";
