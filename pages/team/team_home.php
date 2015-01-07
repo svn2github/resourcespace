@@ -112,9 +112,7 @@ include "../../include/header.php";
 	<?php hook("customteamfunction")?>
 	
 	<?php if (checkperm("a")) { ?>
-	<?php if ($use_plugins_manager == true){ ?>
-	<li><a href="<?php echo $baseurl?>/pages/team/team_plugins.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["pluginssetup"]?></a></li>
-	<?php } ?>
+
 	<li><a href="<?php echo $baseurl?>/pages/admin/admin_home.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["systemsetup"]?></a></li>
 	<?php if($team_centre_bug_report && !hook("custom_bug_report")) { ?>   
     <li><a href="<?php echo $baseurl?>/pages/team/team_reportbug.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["reportbug"]?></a></li>

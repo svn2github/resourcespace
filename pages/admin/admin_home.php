@@ -19,6 +19,11 @@ include ("../../include/header.php");
 		<li><a href="admin_resource_type_fields.php" onclick="CentralSpaceLoad(this,true);"><?php echo $lang["admin_resource_type_fields"] ?></a></li>
 		<li><a href="admin_report_management.php" onclick="CentralSpaceLoad(this,true);"><?php echo $lang['page-title_report_management']; ?></a></li>
 		<li><a href="admin_size_management.php" onclick="CentralSpaceLoad(this,true);"><?php echo $lang["page-title_size_management"] ?></a></li>
+		
+		<?php if ($use_plugins_manager == true){ ?>
+		<li><a href="<?php echo $baseurl?>/pages/team/team_plugins.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["pluginssetup"]?></a></li>
+		<?php } ?>
+		
 <?php
 if ($web_config_edit)
 	{
