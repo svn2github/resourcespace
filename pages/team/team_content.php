@@ -27,7 +27,6 @@ include "../../include/header.php";
 
 
 <div class="BasicsBox"> 
-  <h2>&nbsp;</h2>
   <h1><?php echo $lang["managecontent"]?></h1>
   <p><?php echo text("introtext")?></p>
  

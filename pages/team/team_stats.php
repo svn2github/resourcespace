@@ -47,7 +47,6 @@ if (getval("print","")!="") { # Launch printable page in an iframe
 <?php } ?>
 
 <div class="BasicsBox"> 
-  <h2>&nbsp;</h2>
   <h1><?php echo $lang["viewstatistics"]?></h1>
   <p><?php echo text("introtext")?></p>
   
