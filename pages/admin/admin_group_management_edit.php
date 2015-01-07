@@ -77,7 +77,7 @@ if (getval("save",false))
 
 			if(!(file_exists($logo_dir) && is_dir($logo_dir)))
 				{
-				mkdir($logostorage,0777,true);
+				mkdir($logo_dir,0777,true);
 				}
 
 			$logo_extension=pathinfo($_FILES['grouplogo']['name'])['extension'];
