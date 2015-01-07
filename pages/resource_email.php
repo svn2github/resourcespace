@@ -262,7 +262,7 @@ if ($share_resource_include_related && $enable_related_resources && checkperm("s
 <select class="stdwidth" name="access" id="access">
 <?php
 // List available access levels. The highest level must be the minimum user access level.
-for ($n=2;$n>=$useraccess;$n--)  { ?>
+for ($n=$useraccess;$n<=1;$n++)  { ?>
 <option value="<?php echo $n?>"><?php echo $lang["access" . $n]?></option>
 <?php } ?>
 </select>
