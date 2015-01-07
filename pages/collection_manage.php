@@ -209,7 +209,6 @@ if ($removeall!=""){
 include "../include/header.php";
 ?>
   <div class="BasicsBox">
-    <h2>&nbsp;</h2>
     <h1><?php echo $lang["managemycollections"]?></h1>
     <p class="tight"><?php echo text("introtext")?></p><br>
 <div class="BasicsBox">
