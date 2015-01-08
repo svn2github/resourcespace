@@ -131,6 +131,15 @@ if ($noattach=="")
 	if ($download_filename_id_only){
 		if(!hook('customdownloadidonly', '', array($ref, $ext, $alternative))) {
 			$filename=$ref . "." . $ext;
+
+			if($size != '' && $download_id_only_with_size) {
+				$filename = $ref . '-' . $size . '.' . $ext;
+			}
+
+			if(isset($prefix_filename_string) && trim($prefix_filename_string) != '') {
+				$filename = $prefix_filename_string . $filename;
+			}
+
 		}
 	}
 	
