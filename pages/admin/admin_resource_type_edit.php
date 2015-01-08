@@ -87,7 +87,8 @@ $restypedata=sql_query ("
 	where
             ref='$ref'
 	order by name"
-)[0];
+);
+$restypedata=$restypedata[0];
 
 
 include "../../include/header.php";

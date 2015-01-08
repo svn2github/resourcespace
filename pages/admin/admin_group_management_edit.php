@@ -80,7 +80,8 @@ if (getval("save",false))
 				mkdir($logo_dir,0777,true);
 				}
 
-			$logo_extension=pathinfo($_FILES['grouplogo']['name'])['extension'];
+			$logo_pathinfo=pathinfo($_FILES['grouplogo']['name']);
+			$logo_extension=$logo_pathinfo['extension'];
 			$logo_filename="{$logo_dir}/group{$ref}.{$logo_extension}";
 
 			if (!move_uploaded_file($_FILES['grouplogo']['tmp_name'], $logo_filename))		// this will overwrite if already existing
