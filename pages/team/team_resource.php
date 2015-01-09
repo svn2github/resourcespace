@@ -14,6 +14,7 @@ include "../../include/header.php";
 ?>
 
 <div class="BasicsBox"> 
+<p><a href="<?php echo $baseurl . "/pages/team/team_home.php" ?>" onClick="return CentralSpaceLoad(this,true);">&lt;&nbsp;<?php echo $lang["teamcentre"]?></a></p>
 
   <h1><?php echo $lang["manageresources"]?></h1>
   <p><?php echo text("introtext")?></p>
@@ -80,6 +81,9 @@ include "../../include/header.php";
 		<?php } // end if checksums and temp tables turned on ?>
 
 		<li><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!unused")?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewuncollectedresources"]?></a></li>
+		
+		<?php if (checkperm("i")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_archive.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
+			
 		<?php if (checkperm("k")): // Check if user can manage keywords and fields ?>
 			<li><a href="<?php echo $baseurl_short?>pages/team/team_related_keywords.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managerelatedkeywords"]?></a></li>
 			<li><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/team/team_fields.php"><?php echo $lang["managefieldoptions"]?></a></li>
@@ -90,7 +94,6 @@ include "../../include/header.php";
 	</ul>
 	</div>
 
-	<p><a href="<?php echo $baseurl_short?>pages/team/team_home.php" onClick="return CentralSpaceLoad(this,true);">&lt;&nbsp;<?php echo $lang["backtoteamhome"]?></a></p>
   </div>
 
 <?php

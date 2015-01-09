@@ -54,10 +54,7 @@ include "../../include/header.php";
 			}
  		}
  	?>
-			
-
-	<?php if (checkperm("i")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_archive.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
-	
+				
 	<?php if (checkperm("R")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_request.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managerequestsorders"]?></a>
         &nbsp;&nbsp;<?php
         $condition = "";
