@@ -104,22 +104,16 @@ include "../../include/header.php";
 
     <?php if (checkperm("m")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_mail.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["sendbulkmail"]?></a></li><?php } ?>
 
-	<?php if (checkperm("a")) { ?>
-    <li><a href="<?php echo $baseurl?>/pages/team/team_export.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["exportdata"]?></a></li>
-    <li><a href="<?php echo $baseurl?>/pages/check.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["installationcheck"]?></a></li>
-	<?php } ?>
+    	<?php hook("customteamfunction")?>
 
-	<?php hook("customteamfunction")?>
-	
-	<?php if (checkperm("a")) { ?>
-
+	<?php
+	# Include a link to the System Setup area for those with the appropriate permissions.
+	if (checkperm("a")) { ?>
 	<li><a href="<?php echo $baseurl?>/pages/admin/admin_home.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["systemsetup"]?></a></li>
-	<?php if($team_centre_bug_report && !hook("custom_bug_report")) { ?>   
-    <li><a href="<?php echo $baseurl?>/pages/team/team_reportbug.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["reportbug"]?></a></li>
-	<?php } ?>	
 	<?php hook("customteamfunctionadmin")?>
 	<?php } ?>
-	
+
+		
 	</ul>
 	</div>
 	
