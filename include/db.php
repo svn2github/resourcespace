@@ -39,7 +39,7 @@ function errorhandler($errno, $errstr, $errfile, $errline)
 	?>
 	</select></table></table></table>
 	<div style="box-shadow: 3px 3px 20px #666;font-family:ubuntu,arial,helvetica,sans-serif;position:absolute;top:150px;left:150px; background-color:white;width:450px;padding:20px;font-size:15px;color:#fff;border-radius:5px;">
-	<table cellpadding=5 cellspacing=0><tr><td valign=middle><img src="<?php echo $baseurl?>/pages/admin/gfx/cherrybomb.gif" width="48" height="48"></td><td valign=middle align=left><span style="font-size:26px;">Sorry, an error has occurred</span></td></tr></table>
+	<table cellpadding=5 cellspacing=0><tr><td valign=middle><img src="<?php echo $baseurl?>/gfx/titles/title.png"></td><td valign=middle align=left><span style="font-size:26px;">Sorry, an error has occurred</span></td></tr></table>
 	<p style="font-size:14px;color:black;margin-top:20px;">Please <a href="#" onClick="history.go(-1)">go back</a> and try something else.</p>
 	<?php global $show_error_messages; if ($show_error_messages) { ?>
 	<p style="font-size:14px;color:black;">You can <a href="<?php echo $baseurl?>/pages/check.php">check</a> your installation configuration.</p>
