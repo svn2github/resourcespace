@@ -671,14 +671,14 @@ if (true) # Always show search header now.
         <?php 
 		hook("stickysearchresults");
 
-	if ($display_search_titles)
+	if ($search_titles)
 		{
 		hook("beforesearchtitle");
 		if (!$collections_compact_style)
 			{
-	        echo $search_title;
-	        hook("aftersearchtitle");
-	        }
+			echo $search_title;
+			hook("aftersearchtitle");
+			}
 	    else 
 	    	{
 	    	echo $search_title;hook("aftersearchtitle");
@@ -697,7 +697,7 @@ if (true) # Always show search header now.
 		        $collection_compact_style_titleview=false;
 		        } /*end if a collection search and compact_style - action selector*/   
     		}
-    	}	
+    	}
 	hook("beforesearchresults");
 	
 	# Archive link

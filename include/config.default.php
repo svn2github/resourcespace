@@ -1631,9 +1631,6 @@ $checkbox_and=false;
 # Option to show resource ID in the thumbnail, next to the action icons.
 $display_resource_id_in_thumbnail=false;
 
-# Display a title above the search results for non-search cases, for example collections, recent resources
-$display_search_titles=true;
-
 # Show "Save" and "Clear" buttons at the top of the resource edit form as well as at the bottom
 $edit_show_save_clear_buttons_at_top=false;
 
@@ -1940,7 +1937,7 @@ $debug_log=false;
 $view_resource_collections=false;
 
 # enable titles on the search page that help describe the current context
-$search_titles=true;
+$search_titles=false;
 # whether all/additional keywords should be displayed in search titles (ex. "Recent 1000 / pdf")
 $search_titles_searchcrumbs=false;
 # whether field-specific keywords should include their shortnames in searchcrumbs (if $search_titles_searchcrumbs=true;) ex. "originalfilename:pdf"

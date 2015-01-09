@@ -85,7 +85,7 @@ input.defaultbutton {position: absolute; left: -100%; width: 0; height: 0;}
 #CentralSpaceLogin {margin: 2em auto 4em;padding:0;width: 700px;text-align:left;}
 #CentralSpace {text-align:left;}
 
-.TopInpageNav {clear: left;padding-bottom: 5px;margin-right: 15px;position:relative;}
+.TopInpageNav {clear: left;padding-bottom: 5px;margin-bottom:10px;margin-right: 15px;position:relative;}
 .BottomInpageNav {clear: left;padding-top: 5px;margin: 20px 15px 0px 0px; position:relative;}
 .BottomInpageKey {margin-right: 15px; clear: left; text-align: left;}
 .TopInpageNavLeft{float:left;padding-right:240px;}
@@ -470,7 +470,7 @@ div.autocomplete ul li {
 .meter-wrap{position: relative;width:290px;border:1px solid #fff;}
 .meter-value {height: 10px;}
 
-.SearchOptionNav {padding-bottom:0;margin-bottom:5px;margin-right:20px;float:left;}
+.SearchOptionNav {padding:0 20px 5px 0;float:left;}
 .dynamickeywords {float:left;}
 .keywordsselected {margin-top:10px;}
 
