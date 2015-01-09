@@ -22,7 +22,7 @@ function HookPropose_changesViewAfterresourceactions()
 		if(!$propose_changes_always_allow)
 			{
 			# Check user has permission.
-			$proposeallowed=sql_value("select r.ref value from resource r left join collection_resource cr on r.ref='$ref' and cr.resource=r.ref left join user_collection uc on uc.user='$userref' and uc.collection=cr.collection left join collection c on c.ref=uc.collection where c.propose_changes=1","");
+			$proposeallowed=sql_value("select r.ref value from resource r left join collection_resource cr on r.ref='$ref' and cr.resource=r.ref left join user_collection uc on uc.user='$userref' and uc.collection=cr.collection left join resource_custom_access ca on ca.resource='$ref' left join collection c on c.ref=uc.collection where c.propose_changes=1 or ca.user='$userref'","");
 			}
 
 		if($propose_changes_always_allow || $proposeallowed!="")    
