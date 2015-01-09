@@ -284,10 +284,7 @@ if(isset($usergroup))
 if($slimheader)
     {
     ?>
-    <style>
-    <?php
-    include dirname(__FILE__)."/../css/globalslimheader.css"; ?>
-    </style>
+    <link href="<?php echo $baseurl?>/css/globalslimheader.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" />
     <?php
     }
 hook("headblock");
