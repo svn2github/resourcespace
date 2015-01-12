@@ -269,7 +269,7 @@ if(isset($usergroup))
     {
     //Get group logo value
     $curr_group = get_usergroup($usergroup);
-    if ($curr_group["group_specific_logo"]!=="")
+    if (!empty($curr_group["group_specific_logo"]))
         {
         $linkedheaderimgsrc="{$baseurl}/filestore/admin/groupheaderimg/group{$usergroup}.{$curr_group["group_specific_logo"]}";
         if(!$slimheader)
