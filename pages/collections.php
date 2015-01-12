@@ -606,7 +606,7 @@ elseif ($k!="")
 	else { ?>
     <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>">&gt; <?php echo $lang["viewall"]?></a></li>
     <?php }
-    echo (isset($emptycollection) && collection_writeable($usercollection)) ? '<li><a href="'.$baseurl_short.'pages/collections.php?ref='.urlencode($usercollection).'&removeall=true&submitted=removeall&ajax=true" onclick="if(!confirm(\''.$lang['emptycollectionareyousure'].'\')){return false;}return CollectionDivLoad(this);"> &gt; '.$lang["emptycollection"].'</a></li>' : "";
+    echo (isset($emptycollection) && collection_writeable($usercollection) && $remove_resources_link_on_collection_bar) ? '<li><a href="'.$baseurl_short.'pages/collections.php?ref='.urlencode($usercollection).'&removeall=true&submitted=removeall&ajax=true" onclick="if(!confirm(\''.$lang['emptycollectionareyousure'].'\')){return false;}return CollectionDivLoad(this);"> &gt; '.$lang["emptycollection"].'</a></li>' : "";
      if ($count_result>0)
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)

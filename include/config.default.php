@@ -2509,3 +2509,6 @@ $send_collection_to_admin = FALSE;
 
 # Set to true if you want to share internally a collection which is not private
 $ignore_collection_access = FALSE;
+
+# Show/ hide "Remove resources" link from collection bar:
+$remove_resources_link_on_collection_bar = FALSE;
