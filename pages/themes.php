@@ -14,7 +14,13 @@ hook("themeheader");
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
-	global $theme_direct_jump,$themes_column_sorting,$themes_ref_column,$themes_date_column,$baseurl_short,$baseurl,$default_perpage_list,$collection_prefix,$revsort,$sort,$find,$getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages,$themes_category_split_pages_parents_root_node,$enable_theme_category_sharing,$enable_theme_category_edit,$show_theme_collection_stats,$lastlevelchange,$themes_single_collection_shortcut;
+	global $theme_direct_jump,$themes_column_sorting,$themes_ref_column,$themes_date_column,$baseurl_short,$baseurl,
+		   $default_perpage_list,$collection_prefix,$revsort,$sort,$find,$getthemes,$m,$lang,$flag_new_themes,
+		   $contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,
+		   $themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,
+		   $show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages,
+		   $themes_category_split_pages_parents_root_node,$enable_theme_category_sharing,$enable_theme_category_edit,
+		   $show_theme_collection_stats,$lastlevelchange,$themes_single_collection_shortcut, $download_usage;
 
 	$themes_order_by=getvalescaped("themes_order_by",getvalescaped("saved_themes_order_by","name"));
 	$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));	
@@ -201,7 +207,11 @@ function DisplayTheme($themes=array())
 
                 <?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"]); } ?>
 
-                <?php if (isset($zipcommand) || $collection_download) { ?>
+                <?php
+				if($download_usage && (isset($zipcommand) || $collection_download)) { ?>
+					&nbsp;<a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/terms.php?url=<?php echo urlencode("pages/download_usage.php?collection=" .  $getthemes[$m]['ref']); ?>">&gt; <?php echo $lang["action-download"]?></a>
+				<?php
+				} else if (isset($zipcommand) || $collection_download) { ?>
                 &nbsp;<a href="<?php echo $baseurl_short?>pages/terms.php?url=<?php echo urlencode("pages/collection_download.php?collection=" . $getthemes[$m]["ref"])?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
                 <?php } ?>
 
