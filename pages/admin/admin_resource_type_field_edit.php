@@ -286,7 +286,7 @@ if (getval("delete","")!="")
 	    //Remove all keywords	    
 	    sql_query("delete from resource_keyword where resource_type_field='$ref'");
 	    
-	    redirect($completeurl);
+	    redirect($backurl);
 	    }
         else
 	    {	    
