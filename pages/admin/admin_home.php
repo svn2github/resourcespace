@@ -29,6 +29,7 @@ include ("../../include/header.php");
 		<?php } ?>	
 		
 		<li><a href="<?php echo $baseurl?>/pages/team/team_export.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["exportdata"]?></a></li>
+		<li><a href="<?php echo $baseurl?>/pages/check.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["installationcheck"]?></a></li>
 
 <?php
 if ($web_config_edit)
