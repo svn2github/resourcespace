@@ -574,7 +574,7 @@ function save_collection($ref)
 				{
 				if ($rlist[$n]!=$rlist[$m]) # Don't relate a resource to itself
 					{ 
-						if (@mysql_num_rows(mysql_query("SELECT 1 FROM resource_related WHERE resource='".$rlist[$n]."' and related='".$rlist[$m]."' LIMIT 1"))!=1) 
+						if (count(sql_query("SELECT 1 FROM resource_related WHERE resource='".$rlist[$n]."' and related='".$rlist[$m]."' LIMIT 1"))!=1) 
 							{
 							sql_query("insert into resource_related (resource,related) values ('" . $rlist[$n] . "','" . $rlist[$m] . "')");
 							}
