@@ -337,9 +337,15 @@ if(!$slimheader)
 
     if ($header_link && !$header_text_title && getval("k","")=="") 
         {
+	   if(isset($header_link_height) || isset($header_link_width)){
+		   # compile style attribute for headerlink
+		   $headerlink_style='';
+		   if(isset($header_link_height)){$headerlink_style.="height:".$header_link_height."px;";}
+		   if(isset($header_link_width)){$headerlink_style.="width:".$header_link_width."px;";}
+	   }
        $linkUrl=isset($header_link_url) ? $header_link_url : $homepage_url;
        $onclick = (substr($linkUrl, 0, strlen($baseurl)) === $baseurl || substr($linkUrl, 0, strlen($baseurl_short)) === $baseurl_short) ? "" : ' onclick="return CentralSpaceLoad(this,true);"';
-        ?><a class="headerlink" href="<?php echo $linkUrl ?>"<?php echo $onclick?>></a><?php
+        ?><a class="headerlink" <?php if(isset($headerlink_style)){?> style="<?php echo $headerlink_style?>" <?php } ?> href="<?php echo $linkUrl ?>"<?php echo $onclick?>></a><?php
         }
     if ($header_text_title)
         {?>

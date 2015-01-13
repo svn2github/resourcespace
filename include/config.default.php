@@ -139,6 +139,9 @@ $header_text_title=false;
 
 #If using the old background method, create a clickable area of the resourcespace logo graphic. Defaults to Homepage
 $header_link=false;
+#If using $header_link set the link height and width to match the size of the logo graphic in pixels
+#$header_link_height=;
+#$header_link_width=;
 
 ###### SLIM HEADER DESIGN ######
 #In order to maintain backwards compatibility you must do the following to turn on the Slim Header Design
