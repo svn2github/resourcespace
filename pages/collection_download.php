@@ -16,6 +16,8 @@ $useoriginal=getvalescaped("use_original","no");
 $collectiondata=get_collection($collection);
 $settings_id=getvalescaped("settings","");
 $uniqid=getval("id",uniqid("Col".$collection."-"));
+$usage = getvalescaped('usage', '-1');
+$usagecomment = getvalescaped('usagecomment', '');
 function findDuplicates($data,$dupval) {
 $nb= 0;
 foreach($data as $key => $val) {if ($val==$dupval) {$nb++;}}
@@ -306,7 +308,7 @@ if ($submitted != "")
 				
 				if($tmpfile!==false && file_exists($tmpfile)){$deletion_array[]=$tmpfile;}
 				daily_stat("Resource download",$ref);
-				resource_log($ref,'d',0,"","","",-1,$size);
+				resource_log($ref,'d',0,$usagecomment,"","",$usage,$size);
 				
 				# update hit count if tracking downloads only
 				if ($resource_hit_count_on_downloads) { 
@@ -556,6 +558,8 @@ function ajax_download()
 <?php } ?>
 
 <input type=hidden name="collection" value="<?php echo htmlspecialchars($collection) ?>">
+<input type=hidden name="usage" value="<?php echo htmlspecialchars($usage); ?>">
+<input type=hidden name="usagecomment" value="<?php echo htmlspecialchars($usagecomment); ?>">
 <input type=hidden name="k" value="<?php echo htmlspecialchars($k) ?>">
 
 <?php if ($use_zip_extension){?>

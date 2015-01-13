@@ -6,6 +6,7 @@ include "../include/general.php";
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref","",true),$k))) {include "../include/authenticate.php";}
 
 $ref=getval("ref","");
+$col = getval('collection', -1, true);
 $size=getval("size","");
 $ext=getval("ext","");
 $alternative=getval("alternative",-1);
@@ -20,8 +21,14 @@ if (getval("save","")!="")
 	$usagecomment=getvalescaped("usagecomment","");
 	if($download_url_suffix==""){$download_url_suffix="?";}
 	else{$download_url_suffix.="&";}
-	$download_url_suffix.="ref=" . urlencode($ref)  . "&size=" . urlencode($size) . "&ext=" . urlencode($ext) . "&k=" . urlencode($k) . "&alternative=" . urlencode($alternative) . "&usage=" . urlencode($usage) . "&usagecomment=" . urlencode($usagecomment);
-	redirect("pages/download_progress.php" . $download_url_suffix);
+	if($download_usage && getval('col', -1, true) != -1) {
+		$col = getval('col', -1, true);
+		$download_url_suffix.="collection=" . urlencode($col)  . "&size=" . urlencode($size) . "&ext=" . urlencode($ext) . "&k=" . urlencode($k) . "&alternative=" . urlencode($alternative) . "&usage=" . urlencode($usage) . "&usagecomment=" . urlencode($usagecomment);
+		redirect("pages/collection_download.php" . $download_url_suffix);
+	} else {
+		$download_url_suffix.="ref=" . urlencode($ref)  . "&size=" . urlencode($size) . "&ext=" . urlencode($ext) . "&k=" . urlencode($k) . "&alternative=" . urlencode($alternative) . "&usage=" . urlencode($usage) . "&usagecomment=" . urlencode($usagecomment);
+		redirect("pages/download_progress.php" . $download_url_suffix);
+	}
 	}
 
 include "../include/header.php";
@@ -49,6 +56,9 @@ if(isset($download_usage_prevent_options))
 <div class="BasicsBox">
 
 <form method=post action="<?php echo $baseurl_short?>pages/download_usage.php<?php echo $download_url_suffix ?>" onSubmit="if (  <?php if (!$usage_comment_blank) { ?>  (jQuery('#usagecomment').val()=='') ||<?php } ?>     (jQuery('#usage').val()=='')) {alert('<?php echo $lang["usageincorrect"] ?>');return false;} else {return CentralSpacePost(this,true);}">
+<?php if($download_usage && ($col != -1)) { ?>
+<input type="hidden" name="col" value="<?php echo htmlspecialchars($col) ?>" />
+<?php } ?>
 <input type="hidden" name="ref" value="<?php echo htmlspecialchars($ref) ?>" />
 <input type="hidden" name="size" value="<?php echo htmlspecialchars($size) ?>" />
 <input type="hidden" name="ext" value="<?php echo htmlspecialchars($ext) ?>" />

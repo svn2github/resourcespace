@@ -620,7 +620,10 @@ elseif ($k!="")
 	    }
 	?>
     
-    <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
+    <?php 
+    	if ($download_usage && ((isset($zipcommand) || $collection_download) && $count_result>0)) { ?>
+    		<li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/terms.php?k=<?php echo urlencode($k) ?>&url=<?php echo urlencode("pages/download_usage.php?collection=" .  $usercollection . "&k=" . $k)?>">&gt; <?php echo $lang["action-download"]?></a></li>
+    <?php } else if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
     <li><a onclick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/terms.php?k=<?php echo urlencode($k) ?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>">&gt; <?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
 	<?php hook("collectiontool");?>
