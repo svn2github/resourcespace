@@ -50,7 +50,7 @@ if (getval("newfield","")!="")
 	{
 	sql_query("insert into resource_type_field (title) values('" . getvalescaped("newfield","") . "')");
 	$new=sql_insert_id();
-	redirect($baseurl_short."pages/team/admin_resource_type_field_edit.php?ref=" . $new);
+	redirect($baseurl_short . 'pages/admin/admin_resource_type_field_edit.php?ref=' . $new);
 	}
 	
 	
